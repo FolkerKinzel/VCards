@@ -82,6 +82,7 @@ and let it store as string[]
 - [ ] .NET 9.0 version of the package
 - [ ] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0
 - [ ] Dependency update
+- [x] Fix an issue that when parsing `X-GENDER` and `X-WAB-GENDER` the group name was not preserved.
 
 ### 7.4.2
 - [x] Fix issues with `RelationProperty` instances that contain `VCard` objects

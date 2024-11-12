@@ -257,8 +257,8 @@ public sealed partial class VCard
                     {
                         ReadOnlySpan<char> valSpan = vcfRow.Value.Span.TrimStart();
                         GenderViews = !valSpan.IsEmpty && char.ToUpperInvariant(valSpan[0]) == 'F'
-                            ? new GenderProperty(Enums.Sex.Female)
-                            : new GenderProperty(Enums.Sex.Male);
+                            ? new GenderProperty(Enums.Sex.Female, group: vcfRow.Group)
+                            : new GenderProperty(Enums.Sex.Male, group: vcfRow.Group);
                     }
                     break;
                 case PropKeys.NonStandard.X_WAB_GENDER:
@@ -269,8 +269,8 @@ public sealed partial class VCard
                     else
                     {
                         GenderViews ??= vcfRow.Value.Span.Contains('1')
-                                            ? new GenderProperty(Enums.Sex.Female)
-                                            : new GenderProperty(Enums.Sex.Male);
+                                            ? new GenderProperty(Enums.Sex.Female, group: vcfRow.Group)
+                                            : new GenderProperty(Enums.Sex.Male, group: vcfRow.Group);
                     }
                     break;
                 case PropKeys.IMPP:
