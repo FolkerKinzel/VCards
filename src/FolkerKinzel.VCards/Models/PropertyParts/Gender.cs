@@ -15,7 +15,7 @@ public sealed class Gender
     /// <param name="sex">Standardized information about the sex of the object
     /// the <see cref="VCard"/> represents.</param>
     /// <param name="identity">Free text describing the gender identity.</param>
-    internal Gender(Sex? sex, string? identity)
+    public Gender(Sex? sex, string? identity)
     {
         Sex = sex;
         Identity = string.IsNullOrWhiteSpace(identity) ? null : identity;
@@ -57,15 +57,14 @@ public sealed class Gender
 
     internal void AppendVCardStringTo(VcfSerializer serializer)
     {
-        StringBuilder builder = serializer.Builder;
         if (Sex.HasValue)
         {
-            _ = builder.Append(Sex.ToVcfString());
+            _ = serializer.Builder.Append(Sex.ToVcfString());
         }
 
         if (Identity is not null)
         { 
-            _ = builder.Append(';').AppendValueMasked(Identity, serializer.Version);
+            _ = serializer.Builder.Append(';').AppendValueMasked(Identity, serializer.Version);
         }
     }
 }

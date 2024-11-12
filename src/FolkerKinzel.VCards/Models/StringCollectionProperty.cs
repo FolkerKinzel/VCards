@@ -1,10 +1,7 @@
 using System.Collections;
-using System.Collections.ObjectModel;
-using System.Data.Common;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.PropertyParts;
@@ -71,7 +68,6 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     /// <summary>The data provided by the <see cref="StringCollectionProperty" />.</summary>
     public new IReadOnlyList<string>? Value => _value;
 
-
     /// <inheritdoc />
     public override string ToString() => _value is null ? "" : string.Join(", ", _value);
 
@@ -92,7 +88,6 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer is not null);
@@ -105,8 +100,8 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         Debug.Assert(Value.Count != 0);
 
         StringBuilder builder = serializer.Builder;
-       
-        foreach(string s  in _value.AsSpan())
+
+        foreach (string s in _value.AsSpan())
         {
             Debug.Assert(!string.IsNullOrEmpty(s));
             _ = builder.AppendValueMasked(s, serializer.Version).Append(',');

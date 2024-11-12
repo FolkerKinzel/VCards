@@ -6,6 +6,7 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
+using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -13,6 +14,8 @@ namespace FolkerKinzel.VCards.Models;
 /// object the <see cref="VCard"/> represents.</summary>
 public sealed class Organization
 {
+    #region Remove with version 8.0.1
+
     [Obsolete("Use OrgName instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [ExcludeFromCodeCoverage]
@@ -27,18 +30,22 @@ public sealed class Organization
     public ReadOnlyCollection<string>? OrganizationalUnits => throw new NotImplementedException();
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
+    #endregion
+
+    private readonly string[]? _units;
+
     /// <summary>Initializes a new <see cref="Organization" /> object.</summary>
     /// <param name="orgName">Organization name or <c>null</c>.</param>
     /// <param name="orgUnits">Organization unit(s) or <c>null</c>.</param>
     public Organization(string? orgName, IEnumerable<string?>? orgUnits = null)
     {
-        (string? orgNameParsed, IReadOnlyList<string>? orgUnitsParsed) = ParseProperties(orgName, orgUnits);
+        (string? orgNameParsed, string[]? orgUnitsParsed) = ParseProperties(orgName, orgUnits);
 
         Name = orgNameParsed;
-        Units = orgUnitsParsed;
+        _units = orgUnitsParsed;
     }
 
-    private static (string?, IReadOnlyList<string>?) ParseProperties(string? orgName,
+    private static (string?, string[]?) ParseProperties(string? orgName,
                                                                      IEnumerable<string?>? orgUnits)
     {
         orgName = string.IsNullOrWhiteSpace(orgName) ? null : orgName;
@@ -51,7 +58,7 @@ public sealed class Organization
     public string? Name { get; }
 
     /// <summary>Organizational unit name(s).</summary>
-    public IReadOnlyList<string>? Units { get; }
+    public IReadOnlyList<string>? Units => _units;
 
     /// <summary>Returns <c>true</c>, if the <see cref="Organization" /> object does
     /// not contain any usable data.</summary>
@@ -59,7 +66,7 @@ public sealed class Organization
 
     internal bool NeedsToBeQpEncoded()
         => Name.NeedsToBeQpEncoded() ||
-           (Units?.Any(s => s.NeedsToBeQpEncoded()) ?? false);
+           (_units is not null && StringExtension.ContainsAnyThatNeedsQpEncoding(_units));
 
     /// <inheritdoc/>
     public override string ToString()
