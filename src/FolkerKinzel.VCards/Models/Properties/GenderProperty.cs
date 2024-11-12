@@ -66,7 +66,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
             }
         }
 
-        Value = new Gender(sex, genderIdentity);
+        Value = Gender.Create(sex, genderIdentity);
     }
 
     /// <summary>The data provided by the <see cref="GenderProperty" />. </summary>

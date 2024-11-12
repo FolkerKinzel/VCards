@@ -146,7 +146,7 @@ public readonly struct GenderBuilder
                             string? identity = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-        => Add(new Gender(sex, identity), parameters, group);
+        => Add(Gender.Create(sex, identity), parameters, group);
     
 
     /// <summary>

@@ -180,7 +180,7 @@ internal static class Utility
             Urls = new TextProperty("www.folker.com"),
             DirectoryName = new TextProperty("Webseite"),
             Access = new AccessProperty(Access.Confidential),
-            GenderViews = new GenderProperty(new Gender(Sex.NonOrNotApplicable)),
+            GenderViews = new GenderProperty(Gender.Create(Sex.NonOrNotApplicable)),
             GeoCoordinates = new GeoProperty(new GeoCoordinate(23.456, 49.654)),
             NickNames = new StringCollectionProperty(["Genius", "The Brain"]),
             Kind = new KindProperty(Kind.Organization),

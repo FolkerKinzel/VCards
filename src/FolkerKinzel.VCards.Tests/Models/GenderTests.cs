@@ -12,7 +12,7 @@ public class GenderTests
     [DataRow(Sex.Unknown, null, false)]
     public void IsEmptyTest1(Sex? gender, string? identity, bool expected)
     {
-        var info = new Gender(gender, identity);
+        var info = Gender.Create(gender, identity);
         Assert.AreEqual(expected, info.IsEmpty);
     }
 }
