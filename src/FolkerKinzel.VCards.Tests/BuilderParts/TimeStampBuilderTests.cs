@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class TimeStampBuilderTests
@@ -24,7 +26,7 @@ public class TimeStampBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Updated.Edit((p, d) => new Models.TimeStampProperty(d), DateTimeOffset.UtcNow)
+            .Updated.Edit((p, d) => new TimeStampProperty(d), DateTimeOffset.UtcNow)
             .VCard;
 
         Assert.IsNotNull(vc.Updated);

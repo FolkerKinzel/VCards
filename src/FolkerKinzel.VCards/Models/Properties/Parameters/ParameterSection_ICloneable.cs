@@ -1,4 +1,4 @@
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models.Properties.Parameters;
 
 public sealed partial class ParameterSection : ICloneable
 {

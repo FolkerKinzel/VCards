@@ -2,7 +2,7 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
@@ -456,8 +456,6 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     protected void AppendV2_1Type(string value) => Builder.Append(';').Append(value);
 
-    [SuppressMessage("Style", "IDE0066:Convert switch statement to expression",
-        Justification = "Better style")]
     protected void AppendNonStandardParameters()
     {
         if (!Options.IsSet(Opts.WriteNonStandardParameters))

@@ -4,8 +4,8 @@ using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using Base64Bcl = System.Buffers.Text.Base64;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 

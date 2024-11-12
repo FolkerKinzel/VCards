@@ -1,7 +1,7 @@
 using System.Collections;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Models.Properties;

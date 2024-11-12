@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Tests;
+﻿using FolkerKinzel.VCards.Models;
+
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class GeoCoordinateTests

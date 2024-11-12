@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
+
 /* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
 Before:
 using FolkerKinzel.VCards.Enums;
@@ -22,7 +23,7 @@ using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties;
 using StringExtension = FolkerKinzel.VCards.Intls.Extensions.StringExtension;
 
-namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates information about the name of the person the 
 /// <see cref="VCard"/> represents.</summary>

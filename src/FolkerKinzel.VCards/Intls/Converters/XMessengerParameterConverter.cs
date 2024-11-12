@@ -1,6 +1,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 

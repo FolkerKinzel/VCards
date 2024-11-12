@@ -1,9 +1,10 @@
-﻿using FolkerKinzel.VCards.Models.Properties;
+﻿using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
-public class DataPropertyValueTests
+public class RawDataTests
 {
     [TestMethod]
     public void SwitchTest1()

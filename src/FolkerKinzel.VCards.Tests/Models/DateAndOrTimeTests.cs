@@ -1,7 +1,8 @@
 ﻿using System.Globalization;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class DateAndOrTimeTests

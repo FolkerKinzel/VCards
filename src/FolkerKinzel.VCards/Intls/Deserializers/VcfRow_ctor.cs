@@ -1,5 +1,5 @@
 using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
@@ -54,5 +54,4 @@ internal sealed partial class VcfRow
             this.Parameters = new ParameterSection();
         }
     }
-
 }

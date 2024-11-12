@@ -1,20 +1,10 @@
-
-/* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
-Before:
-using FolkerKinzel.VCards.Enums;
-After:
-using FolkerKinzel;
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards.Enums;
-*/
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties;
 
-namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates information to specify the components of the gender and 
 /// gender identity of the object the <see cref="VCard"/> represents.</summary>

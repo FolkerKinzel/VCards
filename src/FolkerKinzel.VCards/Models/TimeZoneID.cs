@@ -3,10 +3,10 @@ using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
-namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Represents the standardized name of a time zone.</summary>
 /// <seealso cref="Models.Properties.TimeZoneProperty"/>

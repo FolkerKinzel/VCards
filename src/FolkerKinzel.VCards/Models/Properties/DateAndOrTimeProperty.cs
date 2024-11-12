@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Models.Properties;
@@ -113,15 +113,15 @@ public abstract class DateAndOrTimeProperty
                                 group);
 
     /// <summary>
-    /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a <see cref="DateTime"/> or
+    /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a <see cref="System.DateTime"/> or
     /// <see cref="DateTimeOffset"/> value.
     /// </summary>
-    /// <param name="dateTime">A <see cref="DateTime"/> or <see cref="DateTimeOffset"/> value.</param>
+    /// <param name="dateTime">A <see cref="System.DateTime"/> or <see cref="DateTimeOffset"/> value.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
-    /// <remarks><see cref="DateTime"/> has an implicit conversion to <see cref="DateTimeOffset"/>.
+    /// <remarks><see cref="System.DateTime"/> has an implicit conversion to <see cref="DateTimeOffset"/>.
     /// </remarks>
     public static DateAndOrTimeProperty FromDateTime(DateTimeOffset dateTime,
                                                      string? group = null)

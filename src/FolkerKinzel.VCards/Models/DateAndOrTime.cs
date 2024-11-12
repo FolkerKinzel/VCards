@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models.Properties;
 using OneOf;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
 /// Encapsulates data that describes a date and/or a time.
@@ -89,7 +89,7 @@ public sealed partial class DateAndOrTime
     /// <see cref="System.TimeOnly"/>.
     /// </para>
     /// <para>
-    /// The <see cref="System.DateOnly.Year"/> part of <paramref name="value"/> may
+    /// The <see cref="DateOnly.Year"/> part of <paramref name="value"/> may
     /// be irrelevant. Check this with the extension method <see cref="DateOnlyExtension.HasYear"/>.
     /// </para>
     /// </remarks>

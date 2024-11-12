@@ -2,9 +2,9 @@ using System.Globalization;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
-namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates information about the geographical position.</summary>
 public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>

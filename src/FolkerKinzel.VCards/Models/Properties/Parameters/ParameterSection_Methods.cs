@@ -1,7 +1,7 @@
 using System.Collections;
 using FolkerKinzel.VCards.Intls;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models.Properties.Parameters;
 
 public sealed partial class ParameterSection
 {

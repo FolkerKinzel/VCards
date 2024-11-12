@@ -5,9 +5,10 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards;
 
@@ -26,7 +27,7 @@ public sealed partial class VCard
     {
         if (setContactID)
         {
-            ContactID = new ContactIDProperty(VCards.ContactID.Create());
+            ContactID = new ContactIDProperty(Models.ContactID.Create());
         }
 
         if (setCreated)

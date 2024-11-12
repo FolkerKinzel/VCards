@@ -2,7 +2,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 

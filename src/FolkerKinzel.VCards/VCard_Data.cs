@@ -3,8 +3,9 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards;
 
@@ -889,7 +890,7 @@ public sealed partial class VCard
                 Debug.Assert(!prop.IsEmpty);
 
                 RelationProperty relProp = Uri.TryCreate(text.Trim(), UriKind.Absolute, out Uri? uri)
-                    ? new RelationProperty(Relation.Create(VCards.ContactID.Create(uri)),  prop.Group)
+                    ? new RelationProperty(Relation.Create(Models.ContactID.Create(uri)),  prop.Group)
                     : new RelationProperty(Relation.Create(new VCard(setContactID: true, setCreated: false) 
                                                           { 
                                                             DisplayNames = new TextProperty(text) 

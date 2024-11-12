@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class NonStandardBuilderTests
@@ -24,7 +26,7 @@ public class NonStandardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create(setContactID: false)
-            .NonStandards.Edit((p, d) => d, new Models.NonStandardProperty("X-TEST", "The value"))
+            .NonStandards.Edit((p, d) => d, new NonStandardProperty("X-TEST", "The value"))
             .VCard;
 
         Assert.IsNotNull(vc.NonStandards);

@@ -1,9 +1,10 @@
 ﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Models;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
-public class GenderInfoTests
+public class GenderTests
 {
     [DataTestMethod]
     [DataRow(null, null, true)]

@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
 
@@ -23,7 +24,6 @@ public class AddressOrderConverterTests
         AddressOrder? order = AddressOrderConverter.ParseAddress(addr.Value);
         Assert.AreEqual((AddressOrder?)expected, order);
     }
-
 
     [DataTestMethod]
     [DataRow("en-US", AddressOrder.Usa)]

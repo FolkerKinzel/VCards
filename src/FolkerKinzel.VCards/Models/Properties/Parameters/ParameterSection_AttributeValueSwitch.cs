@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models.Properties.Parameters;
 
 public sealed partial class ParameterSection
 {

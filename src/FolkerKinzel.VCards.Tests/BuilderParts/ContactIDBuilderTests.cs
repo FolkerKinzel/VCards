@@ -1,4 +1,7 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class ContactIDBuilderTests
@@ -24,7 +27,7 @@ public class ContactIDBuilderTests
     {
         VCard vc = VCardBuilder
             .Create(setContactID: false)
-            .ContactID.Edit((p, d) => new Models.ContactIDProperty(d), ContactID.Create())
+            .ContactID.Edit((p, d) => new ContactIDProperty(d), ContactID.Create())
             .VCard;
 
         Assert.IsNotNull(vc.ContactID);

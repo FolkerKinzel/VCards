@@ -8,7 +8,7 @@ using FolkerKinzel.VCards.Syncs;
 using OneOf;
 using static FolkerKinzel.VCards.VCard;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models.Properties.Parameters;
 
 public sealed partial class ParameterSection
 {

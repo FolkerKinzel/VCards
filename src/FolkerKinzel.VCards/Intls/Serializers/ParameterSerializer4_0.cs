@@ -3,9 +3,10 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Syncs;
-using ParaKey = FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.ParameterKey;
+using ParaKey = FolkerKinzel.VCards.Models.Properties.Parameters.ParameterSection.ParameterKey;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
@@ -53,7 +54,6 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         => EnumValueCollector.Collect(serializer.ParaSection.RelationType,
                                       serializer._stringCollectionList);
     #endregion
-
 
     #region Build
 
@@ -868,7 +868,14 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendGeo()
     {
+
+/* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
+Before:
         VCards.GeoCoordinate? geo = ParaSection.GeoPosition;
+After:
+        GeoCoordinate? geo = ParaSection.GeoPosition;
+*/
+        VCards.Models.GeoCoordinate? geo = ParaSection.GeoPosition;
 
         if (geo is null)
         {

@@ -2,10 +2,10 @@ using System.ComponentModel;
 using FolkerKinzel.VCards.Models.Properties;
 using OneOf;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
-/// Encapsulates external data in a <see cref="VCards.VCard"/>.
+/// Encapsulates external data in a <see cref="VCard"/>.
 /// This can be either an array of <see cref="byte"/>s,
 /// an absolute <see cref="System.Uri"/>, or a <see cref="string"/>.
 /// </summary>

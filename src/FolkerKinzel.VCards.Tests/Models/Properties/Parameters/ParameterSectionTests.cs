@@ -1,12 +1,13 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Syncs;
 using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+namespace FolkerKinzel.VCards.Models.Properties.Parameters.Tests;
 
 [TestClass]
 public class ParameterSectionTests

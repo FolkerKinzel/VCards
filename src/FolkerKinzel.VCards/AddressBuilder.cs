@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Enums;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards;
 

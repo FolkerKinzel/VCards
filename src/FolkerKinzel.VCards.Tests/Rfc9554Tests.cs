@@ -1,6 +1,8 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -257,7 +259,7 @@ public class Rfc9554Tests
 
         vc = Vcf.Parse(v4Conserved)[0];
 
-        VCards.Models.PropertyParts.ParameterSection? par = vc.DisplayNames?.First()?.Parameters;
+        ParameterSection? par = vc.DisplayNames?.First()?.Parameters;
         Assert.IsNotNull(par);
         Assert.IsTrue(par.Derived);
 
@@ -323,7 +325,7 @@ public class Rfc9554Tests
 
         vc = Vcf.Parse(v4)[0];
 
-        VCards.Models.PropertyParts.ParameterSection? par = vc.Messengers?.First()?.Parameters;
+        ParameterSection? par = vc.Messengers?.First()?.Parameters;
         Assert.IsNotNull(par);
         Assert.AreEqual(serviceType, par.ServiceType);
         Assert.AreEqual(userName, par.UserName);
@@ -386,7 +388,7 @@ public class Rfc9554Tests
 
         vc = Vcf.Parse(v4)[0];
 
-        VCards.Models.PropertyParts.ParameterSection? par = vc.NameViews?.First()?.Parameters;
+        ParameterSection? par = vc.NameViews?.First()?.Parameters;
         Assert.IsNotNull(par);
         Assert.IsTrue(par.Phonetic.HasValue);
         Assert.IsNotNull(par.Script);
@@ -421,7 +423,7 @@ public class Rfc9554Tests
 
         vc = Vcf.Parse(v4)[0];
 
-        VCards.Models.PropertyParts.ParameterSection? par = vc.Addresses?.First()?.Parameters;
+        ParameterSection? par = vc.Addresses?.First()?.Parameters;
         Assert.IsNotNull(par);
         Assert.IsTrue(par.Phonetic.HasValue);
         Assert.IsNotNull(par.Script);

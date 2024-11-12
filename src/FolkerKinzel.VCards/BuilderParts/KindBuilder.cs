@@ -2,8 +2,8 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -47,7 +47,7 @@ public readonly struct KindBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TData>(Func<KindProperty?, TData, KindProperty?> func, TData data)
     {
-        var prop = Builder.VCard.Kind;
+        KindProperty? prop = Builder.VCard.Kind;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Kind = func(prop, data);
         return _builder;
@@ -68,7 +68,7 @@ public readonly struct KindBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<KindProperty?, KindProperty?> func)
     {
-        var prop = Builder.VCard.Kind;
+        KindProperty? prop = Builder.VCard.Kind;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Kind = func(prop);
         return _builder;
@@ -93,7 +93,7 @@ public readonly struct KindBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        var vc = Builder.VCard;
+        VCard vc = Builder.VCard;
         var property = new KindProperty(value, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 

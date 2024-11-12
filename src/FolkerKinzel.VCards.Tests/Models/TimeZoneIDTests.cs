@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Enums;
 
-namespace FolkerKinzel.VCards.Tests;
+namespace FolkerKinzel.VCards.Models.Tests;
 
 internal class TimeZoneIDConverterMock(bool success) : ITimeZoneIDConverter
 {

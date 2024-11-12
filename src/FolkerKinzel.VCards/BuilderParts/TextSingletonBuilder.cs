@@ -2,8 +2,8 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Models.PropertyParts;
 using FolkerKinzel.VCards.Resources;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -75,7 +75,7 @@ public readonly struct TextSingletonBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<TextProperty?, TextProperty?> func)
     {
-        var prop = Builder.VCard.Get<TextProperty?>(_prop);
+        TextProperty? prop = Builder.VCard.Get<TextProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Set(_prop, func(prop));
         return _builder;
@@ -100,7 +100,7 @@ public readonly struct TextSingletonBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        var vc = Builder.VCard;
+        VCard vc = Builder.VCard;
         var property = new TextProperty(value, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 

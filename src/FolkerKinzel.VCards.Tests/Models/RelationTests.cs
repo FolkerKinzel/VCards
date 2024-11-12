@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+﻿using FolkerKinzel.VCards.Models;
+
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class RelationTests

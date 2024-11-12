@@ -1,10 +1,11 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts.Tests;
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class AddressTests
@@ -58,7 +59,7 @@ public class AddressTests
     }
 
     [TestMethod]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
         "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
         "CA1829:Use Length/Count property instead of Count() when available", Justification = "Test")]

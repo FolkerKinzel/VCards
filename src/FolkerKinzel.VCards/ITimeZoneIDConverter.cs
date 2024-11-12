@@ -1,3 +1,5 @@
+using FolkerKinzel.VCards.Models;
+
 namespace FolkerKinzel.VCards;
 
 /// <summary>Defines a method that converts a <see cref="string" />, which represents

@@ -4,7 +4,7 @@ using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Syncs;
 
-namespace FolkerKinzel.VCards.Models.PropertyParts;
+namespace FolkerKinzel.VCards.Models.Properties.Parameters;
 
 /// <summary>Encapsulates the information about the parameters of a vCard property.</summary>
 /// <threadsafety static="true" instance="false" />
@@ -285,7 +285,7 @@ public sealed partial class ParameterSection
     /// </remarks>
     public GeoCoordinate? GeoPosition
     {
-        get => Get<VCards.GeoCoordinate?>(VCdParam.GeoPosition);
+        get => Get<GeoCoordinate?>(VCdParam.GeoPosition);
         set => Set(VCdParam.GeoPosition, value);
     }
 

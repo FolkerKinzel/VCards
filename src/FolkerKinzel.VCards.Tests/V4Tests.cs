@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

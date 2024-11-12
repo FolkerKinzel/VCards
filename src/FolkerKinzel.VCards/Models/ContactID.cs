@@ -1,21 +1,8 @@
-﻿using System;
-
-/* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
-Before:
-using FolkerKinzel.VCards.Intls;
-After:
-using FolkerKinzel;
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards;
-using FolkerKinzel.VCards.Intls;
-*/
-using FolkerKinzel.VCards.Intls;
+﻿using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Resources;
-using OneOf;
 
-namespace FolkerKinzel.VCards;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
 /// Encapsulates a globally unique identifier corresponding to the entity associated 
