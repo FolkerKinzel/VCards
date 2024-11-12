@@ -868,14 +868,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendGeo()
     {
-
-/* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
-Before:
-        VCards.GeoCoordinate? geo = ParaSection.GeoPosition;
-After:
         GeoCoordinate? geo = ParaSection.GeoPosition;
-*/
-        VCards.Models.GeoCoordinate? geo = ParaSection.GeoPosition;
 
         if (geo is null)
         {

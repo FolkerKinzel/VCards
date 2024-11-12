@@ -53,13 +53,6 @@ public class AddressesBuilderTests
 
         VCard vc = builder.VCard;
 
-
-/* Unmerged change from project 'FolkerKinzel.VCards.Tests (net48)'
-Before:
-        IEnumerable<Models.AddressProperty?>? property = vc.Addresses;
-After:
-        IEnumerable<Models.Properties.AddressProperty?>? property = vc.Addresses;
-*/
         IEnumerable<AddressProperty?>? property = vc.Addresses;
 
         Assert.IsNotNull(property);
@@ -153,15 +146,6 @@ After:
             .Addresses.AttachLabels(AddressFormatter.Default)
             .VCard;
 
-
-/* Unmerged change from project 'FolkerKinzel.VCards.Tests (net48)'
-Before:
-        IEnumerable<Models.AddressProperty?>? adr = vc.Addresses;
-        Assert.IsNotNull(adr);
-After:
-        IEnumerable<Models.Properties.AddressProperty?>? adr = vc.Addresses;
-        Assert.IsNotNull(adr);
-*/
         IEnumerable<AddressProperty?>? adr = vc.Addresses;
         Assert.IsNotNull(adr);
         Assert.AreEqual(3, adr.Count());
