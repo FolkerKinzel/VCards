@@ -18,7 +18,6 @@ public class V2Tests
         Assert.AreNotEqual(0, vcard.Count);
     }
 
-
     [TestMethod]
     public void ParseOutlook()
     {
@@ -40,7 +39,6 @@ public class V2Tests
             Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"), VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteNonStandardProperties));
     }
 
-
     [TestMethod]
     public void WriteEmptyVCard()
     {
@@ -59,7 +57,6 @@ public class V2Tests
         Assert.AreEqual(vcard.NameViews!.Count(), 1);
         Assert.IsNotNull(vcard.NameViews!.First());
     }
-
 
     [TestMethod]
     public void TestLineWrapping()
@@ -112,7 +109,6 @@ public class V2Tests
         }
     }
 
-
     [TestMethod]
     public void SerializeVCard()
     {
@@ -128,7 +124,6 @@ public class V2Tests
         VCard vcard = list[0];
         Assert.AreEqual(VCdVersion.V2_1, vcard.Version);
     }
-
 
     [TestMethod]
     public void MoreThanOneAddressTest1()
@@ -408,7 +403,6 @@ public class V2Tests
 
     }
 
-
     [TestMethod]
     public void ParseCroppedEmbeddedVCardTest1()
     {
@@ -488,7 +482,6 @@ public class V2Tests
         //string parsed = vcs[0].ToString();
     }
 
-
     [TestMethod]
     public void ParseCroppedBase64Test1()
     {
@@ -549,7 +542,6 @@ public class V2Tests
         StringAssert.Contains(vcf, "BDAY", StringComparison.Ordinal);
     }
 
-
     [TestMethod]
     public void BirthdayTest2()
     {
@@ -594,7 +586,6 @@ public class V2Tests
         Assert.IsNotNull(vc.Photos);
         Assert.AreEqual("http://käse.com", vc.Photos.First()!.Value?.Uri?.OriginalString);
     }
-
 
     [TestMethod]
     public void EmptyImppTest1()
