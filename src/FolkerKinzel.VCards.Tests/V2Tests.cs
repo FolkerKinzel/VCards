@@ -402,7 +402,6 @@ public class V2Tests
 
     }
 
-
     [TestMethod]
     public void ParseCroppedEmbeddedVCardTest1()
     {
@@ -482,7 +481,6 @@ public class V2Tests
         //string parsed = vcs[0].ToString();
     }
 
-
     [TestMethod]
     public void ParseCroppedBase64Test1()
     {
@@ -508,21 +506,23 @@ public class V2Tests
     {
         VCard vc = VCardBuilder
             .Create()
-            .GenderViews.Add(Sex.Female)
+            .GenderViews.Add(Sex.Female,
+                             group: vc => "GROUP")
             .VCard;
 
         string serialized = vc.ToVcfString(VCdVersion.V2_1, options: Opts.All);
 
-        StringAssert.Contains(serialized, "X-GENDER:Female");
-        StringAssert.Contains(serialized, "X-WAB-GENDER:1");
+        StringAssert.Contains(serialized, "GROUP.X-GENDER:Female");
+        StringAssert.Contains(serialized, "GROUP.X-WAB-GENDER:1");
 
         vc = Vcf.Parse(serialized)[0];
 
         Assert.IsNotNull(vc);
         Assert.IsNotNull(vc.GenderViews);
         Assert.AreEqual(1, vc.GenderViews.Count());
-        Assert.AreEqual(Sex.Female, vc.GenderViews.First()!.Value.Sex);
-
+        GenderProperty prop = vc.GenderViews.First()!;
+        Assert.AreEqual(Sex.Female, prop.Value.Sex);
+        Assert.AreEqual("GROUP", prop.Group);
     }
 
     [TestMethod]

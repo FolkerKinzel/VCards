@@ -253,12 +253,19 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if (GenderViews is null && !vcfRow.Value.IsEmpty)
+                    else if (GenderViews is null)
                     {
                         ReadOnlySpan<char> valSpan = vcfRow.Value.Span.TrimStart();
-                        GenderViews = !valSpan.IsEmpty && char.ToUpperInvariant(valSpan[0]) == 'F'
-                            ? new GenderProperty(Enums.Sex.Female, group: vcfRow.Group)
-                            : new GenderProperty(Enums.Sex.Male, group: vcfRow.Group);
+
+                        if (!valSpan.IsEmpty)
+                        {
+                            GenderProperty genderProp = char.ToUpperInvariant(valSpan[0]) == 'F'
+                                ? new GenderProperty(Sex.Female, group: vcfRow.Group)
+                                : new GenderProperty(Sex.Male, group: vcfRow.Group);
+                            genderProp.Parameters.Assign(vcfRow.Parameters);
+
+                            GenderViews = genderProp;
+                        }
                     }
                     break;
                 case PropKeys.NonStandard.X_WAB_GENDER:
@@ -266,11 +273,14 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else
+                    else if(GenderViews is null && !vcfRow.Value.IsEmpty)
                     {
-                        GenderViews ??= vcfRow.Value.Span.Contains('1')
+                        GenderProperty genderProp = vcfRow.Value.Span.Contains('1')
                                             ? new GenderProperty(Enums.Sex.Female, group: vcfRow.Group)
                                             : new GenderProperty(Enums.Sex.Male, group: vcfRow.Group);
+                        genderProp.Parameters.Assign(vcfRow.Parameters);
+
+                        GenderViews = genderProp;
                     }
                     break;
                 case PropKeys.IMPP:
