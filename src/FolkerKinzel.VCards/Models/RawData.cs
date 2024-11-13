@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using FolkerKinzel.VCards.Models.Properties;
-using OneOf;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -12,34 +11,31 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="DataProperty"/>
 public sealed partial class RawData
 {
-    private readonly OneOf<byte[], Uri, string> _oneOf;
-
-    internal RawData(OneOf<byte[], Uri, string> oneOf)
-        => _oneOf = oneOf;
+    internal RawData(object obj) => Object = obj;
 
     /// <summary>
     /// Gets the encapsulated <see cref="byte"/> array,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
-    public byte[]? Bytes => IsBytes ? AsBytes : null;
+    public byte[]? Bytes => Object as byte[];
 
     /// <summary>
     /// Gets the encapsulated <see cref="System.Uri"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <value>An absolute <see cref="System.Uri"/> or <c>null</c>.</value>
-    public Uri? Uri => IsUri ? AsUri : null;
+    public Uri? Uri => Object as Uri;
 
     /// <summary>
     /// Gets the encapsulated <see cref="string"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
-    public string? String => IsString ? AsString : null;
+    public string? String => Object as string;
 
     /// <summary>
     /// Gets the encapsulated value.
     /// </summary>
-    public object Object => this._oneOf.Value;
+    public object Object { get; }
 
     [Obsolete("Use Object instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -65,7 +61,41 @@ public sealed partial class RawData
     public void Switch(Action<byte[]> bytesAction,
                        Action<Uri> uriAction,
                        Action<string> stringAction)
-        => _oneOf.Switch(bytesAction, uriAction, stringAction);
+    {
+        if (Object is byte[] bytes)
+        {
+            if (bytesAction is null)
+            {
+                throw new InvalidOperationException();
+            }
+            else
+            {
+                bytesAction(bytes);
+            }
+        }
+        else if (Object is Uri uri)
+        {
+            if (uriAction is null)
+            {
+                throw new InvalidOperationException();
+            }
+            else
+            {
+                uriAction(uri);
+            }
+        }
+        else
+        {
+            if (stringAction is null)
+            {
+                throw new InvalidOperationException();
+            }
+            else
+            {
+                stringAction((string)Object);
+            }
+        }
+    }
 
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/>.
@@ -85,27 +115,20 @@ public sealed partial class RawData
     public TResult Convert<TResult>(Func<byte[], TResult>? bytesFunc,
                                     Func<Uri, TResult> uriFunc,
                                     Func<string, TResult> stringFunc)
-        => _oneOf.Match(bytesFunc, uriFunc, stringFunc);
+    {
+        return Object switch
+        {
+            byte[] bytes => bytesFunc is null ? throw new InvalidOperationException() : bytesFunc(bytes),
+            Uri uri => uriFunc is null ? throw new InvalidOperationException() : uriFunc(uri),
+            _ => stringFunc is null ? throw new InvalidOperationException() : stringFunc((string)Object)
+        };
+    }
 
     /// <inheritdoc/>
     public override string ToString()
-     => Convert
-        (
-         bytes => $"{bytes}: {bytes.Length} Bytes",
-         uri => _oneOf.ToString(),
-         str => _oneOf.ToString()
-        );
+        => Object is byte[] bytes
+            ? $"{bytes}: {bytes.Length} Bytes"
+            : Object.ToString() ?? string.Empty;
 
-    private bool IsBytes => _oneOf.IsT0;
-
-    private byte[] AsBytes => _oneOf.AsT0;
-
-    private bool IsUri => _oneOf.IsT1;
-
-    private Uri AsUri => _oneOf.AsT1;
-
-    private bool IsString => _oneOf.IsT2;
-
-    private string AsString => _oneOf.AsT2;
 }
 
