@@ -523,33 +523,35 @@ internal abstract class VcfSerializer : IDisposable
 
             if (Options.HasFlag(Opts.WriteXExtensions))
             {
-                BuildAnniversary(dto, VCard.PropKeys.NonStandard.X_ANNIVERSARY, prop.Group);
+                BuildAnniversary(dto, VCard.PropKeys.NonStandard.X_ANNIVERSARY, prop);
             }
 
             if (Options.HasFlag(Opts.WriteEvolutionExtensions))
             {
-                BuildAnniversary(dto, VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY, prop.Group);
+                BuildAnniversary(dto, VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY, prop);
             }
 
             if (Options.HasFlag(Opts.WriteKAddressbookExtensions))
             {
-                BuildAnniversary(dto, VcfSerializer.X_KADDRESSBOOK_X_Anniversary, prop.Group);
+                BuildAnniversary(dto, VcfSerializer.X_KADDRESSBOOK_X_Anniversary, prop);
             }
 
             if (Options.HasFlag(Opts.WriteWabExtensions))
             {
-                BuildAnniversary(dto, VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY, prop.Group);
+                BuildAnniversary(dto, VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY, prop);
             }
         }
     }
 
-    private void BuildAnniversary(DateOnly dto, string propKey, string? group)
+    private void BuildAnniversary(DateOnly dto, string propKey, VCardProperty prop)
     {
         var xAnniversary = new NonStandardProperty(
             propKey,
             string.Format(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}",
                           dto.Year, dto.Month, dto.Day),
-            group);
+            prop.Group);
+
+        xAnniversary.Parameters.Assign(prop.Parameters);
 
         BuildProperty(propKey, xAnniversary);
     }
@@ -611,9 +613,9 @@ internal abstract class VcfSerializer : IDisposable
     {
         Debug.Assert(value is not null);
 
-        if (value.FirstOrDefault(x => x?.Value.Sex is not null) is GenderProperty pref)
+        if (value.FirstOrDefault(x => x?.Value.Sex is not null) is GenderProperty genderProp)
         {
-            Sex sex = pref.Value.Sex!.Value;
+            Sex sex = genderProp.Value.Sex!.Value;
 
             if (sex is not Sex.Male and not Sex.Female)
             {
@@ -626,7 +628,9 @@ internal abstract class VcfSerializer : IDisposable
 
                 var xGender = new NonStandardProperty(
                     propKey,
-                    sex == Sex.Male ? "Male" : "Female", pref.Group);
+                    sex == Sex.Male ? "Male" : "Female", genderProp.Group);
+
+                xGender.Parameters.Assign(genderProp.Parameters);
 
                 BuildProperty(propKey, xGender);
             }
@@ -635,11 +639,13 @@ internal abstract class VcfSerializer : IDisposable
             {
                 string propKey = VCard.PropKeys.NonStandard.X_WAB_GENDER;
 
-                var xGender = new NonStandardProperty(
+                var xWabGender = new NonStandardProperty(
                     propKey,
-                    sex == Sex.Male ? "2" : "1", pref.Group);
+                    sex == Sex.Male ? "2" : "1", genderProp.Group);
 
-                BuildProperty(propKey, xGender);
+                xWabGender.Parameters.Assign(genderProp.Parameters);
+
+                BuildProperty(propKey, xWabGender);
             }
         }
     }

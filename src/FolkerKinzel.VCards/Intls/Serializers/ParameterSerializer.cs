@@ -220,7 +220,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             case VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY:
             case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
             case VcfSerializer.X_KADDRESSBOOK_X_Anniversary:
-                // no parameters
+                AppendNonStandardParameters();
                 break;
 
             case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE:

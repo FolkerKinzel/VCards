@@ -514,21 +514,26 @@ public class V2Tests
     {
         VCard vc = VCardBuilder
             .Create()
-            .GenderViews.Add(Sex.Female)
+            .GenderViews.Add(Sex.Female, 
+                             parameters: p => p.NonStandard = new Dictionary<string, string> { { "X-TEST", "test"} },
+                             group: vc => "GROUP")
             .VCard;
 
         string serialized = vc.ToVcfString(VCdVersion.V2_1, options: Opts.All);
 
-        StringAssert.Contains(serialized, "X-GENDER:Female");
-        StringAssert.Contains(serialized, "X-WAB-GENDER:1");
+        StringAssert.Contains(serialized, "GROUP.X-GENDER;X-TEST=test:Female");
+        StringAssert.Contains(serialized, "GROUP.X-WAB-GENDER;X-TEST=test:1");
 
         vc = Vcf.Parse(serialized)[0];
 
         Assert.IsNotNull(vc);
         Assert.IsNotNull(vc.GenderViews);
         Assert.AreEqual(1, vc.GenderViews.Count());
-        Assert.AreEqual(Sex.Female, vc.GenderViews.First()!.Value.Sex);
 
+        GenderProperty prop = vc.GenderViews.First()!;
+        Assert.AreEqual(Sex.Female, prop.Value.Sex);
+        Assert.AreEqual("GROUP", prop.Group);
+        Assert.IsNotNull(prop.Parameters.NonStandard);
     }
 
     [TestMethod]
