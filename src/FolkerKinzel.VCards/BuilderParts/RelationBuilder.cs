@@ -221,6 +221,16 @@ public readonly struct RelationBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RelationBuilder"/> 
     /// to be able to chain calls.</returns>
+    /// 
+    /// <remarks>
+    /// <para>If <paramref name="text"/> represents a <see cref="Guid"/>, a <see cref="Relation"/> instance 
+    /// containing a <see cref="ContactID"/> instance with this <see cref="Guid"/> value will be created.</para>
+    /// <para>
+    /// The method adds an empty <see cref="RelationProperty"/> instance if <paramref name="text"/> is <c>null</c>,
+    /// or an empty <see cref="string"/>, or if it consists only of white space.
+    /// </para>
+    /// </remarks>
+    /// 
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
@@ -241,7 +251,7 @@ public readonly struct RelationBuilder
     /// <see cref="Uri"/> that represents a person or organization, to the specified property 
     /// of the <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="uri">An absolute <see cref="Uri"/> or <c>null</c>.</param>
+    /// <param name="uri">A <see cref="Uri"/>, or <c>null</c>.</param>
     /// <param name="relationType">Standardized description of the relationship with the person 
     /// or organization that the <paramref name="uri"/> represents.
     /// The <see cref="ParameterSection.RelationType"/> property of the added instance will be set to this 
@@ -255,6 +265,21 @@ public readonly struct RelationBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RelationBuilder"/> 
     /// to be able to chain calls.</returns>
+    /// 
+    /// <remarks>
+    /// <para>If <paramref name="uri"/> is an absolute <see cref="Uri"/>, a <see cref="Relation"/> instance containing a 
+    /// <see cref="ContactID"/> with a <see cref="Uri"/>
+    /// value will be created unless <paramref name="uri"/> is a valid "uuid" URN. In this case the <see cref="ContactID"/>
+    /// instance will encapsulate its <see cref="Guid"/> value.</para>
+    /// <para>
+    /// If <paramref name="uri"/> is a relative <see cref="Uri"/>, its <see cref="Uri.OriginalString"/> will be preserved
+    /// in a <see cref="ContactID"/> containing a <see cref="string"/> value.
+    /// </para>
+    /// <para>
+    /// The method adds an empty <see cref="RelationProperty"/> instance if <paramref name="uri"/> is <c>null</c>. 
+    /// </para>
+    /// </remarks>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

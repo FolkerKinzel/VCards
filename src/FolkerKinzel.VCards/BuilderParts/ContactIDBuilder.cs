@@ -129,9 +129,9 @@ public readonly struct ContactIDBuilder
 
     /// <summary>
     /// Sets the <see cref="VCard.ContactID"/> property to a <see cref="ContactIDProperty"/> instance that is newly 
-    /// initialized using a specified absolute <see cref="Uri"/>.
+    /// initialized using a specified <see cref="Uri"/>.
     /// </summary>
-    /// <param name="uri">An absolute <see cref="Uri" />, or <c>null</c>.</param>
+    /// <param name="uri">A <see cref="Uri" />, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
@@ -142,12 +142,16 @@ public readonly struct ContactIDBuilder
     /// be able to chain calls.</returns>
     /// 
     /// <remarks>
-    /// <para>If <paramref name="uri"/> is a valid "uuid" URN, a <see cref="ContactID"/> instance
-    /// with this <see cref="Guid"/> value will be created.</para>
+    /// <para>If <paramref name="uri"/> is an absolute <see cref="Uri"/>, a <see cref="ContactID"/> with a <see cref="Uri"/>
+    /// value will be created unless <paramref name="uri"/> is a valid "uuid" URN. In this case a <see cref="ContactID"/> instance
+    /// with a <see cref="Guid"/> value will be created.</para>
+    /// <para>
+    /// If <paramref name="uri"/> is a relative <see cref="Uri"/>, its <see cref="Uri.OriginalString"/> will be preserved
+    /// in a <see cref="ContactID"/> containing a <see cref="string"/> value.
+    /// </para>
     /// <para>
     /// The method sets <see cref="VCard.ContactID"/> to an empty <see cref="ContactIDProperty"/> instance if
-    /// <paramref name="uri"/> is <c>null</c>. If <paramref name="uri"/> is a relative <see cref="Uri"/>,
-    /// its <see cref="Uri.OriginalString"/> will be preserved.
+    /// <paramref name="uri"/> is <c>null</c>. 
     /// </para>
     /// </remarks>
     /// 
