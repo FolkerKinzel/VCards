@@ -72,7 +72,8 @@ public static class VCardExample
                      parameters: p => p.Language = "de-DE",
                      group: vc => vc.NewGroup())
                 .NameViews.ToDisplayNames(NameFormatter.Default)
-                .GenderViews.Add(Sex.Female)
+                .GenderViews.Add(Gender.Female)
+                .GramGenders.Add(Gram.Feminine, parameters: p => p.Language = "de")
                 .Organizations.Add("Millers Company", ["C#", "Webdesign"])
                 .Titles.Add("CEO")
                 .Photos.AddFile(photoFilePath)
