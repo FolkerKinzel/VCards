@@ -10,13 +10,11 @@ namespace FolkerKinzel.VCards.Models;
 /// </summary>
 public sealed class ContactID : IEquatable<ContactID>
 {
-    private ContactID(Guid guid)
-    {
-        Guid = guid;
-        Object = guid;
-    }
+    private readonly object? _object;
 
-    private ContactID(object value) => Object = value;
+    private ContactID(Guid guid) => Guid = guid;
+
+    private ContactID(object value) => _object = value;
 
     /// <summary>
     /// Creates a new <see cref="ContactID"/> instance from a newly
@@ -113,7 +111,7 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <summary>
     /// Gets the encapsulated value.
     /// </summary>
-    public object Object { get; }
+    public object Object => Guid.HasValue ? Guid : _object!;
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
@@ -197,7 +195,7 @@ public sealed class ContactID : IEquatable<ContactID>
     }
 
     /// <inheritdoc/>
-    public override string ToString() => $"{Object.GetType().FullName}: {Object}";
+    public override string ToString() => Guid.HasValue ? $"{typeof(Guid).FullName}: {Guid.Value}" : $"{Object.GetType().FullName}: {Object}";
 
     /// <inheritdoc/>
     public bool Equals(ContactID? other)
@@ -207,8 +205,8 @@ public sealed class ContactID : IEquatable<ContactID>
           && (Guid.HasValue
                      ? other.Guid.HasValue && Guid.Value.Equals(other.Guid.Value)
                      : Object is Uri uri
-                            ? other.Object is Uri otherUri && uri.Equals(otherUri) || other.Object is string && comp.Equals(other.String, ((Uri)Object).AbsoluteUri)
-            /* IsString */  : comp.Equals(String, other.String) || other.Object is Uri && comp.Equals(((Uri)other.Object).AbsoluteUri, String));
+                            ? uri.Equals(other.Uri) || comp.Equals(uri.AbsoluteUri, other.String)
+            /* IsString */  : comp.Equals(String, other.String) || comp.Equals(String, other.Uri?.AbsoluteUri));
     }
 
     /// <inheritdoc/>
