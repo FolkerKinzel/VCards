@@ -97,16 +97,16 @@ public class OrgPropertyTests
 
         var cloned = (VCard)vc.Clone();
 
-        var orgs = cloned.Organizations;
+        IEnumerable<OrgProperty?>? orgs = cloned.Organizations;
 
         Assert.IsNotNull (orgs);
         Assert.AreEqual(2, orgs.Count());
 
-        var clProp1 = orgs.FirstOrDefault(x => x.Value.OrganizationName == "1");
+        OrgProperty? clProp1 = orgs.FirstOrDefault(x => x?.Value.OrganizationName == "1");
         Assert.IsNotNull(clProp1);
         Assert.AreNotSame(prop1, clProp1);
 
-        var clProp2 = orgs.FirstOrDefault(x => x.Value.OrganizationName == "2");
+        OrgProperty? clProp2 = orgs.FirstOrDefault(x => x?.Value.OrganizationName == "2");
         Assert.IsNotNull(clProp2);
         Assert.AreNotSame(prop2, clProp2);
     }

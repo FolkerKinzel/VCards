@@ -85,6 +85,7 @@ and let it store as string[]
 
 ### 7.4.3
 - [x] Fix an issue that with `X-GENDER` and `X-WAB-GENDER` the parameters and the group name were not parsed.
+- [x] Dependency updates
 
 ### 7.4.2
 - [x] Fix issues with `RelationProperty` instances that contain `VCard` objects
