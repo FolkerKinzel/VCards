@@ -169,9 +169,7 @@ public readonly struct ContactIDBuilder
                    ? ContactID.Empty
                    : uri.IsAbsoluteUri
                       ? ContactID.Create(uri)
-                      : string.IsNullOrEmpty(uri.OriginalString)
-                          ? ContactID.Empty
-                          : ContactID.Create(uri.OriginalString);
+                      : ContactID.Create(uri.ToString());
     }
 
     /// <summary>

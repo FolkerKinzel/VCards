@@ -107,11 +107,7 @@ public abstract class VCardProperty : ICloneable
     {
         Debug.Assert(serializer is not null);
 
-        if (Parameters.Encoding != Enc.Base64)
-        {
-            Parameters.Encoding = null;
-        }
-
+        Parameters.Encoding = null;
         Parameters.CharSet = null;
     }
 

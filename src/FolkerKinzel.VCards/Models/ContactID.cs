@@ -126,7 +126,6 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <exception cref="InvalidOperationException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Switch(Action<Guid> guidAction,
                        Action<Uri> uriAction,
                        Action<string> stringAction)
@@ -181,7 +180,6 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <exception cref="InvalidOperationException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TResult Convert<TResult>(Func<Guid, TResult>? guidFunc,
                                     Func<Uri, TResult> uriFunc,
                                     Func<string, TResult> stringFunc)

@@ -108,7 +108,6 @@ public sealed class Relation
     /// <exception cref="InvalidOperationException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Switch(Action<VCard> vCardAction,
                        Action<ContactID> contactIDAction)
     {
@@ -146,7 +145,6 @@ public sealed class Relation
     /// <exception cref="InvalidOperationException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TResult Convert<TResult>(Func<VCard, TResult> vCardFunc,
                                     Func<ContactID, TResult> contactIDFunc)
         => Object is VCard vCard

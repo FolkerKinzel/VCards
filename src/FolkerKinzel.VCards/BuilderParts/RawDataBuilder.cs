@@ -4,10 +4,10 @@ using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -191,9 +191,6 @@ public readonly struct RawDataBuilder
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
     /// 
-    /// <exception cref="ArgumentNullException"><paramref name="filePath"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="filePath"/> is not a valid file path.</exception>
-    /// <exception cref="IOException">The file could not be loaded.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
     /// initialized using the default constructor.</exception>
     public VCardBuilder AddFile(string filePath,
@@ -201,12 +198,14 @@ public readonly struct RawDataBuilder
                                 Action<ParameterSection>? parameters = null,
                                 Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(DataProperty.FromFile(filePath, mimeType, group?.Invoke(_builder.VCard)),
-                                           _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
+        try
+        {
+            return AddRawData(RawData.FromFile(filePath, mimeType));
+        }
+        catch
+        {
+            return AddRawData(RawData.Empty, parameters, group);
+        }
     }
 
     /// <summary>
@@ -215,7 +214,7 @@ public readonly struct RawDataBuilder
     /// <see cref="VCardBuilder.VCard"/>.
     /// </summary>
     /// <param name="bytes">The <see cref="byte"/>s to embed or <c>null</c>.</param>
-    /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="bytes"/>
+    /// <param name="mediaType">The Internet Media Type ("MIME type") of the <paramref name="bytes"/>,
     /// or <c>null</c> for <c>application/octet-stream</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
@@ -229,26 +228,19 @@ public readonly struct RawDataBuilder
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
     /// initialized using the default constructor.</exception>
     public VCardBuilder AddBytes(byte[]? bytes,
-                                 string? mimeType = MimeString.OctetStream,
+                                 string? mediaType = null,
                                  Action<ParameterSection>? parameters = null,
                                  Func<VCard, string?>? group = null)
-    {
-        Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(DataProperty.FromBytes(bytes,
-                                                                  mimeType,
-                                                                  group?.Invoke(_builder.VCard)),
-                                           _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
-    }
+        => bytes is null
+            ? AddRawData(RawData.Empty)
+            : AddRawData(RawData.FromBytes(bytes, mediaType ?? MimeString.OctetStream));
 
     /// <summary>
     /// Adds a <see cref="DataProperty"/> instance, which is newly initialized using the specified text,
     /// to the specified property of the <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="passWord">The text to embed or <c>null</c>.</param>
-    /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="passWord"/>
+    /// <param name="text">The text to embed, or <c>null</c>.</param>
+    /// <param name="mediaType">The Internet Media Type ("MIME type") of the <paramref name="text"/>,
     /// or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
@@ -266,28 +258,20 @@ public readonly struct RawDataBuilder
     /// <seealso cref="VCard.Keys"/>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
     /// initialized using the default constructor.</exception>
-    public VCardBuilder AddText(string? passWord,
-                                string? mimeType = null,
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public VCardBuilder AddText(string? text,
+                                string? mediaType = null,
                                 Action<ParameterSection>? parameters = null,
                                 Func<VCard, string?>? group = null)
-    {
-        Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(DataProperty.FromText(passWord,
-                                                                 mimeType,
-                                                                 group?.Invoke(_builder.VCard)),
-                                           _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
-    }
+        => AddRawData(RawData.FromText(text, mediaType), parameters, group);
 
     /// <summary>
-    /// Adds a <see cref="DataProperty"/> instance, which is newly initialized from an absolute 
+    /// Adds a <see cref="DataProperty"/> instance, which is newly initialized from a
     /// <see cref="Uri"/> that references external data, to the specified property of the 
     /// <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="uri">An absolute <see cref="Uri"/> or <c>null</c>.</param>
-    /// <param name="mimeType">The Internet Media Type ("MIME type") of the 
+    /// <param name="uri">A <see cref="Uri"/>, or <c>null</c>.</param>
+    /// <param name="mediaType">The Internet Media Type ("MIME type") of the 
     /// data the <paramref name="uri"/> points to, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
@@ -298,19 +282,44 @@ public readonly struct RawDataBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
     /// to be able to chain calls.</returns>
-    /// <exception cref="ArgumentException"><paramref name="uri"/> is neither <c>null</c> nor an absolute 
-    /// <see cref="Uri"/>.</exception>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder AddUri(Uri? uri,
-                               string? mimeType = null,
+                               string? mediaType = null,
                                Action<ParameterSection>? parameters = null,
                                Func<VCard, string?>? group = null)
+        => uri is null
+            ? AddRawData(RawData.Empty, parameters, group)
+            : uri.IsAbsoluteUri
+                ? AddRawData(RawData.FromUri(uri, mediaType), parameters, group)
+                : AddRawData(RawData.FromText(uri.ToString(), mediaType), parameters, group);
+
+    /// <summary>
+    /// Adds a <see cref="DataProperty"/> instance, which is newly initialized with a
+    /// <see cref="RawData"/> instance, to the specified property of the 
+    /// <see cref="VCardBuilder.VCard"/>.
+    /// </summary>
+    /// <param name="data">A <see cref="RawData"/> instance, or <c>null</c>.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is called
+    /// with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
+    /// to be able to chain calls.</returns>
+    /// 
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder AddRawData(RawData? data,
+                                   Action<ParameterSection>? parameters = null,
+                                   Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(DataProperty.FromUri(uri,
-                                                                mimeType,
-                                                                group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new DataProperty(data ?? RawData.Empty,
+                                                            group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
                                            parameters)
                           );

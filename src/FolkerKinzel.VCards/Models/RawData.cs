@@ -165,11 +165,11 @@ public sealed class RawData
 
             return FromBytes(data.AsT1, mediaType);
         }
-                
+
         return Empty;
     }
 
-    private static RawData Empty { get; } = new("", null);
+    internal static RawData Empty { get; } = new("", null);
 
     /// <summary>
     /// <c>true</c> if the instance doesn't contain any data, otherwise <c>false</c>.
@@ -214,10 +214,10 @@ public sealed class RawData
     /// the data the <see cref="System.Uri"/> references.
     /// </remarks>
     public string GetFileTypeExtension()
-        => MediaType is not null 
+        => MediaType is not null
             ? MimeString.ToFileTypeExtension(MediaType)
-            : Object is Uri uri 
-                ? UriConverter.GetFileTypeExtensionFromUri(uri) 
+            : Object is Uri uri
+                ? UriConverter.GetFileTypeExtensionFromUri(uri)
                 : ".txt";
 
     /// <summary>
@@ -225,51 +225,58 @@ public sealed class RawData
     /// encapsulated value.
     /// </summary>
     /// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
-    /// is an array of <see cref="byte"/>s.</param>
+    /// is an array of <see cref="byte"/>s, or <c>null</c>.</param>
     /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.Uri"/>.</param>
+    /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
     /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="string"/>.</param>
-    /// <exception cref="InvalidOperationException">
-    /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
-    /// </exception>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Switch(Action<byte[]> bytesAction,
-                       Action<Uri> uriAction,
-                       Action<string> stringAction)
+    /// value is a <see cref="string"/>, or <c>null</c>.</param>
+    /// 
+    public void Switch(Action<byte[]>? bytesAction,
+                       Action<Uri>? uriAction,
+                       Action<string>? stringAction)
     {
         if (Object is byte[] bytes)
         {
-            if (bytesAction is null)
-            {
-                throw new InvalidOperationException();
-            }
-            else
-            {
-                bytesAction(bytes);
-            }
+            bytesAction?.Invoke(bytes);
         }
         else if (Object is Uri uri)
         {
-            if (uriAction is null)
-            {
-                throw new InvalidOperationException();
-            }
-            else
-            {
-                uriAction(uri);
-            }
+            uriAction?.Invoke(uri);
         }
         else
         {
-            if (stringAction is null)
-            {
-                throw new InvalidOperationException();
-            }
-            else
-            {
-                stringAction((string)Object);
-            }
+            stringAction?.Invoke((string)Object);
+        }
+    }
+
+    /// <summary>
+    /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
+    /// encapsulated value and allows to pass an argument to the delegates.
+    /// </summary>
+    /// <typeparam name="TArg">Generic type parameter.</typeparam>
+    /// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
+    /// is an array of <see cref="byte"/>s, or <c>null</c>.</param>
+    /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
+    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="string"/>, or <c>null</c>.</param>
+    /// <param name="arg">An argument to pass to the delegates.</param>
+    public void Switch<TArg>(Action<byte[], TArg>? bytesAction,
+                       Action<Uri, TArg>? uriAction,
+                       Action<string, TArg>? stringAction,
+                       TArg arg)
+    {
+        if (Object is byte[] bytes)
+        {
+            bytesAction?.Invoke(bytes, arg);
+        }
+        else if (Object is Uri uri)
+        {
+            uriAction?.Invoke(uri, arg);
+        }
+        else
+        {
+            stringAction?.Invoke((string)Object, arg);
         }
     }
 
@@ -284,19 +291,18 @@ public sealed class RawData
     /// <param name="stringFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="string"/>.</param>
     /// <returns>A <typeparamref name="TResult"/>.</returns>
-    /// <exception cref="InvalidOperationException">
+    /// <exception cref="ArgumentNullException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TResult Convert<TResult>(Func<byte[], TResult>? bytesFunc,
                                     Func<Uri, TResult> uriFunc,
                                     Func<string, TResult> stringFunc)
     {
         return Object switch
         {
-            byte[] bytes => bytesFunc is null ? throw new InvalidOperationException() : bytesFunc(bytes),
-            Uri uri => uriFunc is null ? throw new InvalidOperationException() : uriFunc(uri),
-            _ => stringFunc is null ? throw new InvalidOperationException() : stringFunc((string)Object)
+            byte[] bytes => bytesFunc is null ? throw new ArgumentNullException(nameof(bytesFunc)) : bytesFunc(bytes),
+            Uri uri => uriFunc is null ? throw new ArgumentNullException(nameof(uriFunc)) : uriFunc(uri),
+            _ => stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc((string)Object)
         };
     }
 
