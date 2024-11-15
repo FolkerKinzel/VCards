@@ -899,7 +899,7 @@ public class VCardBuilderTests
         builder.Keys.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Keys = DataProperty.FromText("Password").Append(null);
+        builder.VCard.Keys = new DataProperty(RawData.FromText("Password")).Append(null);
         builder.Keys.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

@@ -82,7 +82,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
     /// <summary>Copy constructor.</summary>
     /// <param name="prop">The<see cref="DataProperty" /> object to clone.</param>
-    private DataProperty(DataProperty prop) : base(prop) { Value = prop.Value; }
+    private DataProperty(DataProperty prop) : base(prop) => Value = prop.Value;
 
     /// <summary>
     /// Initializes a new <see cref="DataProperty"/> instance with a specified
@@ -112,7 +112,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
         if (Parameters.Encoding == Enc.Base64)
         {
-            Value = RawData.FromBytes(Base64Helper.GetBytesOrNull(vcfRow.Value.Span));
+            Value = RawData.FromBytes(Base64Helper.GetBytesOrNull(vcfRow.Value.Span) ?? []);
             return;
         }
 
@@ -128,14 +128,10 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
         {
             ReadOnlySpan<char> valueSpan = vcfRow.Value.Span;
 
-            Value = RawData.FromBytes
-                   (
-                     valueSpan.IsWhiteSpace()
-                            ? null
-                            : QuotedPrintable.DecodeData(valueSpan),
-                     Parameters.MediaType
-                     );
-
+            Value = valueSpan.IsWhiteSpace() 
+                ? RawData.FromBytes([])
+                : RawData.FromBytes(QuotedPrintable.DecodeData(valueSpan),
+                                    Parameters.MediaType);
             return;
         }
 
@@ -186,11 +182,6 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
     {
         base.PrepareForVcfSerialization(serializer);
 
-        if(IsEmpty)
-        {
-            return;
-        }
-
         if (Value.Object is byte[])
         {
             Parameters.ContentLocation = Loc.Inline;
@@ -218,6 +209,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
         else
         {
             Parameters.DataType = Data.Text;
+            Parameters.ContentLocation = Loc.Inline;
 
             if (serializer.Version == VCdVersion.V2_1 && Value.String.NeedsToBeQpEncoded())
             {
@@ -236,7 +228,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
         if (Value.Object is byte[] bytes)
         {
-            serializer.AppendBase64EncodedData(Value.Bytes);
+            serializer.AppendBase64EncodedData(bytes);
         }
         else if (Value.Object is Uri uri)
         {

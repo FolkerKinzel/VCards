@@ -5,20 +5,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Intls.Converters.Tests.StringArrayConverterTests.ToReadOnlyCollectionTest1")]
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Intls.Converters.Tests.StringArrayConverterTests.ToReadOnlyCollectionTest3")]
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Models.Tests.OrgPropertyTests.OrganizationPropertyTest1(System.String,System.String,System.String[])")]
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Models.Tests.OrgPropertyTests.OrganizationPropertyTest2(System.String,System.String,System.String,System.String[])")]
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Models.Tests.StringCollectionPropertyTests.StringCollectionPropertyTest1(System.String[],System.String,System.String[])")]
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Models.Tests.StringCollectionPropertyTests.StringCollectionPropertyTest2(System.String,System.String,System.String[])")]
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Models.Tests.StringCollectionPropertyTests.StringCollectionPropertyTest3(System.String,System.String,System.String[])")]
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Models.Tests.StringCollectionPropertyTests.ToStringTest1")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Models.Tests")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Intls.Converters.Tests")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.BuilderParts.Tests")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Intls.Formatters.Tests")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Extensions.Tests")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Models.Parameters.Tests")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Intls.Models.Tests")]
 [assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Formatters.Tests")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Models.Properties.Tests")]

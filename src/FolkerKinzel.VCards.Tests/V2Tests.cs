@@ -77,8 +77,8 @@ public class V2Tests
                 new(UNITEXT)
         ];
 
-        vcard.Keys = DataProperty.FromText(ASCIITEXT);
-        vcard.Photos = DataProperty.FromBytes(bytes, "image/jpeg");
+        vcard.Keys = new DataProperty(RawData.FromText(ASCIITEXT));
+        vcard.Photos = new DataProperty(RawData.FromBytes(bytes, "image/jpeg"));
 
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
@@ -294,7 +294,7 @@ public class V2Tests
     [TestMethod]
     public void EmbeddedBytesTest1()
     {
-        var vCard = new VCard { Photos = DataProperty.FromBytes(null) };
+        var vCard = new VCard { Photos = new DataProperty(RawData.FromBytes([])) };
 
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteEmptyProperties));
 
@@ -311,7 +311,7 @@ public class V2Tests
         {
             DisplayNames = new TextProperty("007"),
             Notes = new TextProperty("ÄÖÜ Veeeeeeeeeeeeeeeeeeeeeeeeeery veeeeeeeeeeeeeeeeeeeeeeeeeeeery looooooooooooooooooooooooooooooooong Quoted-Printable text"),
-            Photos = DataProperty.FromBytes(bytes)
+            Photos = new DataProperty(RawData.FromBytes(bytes))
         };
 
         var relProp = new RelationProperty(Relation.Create(agent));

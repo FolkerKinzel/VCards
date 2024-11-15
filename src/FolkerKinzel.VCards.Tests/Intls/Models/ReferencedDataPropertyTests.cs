@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
@@ -11,12 +12,12 @@ public class ReferencedDataPropertyTests
     public void CloneTest1()
     {
         Assert.IsTrue(Uri.TryCreate("http://folker.de/index.htm", UriKind.Absolute, out Uri? uri));
-        var prop1 = DataProperty.FromUri(uri);
+        var prop1 = new DataProperty(RawData.FromUri(uri));
         var prop2 = (DataProperty)prop1.Clone();
 
         Assert.IsNotNull(prop2);
-        Assert.IsInstanceOfType(prop1, typeof(ReferencedDataProperty));
-        Assert.IsInstanceOfType(prop2, typeof(ReferencedDataProperty));
+        Assert.IsInstanceOfType(prop1.Value.Object, typeof(Uri));
+        Assert.IsInstanceOfType(prop2.Value.Object, typeof(Uri));
         Assert.IsNotNull(prop1.Value);
         Assert.IsNotNull(prop2.Value);
         Assert.IsNotNull(prop1.Value!.Uri);
@@ -28,7 +29,7 @@ public class ReferencedDataPropertyTests
 
     [TestMethod]
     public void GetFileTypeExtensionTest1()
-        => Assert.AreEqual(".bin", DataProperty.FromUri(null).GetFileTypeExtension(), false);
+        => Assert.AreEqual(".htm", RawData.FromUri(new Uri("http://folker.de/", UriKind.Absolute)).GetFileTypeExtension(), false);
 
 
     [TestMethod]
@@ -36,15 +37,15 @@ public class ReferencedDataPropertyTests
     {
         Assert.IsTrue(Uri.TryCreate("http://folker.de/test.txt", UriKind.Absolute, out Uri? uri));
 
-        var prop = DataProperty.FromUri(uri, "image/png");
+        var prop = RawData.FromUri(uri, "image/png");
         Assert.AreEqual(".png", prop.GetFileTypeExtension());
 
-        prop = DataProperty.FromUri(uri);
+        prop = RawData.FromUri(uri);
         Assert.AreEqual(".txt", prop.GetFileTypeExtension());
     }
 
     [TestMethod]
-    public void ToStringTest1() => Assert.IsNotNull(DataProperty.FromUri(null).ToString());
+    public void ToStringTest1() => Assert.IsNotNull(new DataProperty(RawData.FromText("")).ToString());
 
 
     [TestMethod]
@@ -52,7 +53,7 @@ public class ReferencedDataPropertyTests
     {
         using var writer = new StringWriter();
         var serializer = new Vcf_3_0Serializer(writer, Opts.Default, null);
-        DataProperty.FromUri(null).AppendValue(serializer);
+        new DataProperty(RawData.FromText("")).AppendValue(serializer);
         Assert.AreEqual(0, serializer.Builder.Length);
     }
 
@@ -63,7 +64,7 @@ public class ReferencedDataPropertyTests
         using var writer = new StringWriter();
         var serializer = new Vcf_2_1Serializer(writer, Opts.Default, null);
 
-        var prop = DataProperty.FromUri(null);
+        var prop = new DataProperty(RawData.FromText(""));
         prop.Parameters.ContentLocation = Loc.Url;
         prop.Parameters.DataType = Data.Uri;
 
@@ -79,7 +80,7 @@ public class ReferencedDataPropertyTests
         var serializer = new Vcf_2_1Serializer(writer, Opts.Default, null);
 
         Assert.IsTrue(Uri.TryCreate("cid:something", UriKind.Absolute, out Uri? uri));
-        var prop = DataProperty.FromUri(uri);
+        var prop = new DataProperty(RawData.FromUri(uri));
 
         prop.PrepareForVcfSerialization(serializer);
         Assert.AreEqual(Loc.Cid, prop.Parameters.ContentLocation);

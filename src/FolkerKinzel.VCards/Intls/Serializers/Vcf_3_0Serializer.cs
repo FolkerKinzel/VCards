@@ -201,7 +201,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     protected override void AppendKeys(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.KEY,
                              value,
-                             static x => x is EmbeddedBytesProperty or EmbeddedTextProperty);
+                             static x => x.Value.Object is not Uri);
 
     protected override void AppendLastRevision(TimeStampProperty value)
         => BuildProperty(VCard.PropKeys.REV, value);
@@ -209,7 +209,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     protected override void AppendLogos(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.LOGO,
                              value,
-                             static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+                             static x => x.Value.Object is not string);
 
     protected override void AppendMailer(TextProperty value)
         => BuildProperty(VCard.PropKeys.MAILER, value);
@@ -278,7 +278,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     protected override void AppendPhotos(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.PHOTO,
                              value,
-                             static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+                             static x => x.Value.Object is not string);
 
     protected override void AppendProdID(TextProperty value)
         => BuildProperty(VCard.PropKeys.PRODID, value);
@@ -303,7 +303,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     protected override void AppendSounds(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.SOUND,
                              value,
-                             static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+                             static x => x.Value.Object is not string);
 
     protected override void AppendSources(IEnumerable<TextProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.SOURCE, value);
@@ -324,7 +324,6 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal override void AppendBase64EncodedData(byte[]? data)
         => _ = Builder.AppendBase64(data);
-
 
     private void PreserveLabel(AddressProperty prop, bool isPref)
     {

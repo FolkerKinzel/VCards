@@ -57,9 +57,9 @@ public class V4Tests
 
         vcard.Notes = [new(UNITEXT)];
 
-        vcard.Keys = DataProperty.FromText(ASCIITEXT);
+        vcard.Keys = new DataProperty(RawData.FromText(ASCIITEXT));
 
-        vcard.Photos = DataProperty.FromBytes(bytes, "image/jpeg");
+        vcard.Photos = new DataProperty(RawData.FromBytes(bytes, "image/jpeg"));
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 

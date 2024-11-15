@@ -50,7 +50,6 @@ public class RelationTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
     public void SwitchTest2()
     {
         var rel = Relation.Create(ContactID.Create("Hi"));
@@ -58,7 +57,7 @@ public class RelationTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
+    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest2()
     {
         var rel = Relation.Create(ContactID.Create("Hi"));

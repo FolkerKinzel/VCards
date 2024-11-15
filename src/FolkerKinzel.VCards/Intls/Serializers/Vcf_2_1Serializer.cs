@@ -214,7 +214,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override void AppendKeys(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.KEY, value,
-                             static x => x is EmbeddedBytesProperty or EmbeddedTextProperty);
+                             static x => x.Value.Object is not Uri);
 
     protected override void AppendLastRevision(TimeStampProperty value)
         => BuildProperty(VCard.PropKeys.REV, value);
@@ -222,7 +222,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendLogos(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.LOGO,
                              value,
-                             static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+                             static x => x.Value.Object is not string);
 
     protected override void AppendMailer(TextProperty value)
         => BuildProperty(VCard.PropKeys.MAILER, value);
@@ -250,7 +250,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendPhotos(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.PHOTO,
                              value,
-                             static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+                             static x => x.Value.Object is not string);
 
     protected override void AppendRelations(IEnumerable<RelationProperty?> value)
         => base.AppendRelations(value);
@@ -270,7 +270,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendSounds(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.SOUND,
                              value,
-                             static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+                             static x => x.Value.Object is not string);
 
     protected override void AppendTimeZones(IEnumerable<TimeZoneProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.TZ, value);

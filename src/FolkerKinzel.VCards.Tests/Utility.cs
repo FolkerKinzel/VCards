@@ -67,17 +67,17 @@ internal static class Utility
             .AddCountry("USA")
             .Build());
 
-        var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
+        var logo1 = new DataProperty(RawData.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg"));
         //logo1.Parameters.MediaType = "image/jpeg";
 
-        var photo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/photo.png"), "image/png");
+        var photo1 = new DataProperty(RawData.FromUri(new Uri("https://folker-kinzel.de/photo.png"), "image/png"));
         //photo1.Parameters.MediaType = "image/png";
 
-        var sound1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/audio.mp3"), "audio/mpeg");
+        var sound1 = new DataProperty(RawData.FromUri(new Uri("https://folker-kinzel.de/audio.mp3"), "audio/mpeg"));
         //sound1.Parameters.MediaType = "audio/mpeg";
 
-        var key1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/pgp"), "application/pgp-keys");
-        var key2 = DataProperty.FromText("ThePassword");
+        var key1 = new DataProperty(RawData.FromUri(new Uri("https://folker-kinzel.de/pgp"), "application/pgp-keys"));
+        var key2 = new DataProperty(RawData.FromText("ThePassword"));
         //key1.Parameters.MediaType = "application/pgp-keys";
 
 

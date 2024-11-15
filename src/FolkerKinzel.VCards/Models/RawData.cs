@@ -34,12 +34,7 @@ public sealed class RawData
     /// file type extension.</param>
     /// 
     /// <returns>The newly created <see cref="RawData"/> instance.</returns>
-    /// <remarks>
-    /// If <paramref name="filePath"/> references an empty file, <paramref name="mediaType"/> 
-    /// will be ignored an the method returns a <see cref="RawData"/> instance
-    /// whose content is an empty <see cref="string"/>. 
-    /// <see cref="IsEmpty">(See RawData.IsEmpty)</see>
-    /// </remarks>
+    /// 
     /// <exception cref="ArgumentNullException"><paramref name="filePath"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="filePath"/> is not a valid file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
@@ -48,9 +43,7 @@ public sealed class RawData
     {
         byte[] bytes = LoadFile(filePath);
 
-        return bytes.Length == 0
-            ? Empty
-            : mediaType is null
+        return mediaType is null
                 ? new(bytes, MimeString.FromFileName(filePath))
                 : FromBytes(bytes, mediaType);
     }
@@ -64,12 +57,7 @@ public sealed class RawData
     /// </param>
     /// 
     /// <returns>The newly created <see cref="RawData"/> instance.</returns>
-    /// <remarks>
-    /// If <paramref name="bytes"/> is an empty array, <paramref name="mediaType"/> 
-    /// will be ignored an the method returns a <see cref="RawData"/> instance
-    /// whose content is an empty <see cref="string"/>. 
-    /// <see cref="IsEmpty">(See RawData.IsEmpty)</see>
-    /// </remarks>
+    /// 
     /// <exception cref="ArgumentNullException"><paramref name="bytes"/> or <paramref name="mediaType"/>
     /// is <c>null</c>.</exception>
     public static RawData FromBytes(byte[] bytes,
@@ -77,11 +65,6 @@ public sealed class RawData
     {
         _ArgumentNullException.ThrowIfNull(bytes, nameof(bytes));
         _ArgumentNullException.ThrowIfNull(mediaType, nameof(mediaType));
-
-        if (bytes.Length == 0)
-        {
-            return Empty;
-        }
 
         mediaType = mediaType.Equals(MimeString.OctetStream, StringComparison.Ordinal)
                       ? mediaType
@@ -105,21 +88,13 @@ public sealed class RawData
     /// The vCard standard only allows to write a password as plain text to the <c>KEY</c> property.
     /// <see cref="VCard.Keys">(See VCard.Keys.)</see>
     /// </para>
-    /// <para>
-    /// If <paramref name="text"/> is an empty <see cref="string"/>, <paramref name="mediaType"/>
-    /// will be ignored.
-    /// </para>
+    /// 
     /// </remarks>
     /// <seealso cref="VCard.Keys"/>
     public static RawData FromText(string text,
                                    string? mediaType = null)
     {
         _ArgumentNullException.ThrowIfNull(text, nameof(text));
-
-        if (text.Length == 0)
-        {
-            return Empty;
-        }
 
         mediaType =
             MimeTypeInfo.TryParse(mediaType, out MimeTypeInfo mimeInfo)
@@ -158,27 +133,24 @@ public sealed class RawData
 
     internal static RawData FromDataUrlInfo(in DataUrlInfo dataUrlInfo)
     {
-        if (dataUrlInfo.TryGetEmbeddedData(out OneOf<string, byte[]> data))
-        {
-            string mediaType = dataUrlInfo.MimeType.ToString();
+        string mediaType = dataUrlInfo.MimeType.ToString();
+        Debug.Assert(mediaType.Length > 0);
 
-            if (data.IsT0)
-            {
-                return FromText(data.AsT0, mediaType);
-            }
-
-            return FromBytes(data.AsT1, mediaType);
-        }
-
-        return Empty;
+        return dataUrlInfo.TryGetEmbeddedData(out OneOf<string, byte[]> data)
+            ? data.IsT0 ? new(data.AsT0, mediaType)
+                        : new(data.AsT1, mediaType)
+            : new RawData(Array.Empty<byte>(), mediaType);
     }
-
-    internal static RawData Empty { get; } = new("", null);
 
     /// <summary>
     /// <c>true</c> if the instance doesn't contain any data, otherwise <c>false</c>.
     /// </summary>
-    public bool IsEmpty => ReferenceEquals(this, Empty);
+    public bool IsEmpty => Object switch
+        {
+            byte[] bytes => bytes.Length == 0,
+            string text => text.Length == 0,
+            _ => false
+        };
 
     /// <summary>
     /// Gets the encapsulated <see cref="byte"/> array,

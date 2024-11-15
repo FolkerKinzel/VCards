@@ -188,8 +188,8 @@ public readonly struct RawDataBuilder
     /// be able to chain calls.</returns>
     /// 
     /// <remarks>
-    /// If <paramref name="filePath"/> is invalid or references an empty file, or if the file could not be loaded,
-    /// <paramref name="mediaType"/> will be ignored and an empty <see cref="DataProperty"/> instance will be created.
+    /// If <paramref name="filePath"/> is <c>null</c>, invalid or references an empty file, or if the file could not be loaded,
+    /// an empty <see cref="DataProperty"/> instance will be created.
     /// </remarks>
     /// 
     /// <example>
@@ -205,16 +205,16 @@ public readonly struct RawDataBuilder
     {
         if(filePath is null)
         {
-            return AddRawData(RawData.Empty, parameters, group);
+            return AddRawData(RawData.FromBytes([], mediaType ?? MimeString.OctetStream), parameters, group);
         }
 
         try
         {
-            return AddRawData(RawData.FromFile(filePath, mediaType));
+            return AddRawData(RawData.FromFile(filePath, mediaType), parameters, group);
         }
         catch
         {
-            return AddRawData(RawData.Empty, parameters, group);
+            return AddRawData(RawData.FromBytes([], mediaType ?? MimeString.OctetStream), parameters, group);
         }
     }
 
@@ -237,19 +237,18 @@ public readonly struct RawDataBuilder
     /// able to chain calls.</returns>
     /// 
     /// <remarks>
-    /// If <paramref name="bytes"/> is <c>null</c> or an empty array, <paramref name="mediaType"/> 
-    /// will be ignored and an empty <see cref="DataProperty"/> instance will be created.
+    /// If <paramref name="bytes"/> is <c>null</c> or an empty array, an empty <see cref="DataProperty"/> instance
+    /// will be created.
     /// </remarks>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
     /// initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder AddBytes(byte[]? bytes,
                                  string? mediaType = null,
                                  Action<ParameterSection>? parameters = null,
                                  Func<VCard, string?>? group = null)
-        => bytes is null
-            ? AddRawData(RawData.Empty)
-            : AddRawData(RawData.FromBytes(bytes, mediaType ?? MimeString.OctetStream));
+        => AddRawData(RawData.FromBytes(bytes ?? [], mediaType ?? MimeString.OctetStream), parameters, group);
 
     /// <summary>
     /// Adds a <see cref="DataProperty"/> instance, which is newly initialized using the specified text,
@@ -272,10 +271,6 @@ public readonly struct RawDataBuilder
     /// <para>
     /// The vCard standard only allows to write a password as plain text to the <c>KEY</c> property.
     /// <see cref="VCard.Keys">(See VCard.Keys.)</see>
-    /// </para>
-    /// <para>
-    /// If <paramref name="text"/> is <c>null</c>, or an empty <see cref="string"/>, <paramref name="mediaType"/>
-    /// will be ignored.
     /// </para>
     /// </remarks>
     /// 
@@ -309,9 +304,8 @@ public readonly struct RawDataBuilder
     /// to be able to chain calls.</returns>
     /// 
     /// <remarks>
-    /// If <paramref name="uri"/> is not an absolute <see cref="Uri"/>, a <see cref="DataProperty"/> instance
-    /// containing a <see cref="RawData"/> object that encapsulates a <see cref="string"/> will be created. If 
-    /// <paramref name="uri"/> is <c>null</c>, <paramref name="mediaType"/> will be ignored.
+    /// If <paramref name="uri"/> is not an absolute <see cref="Uri"/> or if it is <c>null</c>, a <see cref="DataProperty"/> 
+    /// instance containing a <see cref="RawData"/> object that encapsulates a <see cref="string"/> will be created.
     /// </remarks>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
@@ -321,7 +315,7 @@ public readonly struct RawDataBuilder
                                Action<ParameterSection>? parameters = null,
                                Func<VCard, string?>? group = null)
         => uri is null
-            ? AddRawData(RawData.Empty, parameters, group)
+            ? AddRawData(RawData.FromText("", mediaType), parameters, group)
             : uri.IsAbsoluteUri
                 ? AddRawData(RawData.FromUri(uri, mediaType), parameters, group)
                 : AddRawData(RawData.FromText(uri.ToString(), mediaType), parameters, group);
@@ -342,8 +336,9 @@ public readonly struct RawDataBuilder
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
     /// to be able to chain calls.</returns>
     /// 
-    /// <remarks>If <paramref name="data"/> is <c>null</c> or an empty <see cref="RawData"/> instance,
-    /// an empty <see cref="DataProperty"/> will be created.</remarks>
+    /// <remarks>If <paramref name="data"/> is <c>null</c>,
+    /// an empty <see cref="DataProperty"/> containing an empty <see cref="RawData"/> instance with an empty
+    /// <see cref="string"/> will be created.</remarks>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -352,7 +347,7 @@ public readonly struct RawDataBuilder
                                    Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(new DataProperty(data ?? RawData.Empty,
+                          VCardBuilder.Add(new DataProperty(data ?? RawData.FromText(""),
                                                             group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
                                            parameters)

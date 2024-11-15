@@ -10,21 +10,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
-internal class DataPropertyDerived : DataProperty
-{
-    public DataPropertyDerived(DataProperty prop) : base(prop)
-    {
-    }
+//internal class DataPropertyDerived : DataProperty
+//{
+//    public DataPropertyDerived(DataProperty prop) : base(prop)
+//    {
+//    }
 
-    public DataPropertyDerived(ParameterSection parameters, string? group)
-        : base(parameters, group)
-    {
-    }
+//    public DataPropertyDerived(ParameterSection parameters, string? group)
+//        : base(parameters, group)
+//    {
+//    }
 
-    public override object Clone() => throw new NotImplementedException();
-    public override string GetFileTypeExtension() => throw new NotImplementedException();
-    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-}
+//    public override object Clone() => throw new NotImplementedException();
+//    public override string GetFileTypeExtension() => throw new NotImplementedException();
+//    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
+//}
 
 
 [TestClass]
@@ -33,17 +33,18 @@ public class DataPropertyTests
     [TestMethod]
     public void DataPropertyTest3()
     {
-        VcfRow row = VcfRow.Parse("PHOTO:".AsMemory(), new VcfDeserializationInfo())!;
-        var prop = DataProperty.Parse(row, VCdVersion.V3_0);
+        VcfRow? row = VcfRow.Parse("PHOTO:".AsMemory(), new VcfDeserializationInfo());
+        Assert.IsNotNull(row);
+        var prop = new DataProperty(row, VCdVersion.V3_0);
 
-        Assert.IsNull(prop.Value);
+        Assert.IsNotNull(prop.Value);
     }
 
 
     [TestMethod]
     public void ValueTest1()
     {
-        var prop = DataProperty.FromText("abc");
+        var prop = new DataProperty(RawData.FromText("abc"));
         RawData? val1 = prop.Value;
         RawData? val2 = prop.Value;
         Assert.IsNotNull(val1);
@@ -54,17 +55,16 @@ public class DataPropertyTests
     [TestMethod]
     public void ValueTest2()
     {
-        VCardProperty prop = DataProperty.FromText("abc");
+        VCardProperty prop = new DataProperty(RawData.FromText("abc"));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(RawData));
     }
-
 
     [TestMethod]
     public void ValueTest3()
     {
         Assert.IsTrue(Uri.TryCreate("http://folker.de/", UriKind.Absolute, out Uri? uri));
-        VCardProperty prop = DataProperty.FromUri(uri);
+        VCardProperty prop = new DataProperty(RawData.FromUri(uri));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(RawData));
     }
@@ -72,7 +72,7 @@ public class DataPropertyTests
     [TestMethod]
     public void ValueTest4()
     {
-        VCardProperty prop = DataProperty.FromBytes([1, 2, 3]);
+        VCardProperty prop = new DataProperty(RawData.FromBytes([1, 2, 3]));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(RawData));
     }
@@ -82,28 +82,35 @@ public class DataPropertyTests
     public void FromUriTest1()
     {
         Assert.IsTrue(Uri.TryCreate("../relative", UriKind.Relative, out Uri? uri));
-        _ = DataProperty.FromUri(uri);
+        _ = RawData.FromUri(uri);
     }
 
     [TestMethod]
     public void FromBytesTest1()
     {
-        var prop = DataProperty.FromBytes(null, "blabla");
+        var prop = new DataProperty(RawData.FromBytes([1,2], "blabla"));
         Assert.AreEqual("application/octet-stream", prop.Parameters.MediaType);
     }
 
     [TestMethod]
     public void FromFileTest1()
     {
-        var prop = DataProperty.FromFile(TestFiles.NextCloudPhotoIssueTxt, "blabla");
+        var prop = new DataProperty(RawData.FromFile(TestFiles.NextCloudPhotoIssueTxt));
         Assert.AreEqual("text/plain", prop.Parameters.MediaType);
+    }
+
+    [TestMethod]
+    public void FromFileTest1b()
+    {
+        var prop = new DataProperty(RawData.FromFile(TestFiles.NextCloudPhotoIssueTxt, "blabla"));
+        Assert.AreEqual("application/octet-stream", prop.Parameters.MediaType);
     }
 
     [TestMethod]
     public void FromFileTest2()
     {
         const string mime = "image/png";
-        var prop = DataProperty.FromFile(TestFiles.NextCloudPhotoIssueTxt, mime);
+        var prop = new DataProperty(RawData.FromFile(TestFiles.NextCloudPhotoIssueTxt, mime));
         Assert.AreEqual(mime, prop.Parameters.MediaType);
     }
 
@@ -124,14 +131,16 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Keys);
         DataProperty? key = vcard.Keys!.First();
-        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsNotNull(key);
+        Assert.IsInstanceOfType(key.Value.Object, typeof(string));
         Assert.IsNotNull(key.Value);
         Assert.AreEqual("The password", key.Value.String);
         Assert.AreEqual("text/plain", key.Parameters.MediaType);
 
         Assert.IsNotNull(vcard.Photos);
         DataProperty? photo = vcard.Photos!.First();
-        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.IsNotNull(photo);
+        Assert.IsInstanceOfType(photo.Value.Object, typeof(byte[]));
         Assert.AreEqual("blabla", photo!.Parameters.MediaType);
     }
 
@@ -150,7 +159,8 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Keys);
         DataProperty? key = vcard.Keys.First();
-        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsNotNull(key);
+        Assert.IsInstanceOfType(key.Value.Object, typeof(string));
         Assert.IsNotNull(key.Value);
         Assert.AreEqual("The password", key.Value.String);
         Assert.AreEqual("text/plain", key.Parameters.MediaType);
@@ -171,7 +181,8 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Keys);
         DataProperty? key = vcard.Keys.First();
-        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsNotNull(key);
+        Assert.IsInstanceOfType(key.Value.Object, typeof(string));
         Assert.IsNotNull(key.Value);
         Assert.AreEqual("The password", key.Value.String);
         Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
@@ -192,7 +203,8 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.Keys);
         DataProperty? key = vcard.Keys.First();
-        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsNotNull(key);
+        Assert.IsInstanceOfType(key.Value.Object, typeof(string));
         Assert.IsNotNull(key.Value);
         Assert.AreEqual("The password", key.Value.String);
         Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
@@ -214,7 +226,8 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard.Photos);
 
         DataProperty? photo = vcard.Photos!.First();
-        Assert.IsInstanceOfType(photo, typeof(EmbeddedTextProperty));
+        Assert.IsNotNull(photo);
+        Assert.IsInstanceOfType(photo.Value.Object, typeof(byte[]));
         Assert.AreEqual("image/png", photo!.Parameters.MediaType);
     }
 
@@ -234,7 +247,8 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard.Photos);
 
         DataProperty? photo = vcard.Photos!.First();
-        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.IsNotNull(photo);
+        Assert.IsInstanceOfType(photo.Value.Object, typeof(byte[]));
         Assert.AreEqual("image/gif", photo!.Parameters.MediaType);
     }
 
@@ -255,7 +269,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsTrue(photo.IsEmpty);
-        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.IsInstanceOfType(photo.Value.Object, typeof(byte[]));
         Assert.AreEqual("image/gif", photo.Parameters.MediaType);
     }
 
@@ -277,7 +291,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
-        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.IsInstanceOfType(photo.Value.Object, typeof(byte[]));
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
         CollectionAssert.AreEqual(arr, photo.Value.Bytes);
     }
@@ -300,7 +314,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
-        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.IsInstanceOfType(photo.Value.Object, typeof(byte[]));
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
         CollectionAssert.AreEqual(arr, photo.Value.Bytes);
     }
@@ -323,7 +337,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
-        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.IsInstanceOfType(photo.Value.Object, typeof(byte[]));
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
         CollectionAssert.AreEqual(arr, photo.Value.Bytes);
     }
@@ -346,7 +360,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
-        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.IsInstanceOfType(photo.Value.Object, typeof(byte[]));
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
         CollectionAssert.AreEqual(arr, photo.Value.Bytes);
     }
@@ -389,7 +403,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
-        Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
+        Assert.IsInstanceOfType(photo.Value.Object, typeof(byte[]));
         Assert.AreEqual("image/png;parameter=value", photo.Parameters.MediaType);
     }
 
@@ -411,7 +425,7 @@ public class DataPropertyTests
 
         DataProperty key = vcard.Keys!.First()!;
         Assert.IsTrue(key.IsEmpty);
-        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsInstanceOfType(key.Value.Object, typeof(string));
         Assert.AreEqual("text/plain", key.Parameters.MediaType);
     }
 
@@ -435,7 +449,7 @@ public class DataPropertyTests
 
         DataProperty key = vcard.Keys!.First()!;
         Assert.IsFalse(key.IsEmpty);
-        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsInstanceOfType(key.Value.Object, typeof(string));
         Assert.AreEqual("text/plain", key.Parameters.MediaType);
         Assert.AreEqual(PASSWORD, key.Value.String);
     }
@@ -460,7 +474,7 @@ public class DataPropertyTests
 
         DataProperty key = vcard.Keys!.First()!;
         Assert.IsFalse(key.IsEmpty);
-        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsInstanceOfType(key.Value.Object, typeof(string));
         Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
         Assert.AreEqual(PASSWORD, key.Value.String);
     }
@@ -485,23 +499,23 @@ public class DataPropertyTests
 
         DataProperty key = vcard.Keys!.First()!;
         Assert.IsFalse(key.IsEmpty);
-        Assert.IsInstanceOfType(key, typeof(EmbeddedTextProperty));
+        Assert.IsInstanceOfType(key.Value.Object, typeof(string));
         Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
         Assert.AreEqual(PASSWORD, key.Value.String);
     }
 
 
-    [TestMethod]
-    public void IsEmptyTest1()
-    {
-        DataProperty prop = new DataPropertyDerived(DataProperty.FromText("Hello"));
-        Assert.IsTrue(prop.IsEmpty);
-    }
+    //[TestMethod]
+    //public void IsEmptyTest1()
+    //{
+    //    DataProperty prop = new DataPropertyDerived(DataProperty.FromText("Hello"));
+    //    Assert.IsTrue(prop.IsEmpty);
+    //}
 
     [TestMethod]
     public void IEnumerableTest1()
     {
-        var prop = DataProperty.FromText("Hi");
+        var prop = new DataProperty(RawData.FromText("Hi"));
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
     }
 }
