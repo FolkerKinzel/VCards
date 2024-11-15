@@ -52,8 +52,8 @@ public sealed class Relation
     }
 
     /// <summary>
-    /// Creates a new <see cref="Relation"/> instance, which is newly initialized using the 
-    /// <see cref="ContactID"/>-object that identifies a person or organization.
+    /// Creates a new <see cref="Relation"/> instance, which is newly initialized using a 
+    /// <see cref="ContactID"/> instance.
     /// </summary>
     /// <param name="id">The <see cref="ContactID"/>-object that identifies a person or organization
     /// to whom there is a relationship.</param>
@@ -88,46 +88,25 @@ public sealed class Relation
     /// </summary>
     public object Object { get; }
 
-    [Obsolete("Use Object instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public object Value => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
     /// encapsulated value.
     /// </summary>
     /// <param name="vCardAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="VCards.VCard"/>.</param>
+    /// value is a <see cref="VCards.VCard"/>, or <c>null</c>.</param>
     /// <param name="contactIDAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="ContactID"/>.</param>
-    /// 
-    /// 
-    /// <exception cref="InvalidOperationException">
-    /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
-    /// </exception>
-    public void Switch(Action<VCard> vCardAction,
-                       Action<ContactID> contactIDAction)
+    /// value is a <see cref="ContactID"/>, or <c>null</c>.</param>
+    ///
+    public void Switch(Action<VCard>? vCardAction,
+                       Action<ContactID>? contactIDAction)
     {
         if (Object is VCard vc)
         {
-            if (vCardAction is null)
-            {
-                throw new InvalidOperationException();
-            }
-
-            vCardAction(vc);
+            vCardAction?.Invoke(vc);
         }
         else
         {
-            if (contactIDAction is null)
-            {
-                throw new InvalidOperationException();
-            }
-
-            contactIDAction((ContactID)Object);
+            contactIDAction?.Invoke((ContactID)Object);
         }
     }
 
@@ -142,15 +121,16 @@ public sealed class Relation
     /// 
     /// 
     /// <returns>A <typeparamref name="TResult"/>.</returns>
-    /// <exception cref="InvalidOperationException">
+    /// <exception cref="ArgumentNullException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
     public TResult Convert<TResult>(Func<VCard, TResult> vCardFunc,
                                     Func<ContactID, TResult> contactIDFunc)
         => Object is VCard vCard
-            ? vCardFunc is null ? throw new InvalidOperationException() : vCardFunc.Invoke(vCard)
-            : contactIDFunc is null ? throw new InvalidOperationException() : contactIDFunc.Invoke((ContactID)Object);
-
+            ? vCardFunc is null ? throw new ArgumentNullException(nameof(vCardFunc)) 
+                                : vCardFunc(vCard)
+            : contactIDFunc is null ? throw new ArgumentNullException(nameof(contactIDFunc)) 
+                                    : contactIDFunc((ContactID)Object);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

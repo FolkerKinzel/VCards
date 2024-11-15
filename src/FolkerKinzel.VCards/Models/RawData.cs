@@ -29,7 +29,7 @@ public sealed class RawData
     /// <summary>
     /// Creates a new <see cref="RawData"/> instance from the binary content of a file. </summary>
     /// <param name="filePath">Path to the file.</param>
-    /// <param name="mediaType">The Internet Media Type ("MIME type") of the file content
+    /// <param name="mediaType">The Internet Media Type ("MIME type") of the file content,
     /// or <c>null</c> to get the <paramref name="mediaType"/> automatically from the
     /// file type extension.</param>
     /// 
@@ -59,24 +59,26 @@ public sealed class RawData
     /// Creates a new <see cref="RawData"/> instance from an array of 
     /// <see cref="byte"/>s.
     /// </summary>
-    /// <param name="bytes">The <see cref="byte"/>s to embed, or <c>null</c>.</param>
+    /// <param name="bytes">The <see cref="byte"/> array to embed.</param>
     /// <param name="mediaType">The Internet Media Type ("MIME type") of the <paramref name="bytes"/>.
     /// </param>
     /// 
     /// <returns>The newly created <see cref="RawData"/> instance.</returns>
     /// <remarks>
-    /// If <paramref name="bytes"/> is <c>null</c> or an empty array, <paramref name="mediaType"/> 
+    /// If <paramref name="bytes"/> is an empty array, <paramref name="mediaType"/> 
     /// will be ignored an the method returns a <see cref="RawData"/> instance
     /// whose content is an empty <see cref="string"/>. 
     /// <see cref="IsEmpty">(See RawData.IsEmpty)</see>
     /// </remarks>
-    /// <exception cref="ArgumentNullException"><paramref name="mediaType"/> is <c>null</c>.</exception>
-    public static RawData FromBytes(byte[]? bytes,
+    /// <exception cref="ArgumentNullException"><paramref name="bytes"/> or <paramref name="mediaType"/>
+    /// is <c>null</c>.</exception>
+    public static RawData FromBytes(byte[] bytes,
                                     string mediaType = MimeString.OctetStream)
     {
+        _ArgumentNullException.ThrowIfNull(bytes, nameof(bytes));
         _ArgumentNullException.ThrowIfNull(mediaType, nameof(mediaType));
 
-        if (bytes is null || bytes.Length == 0)
+        if (bytes.Length == 0)
         {
             return Empty;
         }
@@ -93,7 +95,7 @@ public sealed class RawData
     /// <summary>
     /// Creates a new <see cref="RawData"/> instance from text.
     /// </summary>
-    /// <param name="text">The text, or <c>null</c>.</param>
+    /// <param name="text">The text.</param>
     /// <param name="mediaType">The Internet Media Type ("MIME type") of the <paramref name="text"/>,
     /// or <c>null</c>.</param>
     /// 
@@ -104,15 +106,17 @@ public sealed class RawData
     /// <see cref="VCard.Keys">(See VCard.Keys.)</see>
     /// </para>
     /// <para>
-    /// If <paramref name="text"/> is <c>null</c> or <see cref="string.Empty"/>, <paramref name="mediaType"/>
+    /// If <paramref name="text"/> is an empty <see cref="string"/>, <paramref name="mediaType"/>
     /// will be ignored.
     /// </para>
     /// </remarks>
     /// <seealso cref="VCard.Keys"/>
-    public static RawData FromText(string? text,
+    public static RawData FromText(string text,
                                    string? mediaType = null)
     {
-        if (string.IsNullOrEmpty(text))
+        _ArgumentNullException.ThrowIfNull(text, nameof(text));
+
+        if (text.Length == 0)
         {
             return Empty;
         }
@@ -126,8 +130,8 @@ public sealed class RawData
     }
 
     /// <summary>
-    /// Creates a new <see cref="RawData"/> instance from an absolute <see cref="Uri"/> 
-    /// that references external data.
+    /// Creates a new <see cref="RawData"/> instance from an absolute <see cref="Uri"/>, 
+    /// which references external data.
     /// </summary>
     /// <param name="uri">An absolute <see cref="Uri"/>.</param>
     /// <param name="mediaType">The Internet Media Type ("MIME type") of the 
@@ -249,36 +253,36 @@ public sealed class RawData
         }
     }
 
-    /// <summary>
-    /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
-    /// encapsulated value and allows to pass an argument to the delegates.
-    /// </summary>
-    /// <typeparam name="TArg">Generic type parameter.</typeparam>
-    /// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
-    /// is an array of <see cref="byte"/>s, or <c>null</c>.</param>
-    /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
-    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="string"/>, or <c>null</c>.</param>
-    /// <param name="arg">An argument to pass to the delegates.</param>
-    public void Switch<TArg>(Action<byte[], TArg>? bytesAction,
-                       Action<Uri, TArg>? uriAction,
-                       Action<string, TArg>? stringAction,
-                       TArg arg)
-    {
-        if (Object is byte[] bytes)
-        {
-            bytesAction?.Invoke(bytes, arg);
-        }
-        else if (Object is Uri uri)
-        {
-            uriAction?.Invoke(uri, arg);
-        }
-        else
-        {
-            stringAction?.Invoke((string)Object, arg);
-        }
-    }
+    ///// <summary>
+    ///// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
+    ///// encapsulated value and allows to pass an argument to the delegates.
+    ///// </summary>
+    ///// <typeparam name="TArg">Generic type parameter.</typeparam>
+    ///// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
+    ///// is an array of <see cref="byte"/>s, or <c>null</c>.</param>
+    ///// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    ///// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
+    ///// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    ///// value is a <see cref="string"/>, or <c>null</c>.</param>
+    ///// <param name="arg">An argument to pass to the delegates.</param>
+    //public void Switch<TArg>(Action<byte[], TArg>? bytesAction,
+    //                   Action<Uri, TArg>? uriAction,
+    //                   Action<string, TArg>? stringAction,
+    //                   TArg arg)
+    //{
+    //    if (Object is byte[] bytes)
+    //    {
+    //        bytesAction?.Invoke(bytes, arg);
+    //    }
+    //    else if (Object is Uri uri)
+    //    {
+    //        uriAction?.Invoke(uri, arg);
+    //    }
+    //    else
+    //    {
+    //        stringAction?.Invoke((string)Object, arg);
+    //    }
+    //}
 
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/>.

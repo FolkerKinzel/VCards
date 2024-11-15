@@ -13,30 +13,6 @@ namespace FolkerKinzel.VCards.Models;
 /// <remarks> Initializes a new <see cref="Gender" /> object. </remarks>
 public sealed class Gender
 {
-    /// <summary>Standardized information about the gender of the object the 
-    /// <see cref="VCard"/> represents.</summary>
-    public Sex? Sex { get; }
-
-    /// <summary>Free text describing the gender identity.</summary>
-    public string? Identity { get; }
-
-    /// <summary> Returns <c>true</c> if the <see cref="Gender" /> object does not 
-    /// contain any usable data, otherwise <c>false</c>.</summary>
-    public bool IsEmpty => !Sex.HasValue && Identity is null;
-
-    /// <summary>
-    /// A singleton that encapsulates <see cref="Sex.Male"/>
-    /// </summary>
-    public static Gender Male { get; } = new(Enums.Sex.Male, null);
-
-    /// <summary>
-    /// A singleton that encapsulates <see cref="Sex.Female"/>
-    /// </summary>
-    public static Gender Female { get; } = new(Enums.Sex.Female, null);
-
-    internal static Gender Empty => new(null, null); // Don't use a singleton here: It's probably not often needed.
-
-    
     private Gender(Sex? sex, string? identity)
     {
         Sex = sex;
@@ -62,14 +38,37 @@ public sealed class Gender
                 return Male;
             }
 
-            if(sex == Enums.Sex.Female)
+            if (sex == Enums.Sex.Female)
             {
-                return Female; 
+                return Female;
             }
         }
 
         return new(sex, identity);
     }
+
+    /// <summary>Standardized information about the gender of the object the 
+    /// <see cref="VCard"/> represents.</summary>
+    public Sex? Sex { get; }
+
+    /// <summary>Free text describing the gender identity.</summary>
+    public string? Identity { get; }
+
+    /// <summary> Returns <c>true</c> if the <see cref="Gender" /> object does not 
+    /// contain any usable data, otherwise <c>false</c>.</summary>
+    public bool IsEmpty => !Sex.HasValue && Identity is null;
+
+    /// <summary>
+    /// A singleton that encapsulates <see cref="Sex.Male"/>
+    /// </summary>
+    public static Gender Male { get; } = new(Enums.Sex.Male, null);
+
+    /// <summary>
+    /// A singleton that encapsulates <see cref="Sex.Female"/>
+    /// </summary>
+    public static Gender Female { get; } = new(Enums.Sex.Female, null);
+
+    internal static Gender Empty => new(null, null); // Don't use a singleton here: It's probably not often needed.
 
     /// <inheritdoc/>
     public override string ToString()

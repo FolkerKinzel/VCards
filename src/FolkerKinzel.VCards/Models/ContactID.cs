@@ -118,51 +118,27 @@ public sealed class ContactID : IEquatable<ContactID>
     /// encapsulated value.
     /// </summary>
     /// <param name="guidAction">The <see cref="Action{T}"/> to perform if the encapsulated value
-    /// is a <see cref="Guid"/>.</param>
+    /// is a <see cref="Guid"/>, or <c>null</c>.</param>
     /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.Uri"/>.</param>
+    /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
     /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="string"/>.</param>
-    /// <exception cref="InvalidOperationException">
-    /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
-    /// </exception>
-    public void Switch(Action<Guid> guidAction,
-                       Action<Uri> uriAction,
-                       Action<string> stringAction)
+    /// value is a <see cref="string"/>, or <c>null</c>.</param>
+    /// 
+    public void Switch(Action<Guid>? guidAction,
+                       Action<Uri>? uriAction,
+                       Action<string>? stringAction)
     {
         if (Guid.HasValue)
         {
-            if (guidAction is null)
-            {
-                throw new InvalidOperationException();
-            }
-            else
-            {
-                guidAction(Guid.Value);
-            }
+            guidAction?.Invoke(Guid.Value);
         }
-
-        if (Object is Uri uri)
+        else if (Object is Uri uri)
         {
-            if (uriAction is null)
-            {
-                throw new InvalidOperationException();
-            }
-            else
-            {
-                uriAction(uri);
-            }
+            uriAction?.Invoke(uri);
         }
         else
         {
-            if (stringAction is null)
-            {
-                throw new InvalidOperationException();
-            }
-            else
-            {
-                stringAction((string)Object);
-            }
+            stringAction?.Invoke((string)Object);
         }
     }
 
@@ -177,18 +153,18 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <param name="stringFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="string"/>.</param>
     /// <returns>A <typeparamref name="TResult"/>.</returns>
-    /// <exception cref="InvalidOperationException">
+    /// <exception cref="ArgumentNullException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
     public TResult Convert<TResult>(Func<Guid, TResult>? guidFunc,
                                     Func<Uri, TResult> uriFunc,
                                     Func<string, TResult> stringFunc)
     {
-        return Guid.HasValue ? guidFunc is null ? throw new InvalidOperationException()
+        return Guid.HasValue ? guidFunc is null ? throw new ArgumentNullException(nameof(guidFunc))
                                                 : guidFunc(Guid.Value)
-                             : Object is Uri uri ? uriFunc is null ? throw new InvalidOperationException()
+                             : Object is Uri uri ? uriFunc is null ? throw new ArgumentNullException(nameof(uriFunc))
                                                                    : uriFunc(uri)
-                                                 : stringFunc is null ? throw new InvalidOperationException()
+                                                 : stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc))
                                                                       : stringFunc((string)Object);
     }
 

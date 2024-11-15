@@ -173,9 +173,9 @@ public readonly struct RawDataBuilder
     /// initialized using the binary content 
     /// of a file, to the specified <see cref="VCard"/> property.
     /// </summary>
-    /// <param name="filePath">Path to the file whose content is to embed.</param>
-    /// <param name="mimeType">The Internet Media Type ("MIME type") of the file content
-    /// or <c>null</c> to get the <paramref name="mimeType"/> automatically from the
+    /// <param name="filePath">Path to the file whose content is to embed, or <c>null</c>.</param>
+    /// <param name="mediaType">The Internet Media Type ("MIME type") of the file content
+    /// or <c>null</c> to get the <paramref name="mediaType"/> automatically from the
     /// file type extension.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
@@ -187,20 +187,30 @@ public readonly struct RawDataBuilder
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
+    /// <remarks>
+    /// If <paramref name="filePath"/> is invalid or references an empty file, or if the file could not be loaded,
+    /// <paramref name="mediaType"/> will be ignored and an empty <see cref="DataProperty"/> instance will be created.
+    /// </remarks>
+    /// 
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
     /// initialized using the default constructor.</exception>
-    public VCardBuilder AddFile(string filePath,
-                                string? mimeType = null,
+    public VCardBuilder AddFile(string? filePath,
+                                string? mediaType = null,
                                 Action<ParameterSection>? parameters = null,
                                 Func<VCard, string?>? group = null)
     {
+        if(filePath is null)
+        {
+            return AddRawData(RawData.Empty, parameters, group);
+        }
+
         try
         {
-            return AddRawData(RawData.FromFile(filePath, mimeType));
+            return AddRawData(RawData.FromFile(filePath, mediaType));
         }
         catch
         {
@@ -213,7 +223,7 @@ public readonly struct RawDataBuilder
     /// content of an array of <see cref="byte"/>s, to the specified property of the 
     /// <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="bytes">The <see cref="byte"/>s to embed or <c>null</c>.</param>
+    /// <param name="bytes">The <see cref="byte"/>s to embed, or <c>null</c>.</param>
     /// <param name="mediaType">The Internet Media Type ("MIME type") of the <paramref name="bytes"/>,
     /// or <c>null</c> for <c>application/octet-stream</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
@@ -225,6 +235,12 @@ public readonly struct RawDataBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> to be 
     /// able to chain calls.</returns>
+    /// 
+    /// <remarks>
+    /// If <paramref name="bytes"/> is <c>null</c> or an empty array, <paramref name="mediaType"/> 
+    /// will be ignored and an empty <see cref="DataProperty"/> instance will be created.
+    /// </remarks>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
     /// initialized using the default constructor.</exception>
     public VCardBuilder AddBytes(byte[]? bytes,
@@ -251,11 +267,20 @@ public readonly struct RawDataBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
     /// to be able to chain calls.</returns>
+    /// 
     /// <remarks>
+    /// <para>
     /// The vCard standard only allows to write a password as plain text to the <c>KEY</c> property.
     /// <see cref="VCard.Keys">(See VCard.Keys.)</see>
+    /// </para>
+    /// <para>
+    /// If <paramref name="text"/> is <c>null</c>, or an empty <see cref="string"/>, <paramref name="mediaType"/>
+    /// will be ignored.
+    /// </para>
     /// </remarks>
+    /// 
     /// <seealso cref="VCard.Keys"/>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
     /// initialized using the default constructor.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -263,7 +288,7 @@ public readonly struct RawDataBuilder
                                 string? mediaType = null,
                                 Action<ParameterSection>? parameters = null,
                                 Func<VCard, string?>? group = null)
-        => AddRawData(RawData.FromText(text, mediaType), parameters, group);
+        => AddRawData(RawData.FromText(text ?? "", mediaType), parameters, group);
 
     /// <summary>
     /// Adds a <see cref="DataProperty"/> instance, which is newly initialized from a
@@ -282,6 +307,12 @@ public readonly struct RawDataBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
     /// to be able to chain calls.</returns>
+    /// 
+    /// <remarks>
+    /// If <paramref name="uri"/> is not an absolute <see cref="Uri"/>, a <see cref="DataProperty"/> instance
+    /// containing a <see cref="RawData"/> object that encapsulates a <see cref="string"/> will be created. If 
+    /// <paramref name="uri"/> is <c>null</c>, <paramref name="mediaType"/> will be ignored.
+    /// </remarks>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -310,6 +341,9 @@ public readonly struct RawDataBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
     /// to be able to chain calls.</returns>
+    /// 
+    /// <remarks>If <paramref name="data"/> is <c>null</c> or an empty <see cref="RawData"/> instance,
+    /// an empty <see cref="DataProperty"/> will be created.</remarks>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
