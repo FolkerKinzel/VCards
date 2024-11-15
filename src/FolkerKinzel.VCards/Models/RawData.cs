@@ -1,5 +1,14 @@
 using System.ComponentModel;
+using System.Security.Cryptography;
+using FolkerKinzel.DataUrls;
+using FolkerKinzel.MimeTypes;
+using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Deserializers;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Resources;
+using OneOf;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -9,9 +18,163 @@ namespace FolkerKinzel.VCards.Models;
 /// an absolute <see cref="System.Uri"/>, or a <see cref="string"/>.
 /// </summary>
 /// <seealso cref="DataProperty"/>
-public sealed partial class RawData
+public sealed class RawData
 {
-    internal RawData(object obj) => Object = obj;
+    internal RawData(object obj, string? mediaType)
+    {
+        Object = obj;
+        MediaType = mediaType;
+    }
+
+    /// <summary>
+    /// Creates a new <see cref="RawData"/> instance from the binary content of a file. </summary>
+    /// <param name="filePath">Path to the file.</param>
+    /// <param name="mediaType">The Internet Media Type ("MIME type") of the file content
+    /// or <c>null</c> to get the <paramref name="mediaType"/> automatically from the
+    /// file type extension.</param>
+    /// 
+    /// <returns>The newly created <see cref="RawData"/> instance.</returns>
+    /// <remarks>
+    /// If <paramref name="filePath"/> references an empty file, <paramref name="mediaType"/> 
+    /// will be ignored an the method returns a <see cref="RawData"/> instance
+    /// whose content is an empty <see cref="string"/>. 
+    /// <see cref="IsEmpty">(See RawData.IsEmpty)</see>
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="filePath"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="filePath"/> is not a valid file path.</exception>
+    /// <exception cref="IOException">The file could not be loaded.</exception>
+    public static RawData FromFile(string filePath,
+                                   string? mediaType = null)
+    {
+        byte[] bytes = LoadFile(filePath);
+
+        return bytes.Length == 0
+            ? Empty
+            : mediaType is null
+                ? new(bytes, MimeString.FromFileName(filePath))
+                : FromBytes(bytes, mediaType);
+    }
+
+    /// <summary>
+    /// Creates a new <see cref="RawData"/> instance from an array of 
+    /// <see cref="byte"/>s.
+    /// </summary>
+    /// <param name="bytes">The <see cref="byte"/>s to embed, or <c>null</c>.</param>
+    /// <param name="mediaType">The Internet Media Type ("MIME type") of the <paramref name="bytes"/>.
+    /// </param>
+    /// 
+    /// <returns>The newly created <see cref="RawData"/> instance.</returns>
+    /// <remarks>
+    /// If <paramref name="bytes"/> is <c>null</c> or an empty array, <paramref name="mediaType"/> 
+    /// will be ignored an the method returns a <see cref="RawData"/> instance
+    /// whose content is an empty <see cref="string"/>. 
+    /// <see cref="IsEmpty">(See RawData.IsEmpty)</see>
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"><paramref name="mediaType"/> is <c>null</c>.</exception>
+    public static RawData FromBytes(byte[]? bytes,
+                                    string mediaType = MimeString.OctetStream)
+    {
+        _ArgumentNullException.ThrowIfNull(mediaType, nameof(mediaType));
+
+        if (bytes is null || bytes.Length == 0)
+        {
+            return Empty;
+        }
+
+        mediaType = mediaType.Equals(MimeString.OctetStream, StringComparison.Ordinal)
+                      ? mediaType
+                      : MimeTypeInfo.TryParse(mediaType, out MimeTypeInfo mimeInfo)
+                            ? mimeInfo.ToString()
+                            : MimeString.OctetStream;
+
+        return new(bytes, mediaType);
+    }
+
+    /// <summary>
+    /// Creates a new <see cref="RawData"/> instance from text.
+    /// </summary>
+    /// <param name="text">The text, or <c>null</c>.</param>
+    /// <param name="mediaType">The Internet Media Type ("MIME type") of the <paramref name="text"/>,
+    /// or <c>null</c>.</param>
+    /// 
+    /// <returns>The newly created <see cref="RawData"/> instance.</returns>
+    /// <remarks>
+    /// <para>
+    /// The vCard standard only allows to write a password as plain text to the <c>KEY</c> property.
+    /// <see cref="VCard.Keys">(See VCard.Keys.)</see>
+    /// </para>
+    /// <para>
+    /// If <paramref name="text"/> is <c>null</c> or <see cref="string.Empty"/>, <paramref name="mediaType"/>
+    /// will be ignored.
+    /// </para>
+    /// </remarks>
+    /// <seealso cref="VCard.Keys"/>
+    public static RawData FromText(string? text,
+                                   string? mediaType = null)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return Empty;
+        }
+
+        mediaType =
+            MimeTypeInfo.TryParse(mediaType, out MimeTypeInfo mimeInfo)
+                           ? mimeInfo.ToString()
+                           : null;
+
+        return new(text, mediaType);
+    }
+
+    /// <summary>
+    /// Creates a new <see cref="RawData"/> instance from an absolute <see cref="Uri"/> 
+    /// that references external data.
+    /// </summary>
+    /// <param name="uri">An absolute <see cref="Uri"/>.</param>
+    /// <param name="mediaType">The Internet Media Type ("MIME type") of the 
+    /// data the <paramref name="uri"/> points to, or <c>null</c>.</param>
+    /// 
+    /// <returns>The newly created <see cref="RawData"/> instance.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="uri"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="uri"/> is not
+    /// an absolute <see cref="Uri"/>.</exception>
+    public static RawData FromUri(Uri uri,
+                                  string? mediaType = null)
+    {
+        _ArgumentNullException.ThrowIfNull(uri, nameof(uri));
+
+        mediaType = MimeTypeInfo.TryParse(mediaType, out MimeTypeInfo mimeInfo)
+                     ? mimeInfo.ToString()
+                     : null;
+
+        return uri.IsAbsoluteUri
+                ? new(uri, mediaType)
+                : throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)),
+                                              nameof(uri));
+    }
+
+    internal static RawData FromDataUrlInfo(in DataUrlInfo dataUrlInfo)
+    {
+        if (dataUrlInfo.TryGetEmbeddedData(out OneOf<string, byte[]> data))
+        {
+            string mediaType = dataUrlInfo.MimeType.ToString();
+
+            if (data.IsT0)
+            {
+                return FromText(data.AsT0, mediaType);
+            }
+
+            return FromBytes(data.AsT1, mediaType);
+        }
+                
+        return Empty;
+    }
+
+    private static RawData Empty { get; } = new("", null);
+
+    /// <summary>
+    /// <c>true</c> if the instance doesn't contain any data, otherwise <c>false</c>.
+    /// </summary>
+    public bool IsEmpty => ReferenceEquals(this, Empty);
 
     /// <summary>
     /// Gets the encapsulated <see cref="byte"/> array,
@@ -37,12 +200,25 @@ public sealed partial class RawData
     /// </summary>
     public object Object { get; }
 
-    [Obsolete("Use Object instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public object Value => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    /// <summary>Specifies the MIME type for the data.</summary>
+    /// <value>Internet Media Type (&quot;MIME type&quot;) according to RFC&#160;2046.</value>
+    /// <example><code language="none">text/plain</code></example>
+    public string? MediaType { get; }
+
+    /// <summary>
+    /// Gets an appropriate file type extension.
+    /// </summary>
+    /// <returns>The file type extension.</returns>
+    /// <remarks>
+    /// If <see cref="Object"/> is a <see cref="Uri"/>, the file type extension is for
+    /// the data the <see cref="System.Uri"/> references.
+    /// </remarks>
+    public string GetFileTypeExtension()
+        => MediaType is not null 
+            ? MimeString.ToFileTypeExtension(MediaType)
+            : Object is Uri uri 
+                ? UriConverter.GetFileTypeExtensionFromUri(uri) 
+                : ".txt";
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
@@ -126,9 +302,55 @@ public sealed partial class RawData
 
     /// <inheritdoc/>
     public override string ToString()
-        => Object is byte[] bytes
-            ? $"{bytes}: {bytes.Length} Bytes"
-            : Object.ToString() ?? string.Empty;
+        => IsEmpty ? "<Empty>"
+                   : Object is byte[] bytes
+                        ? $"{bytes}: {bytes.Length} Bytes"
+                        : Object.ToString() ?? string.Empty;
+
+    /// <summary>
+    /// Loads the file referenced by <paramref name="filePath"/>.
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"><paramref name="filePath"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="filePath"/> is not a valid file path.</exception>
+    /// <exception cref="IOException">The file could not be loaded.</exception>
+    [ExcludeFromCodeCoverage]
+    private static byte[] LoadFile(string filePath)
+    {
+        try
+        {
+            return File.ReadAllBytes(filePath);
+        }
+        catch (ArgumentNullException)
+        {
+            throw new ArgumentNullException(nameof(filePath));
+        }
+        catch (ArgumentException e)
+        {
+            throw new ArgumentException(e.Message, nameof(filePath), e);
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            throw new IOException(e.Message, e);
+        }
+        catch (NotSupportedException e)
+        {
+            throw new ArgumentException(e.Message, nameof(filePath), e);
+        }
+        catch (System.Security.SecurityException e)
+        {
+            throw new IOException(e.Message, e);
+        }
+        catch (PathTooLongException e)
+        {
+            throw new ArgumentException(e.Message, nameof(filePath), e);
+        }
+        catch (Exception e)
+        {
+            throw new IOException(e.Message, e);
+        }
+    }
 
 }
 

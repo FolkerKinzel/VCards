@@ -77,6 +77,9 @@
     <Compile Remove="Intls\Encodings\Base64.cs" />
     <Compile Remove="Intls\Extensions\DoubleExtension.cs" />
     <Compile Remove="Intls\Extensions\PolyfillExtension.cs" />
+    <Compile Remove="Intls\Models\EmbeddedBytesProperty.cs" />
+    <Compile Remove="Intls\Models\EmbeddedTextProperty.cs" />
+    <Compile Remove="Intls\Models\ReferencedDataProperty.cs" />
     <Compile Remove="Intls\Models\RelationTextProperty.cs" />
     <Compile Remove="Intls\Models\RelationUriProperty.cs" />
     <Compile Remove="Intls\Models\RelationUuidProperty.cs" />

@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.ComponentModel;
 using FolkerKinzel.DataUrls;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
@@ -8,6 +10,7 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 using OneOf;
@@ -21,171 +24,147 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="VCard.Logos"/>
 /// <seealso cref="VCard.Sounds"/>
 /// <seealso cref="VCard.Keys"/>
-public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
+public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 {
-    private RawData? _value;
-    private bool _isValueInitialized;
+    #region Remove with 8.0.1
+
+    [Obsolete("Use RawData.GetFileTypeExtension instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public string GetFileTypeExtension() => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use RawData.FromFile instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public static DataProperty FromFile(string filePath,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                                        string? mimeType = null,
+                                        string? group = null)
+               => throw new NotImplementedException();
+
+
+    [Obsolete("Use RawData.FromBytes instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public static DataProperty FromBytes(byte[]? bytes,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                                         string? mimeType = MimeString.OctetStream,
+                                         string? group = null)
+                => throw new NotImplementedException();
+
+
+    [Obsolete("Use RawData.FromText instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public static DataProperty FromText(string? passWord,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                                        string? mimeType = null,
+                                        string? group = null)
+            => throw new NotImplementedException();
+
+
+    [Obsolete("Use RawData.FromUri instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public static DataProperty FromUri(Uri? uri,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                                       string? mimeType = null,
+                                       string? group = null)
+        => throw new NotImplementedException();
+
+    #endregion
 
     /// <summary>Copy constructor.</summary>
     /// <param name="prop">The<see cref="DataProperty" /> object to clone.</param>
-    protected DataProperty(DataProperty prop) : base(prop) { }
+    private DataProperty(DataProperty prop) : base(prop) { Value = prop.Value; }
 
-    /// <summary>ctor</summary>
-    /// <param name="parameters" />
-    /// <param name="group" />
-    internal DataProperty(ParameterSection parameters, string? group)
-        : base(parameters, group) { }
-
-    /// <summary> The data provided by the <see cref="DataProperty" />.</summary>
-    public new RawData? Value
+    /// <summary>
+    /// Initializes a new <see cref="DataProperty"/> instance with a specified
+    /// <see cref="RawData"/> object.
+    /// </summary>
+    /// <param name="data">The <see cref="RawData"/> instance to use as <see cref="Value"/>.</param>
+    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
+    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
+    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public DataProperty(RawData data, string? group = null)
+        : base(new ParameterSection(), group)
     {
-        get
-        {
-            if (!_isValueInitialized)
-            {
-                InitializeValue();
-            }
+        Value = data ?? throw new ArgumentNullException(nameof(data));
+        Parameters.MediaType = data.MediaType;
+    }
 
-            return _value;
+    internal DataProperty(VcfRow vcfRow, VCdVersion version)
+        : base(vcfRow.Parameters, vcfRow.Group)
+    {
+        if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo dataUrlInfo))
+        {
+            Value = DataUrlConverter.ToRawData(vcfRow, ref dataUrlInfo);
+            Parameters.MediaType = Value.MediaType;
+            return;
+        }
+
+        if (Parameters.Encoding == Enc.Base64)
+        {
+            Value = RawData.FromBytes(Base64Helper.GetBytesOrNull(vcfRow.Value.Span));
+            return;
+        }
+
+        if (Parameters.DataType is Data.Uri or Data.Text)
+        {
+            Value = TryAsUri(vcfRow, version);
+            return;
+        }
+
+        // Quoted-Printable encoded binary data:
+        if (Parameters.Encoding == Enc.QuotedPrintable &&
+            Parameters.MediaType is not null)
+        {
+            ReadOnlySpan<char> valueSpan = vcfRow.Value.Span;
+
+            Value = RawData.FromBytes
+                   (
+                     valueSpan.IsWhiteSpace()
+                            ? null
+                            : QuotedPrintable.DecodeData(valueSpan),
+                     Parameters.MediaType
+                     );
+
+            return;
+        }
+
+        // Missing data type:
+        Value = TryAsUri(vcfRow, version);
+
+        ///////////////////////////////////////////////////////////////
+
+        static RawData TryAsUri(VcfRow vcfRow, VCdVersion version)
+        {
+            string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
+                ? vcfRow.Value.Span.UnMaskAndDecodeValue(vcfRow.Parameters.CharSet)
+                : vcfRow.Value.Span.UnMaskValue(version);
+
+            return UriConverter.TryConvertToAbsoluteUri(val, out Uri? uri)
+                       ? RawData.FromUri(uri, vcfRow.Parameters.MediaType)
+                       : RawData.FromText(val, vcfRow.Parameters.MediaType);
         }
     }
 
+    /// <summary> The data provided by the <see cref="DataProperty" />.</summary>
+    public new RawData Value { get; }
+
     /// <inheritdoc />
-    [MemberNotNullWhen(false, nameof(Value))]
-    public override bool IsEmpty => base.IsEmpty;
-
-    /// <summary>
-    /// Gets an appropriate file type extension for <see cref="Value"/>.
-    /// </summary>
-    /// <returns>An appropriate file type extension for <see cref="Value"/>.
-    /// </returns>
-    /// <remarks>
-    /// <para>If value is a <see cref="Uri"/>, the file type extension is for
-    /// the data the <see cref="Uri"/> references.</para>
-    /// </remarks>
-    public abstract string GetFileTypeExtension();
-
-    /// <summary>
-    /// Creates a new <see cref="DataProperty"/> instance that embeds the binary content 
-    /// of a file in a vCard.
-    /// </summary>
-    /// <param name="filePath">Path to the file whose content is to embed.</param>
-    /// <param name="mimeType">The Internet Media Type ("MIME type") of the file content
-    /// or <c>null</c> to get the <paramref name="mimeType"/> automatically from the
-    /// file type extension.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="filePath"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="filePath"/> is not a valid file path.</exception>
-    /// <exception cref="IOException">The file could not be loaded.</exception>
-    public static DataProperty FromFile(string filePath,
-                                        string? mimeType = null,
-                                        string? group = null)
-       => mimeType is null
-            ? new EmbeddedBytesProperty(LoadFile(filePath),
-                                        group,
-                                        new ParameterSection()
-                                        {
-                                            MediaType = MimeString.FromFileName(filePath)
-                                        })
-            : MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-               ? new EmbeddedBytesProperty(LoadFile(filePath),
-                                           group,
-                                           new ParameterSection() { MediaType = mimeInfo.ToString() })
-               : FromFile(filePath, null, group);
-
-    /// <summary>
-    /// Creates a new <see cref="DataProperty"/> instance that embeds an array of 
-    /// <see cref="byte"/>s in a VCF file.
-    /// </summary>
-    /// <param name="bytes">The <see cref="byte"/>s to embed or <c>null</c>.</param>
-    /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="bytes"/>
-    /// or <c>null</c> for <c>application/octet-stream</c>.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
-    public static DataProperty FromBytes(byte[]? bytes,
-                                         string? mimeType = MimeString.OctetStream,
-                                         string? group = null)
-        => new EmbeddedBytesProperty
-           (
-             bytes,
-             group,
-             new ParameterSection()
-             {
-                 MediaType = MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-                              ? mimeInfo.ToString()
-                              : MimeString.OctetStream
-             }
-           );
-
-    /// <summary>
-    /// Creates a new <see cref="DataProperty"/> instance that embeds text in a vCard.
-    /// </summary>
-    /// <param name="passWord">The text to embed or <c>null</c>.</param>
-    /// <param name="mimeType">The Internet Media Type ("MIME type") of the <paramref name="passWord"/>
-    /// or <c>null</c>.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
-    /// <remarks>
-    /// The vCard standard only allows to write a password as plain text to the <c>KEY</c> property.
-    /// <see cref="VCard.Keys">(See VCard.Keys.)</see>
-    /// </remarks>
-    /// <seealso cref="VCard.Keys"/>
-    public static DataProperty FromText(string? passWord,
-                                        string? mimeType = null,
-                                        string? group = null)
-    {
-        var textProp = new TextProperty(passWord, group);
-        textProp.Parameters.MediaType =
-            MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-                           ? mimeInfo.ToString()
-                           : null;
-        textProp.Parameters.DataType = Data.Text;
-
-        return new EmbeddedTextProperty(textProp);
-    }
-
-    /// <summary>
-    /// Creates a new <see cref="DataProperty"/> instance from an absolute <see cref="Uri"/> 
-    /// that references external data.
-    /// </summary>
-    /// <param name="uri">An absolute <see cref="Uri"/> or <c>null</c>.</param>
-    /// <param name="mimeType">The Internet Media Type ("MIME type") of the 
-    /// data the <paramref name="uri"/> points to, or <c>null</c>.</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The newly created <see cref="DataProperty"/> instance.</returns>
-    /// <exception cref="ArgumentException"><paramref name="uri"/> is neither <c>null</c> nor
-    /// an absolute <see cref="Uri"/>.</exception>
-    public static DataProperty FromUri(Uri? uri,
-                                       string? mimeType = null,
-                                       string? group = null)
-        => uri is null ? FromBytes(null, mimeType, group)
-                       : new ReferencedDataProperty
-           (
-             new UriProperty(uri.IsAbsoluteUri
-                               ? uri
-                               : throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)),
-                                                             nameof(uri)),
-                             new ParameterSection()
-                             {
-                                 MediaType = MimeTypeInfo.TryParse(mimeType, out MimeTypeInfo mimeInfo)
-                                                                  ? mimeInfo.ToString()
-                                                                  : null
-                             },
-                             group)
-           );
+    public override bool IsEmpty => Value.IsEmpty;
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => Value?.ToString() ?? base.ToString();
+    public override string ToString() => Value.ToString();
 
     /// <inheritdoc />
     IEnumerator<DataProperty> IEnumerable<DataProperty>.GetEnumerator()
@@ -200,119 +179,72 @@ public abstract class DataProperty : VCardProperty, IEnumerable<DataProperty>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
+    /// <inheritdoc/>
+    public override object Clone() => new DataProperty(this);
 
-    internal static DataProperty Parse(VcfRow vcfRow, VCdVersion version)
+    internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {
-        if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo dataUrlInfo))
+        base.PrepareForVcfSerialization(serializer);
+
+        if(IsEmpty)
         {
-            return DataUrlConverter.ToDataProperty(vcfRow, ref dataUrlInfo);
+            return;
         }
 
-        if (vcfRow.Parameters.Encoding == Enc.Base64)
+        if (Value.Object is byte[])
         {
-            return new EmbeddedBytesProperty
-                       (
-                        Base64Helper.GetBytesOrNull(vcfRow.Value.Span),
-                        vcfRow.Group,
-                        vcfRow.Parameters
-                       );
+            Parameters.ContentLocation = Loc.Inline;
+            Parameters.DataType = Data.Binary;
+            Parameters.Encoding = Enc.Base64;
         }
-
-        if (vcfRow.Parameters.DataType is Data.Uri or Data.Text)
+        else if (Value.Object is Uri uri)
         {
-            return TryAsUri(vcfRow, version);
+            if (serializer.Version == VCdVersion.V2_1)
+            {
+                if (UriConverter.IsContentId(uri))
+                {
+                    Parameters.ContentLocation = Loc.Cid;
+                }
+                else if (Parameters.ContentLocation != Loc.Cid)
+                {
+                    Parameters.ContentLocation = Loc.Url;
+                }
+            }
+            else
+            {
+                Parameters.DataType = Data.Uri;
+            }
         }
-
-        // Quoted-Printable encoded binary data:
-        if (vcfRow.Parameters.Encoding == Enc.QuotedPrintable &&
-            vcfRow.Parameters.MediaType is not null)
+        else
         {
-            ReadOnlySpan<char> valueSpan = vcfRow.Value.Span;
+            Parameters.DataType = Data.Text;
 
-            return new EmbeddedBytesProperty
-                   (
-                     valueSpan.IsWhiteSpace()
-                            ? null
-                            : QuotedPrintable.DecodeData(valueSpan),
-                     vcfRow.Group,
-                     vcfRow.Parameters
-                     );
-        }
-
-        // Missing data type:
-        return TryAsUri(vcfRow, version);
-
-        ///////////////////////////////////////////////////////////////
-
-        static DataProperty TryAsUri(VcfRow vcfRow, VCdVersion version)
-        {
-            string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? vcfRow.Value.Span.UnMaskAndDecodeValue(vcfRow.Parameters.CharSet)
-                : vcfRow.Value.Span.UnMaskValue(version);
-
-            return UriConverter.TryConvertToAbsoluteUri(val, out Uri? uri)
-                       ? new ReferencedDataProperty
-                              (
-                               new UriProperty(uri, vcfRow.Parameters, vcfRow.Group)
-                              )
-                       : new EmbeddedTextProperty(new TextProperty(vcfRow, version));
+            if (serializer.Version == VCdVersion.V2_1 && Value.String.NeedsToBeQpEncoded())
+            {
+                Parameters.Encoding = Enc.QuotedPrintable;
+                Parameters.CharSet = VCard.DEFAULT_CHARSET;
+            }
         }
     }
 
-    private void InitializeValue()
+    internal override void AppendValue(VcfSerializer serializer)
     {
-        _isValueInitialized = true;
-        _value = this switch
+        if (IsEmpty)
         {
-            EmbeddedBytesProperty bt => bt.IsEmpty ? null : new RawData(bt.Value),
-            EmbeddedTextProperty text => text.IsEmpty ? null : new RawData(text.Value),
-            ReferencedDataProperty uri => new RawData(uri.Value),
-            _ => null
-        };
-    }
+            return;
+        }
 
-    /// <summary>
-    /// Loads the file referenced by <paramref name="filePath"/>.
-    /// </summary>
-    /// <param name="filePath"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"><paramref name="filePath"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="filePath"/> is not a valid file path.</exception>
-    /// <exception cref="IOException">The file could not be loaded.</exception>
-    [ExcludeFromCodeCoverage]
-    private static byte[] LoadFile(string filePath)
-    {
-        try
+        if (Value.Object is byte[] bytes)
         {
-            return File.ReadAllBytes(filePath);
+            serializer.AppendBase64EncodedData(Value.Bytes);
         }
-        catch (ArgumentNullException)
+        else if (Value.Object is Uri uri)
         {
-            throw new ArgumentNullException(nameof(filePath));
+            _ = serializer.Builder.Append(uri.AbsoluteUri);
         }
-        catch (ArgumentException e)
+        else
         {
-            throw new ArgumentException(e.Message, nameof(filePath), e);
-        }
-        catch (UnauthorizedAccessException e)
-        {
-            throw new IOException(e.Message, e);
-        }
-        catch (NotSupportedException e)
-        {
-            throw new ArgumentException(e.Message, nameof(filePath), e);
-        }
-        catch (System.Security.SecurityException e)
-        {
-            throw new IOException(e.Message, e);
-        }
-        catch (PathTooLongException e)
-        {
-            throw new ArgumentException(e.Message, nameof(filePath), e);
-        }
-        catch (Exception e)
-        {
-            throw new IOException(e.Message, e);
+            StringSerializer.AppendVcf(serializer.Builder, Value.String, Parameters, serializer.Version);
         }
     }
 }

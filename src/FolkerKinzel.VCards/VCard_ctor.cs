@@ -186,16 +186,16 @@ public sealed partial class VCard
                     Categories = Concat(Categories, new StringCollectionProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.SOUND:
-                    Sounds = Concat(Sounds, DataProperty.Parse(vcfRow, this.Version));
+                    Sounds = Concat(Sounds, new DataProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.PHOTO:
-                    Photos = Concat(Photos, DataProperty.Parse(vcfRow, this.Version));
+                    Photos = Concat(Photos, new DataProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.LOGO:
-                    Logos = Concat(Logos, DataProperty.Parse(vcfRow, this.Version));
+                    Logos = Concat(Logos, new DataProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.KEY:
-                    Keys = Concat(Keys, DataProperty.Parse(vcfRow, this.Version));
+                    Keys = Concat(Keys, new DataProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.SORT_STRING: // nur vCard 3.0
                     if (vcfRowsParsed < vcfRowsToParse)

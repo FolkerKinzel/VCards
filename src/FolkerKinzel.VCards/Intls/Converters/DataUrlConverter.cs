@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class DataUrlConverter
 {
-    internal static DataProperty ToDataProperty(VcfRow vcfRow, ref DataUrlInfo dataUrlInfo)
+    internal static RawData ToRawData(VcfRow vcfRow, ref DataUrlInfo dataUrlInfo)
     {
         ReadOnlyMemory<char> mime = dataUrlInfo.MimeType;
 
@@ -30,10 +30,9 @@ internal static class DataUrlConverter
             CopyDataUrl(mem.Span, mime.Span, dataUrlInfo.Data, base64Encoded);
 
             _ = DataUrl.TryParse(mem.Slice(0, length), out dataUrlInfo);
-            return FromDataUrlInfo(vcfRow, in dataUrlInfo);
         }
 
-        return FromDataUrlInfo(vcfRow, in dataUrlInfo);
+        return RawData.FromDataUrlInfo(in dataUrlInfo);
     }
 
     private static bool UnMaskMimeType(ref ReadOnlyMemory<char> mime, out bool isBase64)
@@ -102,20 +101,5 @@ internal static class DataUrlConverter
             span = span.Slice(1);
             data.CopyTo(span);
         }
-    }
-
-    private static DataProperty FromDataUrlInfo(VcfRow vcfRow, in DataUrlInfo dataUrlInfo)
-    {
-        DataProperty prop = dataUrlInfo.TryGetEmbeddedData(out OneOf<string, byte[]> data)
-                ? data.Match<DataProperty>
-                   (
-                    s => new EmbeddedTextProperty(new TextProperty(s, vcfRow)),
-                    b => new EmbeddedBytesProperty(b, vcfRow.Group, vcfRow.Parameters)
-                    )
-                : DataProperty.FromText(vcfRow.Value.ToString(), dataUrlInfo.MimeType.ToString(), vcfRow.Group);
-
-        prop.Parameters.MediaType = dataUrlInfo.MimeType.ToString();
-
-        return prop;
     }
 }
