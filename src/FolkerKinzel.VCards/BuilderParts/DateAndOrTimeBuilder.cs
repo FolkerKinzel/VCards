@@ -110,7 +110,7 @@ public readonly struct DateAndOrTimeBuilder
     /// as argument.
     /// Its return value will be the new content of the specified <see cref="VCard"/> property.
     /// </param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had

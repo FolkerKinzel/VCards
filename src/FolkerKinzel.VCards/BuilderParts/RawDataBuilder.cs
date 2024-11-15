@@ -27,7 +27,7 @@ namespace FolkerKinzel.VCards.BuilderParts;
 [SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals",
     Justification = "Overriding does not change the default behavior.")]
 #endif
-public readonly struct DataBuilder
+public readonly struct RawDataBuilder
 {
     private readonly VCardBuilder? _builder;
     private readonly Prop _prop;
@@ -35,7 +35,7 @@ public readonly struct DataBuilder
     [MemberNotNull(nameof(_builder))]
     private VCardBuilder Builder => _builder ?? throw new InvalidOperationException(Res.DefaultCtor);
 
-    internal DataBuilder(VCardBuilder builder, Prop prop)
+    internal RawDataBuilder(VCardBuilder builder, Prop prop)
     {
         _builder = builder;
         _prop = prop;
@@ -51,7 +51,7 @@ public readonly struct DataBuilder
     /// objects always the lowest <see cref="ParameterSection.Preference"/> (100), independently
     /// of their position in the collection, or <c>false</c> to treat empty <see cref="VCardProperty"/> 
     /// objects like any other. (<c>null</c> references are always skipped.)</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -66,7 +66,7 @@ public readonly struct DataBuilder
     /// Resets the <see cref="ParameterSection.Preference"/> properties of 
     /// the items in in the specified <see cref="VCard"/> property to the lowest value (100).
     /// </summary>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -87,7 +87,7 @@ public readonly struct DataBuilder
     /// of empty <see cref="VCardProperty"/> objects to <c>null</c>, or <c>false</c> to treat 
     /// empty <see cref="VCardProperty"/> objects like any other. (<c>null</c> references are 
     /// always skipped.)</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -102,7 +102,7 @@ public readonly struct DataBuilder
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
     /// the items in in the specified <see cref="VCard"/> property to <c>null</c>.
     /// </summary>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -122,7 +122,7 @@ public readonly struct DataBuilder
     /// specified <see cref="VCard"/> property and <paramref name="data"/> as arguments. Its return value 
     /// will be the new content of the specified property.</param>
     /// <param name="data">The data to pass to <paramref name="func"/>.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/>
     /// to be able to chain calls.</returns>
     /// <remarks>
     /// This overload allows to pass external data to the delegate without having to use closures.
@@ -145,7 +145,7 @@ public readonly struct DataBuilder
     /// A function called with a collection of the non-<c>null</c> items of the specified <see cref="VCard"/> property
     /// as argument.
     /// Its return value will be the new content of the specified <see cref="VCard"/> property.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
@@ -184,7 +184,7 @@ public readonly struct DataBuilder
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// 
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> to 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
     /// <example>
@@ -224,7 +224,7 @@ public readonly struct DataBuilder
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is called 
     /// with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// 
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> to be 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> to be 
     /// able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
     /// initialized using the default constructor.</exception>
@@ -257,7 +257,7 @@ public readonly struct DataBuilder
     /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// 
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
     /// to be able to chain calls.</returns>
     /// <remarks>
     /// The vCard standard only allows to write a password as plain text to the <c>KEY</c> property.
@@ -296,7 +296,7 @@ public readonly struct DataBuilder
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is called
     /// with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// 
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
     /// to be able to chain calls.</returns>
     /// <exception cref="ArgumentException"><paramref name="uri"/> is neither <c>null</c> nor an absolute 
     /// <see cref="Uri"/>.</exception>
@@ -320,7 +320,7 @@ public readonly struct DataBuilder
     /// <summary>
     /// Sets the specified property of the <see cref="VCardBuilder.VCard"/> to <c>null</c>.
     /// </summary>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
@@ -336,7 +336,7 @@ public readonly struct DataBuilder
     /// </summary>
     /// <param name="predicate">A function that returns <c>true</c> for <see cref="DataProperty"/> objects 
     /// that shall be removed.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DataBuilder"/> 
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>

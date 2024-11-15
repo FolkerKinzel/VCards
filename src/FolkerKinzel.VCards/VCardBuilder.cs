@@ -310,7 +310,7 @@ public sealed class VCardBuilder
     /// <c>(2,3,4)</c></summary>
     /// <value>It may point to an external URL, may be plain text, or may be embedded
     /// in the VCF file as a Base64 encoded block of text.</value>
-    public DataBuilder Keys => new(this, Prop.Keys);
+    public RawDataBuilder Keys => new(this, Prop.Keys);
 
     /// <summary> <c>KIND</c>: Defines the type of entity, that this vCard represents.
     /// <c>(4)</c></summary>
@@ -336,7 +336,7 @@ public sealed class VCardBuilder
     /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
     /// is associated with the individual to which the <see cref="VCard"/> belongs. 
     /// <c>(2,3,4)</c></summary>
-    public DataBuilder Logos => new(this, Prop.Logos);
+    public RawDataBuilder Logos => new(this, Prop.Logos);
 
     /// <summary> <c>MAILER</c>: Name of the e-mail program. <c>(2,3)</c></summary>
     public TextSingletonBuilder Mailer => new(this, Prop.Mailer);
@@ -535,7 +535,7 @@ public sealed class VCardBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public DataBuilder Photos => new(this, Prop.Photos);
+    public RawDataBuilder Photos => new(this, Prop.Photos);
 
     /// <summary> <c>PRODID</c>: The identifier for the product that created the vCard
     /// object. <c>(3,4)</c></summary>
@@ -587,7 +587,7 @@ public sealed class VCardBuilder
 
     /// <summary> <c>SOUND</c>: Specifies the pronunciation of the <see cref="VCard.DisplayNames"
     /// /> property of the <see cref="VCard" />-object. <c>(2,3,4)</c></summary>
-    public DataBuilder Sounds => new(this, Prop.Sounds);
+    public RawDataBuilder Sounds => new(this, Prop.Sounds);
 
     /// <summary> <c>SOURCE</c>: URLs that can be used to get the latest version of
     /// this vCard. <c>(3,4)</c></summary>
