@@ -98,12 +98,12 @@ public sealed partial class DateAndOrTime
     {
         (DateOnly Value, bool Result) result = _oneOf.Match<(DateOnly Value, bool Result)>
          (
-          dateOnly => (dateOnly, true),
-          dtOffset => dtOffset.HasDate()
+          static dateOnly => (dateOnly, true),
+          static dtOffset => dtOffset.HasDate()
                         ? (new DateOnly(dtOffset.Year, dtOffset.Month, dtOffset.Day), true)
                         : (default, false),
-          timeOnly => (default, false),
-          str => System.DateOnly.TryParse(str,
+          static timeOnly => (default, false),
+          static str => System.DateOnly.TryParse(str,
                                           CultureInfo.CurrentCulture,
                                           DateTimeStyles.AllowWhiteSpaces,
                                           out DateOnly dOnly) ? (dOnly, true)
