@@ -84,9 +84,7 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
             goto done;
         }
 
-        string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? valSpan.UnMaskAndDecodeValue(vcfRow.Parameters.CharSet)
-                : valSpan.UnMaskValue(version);
+        string? val = StringDeserializer.Deserialize(vcfRow, version);
 
         if (string.IsNullOrWhiteSpace(val))
         {

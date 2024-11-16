@@ -45,9 +45,7 @@ public sealed class ContactIDProperty : VCardProperty
     {
         if (Parameters.DataType == Data.Text)
         {
-            string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? vcfRow.Value.Span.UnMaskAndDecodeValue(vcfRow.Parameters.CharSet)
-                : vcfRow.Value.Span.UnMaskValue(version);
+            string? val = StringDeserializer.Deserialize(vcfRow, version);
 
             Value = string.IsNullOrWhiteSpace(val) ? ContactID.Empty : ContactID.Create(val);
             return;

@@ -33,7 +33,7 @@ internal sealed class DateTimeOffsetProperty : DateAndOrTimeProperty
     }
 
     internal override void AppendValue(VcfSerializer serializer)
-        => DateTimeConverter.AppendDateAndOrTimeTo(serializer.Builder,
+        => DateTimeConverter.AppendDateTimeOffsetTo(serializer.Builder,
                                                         Value,
                                                         serializer.Version);
 }

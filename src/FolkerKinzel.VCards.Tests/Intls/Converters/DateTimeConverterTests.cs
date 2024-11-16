@@ -109,7 +109,7 @@ public class DateTimeConverterTests
             var builder = new StringBuilder();
             dt.Switch(
                 dateOnly => DateTimeConverter.AppendDateTo(builder, dateOnly, version),
-                dto => DateTimeConverter.AppendDateAndOrTimeTo(builder, dto, version)
+                dto => DateTimeConverter.AppendDateTimeOffsetTo(builder, dto, version)
             );
             return builder.ToString();
         }
@@ -156,7 +156,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest1()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateAndOrTimeTo(builder, default, VCdVersion.V3_0);
+        DateTimeConverter.AppendDateTimeOffsetTo(builder, default, VCdVersion.V3_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -165,7 +165,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest2a()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
+        DateTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -173,7 +173,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest2b()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 2, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
+        DateTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 2, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -182,7 +182,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest2c()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V3_0);
+        DateTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V3_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -199,7 +199,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest3()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateAndOrTimeTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0);
+        DateTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0);
         string s = builder.ToString();
         Assert.IsTrue(s.StartsWith("--"));
     }

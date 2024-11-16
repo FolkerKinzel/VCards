@@ -25,19 +25,9 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
         : base(new ParameterSection(), group)
         => Value = string.IsNullOrWhiteSpace(value) ? null : value;
 
-    internal TextProperty(string value, VcfRow vcfRow)
-        : base(vcfRow.Parameters, vcfRow.Group)
-        => Value = value.Length == 0 ? null : value;
-
     internal TextProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
-    {
-        string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? vcfRow.Value.Span.UnMaskAndDecodeValue(vcfRow.Parameters.CharSet)
-                : vcfRow.Value.Span.UnMaskValue(version);
-
-        Value = val.Length == 0 ? null : val;
-    }
+        => Value = StringDeserializer.Deserialize(vcfRow, version);
 
     /// <summary>The data provided by the <see cref="TextProperty" />.</summary>
     public new virtual string? Value

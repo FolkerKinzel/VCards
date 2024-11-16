@@ -17,17 +17,8 @@ internal static class UriConverter
 
         value = value.Trim();
 
-        if (Uri.TryCreate(value, UriKind.Absolute, out uri))
-        {
-            return true;
-        }
-
-        if (value.StartsWith("http"))
-        {
-            return false;
-        }
-
-        return TryConvertToAbsoluteUri("http://" + value, out uri);
+        return Uri.TryCreate(value, UriKind.Absolute, out uri)
+               || (!value.StartsWith("http") && TryConvertToAbsoluteUri("http://" + value, out uri));
     }
 
     internal static bool IsContentId(this Uri value)

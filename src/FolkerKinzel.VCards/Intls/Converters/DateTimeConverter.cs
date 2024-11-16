@@ -1,6 +1,7 @@
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
@@ -58,14 +59,15 @@ internal sealed class DateTimeConverter
     ];
 
 #if NET5_0_OR_GREATER
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
+    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", 
+        Justification = "Not localizable")]
 #endif
-    internal bool TryParse(ReadOnlySpan<char> roSpan, out OneOf<DateOnly, DateTimeOffset> oneOf)
+    internal bool TryParse(ReadOnlySpan<char> roSpan, [NotNullWhen(true)] out DateAndOrTime? dateAndOrTime)
     {
         Debug.Assert(!roSpan.StartsWith('T'));
         Debug.Assert(roSpan.Trim().Length == roSpan.Length);
 
-        oneOf = default;
+        dateAndOrTime = null;
 
         // Test the length to avoid a StackOverflowException when stackalloc
         if (roSpan.Length > MAX_DATE_TIME_STRING_LENGTH)
@@ -76,6 +78,31 @@ internal sealed class DateTimeConverter
         // date-noreduc zu date-complete
         if (roSpan.StartsWith("---", StringComparison.Ordinal))
         {
+            return TryParseDateNoReduc(roSpan, ref dateAndOrTime);
+        }
+
+        if (roSpan.StartsWith("--", StringComparison.Ordinal))
+        {
+            // "--MM" zu "0004-MM":
+            // Note the use of YYYY-MM in the second example above. YYYYMM is
+            // disallowed to prevent confusion with YYMMDD.
+            if (roSpan.Length == 4)
+            {
+                return TryParseMonthWithoutYear(roSpan, ref dateAndOrTime);
+            }
+
+            // "--MMdd" zu "0004MMdd" ("0004" + s.Substring(2))
+            // Note also that YYYY-MM-DD is disallowed since we are using the basic format instead
+            // of the extended format.
+            return TryParseMonthDayWithoutYear(roSpan, ref dateAndOrTime);
+        }
+
+        return TryParseInternal(roSpan, ref dateAndOrTime);
+
+        //////////////////////////////////////////////////////////////////////////////////////
+
+        bool TryParseDateNoReduc(ReadOnlySpan<char> roSpan, ref DateAndOrTime? dateAndOrTime)
+        {
             roSpan = roSpan.Slice(3);
             ReadOnlySpan<char> firstLeapYearJanuary = "000401".AsSpan();
 
@@ -85,69 +112,54 @@ internal sealed class DateTimeConverter
             Span<char> slice = span.Slice(firstLeapYearJanuary.Length);
             roSpan.CopyTo(slice);
 
-            if (TryParseInternal(span, ref oneOf))
+            return TryParseInternal(span, ref dateAndOrTime);
+        }
+
+        bool TryParseMonthWithoutYear(ReadOnlySpan<char> roSpan, ref DateAndOrTime? dateAndOrTime)
+        {
+            Debug.Assert(roSpan.StartsWith("--", StringComparison.Ordinal));
+            Debug.Assert(roSpan.Length == 4);
+
+            roSpan = roSpan.Slice(2);
+            ReadOnlySpan<char> leapYear = "0004-".AsSpan();
+
+            Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
+
+            leapYear.CopyTo(span);
+            Span<char> slice = span.Slice(leapYear.Length);
+            roSpan.CopyTo(slice);
+
+            if (DateOnly.TryParseExact(span,
+                                       _dateOnlyFormats,
+                                       CultureInfo.InvariantCulture,
+                                       DateTimeStyles.AllowWhiteSpaces,
+                                       out DateOnly dateOnly))
             {
+                dateAndOrTime = dateOnly;
                 return true;
             }
+
+            return false;
         }
-        else if (roSpan.StartsWith("--", StringComparison.Ordinal))
+
+        bool TryParseMonthDayWithoutYear(ReadOnlySpan<char> roSpan, ref DateAndOrTime? dateAndOrTime)
         {
-            // "--MM" zu "0004-MM":
-            // Note the use of YYYY-MM in the second example above.  YYYYMM is
-            // disallowed to prevent confusion with YYMMDD.
-            if (roSpan.Length == 4)
-            {
-                roSpan = roSpan.Slice(2);
-                ReadOnlySpan<char> leapYear = "0004-".AsSpan();
+            Debug.Assert(roSpan.StartsWith("--", StringComparison.Ordinal));
 
-                Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
+            roSpan = roSpan.Slice(2);
+            ReadOnlySpan<char> leapYear = "0004".AsSpan();
 
-                leapYear.CopyTo(span);
-                Span<char> slice = span.Slice(leapYear.Length);
-                roSpan.CopyTo(slice);
+            Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
 
-                if (DateOnly.TryParseExact(span,
-                                           _dateOnlyFormats,
-                                           CultureInfo.InvariantCulture,
-                                           DateTimeStyles.AllowWhiteSpaces,
-                                           out DateOnly dateOnly))
-                {
-                    oneOf = dateOnly;
-                    return true;
-                }
-            }
-            else
-            {
-                // "--MMdd" zu "0004MMdd" ("0004" + s.Substring(2))
-                // Note also that YYYY-MM-DD is disallowed since we are using the basic format instead
-                // of the extended format.
-                roSpan = roSpan.Slice(2);
-                ReadOnlySpan<char> leapYear = "0004".AsSpan();
+            leapYear.CopyTo(span);
+            Span<char> slice = span.Slice(leapYear.Length);
+            roSpan.CopyTo(slice);
 
-                Span<char> span = stackalloc char[leapYear.Length + roSpan.Length];
-
-                leapYear.CopyTo(span);
-                Span<char> slice = span.Slice(leapYear.Length);
-                roSpan.CopyTo(slice);
-
-                if (TryParseInternal(span, ref oneOf))
-                {
-                    return true;
-                }
-            }
+            return TryParseInternal(span, ref dateAndOrTime);
         }
-        else
-        {
-            if (TryParseInternal(roSpan, ref oneOf))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
-    private bool TryParseInternal(ReadOnlySpan<char> span, ref OneOf<DateOnly, DateTimeOffset> oneOf)
+    private bool TryParseInternal(ReadOnlySpan<char> span, [NotNullWhen(true)] ref DateAndOrTime? oneOf)
     {
         DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
@@ -246,7 +258,7 @@ internal sealed class DateTimeConverter
         }//switch
     }
 
-    internal static void AppendDateAndOrTimeTo(StringBuilder builder,
+    internal static void AppendDateTimeOffsetTo(StringBuilder builder,
                                                DateTimeOffset dt,
                                                VCdVersion version)
     {

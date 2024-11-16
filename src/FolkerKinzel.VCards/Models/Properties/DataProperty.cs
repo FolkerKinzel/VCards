@@ -92,7 +92,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentNullException"><paramref name="data"/> is <c>null</c>.</exception>
     public DataProperty(RawData data, string? group = null)
         : base(new ParameterSection(), group)
     {
@@ -142,13 +142,11 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
         static RawData TryAsUri(VcfRow vcfRow, VCdVersion version)
         {
-            string val = vcfRow.Parameters.Encoding == Enc.QuotedPrintable
-                ? vcfRow.Value.Span.UnMaskAndDecodeValue(vcfRow.Parameters.CharSet)
-                : vcfRow.Value.Span.UnMaskValue(version);
+            string? val = StringDeserializer.Deserialize(vcfRow, version);
 
             return UriConverter.TryConvertToAbsoluteUri(val, out Uri? uri)
                        ? RawData.FromUri(uri, vcfRow.Parameters.MediaType)
-                       : RawData.FromText(val, vcfRow.Parameters.MediaType);
+                       : RawData.FromText(val ?? "", vcfRow.Parameters.MediaType);
         }
     }
 

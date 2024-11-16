@@ -3,7 +3,7 @@ using System.Globalization;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models.Properties;
-using OneOf;
+using DateTimeConverter = FolkerKinzel.VCards.Intls.Converters.DateTimeConverter;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -17,23 +17,26 @@ namespace FolkerKinzel.VCards.Models;
 public sealed class DateAndOrTime
 {
     private DateAndOrTime(DateOnly value) => DateOnly = value;
-    
+
     private DateAndOrTime(DateTimeOffset value) => DateTimeOffset = value;
-   
+
     private DateAndOrTime(TimeOnly value) => TimeOnly = value;
-    
+
     private DateAndOrTime(string value) => String = value;
 
     public static DateAndOrTime Create(DateOnly value) => new(value);
-            
-    public static DateAndOrTime Create(DateTimeOffset value) => new(value);
-            
+
+    public static DateAndOrTime Create(DateTimeOffset value) 
+        => !DateTimeConverter.HasDate(value) && !DateTimeConverter.HasTime(value) 
+            ? Empty 
+            : new(value);
+
     public static DateAndOrTime Create(TimeOnly value) => new(value);
-            
-    public static  DateAndOrTime Create(string? value) => string.IsNullOrWhiteSpace(value) ? Empty : new(value);
+
+    public static DateAndOrTime Create(string? value) => string.IsNullOrWhiteSpace(value) ? Empty : new(value);
 
     public static implicit operator DateAndOrTime(DateOnly value) => Create(value);
-   
+
     public static implicit operator DateAndOrTime(DateTimeOffset value) => Create(value);
 
     public static implicit operator DateAndOrTime(TimeOnly value) => Create(value);
@@ -84,7 +87,7 @@ public sealed class DateAndOrTime
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     public string? String { get; }
-    
+
 
     [Obsolete("Use Object instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -173,7 +176,7 @@ public sealed class DateAndOrTime
 
     public bool TryAsTimeOnly(out TimeOnly value)
     {
-        if(TimeOnly.HasValue)
+        if (TimeOnly.HasValue)
         {
             value = TimeOnly.Value;
             return true;
@@ -208,11 +211,11 @@ public sealed class DateAndOrTime
                        Action<TimeOnly>? timeAction,
                        Action<string>? stringAction)
     {
-        if(DateOnly.HasValue)
+        if (DateOnly.HasValue)
         {
             dateAction?.Invoke(DateOnly.Value);
         }
-        else if(DateTimeOffset.HasValue)
+        else if (DateTimeOffset.HasValue)
         {
             dtOffsetAction?.Invoke(DateTimeOffset.Value);
         }
@@ -259,7 +262,7 @@ public sealed class DateAndOrTime
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString()
     {
-        if(IsEmpty)
+        if (IsEmpty)
         {
             return "<Empty>";
         }
