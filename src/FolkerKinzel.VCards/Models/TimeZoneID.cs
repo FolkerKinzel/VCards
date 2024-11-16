@@ -12,8 +12,10 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="Models.Properties.TimeZoneProperty"/>
 /// <seealso cref="VCard.TimeZones"/>
 /// <seealso cref="ParameterSection.TimeZone"/>
-public sealed class TimeZoneID
+public sealed partial class TimeZoneID
 {
+    // This needs to be a partial class because of the compiler generated Regex
+
     private enum TzError { None, Null, Empty }
 
     private const string UTC_OFFSET_PATTERN = @"^[-\+]?[01][0-9]:?([0-5][0-9])?";

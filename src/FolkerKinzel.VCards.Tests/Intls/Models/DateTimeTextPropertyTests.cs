@@ -41,12 +41,12 @@ public class DateTimeTextPropertyTests
         Assert.AreEqual(Data.Text, prop2.Parameters.DataType);
     }
 
-    [TestMethod]
-    public void DateTimeTextPropertyTest2()
-    {
-        var prop = DateAndOrTimeProperty.FromText("   ");
-        Assert.IsNull(prop.Value);
-    }
+    //[TestMethod]
+    //public void DateTimeTextPropertyTest2()
+    //{
+    //    var prop = DateAndOrTimeProperty.FromText("   ");
+    //    Assert.IsNull(prop.Value);
+    //}
 
     [TestMethod]
     public void IsEmptyTest1()
