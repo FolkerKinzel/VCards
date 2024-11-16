@@ -12,13 +12,9 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="Models.Properties.TimeZoneProperty"/>
 /// <seealso cref="VCard.TimeZones"/>
 /// <seealso cref="ParameterSection.TimeZone"/>
-public sealed partial class TimeZoneID
+public sealed class TimeZoneID
 {
-    // This needs to be a partial class because of the compiler generated Regex
-
     private enum TzError { None, Null, Empty }
-
-    private const string UTC_OFFSET_PATTERN = @"^[-\+]?[01][0-9]:?([0-5][0-9])?";
 
     private TimeZoneID(string timeZoneID) => Value = timeZoneID.Trim();
 
@@ -99,7 +95,7 @@ public sealed partial class TimeZoneID
     /// <seealso cref="ITimeZoneIDConverter" />
     public bool TryGetUtcOffset(out TimeSpan utcOffset, ITimeZoneIDConverter? converter = null)
     {
-        if (IsUtcOffset())
+        if (this.IsUtcOffset())
         {
             int startIndex = 0;
 
@@ -180,7 +176,7 @@ public sealed partial class TimeZoneID
                 }
             default:
                 {
-                    if (IsUtcOffset() && TryGetUtcOffset(out TimeSpan utcOffset))
+                    if (this.IsUtcOffset() && TryGetUtcOffset(out TimeSpan utcOffset))
                     {
                         string format = utcOffset < TimeSpan.Zero ? @"\-hhmm" : @"\+hhmm";
                         _ = builder.Append(utcOffset.ToString(format, CultureInfo.InvariantCulture));
@@ -194,38 +190,6 @@ public sealed partial class TimeZoneID
                 }
         }
     }
-
-    [ExcludeFromCodeCoverage]
-    private bool IsUtcOffset()
-    {
-#if NET462 || NETSTANDARD2_0 || NETSTANDARD2_1 || NET5_0 || NET6_0
-        try
-        {
-            return Regex.IsMatch(Value,
-                                 UTC_OFFSET_PATTERN,
-                                 RegexOptions.CultureInvariant,
-                                 TimeSpan.FromMilliseconds(50));
-        }
-        catch (RegexMatchTimeoutException)
-        {
-            return false;
-        }
-    }
-#else
-        try
-        {
-            return UtcOffsetRegex().IsMatch(Value);
-        }
-        catch (RegexMatchTimeoutException)
-        {
-            return false;
-        }
-    }
-
-
-    [GeneratedRegex(UTC_OFFSET_PATTERN, RegexOptions.CultureInvariant, 50)]
-    private static partial Regex UtcOffsetRegex();
-#endif
 }
 
 
