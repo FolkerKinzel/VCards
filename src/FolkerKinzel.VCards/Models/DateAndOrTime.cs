@@ -35,6 +35,29 @@ public sealed class DateAndOrTime
 
     public static DateAndOrTime Create(string? value) => string.IsNullOrWhiteSpace(value) ? Empty : new(value);
 
+    /// <summary>
+    /// Creates a new <see cref="DateAndOrTime"/> instance from a recurring date in the
+    /// Gregorian calendar.
+    /// </summary>
+    /// <param name="month">The month (1 bis 12).</param>
+    /// <param name="day">The day (1 through the number of days in <paramref name="month"/> -
+    /// a leap year may be assumed.)</param>
+    /// 
+    /// <returns>The newly created <see cref="DateAndOrTime"/> instance.</returns>
+    /// <remarks>
+    /// This overload is intended to be used for recurring dates, like, e.g., birthdays, or 
+    /// if the year is unknown.
+    /// </remarks>
+    /// 
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// <para><paramref name="month"/> is less than 1 or greater than 12.</para>
+    /// <para>-or-</para>
+    /// <para><paramref name="day"/> is less than 1 or greater than the number of days 
+    /// that <paramref name="month"/> has in a leap year.</para>
+    /// </exception>
+    public static DateAndOrTime Create(int month, int day)
+        => new(new DateOnly(DateTimeConverter.FIRST_LEAP_YEAR, month, day));
+
     public static implicit operator DateAndOrTime(DateOnly value) => Create(value);
 
     public static implicit operator DateAndOrTime(DateTimeOffset value) => Create(value);

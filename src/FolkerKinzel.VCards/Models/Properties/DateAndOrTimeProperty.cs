@@ -46,7 +46,6 @@ public sealed class DateAndOrTimeProperty
                                                  string? group = null)
         => throw new NotImplementedException();
 
-
     [Obsolete("Use the ctor instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [ExcludeFromCodeCoverage]
@@ -56,7 +55,7 @@ public sealed class DateAndOrTimeProperty
                                                  string? group = null)
         => throw new NotImplementedException();
 
-    [Obsolete("Use FromRecurringDate instead.", true)]
+    [Obsolete("Use the ctor and DateAndOrTime.Create(int, int) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -148,30 +147,6 @@ public sealed class DateAndOrTimeProperty
 
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;
-
-    /// <summary>
-    /// Creates a new <see cref="DateAndOrTimeProperty"/> instance from a recurring date in the
-    /// Gregorian calendar.
-    /// </summary>
-    /// <param name="month">The month (1 bis 12).</param>
-    /// <param name="day">The day (1 through the number of days in <paramref name="month"/> -
-    /// a leap year may be assumed.)</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <returns>The newly created <see cref="DateAndOrTimeProperty"/> instance.</returns>
-    /// <remarks>
-    /// This overload is intended to be used for recurring dates, like, e.g., birthdays, or 
-    /// if the year is unknown.
-    /// </remarks>
-    /// <exception cref="ArgumentOutOfRangeException">
-    /// <para><paramref name="month"/> is less than 1 or greater than 12.</para>
-    /// <para>-or-</para>
-    /// <para><paramref name="day"/> is less than 1 or greater than the number of days 
-    /// that <paramref name="month"/> has in a leap year.</para>
-    /// </exception>
-    public static DateAndOrTimeProperty FromRecurringDate(int month, int day, string? group = null)
-        => new(new DateOnly(Intls.Converters.DateTimeConverter.FIRST_LEAP_YEAR, month, day), group);
 
     /// <inheritdoc />
     IEnumerator<DateAndOrTimeProperty> IEnumerable<DateAndOrTimeProperty>.GetEnumerator()

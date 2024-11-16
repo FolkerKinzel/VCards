@@ -6,6 +6,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -155,14 +156,6 @@ public readonly struct DateAndOrTimeBuilder
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
     /// 
-    /// <exception cref="ArgumentOutOfRangeException">
-    /// <para><paramref name="year"/> is less than 1 or greater than 9999.</para>
-    /// <para>-or-</para>
-    /// <para><paramref name="month"/> is less than 1 or greater than 12.</para>
-    /// <para>-or-</para>
-    /// <para><paramref name="day"/> is less than 1 or greater than the number of days in 
-    /// <paramref name="month"/>.</para>
-    /// </exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(int year,
@@ -171,15 +164,18 @@ public readonly struct DateAndOrTimeBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(DateAndOrTimeProperty.FromDate(year,
-                                                                          month,
-                                                                          day,
-                                                                          group?.Invoke(_builder.VCard)),
-                                           Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
+        DateAndOrTime val;
+
+        try
+        {
+            val = new DateOnly(year, month, day);
+        }
+        catch
+        {
+            val = DateAndOrTime.Empty;
+        }
+
+        return Add(val, parameters, group);
     }
 
     /// <summary>
@@ -202,12 +198,7 @@ public readonly struct DateAndOrTimeBuilder
     /// This overload is intended to be used for recurring dates, like, e.g., birthdays, or 
     /// if the year is unknown.
     /// </remarks>
-    /// <exception cref="ArgumentOutOfRangeException">
-    /// <para><paramref name="month"/> is less than 1 or greater than 12.</para>
-    /// <para>-or-</para>
-    /// <para><paramref name="day"/> is less than 1 or greater than the number of days 
-    /// that <paramref name="month"/> has in a leap year.</para>
-    /// </exception>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(int month,
@@ -215,103 +206,25 @@ public readonly struct DateAndOrTimeBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(DateAndOrTimeProperty.FromDate(month,
-                                                                          day,
-                                                                          group?.Invoke(_builder.VCard)),
-                                           Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
+        DateAndOrTime val;
+
+        try
+        {
+            val = DateAndOrTime.Create(month, day);
+        }
+        catch
+        {
+            val = DateAndOrTime.Empty;
+        }
+
+        return Add(val, parameters, group);
     }
 
     /// <summary>
-    /// Adds a <see cref="DateAndOrTimeProperty"/> instance, which is newly 
-    /// initialized from a <see cref="DateOnly"/> 
-    /// value, to the specified property of the <see cref="VCardBuilder.VCard"/>.
+    /// Adds a <see cref="DateAndOrTimeProperty"/> instance, which is newly initialized with a specified
+    /// <see cref="DateAndOrTime"/> instance, to the specified property of the <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="date">The <see cref="DateOnly"/> value.</param>
-    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
-    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
-    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is called 
-    /// with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DateAndOrTimeBuilder"/> 
-    /// to be able to chain calls.</returns>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had been 
-    /// initialized using the default constructor.</exception>
-    public VCardBuilder Add(DateOnly date,
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null)
-    {
-        Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(DateAndOrTimeProperty.FromDate(date, group?.Invoke(_builder.VCard)),
-                                           Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
-    }
-
-    /// <summary>
-    /// Adds a <see cref="DateAndOrTimeProperty"/> instance, which is newly initialized from 
-    /// a <see cref="System.DateTime"/> or <see cref="DateTimeOffset"/> value, to the specified property 
-    /// of the <see cref="VCardBuilder.VCard"/>.
-    /// </summary>
-    /// <param name="dateTime">A <see cref="System.DateTime"/> or <see cref="DateTimeOffset"/> value.</param>
-    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the <see cref="ParameterSection"/>
-    /// of the newly created <see cref="VCardProperty"/> as argument.</param>
-    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" /> 
-    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that the 
-    /// <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
-    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DateAndOrTimeBuilder"/>
-    /// to be able to chain calls.</returns>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
-    /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(DateTimeOffset dateTime,
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null)
-    {
-        Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(DateAndOrTimeProperty.FromDateTime(dateTime, group?.Invoke(_builder.VCard)),
-                                           Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters));
-        return _builder;
-    }
-
-    /// <summary>
-    /// Adds a <see cref="DateAndOrTimeProperty"/> instance, which is newly initialized from a 
-    /// <see cref="TimeOnly"/> value, to the specified property of the <see cref="VCardBuilder.VCard"/>.
-    /// </summary>
-    /// <param name="time">A <see cref="TimeOnly"/> value.</param>
-    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
-    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
-    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group. The function is called
-    /// with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
-    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DateAndOrTimeBuilder"/>
-    /// to be able to chain calls.</returns>
-    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
-    /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(TimeOnly time,
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null)
-    {
-        Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(DateAndOrTimeProperty.FromTime(time, group?.Invoke(_builder.VCard)),
-                                           Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
-                                           parameters)
-                          );
-        return _builder;
-    }
-
-    /// <summary>
-    /// Adds a <see cref="DateAndOrTimeProperty"/> instance, which is newly initialized from a 
-    /// <see cref="TimeOnly"/> value, to the specified property of the <see cref="VCardBuilder.VCard"/>.
-    /// </summary>
-    /// <param name="text">Any text or <c>null</c>.</param>
+    /// <param name="dateAndOrTime">A <see cref="DateAndOrTime"/> instance, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
@@ -320,19 +233,27 @@ public readonly struct DateAndOrTimeBuilder
     /// with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DateAndOrTimeBuilder"/>
     /// to be able to chain calls.</returns>
-    /// <example>
-    /// <code language="none">
-    /// After midnight.
-    /// </code>
-    /// </example>
+    /// 
+    /// <remarks>
+    /// <para><see cref="DateAndOrTime"/> supports implicit conversion.</para>
+    /// <para>The following data types can be passed directly:</para>
+    /// <list type="bullet">
+    /// <item><see cref="DateOnly"/></item>
+    /// <item><see cref="System.DateTime"/></item>
+    /// <item><see cref="DateTimeOffset"/></item>
+    /// <item><see cref="TimeOnly"/></item>
+    /// <item><see cref="string"/></item>
+    /// </list>
+    /// </remarks>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(string? text,
+    public VCardBuilder Add(DateAndOrTime? dateAndOrTime,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(DateAndOrTimeProperty.FromText(text, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new DateAndOrTimeProperty(dateAndOrTime ?? DateAndOrTime.Empty, group?.Invoke(_builder.VCard)),
                                            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
                                            parameters)
                           );

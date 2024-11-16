@@ -40,10 +40,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Intls\Attributes\**" />
+    <Compile Remove="Intls\Models\**" />
     <Compile Remove="Translations\**" />
     <EmbeddedResource Remove="Intls\Attributes\**" />
+    <EmbeddedResource Remove="Intls\Models\**" />
     <EmbeddedResource Remove="Translations\**" />
     <None Remove="Intls\Attributes\**" />
+    <None Remove="Intls\Models\**" />
     <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
@@ -77,13 +80,6 @@
     <Compile Remove="Intls\Encodings\Base64.cs" />
     <Compile Remove="Intls\Extensions\DoubleExtension.cs" />
     <Compile Remove="Intls\Extensions\PolyfillExtension.cs" />
-    <Compile Remove="Intls\Models\EmbeddedBytesProperty.cs" />
-    <Compile Remove="Intls\Models\EmbeddedTextProperty.cs" />
-    <Compile Remove="Intls\Models\ReferencedDataProperty.cs" />
-    <Compile Remove="Intls\Models\RelationTextProperty.cs" />
-    <Compile Remove="Intls\Models\RelationUriProperty.cs" />
-    <Compile Remove="Intls\Models\RelationUuidProperty.cs" />
-    <Compile Remove="Intls\Models\RelationVCardProperty.cs" />
     <Compile Remove="Intls\Net40LeaveOpenStream.cs" />
     <Compile Remove="Intls\ReadOnlyCollectionEmptyPolyfill.cs" />
     <Compile Remove="Models\ContentSizeRestriction.cs" />
