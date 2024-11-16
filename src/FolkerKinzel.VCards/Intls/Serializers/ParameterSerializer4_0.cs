@@ -807,7 +807,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         if (created.HasValue)
         {
             AppendParameter(ParaKey.Rfc9554.CREATED, null);
-            DateTimeConverter.AppendTimeStampTo(this.Builder, created.Value, VCdVersion.V4_0);
+            TimeStampConverter.AppendTo(this.Builder, created.Value, VCdVersion.V4_0);
         }
     }
 

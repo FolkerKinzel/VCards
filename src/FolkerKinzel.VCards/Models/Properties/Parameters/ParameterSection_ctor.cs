@@ -212,12 +212,9 @@ public sealed partial class ParameterSection
                     AuthorName = parameter.Value.Span.Trim(TRIM_CHARS).UnMaskParameterValue(isLabel: false);
                     break;
                 case ParameterKey.Rfc9554.CREATED:
-                    if (info.DateAndOrTimeConverter.TryParse(parameter.Value.Span.Trim(TRIM_CHARS), out OneOf<DateOnly, DateTimeOffset> value))
+                    if (info.TimeStampConverter.TryParse(parameter.Value.Span.Trim(TRIM_CHARS), out DateTimeOffset value))
                     {
-                        if (value.IsT1)
-                        {
-                            Created = value.AsT1;
-                        }
+                        Created = value;
                     }
                     break;
                 case ParameterKey.Rfc9554.DERIVED:

@@ -1,19 +1,14 @@
-using System;
 using System.Collections;
 using System.ComponentModel;
 using FolkerKinzel.DataUrls;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
-using FolkerKinzel.VCards.Resources;
-using OneOf;
 
 namespace FolkerKinzel.VCards.Models.Properties;
 
@@ -105,7 +100,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
     {
         if (DataUrl.TryParse(vcfRow.Value, out DataUrlInfo dataUrlInfo))
         {
-            Value = DataUrlConverter.ToRawData(vcfRow, ref dataUrlInfo);
+            Value = DataUrlConverter.ToRawData(ref dataUrlInfo);
             Parameters.MediaType = Value.MediaType;
             return;
         }
@@ -128,7 +123,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
         {
             ReadOnlySpan<char> valueSpan = vcfRow.Value.Span;
 
-            Value = valueSpan.IsWhiteSpace() 
+            Value = valueSpan.IsWhiteSpace()
                 ? RawData.FromBytes([])
                 : RawData.FromBytes(QuotedPrintable.DecodeData(valueSpan),
                                     Parameters.MediaType);

@@ -128,7 +128,7 @@ public sealed partial class VCard
                     DisplayNames = Concat(DisplayNames, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.BDAY:
-                    BirthDayViews = Concat(BirthDayViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
+                    BirthDayViews = Concat(BirthDayViews, new DateAndOrTimeProperty(vcfRow, this.Version, info));
                     break;
                 case PropKeys.ADR: // PostOfficeBox, ExtendedAddress, Street, Locality, Region, PostalCode, Country
                     Addresses = Concat(Addresses, new AddressProperty(vcfRow, this.Version));
@@ -227,7 +227,7 @@ public sealed partial class VCard
                     Sources = Concat(Sources, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.ANNIVERSARY:
-                    this.AnniversaryViews = Concat(AnniversaryViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
+                    this.AnniversaryViews = Concat(AnniversaryViews, new DateAndOrTimeProperty(vcfRow, this.Version, info));
                     break;
                 case PropKeys.NonStandard.X_ANNIVERSARY:
                 case PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
@@ -239,7 +239,7 @@ public sealed partial class VCard
                     }
                     else if (AnniversaryViews is null)
                     {
-                        this.AnniversaryViews = DateAndOrTimeProperty.Parse(vcfRow, this.Version, info);
+                        this.AnniversaryViews = new DateAndOrTimeProperty(vcfRow, this.Version, info);
                     }
 
                     break;
@@ -430,7 +430,7 @@ public sealed partial class VCard
                 // Extensions to the vCard standard:
                 case PropKeys.Rfc6474.DEATHDATE:
                     this.DeathDateViews =
-                        Concat(DeathDateViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
+                        Concat(DeathDateViews, new DateAndOrTimeProperty(vcfRow, this.Version, info));
                     break;
                 case PropKeys.Rfc6474.BIRTHPLACE:
                     this.BirthPlaceViews =

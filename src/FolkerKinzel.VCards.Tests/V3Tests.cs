@@ -221,14 +221,7 @@ END:VCARD";
 
         DateAndOrTimeProperty? bday = vcard.BirthDayViews!.First();
 
-        if (bday is TimeOnlyProperty prop)
-        {
-            Assert.AreEqual(new TimeOnly(5, 30, 0), prop.Value);
-        }
-        else
-        {
-            Assert.Fail();
-        }
+        Assert.AreEqual(new TimeOnly(5, 30, 0), bday?.Value.TimeOnly);
     }
 
 

@@ -6,34 +6,11 @@ using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
-internal class DateAndOrTimePropertyDerived : DateAndOrTimeProperty
-{
-    public DateAndOrTimePropertyDerived(DateAndOrTimeProperty prop) : base(prop)
-    {
-    }
-
-    public DateAndOrTimePropertyDerived(ParameterSection parameters, string? group)
-        : base(parameters, group)
-    {
-    }
-
-    public override object Clone() => throw new NotImplementedException();
-    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-}
-
 [TestClass]
 public class DateAndOrTimePropertyTests
 {
-    private class TestIEnumerable : DateAndOrTimeProperty
-    {
-        public TestIEnumerable() : base(FromDateTime(DateTimeOffset.Now)) { }
-        public override object Clone() => throw new NotImplementedException();
-        protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
-        internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-    }
-
     [TestMethod]
-    public void IEnumerableTest1() => Assert.AreEqual(1, new TestIEnumerable().AsWeakEnumerable().Count());
+    public void IEnumerableTest1() => Assert.AreEqual(1, new DateAndOrTimeProperty(DateTime.Now).AsWeakEnumerable().Count());
 
 
     [TestMethod]
@@ -50,7 +27,8 @@ public class DateAndOrTimePropertyTests
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
-        Assert.IsInstanceOfType(bdayProp, typeof(DateTimeOffsetProperty));
+        Assert.IsNotNull(bdayProp);
+        Assert.IsTrue(bdayProp.Value.DateTimeOffset.HasValue);
     }
 
     [TestMethod]
@@ -67,7 +45,8 @@ public class DateAndOrTimePropertyTests
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
-        Assert.IsInstanceOfType(bdayProp, typeof(DateTimeOffsetProperty));
+        Assert.IsNotNull(bdayProp);
+        Assert.IsTrue(bdayProp.Value.DateTimeOffset.HasValue);
     }
 
     [TestMethod]
@@ -84,37 +63,22 @@ public class DateAndOrTimePropertyTests
         Assert.IsNotNull(vcard);
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
-        Assert.IsInstanceOfType(bdayProp, typeof(DateTimeTextProperty));
-    }
-
-    [TestMethod]
-    public void IsEmptyTest1()
-    {
-        DateAndOrTimeProperty prop = new DateAndOrTimePropertyDerived(DateAndOrTimeProperty.FromDate(2023, 10, 11));
-        Assert.IsTrue(prop.IsEmpty);
+        Assert.IsNotNull(bdayProp);
+        Assert.IsTrue(bdayProp.IsEmpty);
     }
 
     [TestMethod]
     public void ValueTest1()
     {
-        VCardProperty prop = DateAndOrTimeProperty.FromDate(2023, 10, 14);
+        VCardProperty prop = new DateAndOrTimeProperty(new DateTime(2023, 10, 14));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
     }
-
-    [TestMethod]
-    public void ValueTest2()
-    {
-        VCardProperty prop = DateAndOrTimeProperty.FromDateTime(DateTime.Now);
-        Assert.IsFalse(prop.IsEmpty);
-        Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
-    }
-
 
     [TestMethod]
     public void ValueTest3()
     {
-        VCardProperty prop = DateAndOrTimeProperty.FromTime(14, 24);
+        VCardProperty prop = new DateAndOrTimeProperty(DateAndOrTime.Create(14, 24));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
     }
@@ -122,28 +86,15 @@ public class DateAndOrTimePropertyTests
     [TestMethod]
     public void ValueTest4()
     {
-        VCardProperty prop = DateAndOrTimeProperty.FromText("Midnight");
+        VCardProperty prop = new DateAndOrTimeProperty("Midnight");
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
-    }
-
-
-    [TestMethod]
-    public void FromDateTest1()
-    {
-        const string group = "Group";
-        var prop = DateAndOrTimeProperty.FromDate(2, 29, group);
-        Assert.IsFalse(prop.IsEmpty);
-        Assert.IsNotNull(prop.Value.DateOnly);
-        Assert.IsFalse(prop.Value.DateOnly.Value.HasYear());
-        Assert.AreEqual(2, prop.Value.DateOnly.Value.Month);
-        Assert.AreEqual(29, prop.Value.DateOnly.Value.Day);
     }
 
     [TestMethod]
     public void ToStringTest1()
     {
-        var prop = DateAndOrTimeProperty.FromDate(2, 29);
+        var prop = new DateAndOrTimeProperty(DateTimeOffset.Now);
         Assert.IsNotNull(prop.ToString());
     }
 }

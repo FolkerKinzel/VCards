@@ -1,19 +1,14 @@
 ﻿using FolkerKinzel.DataUrls;
-using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Properties;
-using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class DataUrlConverter
 {
-    internal static RawData ToRawData(VcfRow vcfRow, ref DataUrlInfo dataUrlInfo)
+    internal static RawData ToRawData(ref DataUrlInfo dataUrlInfo)
     {
         ReadOnlyMemory<char> mime = dataUrlInfo.MimeType;
 

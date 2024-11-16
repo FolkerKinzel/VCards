@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
@@ -24,14 +25,14 @@ public class TimeConverterTests
     private void Roundtrip(
         string s, bool stringRoundTrip, VCdVersion version)
     {
-        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> dt));
+        Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateAndOrTime? dt));
 
 
         var builder = new StringBuilder();
 
         dt.Switch(
-            to => TimeConverter.AppendTimeTo(builder, to, version),
-            dto => TimeConverter.AppendTimeTo(builder, dto, version)
+            dtOffsetAction: dto => TimeConverter.AppendTimeTo(builder, dto, version),
+            timeAction: to => TimeConverter.AppendTimeTo(builder, to, version)
             );
         string s2 = builder.ToString();
 
@@ -40,13 +41,12 @@ public class TimeConverterTests
             Assert.AreEqual(s, s2);
         }
 
-        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> dt2));
+        Assert.IsTrue(_conv.TryParse(s2.AsSpan(), out DateAndOrTime? dt2));
         Assert.AreEqual(dt, dt2);
     }
 
     [TestMethod]
     public void TryParseTest1() => Assert.IsFalse(_conv.TryParse(null, out _));
-
 
     [DataTestMethod]
     [DataRow("T143522+02")]
@@ -61,8 +61,8 @@ public class TimeConverterTests
     [DataRow("T--22+0200")]
     public void TryParseTest2(string? input)
     {
-        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> oneOf));
-        Assert.IsTrue(oneOf.IsT1);
+        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out DateAndOrTime? oneOf));
+        Assert.IsTrue(oneOf.DateTimeOffset.HasValue);
     }
 
 
@@ -74,8 +74,8 @@ public class TimeConverterTests
     [DataRow("T--22")]
     public void TryParseTest3(string? input)
     {
-        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> oneOf));
-        Assert.IsTrue(oneOf.IsT0);
+        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out DateAndOrTime? oneOf));
+        Assert.IsTrue(oneOf.TimeOnly.HasValue);
     }
 
     [TestMethod]
@@ -100,8 +100,8 @@ public class TimeConverterTests
     [DataRow("T--22+0200")]
     public void TryParseTest5(string? input)
     {
-        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> oneOf));
-        Assert.IsTrue(oneOf.IsT1);
+        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out DateAndOrTime? oneOf));
+        Assert.IsTrue(oneOf.DateTimeOffset.HasValue);
     }
 
     [DataTestMethod]
@@ -112,8 +112,8 @@ public class TimeConverterTests
     [DataRow("T--22")]
     public void TryParseTest6(string? input)
     {
-        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out OneOf.OneOf<TimeOnly, DateTimeOffset> oneOf));
-        Assert.IsTrue(oneOf.IsT0);
+        Assert.IsTrue(_conv.TryParse(input.AsSpan(), out DateAndOrTime? oneOf));
+        Assert.IsTrue(oneOf.TimeOnly.HasValue);
     }
 
 }

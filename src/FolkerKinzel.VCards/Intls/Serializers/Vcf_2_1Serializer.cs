@@ -2,10 +2,9 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using Base64Bcl = System.Buffers.Text.Base64;
-using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
@@ -195,7 +194,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
         => BuildFirstProperty(VCard.PropKeys.BDAY,
                               value,
-                              static x => x is DateOnlyProperty or DateTimeOffsetProperty);
+                              static x => x.Value.DateOnly.HasValue || x.Value.DateTimeOffset.HasValue);
 
     protected override void AppendDisplayNames(IEnumerable<TextProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.FN, value);
@@ -262,7 +261,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         if (Options.HasFlag(Opts.WriteXExtensions))
         {
-            BuildPropertyCollection(VCard.PropKeys.NonStandard.X_SOCIALPROFILE, 
+            BuildPropertyCollection(VCard.PropKeys.NonStandard.X_SOCIALPROFILE,
                                     value.Where(x => x?.Parameters.DataType != Data.Text));
         }
     }

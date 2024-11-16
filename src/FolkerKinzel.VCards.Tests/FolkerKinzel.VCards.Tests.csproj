@@ -33,6 +33,7 @@
 		<Compile Remove="Intls\Models\RelationUriPropertyTests.cs" />
 		<Compile Remove="Intls\Models\RelationUuidPropertyTests.cs" />
 		<Compile Remove="Intls\Models\RelationVCardPropertyTests.cs" />
+		<Compile Remove="Intls\Models\UriPropertyTests.cs" />
 		<Compile Remove="Models\DataUrlTests.cs" />
 		<Compile Remove="Models\MimeTypeTests.cs" />
 		<Compile Remove="MultiAnsiFilterTests.cs" />

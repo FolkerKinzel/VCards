@@ -57,12 +57,9 @@ public class IEnumerableTests
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>")]
     public void IEnumerableTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vc = new VCard
         {
-            BirthDayViews = DateAndOrTimeProperty.FromDateTime(DateTime.Now)
+            BirthDayViews = new DateAndOrTimeProperty(DateTime.Now)
         };
 
         IEnumerable enumerable = vc.BirthDayViews;
@@ -75,7 +72,4 @@ public class IEnumerableTests
         IEnumerable<VCardProperty?> props = vc.BirthDayViews;
         Assert.IsNotNull(vc.BirthDayViews.FirstOrDefault());
     }
-
-
-
 }

@@ -134,7 +134,7 @@ internal static class Utility
         var xEl = new XElement(xName, "The content");
         var xml1 = new XmlProperty(xEl);
 
-        var bday = DateAndOrTimeProperty.FromDate(1977, 11, 11);
+        var bday = new DateAndOrTimeProperty(new DateOnly(1977, 11, 11));
         bday.Parameters.Calendar = "  ";
 
         var source = new TextProperty("http://neu.de/");
@@ -152,12 +152,12 @@ internal static class Utility
             Interests = hobby1,
             Expertises = expertise1,
             BirthDayViews = bday,
-            AnniversaryViews = DateAndOrTimeProperty.FromDate(2001, 9, 11),
+            AnniversaryViews = new DateAndOrTimeProperty(new DateOnly(2001, 9, 11)),
             Logos = logo1,
             Photos = photo1,
             Sounds = sound1,
             Keys = [key1, key2],
-            DeathDateViews = DateAndOrTimeProperty.FromText("Later"),
+            DeathDateViews = new DateAndOrTimeProperty("Later"),
             DeathPlaceViews = new TextProperty("Somewhere"),
             BirthPlaceViews = new TextProperty("Dessau"),
             ProductID = new TextProperty("Testcode"),

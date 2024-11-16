@@ -1,9 +1,7 @@
 using FolkerKinzel.DataUrls;
-using System.Security.Cryptography;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
@@ -181,7 +179,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendGramGenders(IEnumerable<GramProperty?> value)
     {
-        if(Options.HasFlag(Opts.WriteRfc9554Extensions))
+        if (Options.HasFlag(Opts.WriteRfc9554Extensions))
         {
             BuildPropertyCollection(VCard.PropKeys.Rfc9554.GRAMGENDER, value);
         }
@@ -295,7 +293,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendPronouns(IEnumerable<TextProperty?> value)
     {
-        if(Options.HasFlag(Opts.WriteRfc9554Extensions))
+        if (Options.HasFlag(Opts.WriteRfc9554Extensions))
         {
             BuildPropertyCollection(VCard.PropKeys.Rfc9554.PRONOUNS, value);
         }

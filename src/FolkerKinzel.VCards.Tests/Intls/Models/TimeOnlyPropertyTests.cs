@@ -13,17 +13,15 @@ public class TimeOnlyPropertyTests
         var dto = TimeOnly.FromDateTime(DateTime.Now);
         const string group = "gr1";
 
-        var prop = DateAndOrTimeProperty.FromTime(dto, group);
+        var prop = new DateAndOrTimeProperty(dto, group);
 
-        Assert.IsInstanceOfType(prop, typeof(TimeOnlyProperty));
         Assert.AreEqual(group, prop.Group);
-        Assert.AreEqual(dto, prop.Value?.TimeOnly);
+        Assert.AreEqual(dto, prop.Value.TimeOnly);
         Assert.AreEqual(Data.Time, prop.Parameters.DataType);
 
         var clone = (DateAndOrTimeProperty)prop.Clone();
-        Assert.IsInstanceOfType(prop, typeof(TimeOnlyProperty));
         Assert.AreEqual(group, prop.Group);
-        Assert.AreEqual(dto, prop.Value?.TimeOnly);
+        Assert.AreEqual(dto, prop.Value.TimeOnly);
         Assert.AreEqual(Data.Time, prop.Parameters.DataType);
 
         Assert.AreNotSame(clone, prop);
@@ -36,7 +34,7 @@ public class TimeOnlyPropertyTests
         var serializer = new Vcf_2_1Serializer(writer, Opts.Default, null);
 
         var dto = TimeOnly.FromDateTime(DateTime.Now);
-        var prop = DateAndOrTimeProperty.FromTime(dto);
+        var prop = new DateAndOrTimeProperty(dto);
 
         prop.PrepareForVcfSerialization(serializer);
         Assert.AreEqual(Data.Time, prop.Parameters.DataType);
@@ -49,7 +47,7 @@ public class TimeOnlyPropertyTests
         var serializer = new Vcf_2_1Serializer(writer, Opts.Default, null);
 
         var dto = TimeOnly.FromDateTime(DateTime.Now);
-        var prop = DateAndOrTimeProperty.FromTime(dto);
+        var prop = new DateAndOrTimeProperty(dto);
 
         prop.AppendValue(serializer);
         Assert.AreNotEqual(0, serializer.Builder.Length);

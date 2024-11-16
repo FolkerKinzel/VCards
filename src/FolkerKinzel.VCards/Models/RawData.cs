@@ -1,11 +1,7 @@
-using System.ComponentModel;
-using System.Security.Cryptography;
 using FolkerKinzel.DataUrls;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Resources;
 using OneOf;
@@ -147,7 +143,6 @@ public sealed class RawData
     /// <c>true</c> if the instance doesn't contain any data, otherwise <c>false</c>.
     /// </summary>
     public bool IsEmpty { get; }
-        
 
     /// <summary>
     /// Gets the encapsulated <see cref="byte"/> array,

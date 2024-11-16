@@ -14,7 +14,7 @@ namespace FolkerKinzel.VCards.Models;
 /// value, or a <see cref="string"/>.
 /// </summary>
 /// <seealso cref="DateAndOrTimeProperty"/>
-public sealed class DateAndOrTime
+public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
 {
     private DateAndOrTime(DateOnly value) => DateOnly = value;
 
@@ -26,9 +26,9 @@ public sealed class DateAndOrTime
 
     public static DateAndOrTime Create(DateOnly value) => new(value);
 
-    public static DateAndOrTime Create(DateTimeOffset value) 
-        => !DateTimeConverter.HasDate(value) && !DateTimeConverter.HasTime(value) 
-            ? Empty 
+    public static DateAndOrTime Create(DateTimeOffset value)
+        => !DateTimeConverter.HasDate(value) && !DateTimeConverter.HasTime(value)
+            ? Empty
             : new(value);
 
     public static DateAndOrTime Create(TimeOnly value) => new(value);
@@ -61,6 +61,8 @@ public sealed class DateAndOrTime
     public static implicit operator DateAndOrTime(DateOnly value) => Create(value);
 
     public static implicit operator DateAndOrTime(DateTimeOffset value) => Create(value);
+
+    public static implicit operator DateAndOrTime(DateTime value) => Create(value);
 
     public static implicit operator DateAndOrTime(TimeOnly value) => Create(value);
 
@@ -112,7 +114,7 @@ public sealed class DateAndOrTime
     public string? String { get; }
 
 
-    [Obsolete("Use Object instead.", true)]
+    [Obsolete("Use the TryAsXXX methods instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -229,10 +231,10 @@ public sealed class DateAndOrTime
     /// value is a <see cref="string"/>.</param>
     /// 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Switch(Action<DateOnly>? dateAction,
-                       Action<DateTimeOffset>? dtOffsetAction,
-                       Action<TimeOnly>? timeAction,
-                       Action<string>? stringAction)
+    public void Switch(Action<DateOnly>? dateAction = null,
+                       Action<DateTimeOffset>? dtOffsetAction = null,
+                       Action<TimeOnly>? timeAction = null,
+                       Action<string>? stringAction = null)
     {
         if (DateOnly.HasValue)
         {
@@ -300,4 +302,22 @@ public sealed class DateAndOrTime
 
         return $"{box.GetType().FullName}: {box}";
     }
+
+    /// <inheritdoc/>
+    public bool Equals(DateAndOrTime? other)
+       => other is not null
+        && (ReferenceEquals(this, other)
+            || (DateOnly.HasValue
+                ? DateOnly == other.DateOnly
+                : DateTimeOffset.HasValue
+                    ? DateTimeOffset == other.DateTimeOffset
+                    : TimeOnly.HasValue
+                        ? TimeOnly == other.TimeOnly
+                        : StringComparer.Ordinal.Equals(String, other.String)));
+    
+    /// <inheritdoc/>
+    public override bool Equals(object? obj) => obj is DateAndOrTime dto && Equals(dto);
+    
+    /// <inheritdoc/>
+    public override int GetHashCode() => HashCode.Combine(DateOnly, DateTimeOffset, TimeOnly, String);
 }

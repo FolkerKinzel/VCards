@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Intls.Models.Tests;
@@ -14,7 +15,7 @@ public class DateTimeTextPropertyTests
     {
         string now = "Früh morgens";
 
-        var prop = DateAndOrTimeProperty.FromText(now, GROUP);
+        var prop = new DateAndOrTimeProperty(now, GROUP);
 
         var vcard = new VCard
         {
@@ -32,10 +33,10 @@ public class DateTimeTextPropertyTests
 
         Assert.IsNotNull(vcard.BirthDayViews);
 
-        var prop2 = vcard.BirthDayViews!.First() as DateTimeTextProperty;
+        DateAndOrTimeProperty? prop2 = vcard.BirthDayViews!.First();
 
-        Assert.IsNotNull(prop2);
-        Assert.AreEqual(now, prop2!.Value);
+        Assert.IsNotNull(prop2?.Value.String);
+        Assert.AreEqual(now, prop2.Value);
         Assert.AreEqual(GROUP, prop2.Group);
         Assert.IsFalse(prop2.IsEmpty);
         Assert.AreEqual(Data.Text, prop2.Parameters.DataType);
@@ -51,7 +52,7 @@ public class DateTimeTextPropertyTests
     [TestMethod]
     public void IsEmptyTest1()
     {
-        var prop = DateAndOrTimeProperty.FromText(null);
+        var prop = new DateAndOrTimeProperty((string?)null);
         Assert.IsTrue(prop.IsEmpty);
         Assert.IsNull(prop.Value);
     }
@@ -60,7 +61,7 @@ public class DateTimeTextPropertyTests
     public void IsEmptyTest2()
     {
         const string test = "test";
-        var prop = DateAndOrTimeProperty.FromText(test);
+        var prop = new DateAndOrTimeProperty(test);
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsNotNull(prop.Value);
         Assert.AreEqual(test, prop.Value!.String);
@@ -69,7 +70,7 @@ public class DateTimeTextPropertyTests
     [TestMethod]
     public void ToStringTest1()
     {
-        var prop = DateAndOrTimeProperty.FromText(null);
+        var prop = new DateAndOrTimeProperty(DateAndOrTime.Empty);
         string s = prop.ToString();
         Assert.IsNotNull(s);
         Assert.IsTrue(s.Length > 0);
@@ -78,7 +79,7 @@ public class DateTimeTextPropertyTests
     [TestMethod]
     public void CloneTest1()
     {
-        var prop1 = DateAndOrTimeProperty.FromText("text");
+        var prop1 = new DateAndOrTimeProperty("text");
 
         var prop2 = (DateAndOrTimeProperty)prop1.Clone();
 

@@ -1,9 +1,8 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
@@ -93,11 +92,11 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
         => BuildFirstProperty(VCard.PropKeys.BDAY,
                               value,
-                              static x => x is DateOnlyProperty or DateTimeOffsetProperty);
+                              static x => x.Value.DateOnly.HasValue || x.Value.DateTimeOffset.HasValue);
 
     protected override void AppendCalendarAccessUri(IEnumerable<TextProperty?> value)
     {
-        if(Options.HasFlag(Opts.WriteRfc2739Extensions))
+        if (Options.HasFlag(Opts.WriteRfc2739Extensions))
         {
             BuildPropertyCollection(VCard.PropKeys.Rfc2739.CAPURI, value);
         }
@@ -245,9 +244,9 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         OrgProperty? pref = value.PrefOrNullIntl(IgnoreEmptyItems);
 
-        if (pref is null) 
-        { 
-            return; 
+        if (pref is null)
+        {
+            return;
         }
 
         BuildProperty(VCard.PropKeys.ORG, pref);
@@ -262,8 +261,8 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
             if (VCardToSerialize.NameViews!
                                 .FirstOrNullIntl(IgnoreEmptyItems)?
                                 .Parameters.SortAs?.Any() ?? false)
-            { 
-                return; 
+            {
+                return;
             }
 
             var sortStringProp = new TextProperty(sortString, pref.Group);

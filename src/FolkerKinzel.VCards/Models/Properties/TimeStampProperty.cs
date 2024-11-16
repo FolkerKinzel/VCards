@@ -47,13 +47,9 @@ public sealed class TimeStampProperty : VCardProperty
     internal TimeStampProperty(VcfRow vcfRow, VcfDeserializationInfo info)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        // A static DateAndOrTimeConverter can't be used because it would
-        // destroy the thread safety:
-        if (info.DateAndOrTimeConverter.TryParse(vcfRow.Value.Span.Trim(), out OneOf<DateOnly, DateTimeOffset> value))
+        if (info.TimeStampConverter.TryParse(vcfRow.Value.Span.Trim(), out DateTimeOffset value))
         {
-            Value = value.Match(
-                dateOnly => new DateTimeOffset(dateOnly.ToDateTime(TimeOnly.MinValue, DateTimeKind.Local)),
-                dateTimeOffset => dateTimeOffset);
+            Value = value;
             Parameters.DataType = Data.TimeStamp;
         }
     }
@@ -78,7 +74,6 @@ public sealed class TimeStampProperty : VCardProperty
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer is not null);
-
-        DateTimeConverter.AppendTimeStampTo(serializer.Builder, Value, serializer.Version);
+        TimeStampConverter.AppendTo(serializer.Builder, Value, serializer.Version);
     }
 }

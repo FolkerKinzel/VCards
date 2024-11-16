@@ -2,7 +2,6 @@ using System.Globalization;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
-using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -58,10 +57,6 @@ internal sealed class DateTimeConverter
             //"T--sszzz"
     ];
 
-#if NET5_0_OR_GREATER
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", 
-        Justification = "Not localizable")]
-#endif
     internal bool TryParse(ReadOnlySpan<char> roSpan, [NotNullWhen(true)] out DateAndOrTime? dateAndOrTime)
     {
         Debug.Assert(!roSpan.StartsWith('T'));
@@ -203,27 +198,6 @@ internal sealed class DateTimeConverter
         //////////////////////////////////////////////////////////////
 
         static bool IsDateOnly(ReadOnlySpan<char> span) => !span.Contains('T');
-    }
-
-    internal static void AppendTimeStampTo(StringBuilder builder,
-        DateTimeOffset dto, VCdVersion version)
-    {
-        DateTimeOffset dt = dto.ToUniversalTime();
-
-        switch (version)
-        {
-            case VCdVersion.V2_1:
-            case VCdVersion.V3_0:
-                _ = builder.AppendFormat(CultureInfo.InvariantCulture,
-                                         "{0:0000}-{1:00}-{2:00}T{3:00}:{4:00}:{5:00}Z",
-                                          dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
-                break;
-            default:
-                _ = builder.AppendFormat(CultureInfo.InvariantCulture,
-                                         "{0:0000}{1:00}{2:00}T{3:00}{4:00}{5:00}Z",
-                                          dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
-                break;
-        }
     }
 
     internal static void AppendDateTo(StringBuilder builder,
