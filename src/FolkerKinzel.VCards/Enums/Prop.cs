@@ -1,4 +1,4 @@
-using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Enums;
 

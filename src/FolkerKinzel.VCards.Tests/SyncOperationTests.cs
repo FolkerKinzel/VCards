@@ -1,6 +1,6 @@
 ﻿using FolkerKinzel.VCards.Models.Properties;
 
-namespace FolkerKinzel.VCards.Syncs.Tests;
+namespace FolkerKinzel.VCards.Tests;
 
 [TestClass()]
 public class SyncOperationTests
@@ -100,9 +100,9 @@ public class SyncOperationTests
     {
         var vc = new VCard();
         SyncOperation sync = vc.Sync;
-        Assert.IsFalse(sync.Equals((SyncOperation?)null));
+        Assert.IsFalse(sync.Equals(null));
 
-        Assert.AreEqual(sync.GetHashCode(), ((object)sync).GetHashCode());
+        Assert.AreEqual(sync.GetHashCode(), sync.GetHashCode());
     }
 
     [TestMethod]

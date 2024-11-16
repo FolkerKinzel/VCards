@@ -2,7 +2,6 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Resources;
-using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Models.Properties.Parameters;
 
@@ -518,11 +517,11 @@ public sealed partial class ParameterSection
     /// to identify the <see cref="VCardProperty" />. <c>(4)</c></summary>
     /// <remarks>
     /// The value of this property can change when calling the methods of
-    /// the <see cref="Syncs.SyncOperation"/> object provided by the <see cref="VCard.Sync"/>
+    /// the <see cref="VCards.SyncOperation"/> object provided by the <see cref="VCard.Sync"/>
     /// property.
     /// </remarks>
     /// <seealso cref="VCard.Sync"/>
-    /// <seealso cref="Syncs.SyncOperation"/>
+    /// <seealso cref="VCards.SyncOperation"/>
     /// <seealso cref="PropertyID"/>
     public IEnumerable<PropertyID>? PropertyIDs
     {

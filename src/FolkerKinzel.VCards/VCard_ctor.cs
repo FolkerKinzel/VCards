@@ -3,11 +3,8 @@ using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Resources;
-using FolkerKinzel.VCards.Syncs;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards;
@@ -390,18 +387,18 @@ public sealed partial class VCard
                             var relProp = new RelationProperty(Relation.Empty, vcfRow.Group);
                             relProp.Parameters.RelationType = Rel.Agent;
                             Relations = Concat(Relations, relProp);
-                        } 
+                        }
                         else
                         {
                             if (valSpan.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                             {
                                 VCard? nested = ParseNestedVcard(vcfRow.Value.Span, info, this.Version);
-                                RelationProperty relProp = nested is null 
+                                RelationProperty relProp = nested is null
                                                             ? RelationProperty.Parse(vcfRow, Version)
                                                             : new RelationProperty(Relation.Create(nested), vcfRow.Group);
                                 relProp.Parameters.RelationType = Rel.Agent;
 
-                                Relations =  Concat(Relations, relProp);
+                                Relations = Concat(Relations, relProp);
                             }
                             else
                             {

@@ -1,4 +1,4 @@
-﻿namespace FolkerKinzel.VCards.Syncs.Tests;
+﻿namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class PropertyIDTests
@@ -193,8 +193,8 @@ public class PropertyIDTests
 
         foreach (object? item in numerable)
         {
-            Assert.IsTrue((item as PropertyID) == id1);
-            Assert.IsFalse((item as PropertyID) != id1);
+            Assert.IsTrue(item as PropertyID == id1);
+            Assert.IsFalse(item as PropertyID != id1);
         }
     }
 

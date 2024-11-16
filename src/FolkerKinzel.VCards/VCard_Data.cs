@@ -3,7 +3,6 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Syncs;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
@@ -185,11 +184,11 @@ public sealed partial class VCard
     /// that edited the vCard. <c>(4)</c></summary>
     /// <remarks>
     /// The value of this property can change when calling the methods of the
-    /// <see cref="Syncs.SyncOperation"/> object provided by the <see cref="Sync"/>
+    /// <see cref="VCards.SyncOperation"/> object provided by the <see cref="Sync"/>
     /// property.
     /// </remarks>
     /// <seealso cref="Sync"/>
-    /// <seealso cref="Syncs.SyncOperation"/>
+    /// <seealso cref="VCards.SyncOperation"/>
     /// <seealso cref="AppID"/>
     public IEnumerable<AppIDProperty>? AppIDs
     {

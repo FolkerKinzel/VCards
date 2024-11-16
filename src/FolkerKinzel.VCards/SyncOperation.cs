@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
-namespace FolkerKinzel.VCards.Syncs;
+namespace FolkerKinzel.VCards;
 
 /// <summary>
 /// Provides methods that perform data synchronization operations on
@@ -83,7 +84,7 @@ public sealed class SyncOperation
 
         if (any && CurrentAppID is not null)
         {
-            if (!(_vCard.AppIDs?.Any(x => object.ReferenceEquals(x.Value, CurrentAppID)) ?? false))
+            if (!(_vCard.AppIDs?.Any(x => ReferenceEquals(x.Value, CurrentAppID)) ?? false))
             {
                 var newAppIDProp = new AppIDProperty(CurrentAppID);
                 _vCard.AppIDs = _vCard.AppIDs?.Concat(newAppIDProp) ?? newAppIDProp;

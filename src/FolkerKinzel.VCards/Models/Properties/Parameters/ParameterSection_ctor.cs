@@ -4,7 +4,6 @@ using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Syncs;
 using OneOf;
 using static FolkerKinzel.VCards.VCard;
 
@@ -94,7 +93,7 @@ public sealed partial class ParameterSection
                     }
                 case ParameterKey.PID:
                     {
-                        this.PropertyIDs = Syncs.PropertyID.Parse(parameter.Value.Span);
+                        this.PropertyIDs = Models.PropertyID.Parse(parameter.Value.Span);
                         break;
                     }
                 case ParameterKey.TYPE:

@@ -1,4 +1,4 @@
-﻿namespace FolkerKinzel.VCards.Syncs.Tests;
+﻿namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class AppIDTests

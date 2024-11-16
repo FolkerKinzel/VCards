@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Resources;
-using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards;
 

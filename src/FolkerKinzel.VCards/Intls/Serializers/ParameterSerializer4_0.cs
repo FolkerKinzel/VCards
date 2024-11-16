@@ -5,7 +5,6 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
-using FolkerKinzel.VCards.Syncs;
 using ParaKey = FolkerKinzel.VCards.Models.Properties.Parameters.ParameterSection.ParameterKey;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;

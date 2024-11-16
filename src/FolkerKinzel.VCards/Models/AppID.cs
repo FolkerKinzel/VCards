@@ -3,7 +3,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
-namespace FolkerKinzel.VCards.Syncs;
+namespace FolkerKinzel.VCards.Models;
 
 /// <summary> 
 /// Identifies a vCard client globally, and locally inside the <see cref="VCard"/>.

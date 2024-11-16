@@ -1,6 +1,3 @@
-using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Syncs;
-
 namespace FolkerKinzel.VCards.Models.Properties.Parameters;
 
 public sealed partial class ParameterSection
