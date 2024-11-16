@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
@@ -127,9 +126,9 @@ public sealed class Relation
     public TResult Convert<TResult>(Func<VCard, TResult> vCardFunc,
                                     Func<ContactID, TResult> contactIDFunc)
         => Object is VCard vCard
-            ? vCardFunc is null ? throw new ArgumentNullException(nameof(vCardFunc)) 
+            ? vCardFunc is null ? throw new ArgumentNullException(nameof(vCardFunc))
                                 : vCardFunc(vCard)
-            : contactIDFunc is null ? throw new ArgumentNullException(nameof(contactIDFunc)) 
+            : contactIDFunc is null ? throw new ArgumentNullException(nameof(contactIDFunc))
                                     : contactIDFunc((ContactID)Object);
 
     /// <inheritdoc />
