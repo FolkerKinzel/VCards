@@ -88,7 +88,7 @@ public sealed class ContactID : IEquatable<ContactID>
     /// </summary>
     public bool IsEmpty => ReferenceEquals(this, Empty);
 
-    internal static ContactID Empty { get; } = new ContactID(System.Guid.Empty);
+    public static ContactID Empty { get; } = new ContactID(System.Guid.Empty);
 
     /// <summary>
     /// Gets the encapsulated <see cref="Guid"/>,

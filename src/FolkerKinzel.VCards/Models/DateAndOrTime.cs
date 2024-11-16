@@ -320,4 +320,24 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(DateOnly, DateTimeOffset, TimeOnly, String);
+
+    // <summary>
+    /// Overloads the equality operator for <see cref="DateAndOrTime"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="DateAndOrTime"/> object, or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="DateAndOrTime"/> object, or <c>null</c>.</param>
+    /// <returns><c>true</c> if the contents of <paramref name="left"/> and 
+    /// <paramref name="right"/> are equal, otherwise <c>false</c>.</returns>
+    public static bool operator ==(DateAndOrTime? left, DateAndOrTime? right)
+        => ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
+
+    /// <summary>
+    /// Overloads the not-equal-to operator for <see cref="DateAndOrTime"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="DateAndOrTime"/> object, or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="DateAndOrTime"/> object, or <c>null</c>.</param>
+    /// <returns><c>true</c> if the contents of <paramref name="left"/> and 
+    /// <paramref name="right"/> are not equal, otherwise <c>false</c>.</returns>
+    public static bool operator !=(DateAndOrTime? left, DateAndOrTime? right)
+        => !(left == right);
 }
