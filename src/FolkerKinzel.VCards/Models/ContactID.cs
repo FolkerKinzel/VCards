@@ -10,7 +10,8 @@ namespace FolkerKinzel.VCards.Models;
 /// </summary>
 public sealed class ContactID : IEquatable<ContactID>
 {
-    private readonly object? _object;
+    private object? _object;
+    private bool _boxed;
 
     private ContactID(Guid guid) => Guid = guid;
 
@@ -111,7 +112,21 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <summary>
     /// Gets the encapsulated value.
     /// </summary>
-    public object Object => Guid.HasValue ? Guid : _object!;
+    public object Object
+    {
+        get
+        {
+            // Box the Guid only once, and only if
+            // needed:
+            if(!_boxed && Guid.HasValue)
+            {
+                _object = Guid.Value;
+                _boxed = true;
+            }
+
+            return _object!;
+        }
+    }
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
@@ -169,7 +184,7 @@ public sealed class ContactID : IEquatable<ContactID>
     }
 
     /// <inheritdoc/>
-    public override string ToString() => Guid.HasValue ? $"{typeof(Guid).FullName}: {Guid.Value}" : $"{Object.GetType().FullName}: {Object}";
+    public override string ToString() => $"{Object.GetType().FullName}: {Object}";
 
     /// <inheritdoc/>
     public bool Equals(ContactID? other)
