@@ -1,10 +1,8 @@
-﻿
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Syncs;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -376,7 +374,7 @@ public class VCardTests
         vc1.Xmls = vc1.Xmls.ConcatWith((XmlProperty)vc1.Xmls!.First()!.Clone());
         Assert.AreEqual(2, vc1.Xmls?.Count());
 
-        vc1.BirthDayViews =vc1.BirthDayViews.ConcatWith((DateAndOrTimeProperty)vc1.BirthDayViews!.First()!.Clone());
+        vc1.BirthDayViews = vc1.BirthDayViews.ConcatWith((DateAndOrTimeProperty)vc1.BirthDayViews!.First()!.Clone());
         Assert.AreEqual(2, vc1.BirthDayViews?.Count());
 
         vc1.Addresses = vc1.Addresses.ConcatWith((AddressProperty)vc1.Addresses!.First()!.Clone());
@@ -393,7 +391,7 @@ public class VCardTests
 
         vc1.NonStandards = vc1.NonStandards!.First();
         Assert.AreEqual(1, vc1.NonStandards?.Count());
-        
+
         Assert.AreEqual(2, vc1.AppIDs?.Count());
 
         vc1.TimeZones = vc1.TimeZones.ConcatWith((TimeZoneProperty)vc1.TimeZones!.First()!.Clone());

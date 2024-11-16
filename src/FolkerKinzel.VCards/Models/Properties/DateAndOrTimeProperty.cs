@@ -240,14 +240,14 @@ public abstract class DateAndOrTimeProperty
 
         _value = this switch
         {
-            DateOnlyProperty dateOnlyProperty => new DateAndOrTime(dateOnlyProperty.Value),
-            TimeOnlyProperty timeOnlyProperty => new DateAndOrTime(timeOnlyProperty.Value),
+            DateOnlyProperty dateOnlyProperty => dateOnlyProperty.Value,
+            TimeOnlyProperty timeOnlyProperty => timeOnlyProperty.Value,
             DateTimeOffsetProperty dateTimeOffsetProperty
                                         => dateTimeOffsetProperty.IsEmpty ? null
-                                                                          : new DateAndOrTime(dateTimeOffsetProperty.Value),
+                                                                          : dateTimeOffsetProperty.Value,
             DateTimeTextProperty dateTimeTextProperty
                                         => dateTimeTextProperty.IsEmpty ? null
-                                                                        : new DateAndOrTime(dateTimeTextProperty.Value),
+                                                                        : dateTimeTextProperty.Value,
             _ => null
         };
     }

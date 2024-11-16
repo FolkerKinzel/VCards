@@ -4,7 +4,7 @@ using FolkerKinzel.VCards.Intls.Encodings;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
-internal static partial class StringExtension
+internal static class StringExtension
 {
     /// <summary> Indicates whether <paramref name="s" /> needs 
     /// Quoted-Printable encoding.</summary>

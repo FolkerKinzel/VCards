@@ -184,7 +184,7 @@ public sealed class ContactID : IEquatable<ContactID>
     }
 
     /// <inheritdoc/>
-    public override string ToString() => $"{Object.GetType().FullName}: {Object}";
+    public override string ToString() => IsEmpty ? "Empty" : $"{Object.GetType().FullName}: {Object}";
 
     /// <inheritdoc/>
     public bool Equals(ContactID? other)

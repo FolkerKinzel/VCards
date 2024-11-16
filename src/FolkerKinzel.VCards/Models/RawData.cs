@@ -20,10 +20,11 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="DataProperty"/>
 public sealed class RawData
 {
-    internal RawData(object obj, string? mediaType)
+    internal RawData(object obj, string? mediaType, bool isEmpty)
     {
         Object = obj;
         MediaType = mediaType;
+        IsEmpty = isEmpty;
     }
 
     /// <summary>
@@ -44,7 +45,7 @@ public sealed class RawData
         byte[] bytes = LoadFile(filePath);
 
         return mediaType is null
-                ? new(bytes, MimeString.FromFileName(filePath))
+                ? new(bytes, MimeString.FromFileName(filePath), bytes.Length == 0)
                 : FromBytes(bytes, mediaType);
     }
 
@@ -72,7 +73,7 @@ public sealed class RawData
                             ? mimeInfo.ToString()
                             : MimeString.OctetStream;
 
-        return new(bytes, mediaType);
+        return new(bytes, mediaType, bytes.Length == 0);
     }
 
     /// <summary>
@@ -101,7 +102,7 @@ public sealed class RawData
                            ? mimeInfo.ToString()
                            : null;
 
-        return new(text, mediaType);
+        return new(text, mediaType, text.Length == 0);
     }
 
     /// <summary>
@@ -126,7 +127,7 @@ public sealed class RawData
                      : null;
 
         return uri.IsAbsoluteUri
-                ? new(uri, mediaType)
+                ? new(uri, mediaType, false)
                 : throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)),
                                               nameof(uri));
     }
@@ -137,20 +138,16 @@ public sealed class RawData
         Debug.Assert(mediaType.Length > 0);
 
         return dataUrlInfo.TryGetEmbeddedData(out OneOf<string, byte[]> data)
-            ? data.IsT0 ? new(data.AsT0, mediaType)
-                        : new(data.AsT1, mediaType)
-            : new RawData(Array.Empty<byte>(), mediaType);
+            ? data.IsT0 ? new(data.AsT0, mediaType, data.AsT0.Length == 0)
+                        : new(data.AsT1, mediaType, data.AsT1.Length == 0)
+            : new RawData(Array.Empty<byte>(), mediaType, true);
     }
 
     /// <summary>
     /// <c>true</c> if the instance doesn't contain any data, otherwise <c>false</c>.
     /// </summary>
-    public bool IsEmpty => Object switch
-        {
-            byte[] bytes => bytes.Length == 0,
-            string text => text.Length == 0,
-            _ => false
-        };
+    public bool IsEmpty { get; }
+        
 
     /// <summary>
     /// Gets the encapsulated <see cref="byte"/> array,
@@ -284,10 +281,9 @@ public sealed class RawData
 
     /// <inheritdoc/>
     public override string ToString()
-        => IsEmpty ? "<Empty>"
-                   : Object is byte[] bytes
-                        ? $"{bytes}: {bytes.Length} Bytes"
-                        : Object.ToString() ?? string.Empty;
+        => Object is byte[] bytes
+              ? $"{bytes}: {bytes.Length} Bytes"
+              : Object.ToString() ?? string.Empty;
 
     /// <summary>
     /// Loads the file referenced by <paramref name="filePath"/>.

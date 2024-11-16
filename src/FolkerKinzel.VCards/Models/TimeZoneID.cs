@@ -3,8 +3,8 @@ using System.Text.RegularExpressions;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -12,7 +12,7 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="Models.Properties.TimeZoneProperty"/>
 /// <seealso cref="VCard.TimeZones"/>
 /// <seealso cref="ParameterSection.TimeZone"/>
-public sealed partial class TimeZoneID
+public sealed class TimeZoneID
 {
     private enum TzError { None, Null, Empty }
 
