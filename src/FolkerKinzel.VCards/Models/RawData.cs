@@ -199,9 +199,9 @@ public sealed class RawData
     /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="string"/>, or <c>null</c>.</param>
     /// 
-    public void Switch(Action<byte[]>? bytesAction,
-                       Action<Uri>? uriAction,
-                       Action<string>? stringAction)
+    public void Switch(Action<byte[]>? bytesAction = null,
+                       Action<Uri>? uriAction = null,
+                       Action<string>? stringAction = null)
     {
         if (Object is byte[] bytes)
         {
@@ -217,41 +217,41 @@ public sealed class RawData
         }
     }
 
-    ///// <summary>
-    ///// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
-    ///// encapsulated value and allows to pass an argument to the delegates.
-    ///// </summary>
-    ///// <typeparam name="TArg">Generic type parameter.</typeparam>
-    ///// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
-    ///// is an array of <see cref="byte"/>s, or <c>null</c>.</param>
-    ///// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    ///// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
-    ///// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    ///// value is a <see cref="string"/>, or <c>null</c>.</param>
-    ///// <param name="arg">An argument to pass to the delegates.</param>
-    //public void Switch<TArg>(Action<byte[], TArg>? bytesAction,
-    //                   Action<Uri, TArg>? uriAction,
-    //                   Action<string, TArg>? stringAction,
-    //                   TArg arg)
-    //{
-    //    if (Object is byte[] bytes)
-    //    {
-    //        bytesAction?.Invoke(bytes, arg);
-    //    }
-    //    else if (Object is Uri uri)
-    //    {
-    //        uriAction?.Invoke(uri, arg);
-    //    }
-    //    else
-    //    {
-    //        stringAction?.Invoke((string)Object, arg);
-    //    }
-    //}
+    /// <summary>
+    /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
+    /// encapsulated value and allows to pass an argument to the delegates.
+    /// </summary>
+    /// <typeparam name="TArg">Generic type parameter.</typeparam>
+    /// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
+    /// is an array of <see cref="byte"/>s, or <c>null</c>.</param>
+    /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
+    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="string"/>, or <c>null</c>.</param>
+    /// <param name="arg">The argument to pass to the delegates.</param>
+    public void Switch<TArg>(Action<byte[], TArg>? bytesAction,
+                             Action<Uri, TArg>? uriAction,
+                             Action<string, TArg>? stringAction,
+                             TArg arg)
+    {
+        if (Object is byte[] bytes)
+        {
+            bytesAction?.Invoke(bytes, arg);
+        }
+        else if (Object is Uri uri)
+        {
+            uriAction?.Invoke(uri, arg);
+        }
+        else
+        {
+            stringAction?.Invoke((string)Object, arg);
+        }
+    }
 
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/>.
     /// </summary>
-    /// <typeparam name="TResult">Generic type parameter.</typeparam>
+    /// <typeparam name="TResult">Generic type parameter for the return type of the delegates.</typeparam>
     /// <param name="bytesFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated 
     /// value is an array of <see cref="byte"/>s.</param>
     /// <param name="uriFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
@@ -271,6 +271,37 @@ public sealed class RawData
             byte[] bytes => bytesFunc is null ? throw new ArgumentNullException(nameof(bytesFunc)) : bytesFunc(bytes),
             Uri uri => uriFunc is null ? throw new ArgumentNullException(nameof(uriFunc)) : uriFunc(uri),
             _ => stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc((string)Object)
+        };
+    }
+
+    /// <summary>
+    /// Converts the encapsulated value to <typeparamref name="TResult"/> and allows to specify an
+    /// argument for the conversion.
+    /// </summary>
+    /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
+    /// to the delegates.</typeparam>
+    /// <typeparam name="TResult">Generic type parameter for the return type of the delegates.</typeparam>
+    /// <param name="bytesFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated 
+    /// value is an array of <see cref="byte"/>s.</param>
+    /// <param name="uriFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// value is a <see cref="System.Uri"/>.</param>
+    /// <param name="stringFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// value is a <see cref="string"/>.</param>
+    /// <param name="arg">The argument to pass to the delegates.</param>
+    /// <returns>A <typeparamref name="TResult"/>.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
+    /// </exception>
+    public TResult Convert<TArg, TResult>(Func<byte[], TArg, TResult>? bytesFunc,
+                                          Func<Uri, TArg, TResult> uriFunc,
+                                          Func<string, TArg, TResult> stringFunc,
+                                          TArg arg)
+    {
+        return Object switch
+        {
+            byte[] bytes => bytesFunc is null ? throw new ArgumentNullException(nameof(bytesFunc)) : bytesFunc(bytes, arg),
+            Uri uri => uriFunc is null ? throw new ArgumentNullException(nameof(uriFunc)) : uriFunc(uri, arg),
+            _ => stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc((string)Object, arg)
         };
     }
 

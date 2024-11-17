@@ -19,12 +19,7 @@ public sealed class Relation
 {
     private Relation(object obj) => Object = obj;
 
-    /// <summary>
-    /// <c>true</c> if the instance doesn't contain usable data, otherwise <c>false</c>.
-    /// </summary>
-    public bool IsEmpty => ReferenceEquals(this, Empty);
-
-    internal static Relation Empty { get; } = new Relation(ContactID.Empty);
+    
 
     /// <summary>
     /// Creates a new <see cref="Relation"/> instance, which is newly initialized using the 
@@ -67,6 +62,17 @@ public sealed class Relation
     }
 
     /// <summary>
+    /// <c>true</c> if the instance if the instance does not relate to anything, otherwise 
+    /// <c>false</c>.
+    /// </summary>
+    public bool IsEmpty => ReferenceEquals(this, Empty);
+
+    /// <summary>
+    /// A singleton whose <see cref="IsEmpty"/> property returns <c>true</c>.
+    /// </summary>
+    public static Relation Empty { get; } = new Relation(ContactID.Empty);
+
+    /// <summary>
     /// Gets the encapsulated <see cref="VCards.VCard"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
@@ -96,8 +102,8 @@ public sealed class Relation
     /// <param name="contactIDAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="ContactID"/>, or <c>null</c>.</param>
     ///
-    public void Switch(Action<VCard>? vCardAction,
-                       Action<ContactID>? contactIDAction)
+    public void Switch(Action<VCard>? vCardAction = null,
+                       Action<ContactID>? contactIDAction = null)
     {
         if (Object is VCard vc)
         {

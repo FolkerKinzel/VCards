@@ -84,10 +84,13 @@ public sealed class ContactID : IEquatable<ContactID>
     }
 
     /// <summary>
-    /// <c>true</c> if the instance doesn't reference anything, otherwise <c>false</c>.
+    /// <c>true</c> if the instance doesn't identify anything, otherwise <c>false</c>.
     /// </summary>
     public bool IsEmpty => ReferenceEquals(this, Empty);
 
+    /// <summary>
+    /// A singleton whose <see cref="IsEmpty"/> property returns <c>true</c>.
+    /// </summary>
     public static ContactID Empty { get; } = new ContactID(System.Guid.Empty);
 
     /// <summary>
@@ -139,9 +142,9 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="string"/>, or <c>null</c>.</param>
     /// 
-    public void Switch(Action<Guid>? guidAction,
-                       Action<Uri>? uriAction,
-                       Action<string>? stringAction)
+    public void Switch(Action<Guid>? guidAction = null,
+                       Action<Uri>? uriAction = null,
+                       Action<string>? stringAction = null)
     {
         if (Guid.HasValue)
         {
@@ -209,8 +212,8 @@ public sealed class ContactID : IEquatable<ContactID>
     /// </summary>
     /// <param name="left">The left <see cref="ContactID"/> object or <c>null</c>.</param>
     /// <param name="right">The right <see cref="ContactID"/> object or <c>null</c>.</param>
-    /// <returns><c>true</c> if the <see cref="Object"/> of <paramref name="left"/> and 
-    /// <paramref name="right"/> is equal, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the contents of <paramref name="left"/> and 
+    /// <paramref name="right"/> are equal, otherwise <c>false</c>.</returns>
     public static bool operator ==(ContactID? left, ContactID? right)
         => ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
 
@@ -219,8 +222,8 @@ public sealed class ContactID : IEquatable<ContactID>
     /// </summary>
     /// <param name="left">The left <see cref="ContactID"/> object or <c>null</c>.</param>
     /// <param name="right">The right <see cref="ContactID"/> object or <c>null</c>.</param>
-    /// <returns><c>true</c> if the <see cref="Object"/> of <paramref name="left"/> and 
-    /// <paramref name="right"/> is not equal, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the contents of <paramref name="left"/> and 
+    /// <paramref name="right"/> are not equal, otherwise <c>false</c>.</returns>
     public static bool operator !=(ContactID? left, ContactID? right)
         => !(left == right);
 }
