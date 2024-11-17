@@ -482,7 +482,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             key = key.Trim();
 
             if (string.IsNullOrWhiteSpace(parameter.Value) 
-                || !key.StartsWith("X-", StringComparison.OrdinalIgnoreCase) 
+                || !XNameValidator.IsXName(key) 
                 || key.Equals(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, StringComparison.OrdinalIgnoreCase))
             {
                 continue;

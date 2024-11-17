@@ -62,7 +62,25 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     {
         _ArgumentNullException.ThrowIfNull(xName, nameof(xName));
 
-        Key = IsXName(xName) ? xName
+
+        /* Unmerged change from project 'FolkerKinzel.VCards (netstandard2.0)'
+        Before:
+                Key = IsXName(xName) ? xName
+                                       : throw new ArgumentException(Res.NoXName, nameof(xName));
+        After:
+                Key = XNameValidator.IsXName(xName) ? xName
+                                       : throw new ArgumentException(Res.NoXName, nameof(xName));
+        */
+
+        /* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
+        Before:
+                Key = Properties.XNameValidator.IsXName(xName) ? xName
+                                       : throw new ArgumentException(Res.NoXName, nameof(xName));
+        After:
+                Key = XNameValidator.IsXName(xName) ? xName
+                                       : throw new ArgumentException(Res.NoXName, nameof(xName));
+        */
+        Key = Intls.XNameValidator.IsXName(xName) ? xName
                                : throw new ArgumentException(Res.NoXName, nameof(xName));
         Value = value ?? "";
     }
@@ -128,13 +146,5 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     }
 
     [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
-    internal bool IsXNameProperty() => IsXName(Key);
-
-    private static bool IsXName(string xName)
-    {
-        ReadOnlySpan<char> span = xName.AsSpan();
-        return span.Length >= 3 &&
-               span.StartsWith("X-", StringComparison.OrdinalIgnoreCase) &&
-               !span.Contains(' ');
-    }
+    internal bool IsXNameProperty() => XNameValidator.IsXName(Key);
 }
