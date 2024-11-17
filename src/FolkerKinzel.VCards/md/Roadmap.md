@@ -116,6 +116,20 @@ and let it store as string[]
 &nbsp;
 - [x] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
+&nbsp;
+- [ ] Change `VCard.Xmls` property to return and accept IEnumerable<TextProperty?>?
+- [ ] Remove XmlProperty
+- [ ] Remove XmlBuilder
+
+&nbsp;
+- [ ] Change `ProfileProperty` to not been derived from `TextProperty`
+
+&nbsp;
+- [ ] Make `TextProperty` sealed.
+
+&nbsp;
+- [x] Rename `NonStandardProperty.XName` to `Key`
+
 ### 7.4.3
 - [ ] .NET 9.0 version of the package
 - [ ] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0

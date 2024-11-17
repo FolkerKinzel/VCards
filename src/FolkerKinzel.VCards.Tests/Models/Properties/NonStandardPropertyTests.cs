@@ -16,7 +16,7 @@ public class NonStandardPropertyTests
 
         Assert.AreEqual(GROUP, prop.Group);
         Assert.AreEqual(VALUE, prop.Value);
-        Assert.AreEqual(KEY, prop.XName);
+        Assert.AreEqual(KEY, prop.Key);
         Assert.IsFalse(prop.IsEmpty);
     }
 
@@ -95,7 +95,7 @@ public class NonStandardPropertyTests
         var prop2 = (NonStandardProperty)prop1.Clone();
 
         Assert.AreSame(prop1.Value, prop2.Value);
-        Assert.AreSame(prop1.XName, prop2.XName);
+        Assert.AreSame(prop1.Key, prop2.Key);
         Assert.AreNotSame(prop1, prop2);
     }
 }

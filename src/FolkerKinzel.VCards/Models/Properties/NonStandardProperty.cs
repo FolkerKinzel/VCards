@@ -1,4 +1,5 @@
 using System.Collections;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -25,11 +26,22 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="VCard.NonStandards"/>
 public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandardProperty>
 {
+    #region Remove with 8.0.1
+
+    [Obsolete("Use Key instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public string XName => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    #endregion
+
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="NonStandardProperty"/> instance to clone.</param>
     private NonStandardProperty(NonStandardProperty prop) : base(prop)
     {
-        XName = prop.XName;
+        Key = prop.Key;
         Value = prop.Value;
     }
 
@@ -37,7 +49,7 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     /// <param name="xName">The key ("name") of the non-standard vCard property
     /// (format: <c>X-NAME</c>).</param>
     /// <param name="value">The value of the vCard property: any data encoded as <see
-    /// cref="string" /> or <c>null</c>.</param>
+    /// cref="string" />, or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
@@ -50,34 +62,30 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     {
         _ArgumentNullException.ThrowIfNull(xName, nameof(xName));
 
-        if (xName.Length < 3 ||
-            !xName.StartsWith("X-", StringComparison.OrdinalIgnoreCase) ||
-             xName.Contains(' ', StringComparison.Ordinal))
-        {
-            throw new ArgumentException(
-                Res.NoXName, nameof(xName));
-        }
-
-        XName = xName;
-        Value = value;
+        Key = IsXName(xName) ? xName
+                               : throw new ArgumentException(Res.NoXName, nameof(xName));
+        Value = value ?? "";
     }
 
     internal NonStandardProperty(VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        XName = vcfRow.Key;
-        Value = vcfRow.Value.Span.IsEmpty ? null : vcfRow.Value.ToString();
+        Key = vcfRow.Key;
+        Value = vcfRow.Value.ToString();
     }
 
     /// <summary>The key ("name") of the vCard property.</summary>
-    public string XName { get; }
+    public string Key { get; }
 
     /// <summary>The data provided by the <see cref="NonStandardProperty" /> (raw <see
     /// cref="string" /> data).</summary>
-    public new string? Value
+    public new string Value
     {
         get;
     }
+
+    /// <inheritdoc/>
+    public override bool IsEmpty => Value.Length == 0;
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -88,7 +96,7 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     {
         var sb = new StringBuilder();
 
-        _ = sb.Append($"{nameof(XName)}: ").AppendLine(XName);
+        _ = sb.Append($"{nameof(Key)}: ").AppendLine(Key);
         _ = sb.Append("Value: ").Append(Value);
 
         return sb.ToString();
@@ -117,5 +125,16 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
         Debug.Assert(serializer is not null);
 
         _ = serializer.Builder.Append(Value);
+    }
+
+    [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
+    internal bool IsXNameProperty() => IsXName(Key);
+
+    private static bool IsXName(string xName)
+    {
+        ReadOnlySpan<char> span = xName.AsSpan();
+        return span.Length >= 3 &&
+               span.StartsWith("X-", StringComparison.OrdinalIgnoreCase) &&
+               !span.Contains(' ');
     }
 }

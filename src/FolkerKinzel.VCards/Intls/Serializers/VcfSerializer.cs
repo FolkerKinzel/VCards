@@ -705,12 +705,12 @@ internal abstract class VcfSerializer : IDisposable
 
         foreach (NonStandardProperty? nonStandardProp in value)
         {
-            if (nonStandardProp is null)
+            if (nonStandardProp is null || !nonStandardProp.IsXNameProperty())
             {
                 continue;
             }
 
-            BuildProperty(nonStandardProp.XName,
+            BuildProperty(nonStandardProp.Key,
                           nonStandardProp,
                           nonStandardProp.Parameters.Preference == 1);
         }

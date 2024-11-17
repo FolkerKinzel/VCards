@@ -475,6 +475,8 @@ public sealed partial class VCard
                     break;
                 default:
                     Debug.Assert(!vcfRow.Key.Equals(PropKeys.NonStandard.X_SOCIALPROFILE, StringComparison.OrdinalIgnoreCase));
+                    Debug.Assert(!vcfRow.Key.Equals(PropKeys.NonStandard.X_AB_LABEL, StringComparison.OrdinalIgnoreCase));
+
                     NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
                     break;
             };//switch
