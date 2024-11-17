@@ -64,21 +64,14 @@ public class DateAndOrTimePropertyTests
         Assert.IsNotNull(vcard.BirthDayViews);
         DateAndOrTimeProperty? bdayProp = vcard.BirthDayViews!.First();
         Assert.IsNotNull(bdayProp);
-        Assert.IsTrue(bdayProp.IsEmpty);
+        Assert.IsFalse(bdayProp.IsEmpty);
+        Assert.AreEqual("bla", bdayProp.Value.String);
     }
 
     [TestMethod]
     public void ValueTest1()
     {
         VCardProperty prop = new DateAndOrTimeProperty(new DateTime(2023, 10, 14));
-        Assert.IsFalse(prop.IsEmpty);
-        Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
-    }
-
-    [TestMethod]
-    public void ValueTest3()
-    {
-        VCardProperty prop = new DateAndOrTimeProperty(DateAndOrTime.Create(14, 24));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
     }

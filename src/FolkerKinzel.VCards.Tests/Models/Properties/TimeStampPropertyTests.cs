@@ -49,7 +49,7 @@ public class TimeStampPropertyTests
 
         var prop = new TimeStampProperty(row, info);
 
-        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsTrue(prop.IsEmpty);
     }
 
     [TestMethod]

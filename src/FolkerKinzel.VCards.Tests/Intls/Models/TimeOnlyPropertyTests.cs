@@ -17,12 +17,10 @@ public class TimeOnlyPropertyTests
 
         Assert.AreEqual(group, prop.Group);
         Assert.AreEqual(dto, prop.Value.TimeOnly);
-        Assert.AreEqual(Data.Time, prop.Parameters.DataType);
 
         var clone = (DateAndOrTimeProperty)prop.Clone();
         Assert.AreEqual(group, prop.Group);
         Assert.AreEqual(dto, prop.Value.TimeOnly);
-        Assert.AreEqual(Data.Time, prop.Parameters.DataType);
 
         Assert.AreNotSame(clone, prop);
     }

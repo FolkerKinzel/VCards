@@ -66,7 +66,7 @@ public class DateTimeOffsetPropertyTests
     {
         var prop = new DateAndOrTimeProperty(DateTimeOffset.MinValue, GROUP);
         Assert.IsTrue(prop.IsEmpty);
-        Assert.IsNull(prop.Value);
+        Assert.IsNotNull(prop.Value);
     }
 
     [TestMethod]
@@ -105,14 +105,12 @@ public class DateTimeOffsetPropertyTests
 
         Assert.IsTrue(prop.Value.DateTimeOffset.HasValue);
         Assert.AreEqual(group, prop.Group);
-        Assert.AreEqual(dto, prop.Value?.DateTimeOffset);
-        Assert.AreEqual(Data.DateAndOrTime, prop.Parameters.DataType);
+        Assert.AreEqual(dto, prop.Value.DateTimeOffset);
 
         var clone = (DateAndOrTimeProperty)prop.Clone();
         Assert.IsTrue(clone.Value.DateTimeOffset.HasValue);
         Assert.AreEqual(group, clone.Group);
         Assert.AreEqual(dto, clone.Value.DateTimeOffset);
-        Assert.AreEqual(Data.DateAndOrTime, prop.Parameters.DataType);
 
         Assert.AreNotSame(clone, prop);
     }

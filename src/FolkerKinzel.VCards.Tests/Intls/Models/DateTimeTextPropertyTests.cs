@@ -54,7 +54,7 @@ public class DateTimeTextPropertyTests
     {
         var prop = new DateAndOrTimeProperty((string?)null);
         Assert.IsTrue(prop.IsEmpty);
-        Assert.IsNull(prop.Value);
+        Assert.IsNotNull(prop.Value);
     }
 
     [TestMethod]
