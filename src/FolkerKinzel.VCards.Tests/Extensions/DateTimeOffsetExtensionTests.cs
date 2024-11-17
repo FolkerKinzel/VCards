@@ -10,7 +10,7 @@ public class DateTimeOffsetExtensionTests
     [TestMethod()]
     public void HasYearTest1()
     {
-        Assert.IsTrue(new DateTimeConverter().TryParse("--0304T170000".AsSpan(), out DateAndOrTime? dto));
+        Assert.IsTrue(new DateAndOrTimeConverter().TryParse("--0304T170000".AsSpan(), out DateAndOrTime? dto));
         Assert.IsTrue(dto.DateTimeOffset.HasValue);
         Assert.IsFalse(dto.DateTimeOffset.Value.HasYear());
         Assert.IsTrue(dto.DateTimeOffset.Value.HasDate());
@@ -19,7 +19,7 @@ public class DateTimeOffsetExtensionTests
     [TestMethod()]
     public void HasYearTest2()
     {
-        Assert.IsTrue(new DateTimeConverter().TryParse("16850304T170000".AsSpan(), out DateAndOrTime? dto));
+        Assert.IsTrue(new DateAndOrTimeConverter().TryParse("16850304T170000".AsSpan(), out DateAndOrTime? dto));
         Assert.IsTrue(dto.DateTimeOffset.HasValue);
         Assert.IsTrue(dto.DateTimeOffset.Value.HasYear());
         Assert.IsTrue(dto.DateTimeOffset.Value.HasDate());

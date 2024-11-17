@@ -19,8 +19,6 @@ public sealed class Relation
 {
     private Relation(object obj) => Object = obj;
 
-    
-
     /// <summary>
     /// Creates a new <see cref="Relation"/> instance, which is newly initialized using the 
     /// <see cref="VCard"/>-object that represents a person or organization.
@@ -116,6 +114,31 @@ public sealed class Relation
     }
 
     /// <summary>
+    /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
+    /// encapsulated value and allows to pass an argument to the delegates.
+    /// </summary>
+    /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
+    /// to the delegates.</typeparam>
+    /// <param name="vCardAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="VCards.VCard"/>, or <c>null</c>.</param>
+    /// <param name="contactIDAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="ContactID"/>, or <c>null</c>.</param>
+    /// <param name="arg">The argument to pass to the delegates.</param>
+    public void Switch<TArg>(Action<VCard, TArg>? vCardAction,
+                             Action<ContactID, TArg>? contactIDAction,
+                             TArg arg)
+    {
+        if (Object is VCard vc)
+        {
+            vCardAction?.Invoke(vc, arg);
+        }
+        else
+        {
+            contactIDAction?.Invoke((ContactID)Object, arg);
+        }
+    }
+
+    /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/>.
     /// </summary>
     /// <typeparam name="TResult">Generic type parameter.</typeparam>
@@ -136,6 +159,33 @@ public sealed class Relation
                                 : vCardFunc(vCard)
             : contactIDFunc is null ? throw new ArgumentNullException(nameof(contactIDFunc))
                                     : contactIDFunc((ContactID)Object);
+
+
+    /// <summary>
+    /// Converts the encapsulated value to <typeparamref name="TResult"/> and allows to specify an
+    /// argument for the conversion.
+    /// </summary>
+    /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
+    /// to the delegates.</typeparam>
+    /// <typeparam name="TResult">Generic type parameter for the return type of the delegates.</typeparam>
+    /// 
+    /// <param name="vCardFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// value is a <see cref="VCards.VCard"/>.</param>
+    /// <param name="contactIDFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// value is a <see cref="ContactID"/>.</param>
+    /// <param name="arg">The argument to pass to the delegates.</param>
+    /// <returns>A <typeparamref name="TResult"/>.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
+    /// </exception>
+    public TResult Convert<TArg, TResult>(Func<VCard, TArg, TResult> vCardFunc,
+                                          Func<ContactID, TArg, TResult> contactIDFunc,
+                                          TArg arg)
+        => Object is VCard vCard
+            ? vCardFunc is null ? throw new ArgumentNullException(nameof(vCardFunc))
+                                : vCardFunc(vCard, arg)
+            : contactIDFunc is null ? throw new ArgumentNullException(nameof(contactIDFunc))
+                                    : contactIDFunc((ContactID)Object, arg);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

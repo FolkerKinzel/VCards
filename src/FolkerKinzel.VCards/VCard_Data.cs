@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
@@ -859,8 +860,7 @@ public sealed partial class VCard
 
     /// <summary>
     /// Replaces <see cref="RelationProperty"/> instances in <see cref="Members"/>
-    /// that contain text with <see cref="RelationProperty"/> instances that contain <see cref="Uri"/>s
-    /// if possible, if not, with <see cref="RelationProperty"/> instances that contain <see cref="VCard"/>s.
+    /// that contain text with <see cref="RelationProperty"/> instances that contain <see cref="VCard"/>s.
     /// </summary>
     /// <remarks>
     /// RFC 6350 allows only URIs as value for <c>MEMBER</c>. Values that can't be preserved as URI will be saved in 
@@ -874,7 +874,9 @@ public sealed partial class VCard
             return;
         }
 
-        RelationProperty[] members = Members.OfType<RelationProperty>().ToArray();
+        // Members that contain Relation.Empty can be ignored because
+        // an empty string is an empty URI too
+        RelationProperty[] members = Members.Items().ToArray();
         Members = members;
         Span<RelationProperty> span = members.AsSpan();
 
@@ -885,10 +887,9 @@ public sealed partial class VCard
             if (prop.Value.ContactID?.String is string text)
             {
                 Debug.Assert(!prop.IsEmpty);
+                Debug.Assert(!Uri.TryCreate(text, UriKind.Absolute, out _));
 
-                RelationProperty relProp = Uri.TryCreate(text.Trim(), UriKind.Absolute, out Uri? uri)
-                    ? new RelationProperty(Relation.Create(Models.ContactID.Create(uri)), prop.Group)
-                    : new RelationProperty(Relation.Create(new VCard(setContactID: true, setCreated: false)
+                var relProp = new RelationProperty(Relation.Create(new VCard(setContactID: true, setCreated: false)
                     {
                         DisplayNames = new TextProperty(text)
                     }), prop.Group);

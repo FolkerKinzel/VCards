@@ -188,7 +188,9 @@ public readonly struct ContactIDBuilder
     /// 
     /// <remarks>
     /// <para>If <paramref name="text"/> represents a <see cref="Guid"/>, a <see cref="ContactID"/> instance
-    /// with this <see cref="Guid"/> value will be created.</para>
+    /// with this <see cref="Guid"/> value will be created. If <paramref name="text"/> represents an absolute
+    /// <see cref="Uri"/>, a <see cref="ContactID"/> instance containing a <see cref="Uri"/> will
+    /// be created.</para>
     /// <para>
     /// The method sets <see cref="VCard.ContactID"/> to an empty <see cref="ContactIDProperty"/> instance if
     /// <paramref name="text"/> is <c>null</c>, or an empty <see cref="string"/>, or if it consists only of 

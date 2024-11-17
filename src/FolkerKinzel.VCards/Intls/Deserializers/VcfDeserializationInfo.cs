@@ -6,18 +6,18 @@ internal sealed class VcfDeserializationInfo
 {
     internal const int INITIAL_PARAMETERLIST_CAPACITY = 8;
 
-    private DateTimeConverter? _dateAndOrTimeConverter;
+    private DateAndOrTimeConverter? _dateAndOrTimeConverter;
     private TimeConverter? _timeConverter;
     private NameBuilder? _nameBuilder;
     private TimeStampConverter? _timeStampConverter;
 
     internal List<KeyValuePair<string, ReadOnlyMemory<char>>> ParameterList { get; } = [];
 
-    internal DateTimeConverter DateAndOrTimeConverter
+    internal DateAndOrTimeConverter DateAndOrTimeConverter
     {
         get
         {
-            this._dateAndOrTimeConverter ??= new DateTimeConverter();
+            this._dateAndOrTimeConverter ??= new DateAndOrTimeConverter();
             return this._dateAndOrTimeConverter;
         }
     }

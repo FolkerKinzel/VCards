@@ -14,19 +14,23 @@ internal static class DataUrlConverter
 
         bool masked = UnMaskMimeType(ref mime, out bool base64Encoded);
 
-        if (masked)
+        if (!masked)
         {
-            // If the "data" URL is masked dataUrlInfo has to be parsed again.
-
-            int length = (base64Encoded ? 13 : 6) + mime.Length + dataUrlInfo.Data.Length;
-
-            using ArrayPoolHelper.SharedArray<char> shared = ArrayPoolHelper.Rent<char>(length);
-            Memory<char> mem = shared.Array;
-            CopyDataUrl(mem.Span, mime.Span, dataUrlInfo.Data, base64Encoded);
-
-            _ = DataUrl.TryParse(mem.Slice(0, length), out dataUrlInfo);
+            return RawData.FromDataUrlInfo(in dataUrlInfo);
         }
 
+        // If the "data" URL is masked dataUrlInfo has to be parsed again:
+
+        const int defaultLength = 6; // data:,
+        const int base64EncodedLength = 13; // data:;base64,
+
+        int length = (base64Encoded ? base64EncodedLength : defaultLength) + mime.Length + dataUrlInfo.Data.Length;
+
+        using ArrayPoolHelper.SharedArray<char> shared = ArrayPoolHelper.Rent<char>(length);
+        Memory<char> mem = shared.Array;
+        CopyUnmaskedDataUrl(mem.Span, mime.Span, dataUrlInfo.Data, base64Encoded);
+
+        _ = DataUrl.TryParse(mem.Slice(0, length), out dataUrlInfo);
         return RawData.FromDataUrlInfo(in dataUrlInfo);
     }
 
@@ -64,7 +68,7 @@ internal static class DataUrlConverter
         return true;
     }
 
-    private static void CopyDataUrl(Span<char> span, ReadOnlySpan<char> mime, ReadOnlySpan<char> data, bool base64Encoded)
+    private static void CopyUnmaskedDataUrl(Span<char> span, ReadOnlySpan<char> mime, ReadOnlySpan<char> data, bool base64Encoded)
     {
         if (base64Encoded)
         {

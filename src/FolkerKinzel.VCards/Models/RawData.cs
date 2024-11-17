@@ -221,7 +221,8 @@ public sealed class RawData
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
     /// encapsulated value and allows to pass an argument to the delegates.
     /// </summary>
-    /// <typeparam name="TArg">Generic type parameter.</typeparam>
+    /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
+    /// to the delegates.</typeparam>
     /// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
     /// is an array of <see cref="byte"/>s, or <c>null</c>.</param>
     /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
@@ -262,7 +263,7 @@ public sealed class RawData
     /// <exception cref="ArgumentNullException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
-    public TResult Convert<TResult>(Func<byte[], TResult>? bytesFunc,
+    public TResult Convert<TResult>(Func<byte[], TResult> bytesFunc,
                                     Func<Uri, TResult> uriFunc,
                                     Func<string, TResult> stringFunc)
     {
@@ -292,7 +293,7 @@ public sealed class RawData
     /// <exception cref="ArgumentNullException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
-    public TResult Convert<TArg, TResult>(Func<byte[], TArg, TResult>? bytesFunc,
+    public TResult Convert<TArg, TResult>(Func<byte[], TArg, TResult> bytesFunc,
                                           Func<Uri, TArg, TResult> uriFunc,
                                           Func<string, TArg, TResult> stringFunc,
                                           TArg arg)

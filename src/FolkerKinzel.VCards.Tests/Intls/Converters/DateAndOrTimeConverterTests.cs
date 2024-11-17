@@ -5,9 +5,9 @@ using FolkerKinzel.VCards.Models;
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass]
-public class DateTimeConverterTests
+public class DateAndOrTimeConverterTests
 {
-    private readonly DateTimeConverter _conv = new();
+    private readonly DateAndOrTimeConverter _conv = new();
 
     [TestMethod]
     public void DateTest()
@@ -104,8 +104,8 @@ public class DateTimeConverterTests
         {
             var builder = new StringBuilder();
             dt.Switch(
-                dateOnly => DateTimeConverter.AppendDateTo(builder, dateOnly, version),
-                dto => DateTimeConverter.AppendDateTimeOffsetTo(builder, dto, version)
+                dateOnly => DateAndOrTimeConverter.AppendDateTo(builder, dateOnly, version),
+                dto => DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, dto, version)
             );
             return builder.ToString();
         }
@@ -141,7 +141,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest1()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateTimeOffsetTo(builder, default, VCdVersion.V3_0);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, default, VCdVersion.V3_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -149,7 +149,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest2a()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -157,7 +157,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest2b()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 2, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 2, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -165,7 +165,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest2c()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V3_0);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V3_0);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -173,7 +173,7 @@ public class DateTimeConverterTests
     public void AppendDateTimeStringToTest3()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0);
         string s = builder.ToString();
         Assert.IsTrue(s.StartsWith("--"));
     }
@@ -182,7 +182,7 @@ public class DateTimeConverterTests
     public void AppendDateToTest1()
     {
         var builder = new StringBuilder();
-        DateTimeConverter.AppendDateTo(builder, new DateOnly(4, 5, 1), VCdVersion.V3_0);
+        DateAndOrTimeConverter.AppendDateTo(builder, new DateOnly(4, 5, 1), VCdVersion.V3_0);
         string s = builder.ToString();
         Assert.IsTrue(s.StartsWith("--"));
     }

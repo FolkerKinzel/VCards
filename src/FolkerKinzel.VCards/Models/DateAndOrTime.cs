@@ -2,8 +2,8 @@ using System.ComponentModel;
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models.Properties;
-using DateTimeConverter = FolkerKinzel.VCards.Intls.Converters.DateTimeConverter;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -56,7 +56,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <see cref="Empty"/>.
     /// </remarks>
     public static DateAndOrTime Create(DateTimeOffset value)
-        => !DateTimeConverter.HasDate(value) && !DateTimeConverter.HasTime(value)
+        => !DateAndOrTimeConverter.HasDate(value) && !DateAndOrTimeConverter.HasTime(value)
             ? Empty
             : new(value);
 
@@ -104,7 +104,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// that <paramref name="month"/> has in a leap year.</para>
     /// </exception>
     public static DateAndOrTime Create(int month, int day)
-        => new(new DateOnly(DateTimeConverter.FIRST_LEAP_YEAR, month, day));
+        => new(new DateOnly(DateAndOrTimeConverter.FIRST_LEAP_YEAR, month, day));
 
     /// <summary>
     /// Defines an implicit conversion of a <see cref="System.DateOnly"/> value to a 
@@ -331,7 +331,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// </summary>
     /// <param name="dateAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.DateOnly"/>, or <c>null</c>.</param>
-    /// <param name="dtOffsetAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// <param name="dtoAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.DateTimeOffset"/>, or <c>null</c>.</param>
     /// <param name="timeAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.TimeOnly"/>, or <c>null</c>.</param>
@@ -340,7 +340,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Switch(Action<DateOnly>? dateAction = null,
-                       Action<DateTimeOffset>? dtOffsetAction = null,
+                       Action<DateTimeOffset>? dtoAction = null,
                        Action<TimeOnly>? timeAction = null,
                        Action<string>? stringAction = null)
     {
@@ -350,7 +350,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
         }
         else if (DateTimeOffset.HasValue)
         {
-            dtOffsetAction?.Invoke(DateTimeOffset.Value);
+            dtoAction?.Invoke(DateTimeOffset.Value);
         }
         else if (TimeOnly.HasValue)
         {
@@ -366,10 +366,11 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
     /// encapsulated value and allows to pass an argument to the delegates.
     /// </summary>
-    /// <typeparam name="TArg">Generic type parameter.</typeparam>
+    /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
+    /// to the delegates.</typeparam>
     /// <param name="dateAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.DateOnly"/>, or <c>null</c>.</param>
-    /// <param name="dtOffsetAction">The <see cref="Action{T}"/> to perform if the encapsulated
+    /// <param name="dtoAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.DateTimeOffset"/>, or <c>null</c>.</param>
     /// <param name="timeAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.TimeOnly"/>, or <c>null</c>.</param>
@@ -377,7 +378,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// value is a <see cref="string"/>, or <c>null</c>.</param>
     /// <param name="arg">The argument to pass to the delegates.</param>
     public void Switch<TArg>(Action<DateOnly, TArg>? dateAction,
-                       Action<DateTimeOffset, TArg>? dtOffsetAction,
+                       Action<DateTimeOffset, TArg>? dtoAction,
                        Action<TimeOnly, TArg>? timeAction,
                        Action<string, TArg>? stringAction,
                        TArg arg)
@@ -388,7 +389,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
         }
         else if (DateTimeOffset.HasValue)
         {
-            dtOffsetAction?.Invoke(DateTimeOffset.Value, arg);
+            dtoAction?.Invoke(DateTimeOffset.Value, arg);
         }
         else if (TimeOnly.HasValue)
         {
@@ -406,7 +407,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <typeparam name="TResult">Generic type parameter for the return type of the delegates.</typeparam>
     /// <param name="dateFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.DateOnly"/> value.</param>
-    /// <param name="dtOffsetFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// <param name="dtoFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.DateTimeOffset"/> value.</param>
     /// <param name="timeFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.TimeOnly"/> value.</param>
@@ -418,13 +419,13 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TResult Convert<TResult>(Func<DateOnly, TResult> dateFunc,
-                                    Func<DateTimeOffset, TResult> dtOffsetFunc,
+                                    Func<DateTimeOffset, TResult> dtoFunc,
                                     Func<TimeOnly, TResult> timeFunc,
                                     Func<string, TResult> stringFunc)
         => DateOnly.HasValue
             ? dateFunc is null ? throw new ArgumentNullException(nameof(dateFunc)) : dateFunc(DateOnly.Value)
             : DateTimeOffset.HasValue
-                ? dtOffsetFunc is null ? throw new ArgumentNullException(nameof(dtOffsetFunc)) : dtOffsetFunc(DateTimeOffset.Value)
+                ? dtoFunc is null ? throw new ArgumentNullException(nameof(dtoFunc)) : dtoFunc(DateTimeOffset.Value)
                 : TimeOnly.HasValue
                             ? timeFunc is null ? throw new ArgumentNullException(nameof(timeFunc)) : timeFunc(TimeOnly.Value)
                             : stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc(String!);
@@ -438,7 +439,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <typeparam name="TResult">Generic type parameter for the return type of the delegates.</typeparam>
     /// <param name="dateFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.DateOnly"/> value.</param>
-    /// <param name="dtOffsetFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
+    /// <param name="dtoFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.DateTimeOffset"/> value.</param>
     /// <param name="timeFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.TimeOnly"/> value.</param>
@@ -451,14 +452,14 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public TResult Convert<TArg, TResult>(Func<DateOnly, TArg, TResult> dateFunc,
-                                    Func<DateTimeOffset, TArg, TResult> dtOffsetFunc,
+                                    Func<DateTimeOffset, TArg, TResult> dtoFunc,
                                     Func<TimeOnly, TArg, TResult> timeFunc,
                                     Func<string, TArg, TResult> stringFunc,
                                     TArg arg)
         => DateOnly.HasValue
             ? dateFunc is null ? throw new ArgumentNullException(nameof(dateFunc)) : dateFunc(DateOnly.Value, arg)
             : DateTimeOffset.HasValue
-                ? dtOffsetFunc is null ? throw new ArgumentNullException(nameof(dtOffsetFunc)) : dtOffsetFunc(DateTimeOffset.Value, arg)
+                ? dtoFunc is null ? throw new ArgumentNullException(nameof(dtoFunc)) : dtoFunc(DateTimeOffset.Value, arg)
                 : TimeOnly.HasValue
                             ? timeFunc is null ? throw new ArgumentNullException(nameof(timeFunc)) : timeFunc(TimeOnly.Value, arg)
                             : stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc(String!, arg);
@@ -484,6 +485,9 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     }
 
     /// <inheritdoc/>
+    /// <remarks>Equality is given if <paramref name="other"/> is a <see cref="DateAndOrTime"/>
+    /// instance, and if the content of <paramref name="other"/> has the same <see cref="Type"/>
+    /// and is equal.</remarks>
     public bool Equals(DateAndOrTime? other)
        => other is not null
         && (ReferenceEquals(this, other)
@@ -493,15 +497,18 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
                     ? DateTimeOffset == other.DateTimeOffset
                     : TimeOnly.HasValue
                         ? TimeOnly == other.TimeOnly
-                        : StringComparer.Ordinal.Equals(String, other.String)));
+                        : String!.Equals(other.String)));
 
     /// <inheritdoc/>
+    /// <remarks>Equality is given if <paramref name="obj"/> is a <see cref="DateAndOrTime"/>
+    /// instance, and if the content of <paramref name="obj"/> has the same <see cref="Type"/>
+    /// and is equal.</remarks>
     public override bool Equals(object? obj) => obj is DateAndOrTime dto && Equals(dto);
 
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(DateOnly, DateTimeOffset, TimeOnly, String);
 
-    // <summary>
+    /// <summary>
     /// Overloads the equality operator for <see cref="DateAndOrTime"/> instances.
     /// </summary>
     /// <param name="left">The left <see cref="DateAndOrTime"/> object, or <c>null</c>.</param>

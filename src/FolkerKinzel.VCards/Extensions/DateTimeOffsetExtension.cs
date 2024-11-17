@@ -22,7 +22,7 @@ public static class DateTimeOffsetExtension
     /// property is smaller than 5, otherwise it returns <c>true</c>.
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool HasYear(this DateTimeOffset value) => DateTimeConverter.HasYear(value);
+    public static bool HasYear(this DateTimeOffset value) => DateAndOrTimeConverter.HasYear(value);
 
     /// <summary>
     /// Indicates whether the date part of <paramref name="value"/> contains relevant
@@ -40,5 +40,5 @@ public static class DateTimeOffsetExtension
     /// property is smaller than 4, otherwise it returns <c>true</c>.
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool HasDate(this DateTimeOffset value) => DateTimeConverter.HasDate(value);
+    public static bool HasDate(this DateTimeOffset value) => DateAndOrTimeConverter.HasDate(value);
 }

@@ -5,7 +5,6 @@ using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
-using DateTimeConverter = FolkerKinzel.VCards.Intls.Converters.DateTimeConverter;
 
 namespace FolkerKinzel.VCards.Models.Properties;
 
@@ -206,13 +205,13 @@ public sealed class DateAndOrTimeProperty
 
         if (Value.DateOnly.HasValue)
         {
-            DateTimeConverter.AppendDateTo(serializer.Builder,
+            DateAndOrTimeConverter.AppendDateTo(serializer.Builder,
                                            Value.DateOnly.Value,
                                            serializer.Version);
         }
         else if (Value.DateTimeOffset.HasValue)
         {
-            DateTimeConverter.AppendDateTimeOffsetTo(serializer.Builder,
+            DateAndOrTimeConverter.AppendDateTimeOffsetTo(serializer.Builder,
                                                      Value.DateTimeOffset.Value,
                                                      serializer.Version);
         }

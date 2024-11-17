@@ -31,7 +31,7 @@ public class TimeConverterTests
         var builder = new StringBuilder();
 
         dt.Switch(
-            dtOffsetAction: dto => TimeConverter.AppendTimeTo(builder, dto, version),
+            dtoAction: dto => TimeConverter.AppendTimeTo(builder, dto, version),
             timeAction: to => TimeConverter.AppendTimeTo(builder, to, version)
             );
         string s2 = builder.ToString();

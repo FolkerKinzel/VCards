@@ -47,7 +47,7 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
     public new Relation Value { get; }
 
     /// <inheritdoc />
-    public override bool IsEmpty => ReferenceEquals(Value, Relation.Empty);
+    public override bool IsEmpty => Value.IsEmpty;
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
