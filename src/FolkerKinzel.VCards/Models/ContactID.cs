@@ -27,7 +27,12 @@ public sealed class ContactID : IEquatable<ContactID>
     /// </summary>
     /// <returns>A newly created <see cref="ContactID"/> instance that 
     /// has been initialized with a newly created <see cref="Guid"/>.</returns>
-    public static ContactID Create() => new(System.Guid.NewGuid());
+    public static ContactID Create()
+#if NET9_0_OR_GREATER
+        => new(System.Guid.CreateVersion7());
+#else
+        => new(System.Guid.NewGuid());
+#endif
 
     /// <summary>
     /// Creates a new <see cref="ContactID"/> instance from a specified

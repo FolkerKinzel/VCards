@@ -14,14 +14,14 @@
 - [x] Let `Vcf.DoDeserialize` return `IReadOnlyList<VCard>`
 
 &nbsp;
-- [ ] Fix the issue that with `UID` only Guid values are supported
+- [x] Fix the issue that with `UID` only Guid values are supported
     - [x] Implement a `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
     - [x] Let the 'IDProperty' have an instance of the `ContactID` class as value.
     - [x] Remove `IEquatable<IDProperty>` from 'IDProperty'
     - [x] Remove the overridden `Equals` and `GetHashCode` methods from 'IDProperty'
     - [x] Remove the `==` and `!=` operator overloads from 'IDProperty'
 
-    - [ ] Let `ContactID.Create()` use `Guid.CreateVersion7` in .NET 9.0
+    - [x] Let `ContactID.Create()` use `Guid.CreateVersion7` in .NET 9.0
     - [x] Update the `IDBuilder.Set` methods
     - [x] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
     - [x] Update the `RelationBuilder` struct.
