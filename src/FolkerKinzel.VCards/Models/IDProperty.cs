@@ -22,7 +22,13 @@ public sealed class IDProperty : VCardProperty, IEquatable<IDProperty>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public IDProperty(string? group = null) : this(Guid.NewGuid(), group) { }
+    public IDProperty(string? group = null) : this(
+#if NET9_0_OR_GREATER
+        Guid.CreateVersion7()
+#else
+        Guid.NewGuid()
+#endif
+        , group) { }
 
     /// <summary> Initializes a new <see cref="IDProperty" /> object with a 
     /// specified <see cref="Guid"/>. </summary>

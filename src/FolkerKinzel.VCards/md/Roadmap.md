@@ -79,9 +79,9 @@ and let it store as string[]
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
 ### 7.4.4
-- [ ] .NET 9.0 version of the package
-- [ ] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0
-- [ ] Dependency update
+- [x] .NET 9.0 version of the package
+- [x] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0
+- [x] Dependency update
 
 ### 7.4.3
 - [x] Fix an issue that with `X-GENDER` and `X-WAB-GENDER` the parameters and the group name were not parsed.
