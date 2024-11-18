@@ -42,7 +42,7 @@ public readonly struct ProfileBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<ProfileProperty?, ProfileProperty?> func)
     {
-        var prop = Builder.VCard.Profile;
+        ProfileProperty? prop = Builder.VCard.Profile;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         _builder.VCard.Profile = func(prop);
         return _builder;

@@ -409,7 +409,7 @@ public sealed partial class VCard
                         break;
                     }
                 case PropKeys.PROFILE:
-                    this.Profile = new ProfileProperty(vcfRow, this.Version);
+                    this.Profile = new ProfileProperty(vcfRow);
                     break;
                 case PropKeys.XML:
                     Xmls = Concat(Xmls, new XmlProperty(vcfRow));

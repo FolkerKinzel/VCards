@@ -45,7 +45,8 @@ public class NonStandardPropertyTests
 
         NonStandardProperty? xTest = nonStandards.FirstOrDefault();
         Assert.IsNotNull(xTest);
-        Assert.IsNull(xTest.Value);
+        Assert.IsTrue(xTest.IsEmpty);
+        Assert.IsNotNull(xTest.Value);
     }
 
     [TestMethod]

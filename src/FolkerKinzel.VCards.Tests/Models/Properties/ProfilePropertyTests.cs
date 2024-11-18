@@ -20,9 +20,6 @@ public class ProfilePropertyTests
 
         VCardProperty vcProp = prop;
         Assert.AreEqual(vcProp.Value, s);
-
-        TextProperty textProp = prop;
-        Assert.AreEqual(textProp.Value, s);
     }
 
 
@@ -57,7 +54,7 @@ public class ProfilePropertyTests
     public void GetValueTest()
     {
         VcfRow row = VcfRow.Parse("Profile:".AsMemory(), new VcfDeserializationInfo())!;
-        var prop = new ProfileProperty(row, VCdVersion.V3_0);
+        var prop = new ProfileProperty(row);
 
         Assert.AreEqual("VCARD", prop.Value);
     }

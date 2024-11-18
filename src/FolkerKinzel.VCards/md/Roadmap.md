@@ -122,7 +122,7 @@ and let it store as string[]
 - [ ] Remove XmlBuilder
 
 &nbsp;
-- [ ] Change `ProfileProperty` to not been derived from `TextProperty`
+- [x] Change `ProfileProperty` to not been derived from `TextProperty`
 
 &nbsp;
 - [ ] Make `TextProperty` sealed.
