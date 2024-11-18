@@ -73,7 +73,7 @@ public class DateAndOrTimePropertyTests
     {
         VCardProperty prop = new DateAndOrTimeProperty(new DateTime(2023, 10, 14));
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
+        Assert.IsInstanceOfType<DateAndOrTime>(prop.Value);
     }
 
     [TestMethod]
@@ -81,7 +81,7 @@ public class DateAndOrTimePropertyTests
     {
         VCardProperty prop = new DateAndOrTimeProperty("Midnight");
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsInstanceOfType(prop.Value, typeof(DateAndOrTime));
+        Assert.IsInstanceOfType<DateAndOrTime>(prop.Value);
     }
 
     [TestMethod]

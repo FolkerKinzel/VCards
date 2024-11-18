@@ -13,8 +13,8 @@ public class NameBuilderTests
         var bldr2 = NameBuilder.Create();
 
         Assert.AreNotSame(bldr1, bldr2);
-        Assert.IsInstanceOfType(bldr1, typeof(NameBuilder));
-        Assert.IsInstanceOfType(bldr2, typeof(NameBuilder));
+        Assert.IsInstanceOfType<NameBuilder>(bldr1);
+        Assert.IsInstanceOfType<NameBuilder>(bldr2);
     }
 
     [TestMethod]
@@ -199,7 +199,7 @@ public class NameBuilderTests
             
         _ = bldr.Build();
 
-        Assert.IsInstanceOfType(bldr, typeof(NameBuilder));
+        Assert.IsInstanceOfType<NameBuilder>(bldr);
         Assert.IsTrue(bldr.Data.All(x => x.Value.Count == 0));
     }
 

@@ -51,7 +51,7 @@ public class IEnumerableExtensionTests
 
         VCard? vc1 = list[0];
 
-        Assert.IsInstanceOfType(vc1, typeof(VCard));
+        Assert.IsInstanceOfType<VCard>(vc1);
         Assert.IsNotNull(vc1?.Relations);
 
         var uuidProp = vc1?.Relations?.FirstOrDefault(x => x is not null) as RelationProperty;
@@ -62,7 +62,7 @@ public class IEnumerableExtensionTests
 
         VCard? vc2 = list[1];
 
-        Assert.IsInstanceOfType(vc2, typeof(VCard));
+        Assert.IsInstanceOfType<VCard>(vc2);
         Assert.IsNotNull(vc2?.ContactID);
 
         Guid? o2 = vc2.ContactID.Value.Guid;

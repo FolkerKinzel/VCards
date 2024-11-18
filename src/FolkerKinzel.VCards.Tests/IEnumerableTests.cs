@@ -18,7 +18,7 @@ public class IEnumerableTests
 
         var vc = new VCard
         {
-            Xmls = new XmlProperty(new XElement(f + "Test"))
+            Xmls = new TextProperty(new XElement(f + "Test").ToString())
         };
 
         IEnumerable enumerable = vc.Xmls;

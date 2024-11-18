@@ -24,6 +24,7 @@
 		<None Remove="reports\**" />
 	</ItemGroup>
 	<ItemGroup>
+		<Compile Remove="BuilderParts\XmlBuilderTests.cs" />
 		<Compile Remove="Intls\Converters\MimeTypeConverterTests_OBSOLETE.cs" />
 		<Compile Remove="Intls\Deserializers\AssignerTests.cs" />
 		<Compile Remove="Intls\Deserializers\DigitParserTests.cs" />
@@ -36,6 +37,7 @@
 		<Compile Remove="Intls\Models\UriPropertyTests.cs" />
 		<Compile Remove="Models\DataUrlTests.cs" />
 		<Compile Remove="Models\MimeTypeTests.cs" />
+		<Compile Remove="Models\Properties\XmlPropertyTest.cs" />
 		<Compile Remove="MultiAnsiFilterTests.cs" />
 		<Compile Remove="UnitTestsInitialize.cs" />
 		<Compile Remove="VcfPaths.cs" />

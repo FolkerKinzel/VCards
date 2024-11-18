@@ -13,8 +13,8 @@ public class AddressBuilderTests
         var bldr2 = AddressBuilder.Create();
 
         Assert.AreNotSame(bldr1, bldr2);
-        Assert.IsInstanceOfType(bldr1, typeof(AddressBuilder));
-        Assert.IsInstanceOfType(bldr2, typeof(AddressBuilder));
+        Assert.IsInstanceOfType<AddressBuilder>(bldr1);
+        Assert.IsInstanceOfType<AddressBuilder>(bldr2);
     }
 
     [TestMethod()]
@@ -43,7 +43,7 @@ public class AddressBuilderTests
 
         _ = bldr.Build();
 
-        Assert.IsInstanceOfType(bldr, typeof(AddressBuilder));
+        Assert.IsInstanceOfType<AddressBuilder>(bldr);
         Assert.IsTrue(bldr.Data.All(x => x.Value.Count == 0));
     }
 

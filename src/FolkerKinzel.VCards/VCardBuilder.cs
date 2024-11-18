@@ -626,6 +626,6 @@ public sealed class VCardBuilder
     public TextBuilder Urls => new(this, Prop.Urls);
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
-    public XmlBuilder Xmls => new(this);
+    public TextBuilder Xmls => new(this, Prop.Xmls);
 }
 

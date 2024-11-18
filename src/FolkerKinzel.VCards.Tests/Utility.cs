@@ -132,7 +132,7 @@ internal static class Utility
 
         var xName = XName.Get("{TheNs}TheLocal");
         var xEl = new XElement(xName, "The content");
-        var xml1 = new XmlProperty(xEl);
+        var xml1 = new TextProperty(xEl.ToString());
 
         var bday = new DateAndOrTimeProperty(new DateOnly(1977, 11, 11));
         bday.Parameters.Calendar = "  ";

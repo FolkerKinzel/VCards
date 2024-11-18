@@ -15,10 +15,10 @@ public class VCardBuilderTests
     {
         var builder = VCardBuilder.Create();
         Assert.IsNotNull(builder);
-        Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
+        Assert.IsInstanceOfType<VCardBuilder>(builder);
         VCard vc = builder.VCard;
         Assert.IsNotNull(vc);
-        Assert.IsInstanceOfType(vc, typeof(VCard));
+        Assert.IsInstanceOfType<VCard>(vc);
         Assert.IsNotNull(vc.ContactID);
     }
 
@@ -27,10 +27,10 @@ public class VCardBuilderTests
     {
         var builder = VCardBuilder.Create(setContactID: false);
         Assert.IsNotNull(builder);
-        Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
+        Assert.IsInstanceOfType<VCardBuilder>(builder);
         VCard vc = builder.VCard;
         Assert.IsNotNull(vc);
-        Assert.IsInstanceOfType(vc, typeof(VCard));
+        Assert.IsInstanceOfType<VCard>(vc);
         Assert.IsNull(vc.ContactID);
     }
 
@@ -40,7 +40,7 @@ public class VCardBuilderTests
         var vc = new VCard();
         var builder = VCardBuilder.Create(vc);
         Assert.IsNotNull(builder);
-        Assert.IsInstanceOfType(builder, typeof(VCardBuilder));
+        Assert.IsInstanceOfType<VCardBuilder>(builder);
         Assert.AreSame(vc, builder.VCard);
     }
 
@@ -1017,7 +1017,7 @@ public class VCardBuilderTests
 
     [TestMethod()]
     public void AddMemberTest()
-        => Assert.IsInstanceOfType(VCardBuilder.Create().Members, typeof(RelationBuilder));
+        => Assert.IsInstanceOfType<RelationBuilder>(VCardBuilder.Create().Members);
 
 //    [TestMethod()]
 //    public void AddNameViewTest1()
@@ -1143,7 +1143,7 @@ public class VCardBuilderTests
 
     [TestMethod()]
     public void AddNickNameTest()
-        => Assert.IsInstanceOfType(VCardBuilder.Create().NickNames, typeof(StringCollectionBuilder));
+        => Assert.IsInstanceOfType<StringCollectionBuilder>(VCardBuilder.Create().NickNames);
 
     [TestMethod]
     public void EditNickNameTest1()
@@ -1729,8 +1729,8 @@ public class VCardBuilderTests
 
         VCard vc = VCardBuilder
             .Create()
-            .Xmls.Add(new XElement(ns + "Key2", "Second"), group: vc => "g")
-            .Xmls.Add(new XElement(ns + "Key1", "First"))
+            .Xmls.Add(new XElement(ns + "Key2", "Second").ToString(), group: vc => "g")
+            .Xmls.Add(new XElement(ns + "Key1", "First") .ToString())
             .Xmls.SetPreferences()
             .VCard;
 
@@ -1756,11 +1756,11 @@ public class VCardBuilderTests
     public void EditXmlsTest1()
     {
         var builder = VCardBuilder.Create();
-        IEnumerable<XmlProperty?>? prop = null;
+        IEnumerable<TextProperty?>? prop = null;
         builder.Xmls.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.Xmls = ((IEnumerable<XmlProperty>)new XmlProperty((XElement?)null)).Append(null);
+        builder.VCard.Xmls = ((IEnumerable<TextProperty>)new TextProperty("")).Append(null);
         builder.Xmls.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

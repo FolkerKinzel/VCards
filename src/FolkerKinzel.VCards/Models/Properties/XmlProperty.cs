@@ -22,6 +22,7 @@ public sealed class XmlProperty : TextProperty, IEnumerable<XmlProperty>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
+    /// 
     /// <exception cref="ArgumentException"> <paramref name="value" /> is not assigned
     /// to an XML namespace - or - <paramref name="value" /> is in the reserved
     /// namespace <c>urn:ietf:params:xml:ns:vcard-4.0</c>.</exception>

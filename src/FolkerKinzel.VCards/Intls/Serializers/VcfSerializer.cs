@@ -307,7 +307,7 @@ internal abstract class VcfSerializer : IDisposable
                     AppendNotes((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case Prop.Xmls:
-                    AppendXmlProperties((IEnumerable<XmlProperty?>)kvp.Value);
+                    AppendXmlProperties((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case Prop.Logos:
                     AppendLogos((IEnumerable<DataProperty?>)kvp.Value);
@@ -843,7 +843,7 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendURLs(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendXmlProperties(IEnumerable<XmlProperty?> value) { }
+    protected virtual void AppendXmlProperties(IEnumerable<TextProperty?> value) { }
 
     internal abstract void AppendBase64EncodedData(byte[]? data);
 

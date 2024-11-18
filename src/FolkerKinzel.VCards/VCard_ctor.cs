@@ -50,7 +50,7 @@ public sealed partial class VCard
             Set(kvp.Key, kvp.Value switch
             {
                 VCardProperty prop => prop.Clone(),
-                IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(Cloned).Cast<XmlProperty?>().ToArray(),
+                //IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(Cloned).Cast<XmlProperty?>().ToArray(),
                 IEnumerable<TextProperty?> txtPropEnumerable => txtPropEnumerable.Select(Cloned).Cast<TextProperty?>().ToArray(),
                 IEnumerable<DateAndOrTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(Cloned).Cast<DateAndOrTimeProperty?>().ToArray(),
                 IEnumerable<AddressProperty?> adrPropEnumerable => adrPropEnumerable.Select(Cloned).Cast<AddressProperty?>().ToArray(),
@@ -412,7 +412,7 @@ public sealed partial class VCard
                     this.Profile = new ProfileProperty(vcfRow);
                     break;
                 case PropKeys.XML:
-                    Xmls = Concat(Xmls, new XmlProperty(vcfRow));
+                    Xmls = Concat(Xmls, new TextProperty(vcfRow, Version));
                     break;
                 case PropKeys.CLIENTPIDMAP:
                     if (AppIDProperty.TryParse(vcfRow, out AppIDProperty? prop))

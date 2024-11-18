@@ -852,9 +852,14 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
-    public IEnumerable<XmlProperty?>? Xmls
+    /// <value>
+    /// The <see cref="TextProperty"/> instances may contain text that is valid XML. The root element
+    /// must be explicitly assigned to an XML namespace (xmlns attribute). This namespace
+    /// must not be the VCARD 4.0 namespace <c>urn:ietf:params:xml:ns:vcard-4.0</c>!
+    /// </value>
+    public IEnumerable<TextProperty?>? Xmls
     {
-        get => Get<IEnumerable<XmlProperty?>?>(Prop.Xmls);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Xmls);
         set => Set(Prop.Xmls, value);
     }
 

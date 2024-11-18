@@ -16,8 +16,8 @@ public class ReferencedDataPropertyTests
         var prop2 = (DataProperty)prop1.Clone();
 
         Assert.IsNotNull(prop2);
-        Assert.IsInstanceOfType(prop1.Value.Object, typeof(Uri));
-        Assert.IsInstanceOfType(prop2.Value.Object, typeof(Uri));
+        Assert.IsInstanceOfType<Uri>(prop1.Value.Object);
+        Assert.IsInstanceOfType<Uri>(prop2.Value.Object);
         Assert.IsNotNull(prop1.Value);
         Assert.IsNotNull(prop2.Value);
         Assert.IsNotNull(prop1.Value!.Uri);

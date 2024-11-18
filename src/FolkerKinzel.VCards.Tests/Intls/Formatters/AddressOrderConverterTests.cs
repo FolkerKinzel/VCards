@@ -71,7 +71,7 @@ public class AddressOrderConverterTests
     {
         foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
         {
-            Assert.IsInstanceOfType(AddressOrderConverter.ParseCultureInfo(culture), typeof(AddressOrder));
+            Assert.IsInstanceOfType<AddressOrder>(AddressOrderConverter.ParseCultureInfo(culture));
         }
     }
 

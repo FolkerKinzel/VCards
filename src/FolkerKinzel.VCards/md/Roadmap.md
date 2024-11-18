@@ -117,15 +117,15 @@ and let it store as string[]
 - [x] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
 &nbsp;
-- [ ] Change `VCard.Xmls` property to return and accept IEnumerable<TextProperty?>?
-- [ ] Remove XmlProperty
-- [ ] Remove XmlBuilder
+- [x] Change `VCard.Xmls` property to return and accept IEnumerable<TextProperty?>?
+- [x] Remove XmlProperty
+- [x] Remove XmlBuilder
 
 &nbsp;
 - [x] Change `ProfileProperty` to not been derived from `TextProperty`
 
 &nbsp;
-- [ ] Make `TextProperty` sealed.
+- [x] Make `TextProperty` sealed.
 
 &nbsp;
 - [x] Rename `NonStandardProperty.XName` to `Key`

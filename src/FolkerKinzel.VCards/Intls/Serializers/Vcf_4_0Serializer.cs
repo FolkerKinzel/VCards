@@ -340,7 +340,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     protected override void AppendURLs(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.URL, value);
 
-    protected override void AppendXmlProperties(IEnumerable<XmlProperty?> value)
+    protected override void AppendXmlProperties(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.XML, value);
 
     #endregion

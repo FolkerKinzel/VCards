@@ -1,19 +1,17 @@
 using System.Collections;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Encodings;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Models.Properties;
 
 /// <summary>Represents vCard properties whose content consists of text.</summary>
-public class TextProperty : VCardProperty, IEnumerable<TextProperty>
+public sealed class TextProperty : VCardProperty, IEnumerable<TextProperty>
 {
     /// <summary>Copy constructor.</summary>
     /// <param name="prop">The <see cref="TextProperty" /> instance to clone.</param>
-    protected TextProperty(TextProperty prop) : base(prop)
+    private TextProperty(TextProperty prop) : base(prop)
         => Value = prop.Value;
 
     /// <summary>Initializes a new <see cref="TextProperty" /> object.</summary>
@@ -30,7 +28,7 @@ public class TextProperty : VCardProperty, IEnumerable<TextProperty>
         => Value = StringDeserializer.Deserialize(vcfRow, version);
 
     /// <summary>The data provided by the <see cref="TextProperty" />.</summary>
-    public new virtual string? Value
+    public new string? Value
     {
         get;
     }

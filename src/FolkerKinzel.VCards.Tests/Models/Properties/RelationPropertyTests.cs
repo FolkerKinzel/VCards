@@ -58,7 +58,7 @@ public class RelationPropertyTests
     public void FromUriTest3()
     {
         Assert.IsTrue(Uri.TryCreate("mailto:jemand@beispiel.com", UriKind.Absolute, out Uri? uri));
-        Assert.IsInstanceOfType(new RelationProperty(Relation.Create(ContactID.Create(uri))), typeof(RelationProperty));
+        Assert.IsInstanceOfType<RelationProperty>(new RelationProperty(Relation.Create(ContactID.Create(uri))));
     }
 
     [TestMethod]
@@ -66,7 +66,7 @@ public class RelationPropertyTests
     {
         Assert.IsTrue(Uri.TryCreate("urn:uuid:550e8400-e29b-11d4-a716-446655440000", UriKind.Absolute, out Uri? uri));
         var prop = new RelationProperty(Relation.Create(ContactID.Create(uri)));
-        Assert.IsInstanceOfType(prop, typeof(RelationProperty));
+        Assert.IsInstanceOfType<RelationProperty>(prop);
         Assert.IsFalse(prop.IsEmpty);
     }
 
@@ -87,7 +87,7 @@ public class RelationPropertyTests
         Assert.IsNotNull(row);
 
         var prop = RelationProperty.Parse(row!, VCdVersion.V4_0);
-        Assert.IsInstanceOfType(prop, typeof(RelationProperty));
+        Assert.IsInstanceOfType<RelationProperty>(prop);
     }
 
     [TestMethod]
@@ -106,7 +106,7 @@ public class RelationPropertyTests
     {
         VCardProperty prop = new RelationProperty(Relation.Create(ContactID.Create("abc")));
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsInstanceOfType(prop.Value, typeof(Relation));
+        Assert.IsInstanceOfType<Relation>(prop.Value);
     }
 
     [TestMethod]
@@ -114,7 +114,7 @@ public class RelationPropertyTests
     {
         VCardProperty prop = new RelationProperty(Relation.Create(ContactID.Create()));
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsInstanceOfType(prop.Value, typeof(Relation));
+        Assert.IsInstanceOfType<Relation>(prop.Value);
     }
 
     [TestMethod]
@@ -122,7 +122,7 @@ public class RelationPropertyTests
     {
         VCardProperty prop = new RelationProperty(Relation.Create(new VCard { DisplayNames = new TextProperty("Folker") }));
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsInstanceOfType(prop.Value, typeof(Relation));
+        Assert.IsInstanceOfType<Relation>(prop.Value);
     }
 
 }

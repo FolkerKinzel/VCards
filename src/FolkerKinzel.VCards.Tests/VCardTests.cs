@@ -371,7 +371,7 @@ public class VCardTests
         VCard.RegisterApp(new Uri("http://123.com"));
         vc1.Sync.SetPropertyIDs();
 
-        vc1.Xmls = vc1.Xmls.ConcatWith((XmlProperty)vc1.Xmls!.First()!.Clone());
+        vc1.Xmls = vc1.Xmls.ConcatWith((TextProperty)vc1.Xmls!.First()!.Clone());
         Assert.AreEqual(2, vc1.Xmls?.Count());
 
         vc1.BirthDayViews = vc1.BirthDayViews.ConcatWith((DateAndOrTimeProperty)vc1.BirthDayViews!.First()!.Clone());

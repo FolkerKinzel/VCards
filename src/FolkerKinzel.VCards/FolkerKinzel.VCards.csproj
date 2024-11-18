@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>7.4.1</Version>
-    <FileVersion>7.4.1.81</FileVersion>
+    <FileVersion>7.4.1.86</FileVersion>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v7.4.1</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="AnsiFilter_old.cs" />
+    <Compile Remove="BuilderParts\XmlBuilder.cs" />
     <Compile Remove="Intls\Converters\MimeTypeConverter_OBSOLETE.cs" />
     <Compile Remove="Intls\Converters\TextEncodingConverter.cs" />
     <Compile Remove="Intls\Deserializers\Assigner.cs" />
@@ -92,6 +93,7 @@
     <Compile Remove="Enums\SizeRestriction.cs" />
     <Compile Remove="Models\Properties\Parameters\CompoundObject.cs" />
     <Compile Remove="Models\Properties\Parameters\MimeType.cs" />
+    <Compile Remove="Models\Properties\XmlProperty.cs" />
     <Compile Remove="MultiAnsiFilter.cs" />
     <Compile Remove="TextEncoding.cs" />
     <Compile Remove="VCardBuilder_Access.cs" />
