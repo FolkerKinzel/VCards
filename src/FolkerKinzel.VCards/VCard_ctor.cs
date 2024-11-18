@@ -307,7 +307,7 @@ public sealed partial class VCard
                     {
                         var textProp = new TextProperty(vcfRow, this.Version);
 
-                        if (textProp.Value is not null &&
+                        if (!textProp.IsEmpty &&
                             (Messengers?.All(x => x!.Value != textProp.Value) ?? true))
                         {
                             Messengers = Concat(Messengers, textProp);

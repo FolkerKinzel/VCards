@@ -21,21 +21,17 @@ public sealed class TextProperty : VCardProperty, IEnumerable<TextProperty>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public TextProperty(string? value, string? group = null)
         : base(new ParameterSection(), group)
-        => Value = string.IsNullOrWhiteSpace(value) ? null : value;
+        => Value = string.IsNullOrWhiteSpace(value) ? "" : value;
 
     internal TextProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
         => Value = StringDeserializer.Deserialize(vcfRow, version);
 
     /// <summary>The data provided by the <see cref="TextProperty" />.</summary>
-    public new string? Value
-    {
-        get;
-    }
+    public new string Value { get;}
 
     /// <inheritdoc />
-    [MemberNotNullWhen(false, nameof(Value))]
-    public override bool IsEmpty => base.IsEmpty;
+    public override bool IsEmpty => Value.Length == 0;
 
     /// <inheritdoc />
     public override object Clone() => new TextProperty(this);

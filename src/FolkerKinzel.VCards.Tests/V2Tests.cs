@@ -597,7 +597,7 @@ public class V2Tests
             """;
 
         VCard vc = Vcf.Parse(vcf)[0];
-        Assert.IsNull(vc.Messengers);
+        Assert.IsNotNull(vc.Messengers);
     }
 
     [TestMethod]
