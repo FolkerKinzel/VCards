@@ -113,7 +113,14 @@ public sealed partial class VCard
                     this.Version = VCdVersionConverter.Parse(vcfRow.Value.Span);
                     break;
                 case PropKeys.KIND:
-                    Kind = new KindProperty(vcfRow);
+                    if (KindProperty.TryParse(vcfRow, out KindProperty? kindProp))
+                    {
+                        Kind = kindProp;
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
+                    }
                     break;
                 case PropKeys.TEL:
                     Phones = Concat(Phones, new TextProperty(vcfRow, this.Version));

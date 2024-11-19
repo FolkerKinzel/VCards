@@ -88,7 +88,7 @@ public readonly struct NonStandardBuilder
     /// Adds a <see cref="NonStandardProperty"/> instance, which is newly initialized using the 
     /// specified arguments, to the <see cref="VCard.NonStandards"/> property.
     /// </summary>
-    /// <param name="xName">The key ("name") of the non-standard vCard property (format: <c>X-NAME</c>).</param>
+    /// <param name="key">The key ("name") of the non-standard vCard property (format: <c>X-NAME</c>).</param>
     /// <param name="value">The value of the vCard property: any data encoded as <see
     /// cref="string" /> or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
@@ -100,17 +100,17 @@ public readonly struct NonStandardBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NonStandardBuilder"/>
     /// to be able to chain calls.</returns>
-    /// <exception cref="ArgumentNullException"> <paramref name="xName" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="xName" /> is not a valid X-NAME.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="key" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="key" /> is not a valid X-NAME.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(string xName,
+    public VCardBuilder Add(string key,
                             string? value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.NonStandards,
-                          VCardBuilder.Add(new NonStandardProperty(xName, value, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new NonStandardProperty(key, value, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards),
                                            parameters)
                           );

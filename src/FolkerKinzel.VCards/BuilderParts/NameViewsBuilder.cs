@@ -29,7 +29,6 @@ namespace FolkerKinzel.VCards.BuilderParts;
 #endif
 public readonly struct NameViewsBuilder
 {
-
     #region Remove this code with version 8.0.0
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -171,7 +170,7 @@ public readonly struct NameViewsBuilder
     /// Adds a <see cref="NameProperty"/> instance, which is newly 
     /// initialized with the specified <see cref="Name"/>.
     /// </summary>
-    /// <param name="name">The <see cref="Name"/> instance, or <c>null</c>.</param>
+    /// <param name="value">The <see cref="Name"/> instance, or <c>null</c>.</param>
     /// 
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
@@ -190,12 +189,12 @@ public readonly struct NameViewsBuilder
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(Name? name,
+    public VCardBuilder Add(Name? value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
-        var prop = new NameProperty(name ?? new Name(),
+        var prop = new NameProperty(value ?? new Name(),
                                     group?.Invoke(vc));
         vc.Set(Prop.NameViews,
                VCardBuilder.Add(prop,

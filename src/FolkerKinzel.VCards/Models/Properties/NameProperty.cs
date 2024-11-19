@@ -67,16 +67,16 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
     /// Initializes a new <see cref="NameProperty"/> instance with a 
     /// specified <see cref="Name"/>.
     /// </summary>
-    /// <param name="name">The <see cref="Name"/> instance used as <see cref="Value"/>.</param>
+    /// <param name="value">The <see cref="Name"/> instance used as <see cref="Value"/>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="name"/> is <c>null</c>.</exception>
-    public NameProperty(Name name, string? group = null)
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+    public NameProperty(Name value, string? group = null)
         : base(new ParameterSection(), group)
     {
-        _ArgumentNullException.ThrowIfNull(name, nameof(name));
-        Value = name;
+        _ArgumentNullException.ThrowIfNull(value, nameof(value));
+        Value = value;
     }
 
     /// <summary>Copy ctor.</summary>
@@ -103,10 +103,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
 
     /// <summary> The data provided by the <see cref="NameProperty" />.
     /// </summary>
-    public new Name Value
-    {
-        get;
-    }
+    public new Name Value { get; }
 
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;

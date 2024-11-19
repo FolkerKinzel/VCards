@@ -46,42 +46,24 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     }
 
     /// <summary>Initializes a new <see cref="NonStandardProperty" /> object.</summary>
-    /// <param name="xName">The key ("name") of the non-standard vCard property
+    /// <param name="key">The key ("name") of the non-standard vCard property
     /// (format: <c>X-NAME</c>).</param>
     /// <param name="value">The value of the vCard property: any data encoded as <see
     /// cref="string" />, or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"> <paramref name="xName" /> is
+    /// <exception cref="ArgumentNullException"> <paramref name="key" /> is
     /// <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="xName" /> is not
+    /// <exception cref="ArgumentException"> <paramref name="key" /> is not
     /// a valid X-NAME.</exception>
-    public NonStandardProperty(string xName, string? value, string? group = null)
+    public NonStandardProperty(string key, string? value, string? group = null)
         : base(new ParameterSection(), group)
     {
-        _ArgumentNullException.ThrowIfNull(xName, nameof(xName));
+        _ArgumentNullException.ThrowIfNull(key, nameof(key));
 
-
-        /* Unmerged change from project 'FolkerKinzel.VCards (netstandard2.0)'
-        Before:
-                Key = IsXName(xName) ? xName
-                                       : throw new ArgumentException(Res.NoXName, nameof(xName));
-        After:
-                Key = XNameValidator.IsXName(xName) ? xName
-                                       : throw new ArgumentException(Res.NoXName, nameof(xName));
-        */
-
-        /* Unmerged change from project 'FolkerKinzel.VCards (net8.0)'
-        Before:
-                Key = Properties.XNameValidator.IsXName(xName) ? xName
-                                       : throw new ArgumentException(Res.NoXName, nameof(xName));
-        After:
-                Key = XNameValidator.IsXName(xName) ? xName
-                                       : throw new ArgumentException(Res.NoXName, nameof(xName));
-        */
-        Key = Intls.XNameValidator.IsXName(xName) ? xName
-                               : throw new ArgumentException(Res.NoXName, nameof(xName));
+        Key = Intls.XNameValidator.IsXName(key) ? key
+                               : throw new ArgumentException(Res.NoXName, nameof(key));
         Value = value ?? "";
     }
 
@@ -97,10 +79,7 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
 
     /// <summary>The data provided by the <see cref="NonStandardProperty" /> (raw <see
     /// cref="string" /> data).</summary>
-    public new string Value
-    {
-        get;
-    }
+    public new string Value { get; }
 
     /// <inheritdoc/>
     public override bool IsEmpty => Value.Length == 0;
@@ -112,12 +91,10 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
     /// <inheritdoc/>
     public override string ToString()
     {
-        var sb = new StringBuilder();
-
-        _ = sb.Append($"{nameof(Key)}: ").AppendLine(Key);
-        _ = sb.Append("Value: ").Append(Value);
-
-        return sb.ToString();
+        return $"""
+            {nameof(Key)}:   {Key}
+            {nameof(Value)}: {Value}
+            """;
     }
 
     /// <inheritdoc />

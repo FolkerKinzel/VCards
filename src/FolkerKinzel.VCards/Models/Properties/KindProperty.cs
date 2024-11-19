@@ -25,15 +25,25 @@ public sealed class KindProperty : VCardProperty
     public KindProperty(Kind value, string? group = null)
         : base(new ParameterSection(), group) => Value = value;
 
-    internal KindProperty(VcfRow vcfRow)
-        : base(vcfRow.Parameters, vcfRow.Group) => Value = KindConverter.Parse(vcfRow.Value.Span);
+    private KindProperty(Kind value, VcfRow vcfRow)
+        : base(vcfRow.Parameters, vcfRow.Group) 
+        => Value = value;
+
+    internal static bool TryParse(VcfRow vcfRow, [NotNullWhen(true)] out KindProperty? prop)
+    {
+        if(KindConverter.TryParse(vcfRow.Value.Span, out Kind value))
+        {
+            prop = new KindProperty(value, vcfRow);
+            return true;
+        }
+
+        prop = null;
+        return false;
+    }
 
     /// <summary> The data provided by the <see cref="KindProperty" />.
     /// </summary>
-    public new Kind Value
-    {
-        get;
-    }
+    public new Kind Value { get; }
 
     /// <inheritdoc />
     public override bool IsEmpty => false;
