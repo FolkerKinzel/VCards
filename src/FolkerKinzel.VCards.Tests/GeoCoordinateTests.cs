@@ -221,4 +221,14 @@ public class GeoCoordinateTests
 
     }
 
+    [TestMethod]
+    public void TryParseMaskedTest1()
+    {
+        const string geoUri = "geo:52.511821\\,13.389581\\;u=10\\;other=50";
+
+        Assert.IsTrue(GeoCoordinate.TryParse(geoUri.AsSpan(), out GeoCoordinate? geo));
+        Assert.IsNotNull(geo);
+        Assert.IsTrue(geo.Uncertainty.HasValue);
+    }
+
 }

@@ -22,7 +22,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     private const double MIN_DISTANCE = ONE_DEGREE_DISTANCE * _6;
     private const string GEO_URI_PROTOCOL = "geo:";
 
-    /// <summary> Initializes a new <see cref="GeoCoordinate" /> objekt. </summary>
+    /// <summary> Initializes a new <see cref="GeoCoordinate" /> instance. </summary>
     /// <param name="latitude">Latitude (value between -90 and 90).</param>
     /// <param name="longitude">Longitude (value between -180 and 180).</param>
     /// <param name="uncertainty">The amount of uncertainty in the location as a 
@@ -299,11 +299,21 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         int splitIndex = value.IndexOf(',');
 
-        if (splitIndex == -1) { return false; }
+        if (splitIndex == -1)
+        { 
+            return false;
+        }
 
         NumberStyles styles = NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign;
 
-        if (!_Double.TryParse(value.Slice(0, splitIndex),
+        ReadOnlySpan<char> latitudeSpan = value.Slice(0, splitIndex);
+
+        if (latitudeSpan.EndsWith('\\'))
+        {
+            latitudeSpan = latitudeSpan.Slice(0, latitudeSpan.Length - 1);
+        }
+
+        if (!_Double.TryParse(latitudeSpan,
                               styles,
                               CultureInfo.InvariantCulture,
                               out double latitude))
@@ -315,13 +325,21 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         splitIndex = value.IndexOfAny(",;");
 
-        if (!_Double.TryParse(splitIndex == -1 ? value : value.Slice(0, splitIndex),
+        ReadOnlySpan<char> longitudeSpan = splitIndex == -1 ? value : value.Slice(0, splitIndex);
+
+        if (longitudeSpan.EndsWith('\\'))
+        {
+            longitudeSpan = longitudeSpan.Slice(0, longitudeSpan.Length - 1);
+        }
+
+        if (!_Double.TryParse(longitudeSpan,
                               styles,
                               CultureInfo.InvariantCulture,
                               out double longitude))
         {
             return false;
         }
+
         float? uncertainty = null;
 
         if (splitIndex != -1)
@@ -340,6 +358,11 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
                 if (uParameterEnd != -1)
                 {
                     value = value.Slice(0, uParameterEnd);
+
+                    if (value.EndsWith('\\'))
+                    {
+                        value = value.Slice(0, value.Length - 1);
+                    }
                 }
 
                 if (_Float.TryParse(value,

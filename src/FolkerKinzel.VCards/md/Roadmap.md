@@ -78,6 +78,10 @@ and let it store as string[]
 &nbsp;
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
+### 7.4.5
+- [ ] Fix an issue that a "geo" URI was not parsed if this "geo" URI was masked.
+- [ ] Update dependencies to contain .NET 9.0 packages.
+
 ### 7.4.4
 - [x] .NET 9.0 version of the package
 - [x] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0
