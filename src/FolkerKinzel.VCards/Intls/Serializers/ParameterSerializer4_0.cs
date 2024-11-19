@@ -874,6 +874,8 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             return;
         }
 
+        Debug.Assert(!geo.IsEmpty);
+
         AppendParameter(ParameterSection.ParameterKey.GEO, "");
         Builder.Append('"');
         GeoCoordinateConverter.AppendTo(Builder, geo, VCdVersion.V4_0);

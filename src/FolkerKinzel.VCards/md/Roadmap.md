@@ -130,6 +130,19 @@ and let it store as string[]
 &nbsp;
 - [x] Rename `NonStandardProperty.XName` to `Key`
 
+&nbsp;
+- [ ] Rename `Opts` to `VcfOpts`
+
+&nbsp;
+- [ ] Make `VCardProperty.Value` non-nullable
+- [ ] Make `VCard.Property.IsEmpty` abstract
+- [ ] Ensure that each VCardProperty ctor has a `value` parameter.
+- [ ] Ensure that the corresponding VCardBuilder parameter is also named `value`
+
+&nbsp;
+- [ ] Implement `GeoCoordinate? GeoCoordinate.TryCreate(double, double)` that doesn't throw any exception
+- [ ] Write remarks to `GeoCoordinate.IsEmpty`
+
 ### 7.4.3
 - [ ] .NET 9.0 version of the package
 - [ ] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0

@@ -248,6 +248,17 @@ public sealed partial class VCard
         set => Set(Prop.Categories, value);
     }
 
+    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
+    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
+    /// </summary>
+    /// <remarks>As a default setting each newly created <see cref="VCard"/> gets an <see cref="ContactID"/>
+    /// automatically.</remarks>
+    public ContactIDProperty? ContactID
+    {
+        get => Get<ContactIDProperty?>(Prop.ContactID);
+        set => Set(Prop.ContactID, value);
+    }
+
     /// <summary>
     /// <c>CONTACT-URI</c>: URIs representing an email address or a location for a web form. <c>(4 - RFC&#160;8605)</c>
     /// </summary>
@@ -281,16 +292,7 @@ public sealed partial class VCard
         set => Set(Prop.Created, value);
     }
 
-    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
-    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>Although the standard allows any strings for identification, the library
-    /// only supports UUIDs.</value>
-    public ContactIDProperty? ContactID
-    {
-        get => Get<ContactIDProperty?>(Prop.ContactID);
-        set => Set(Prop.ContactID, value);
-    }
+    
 
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them

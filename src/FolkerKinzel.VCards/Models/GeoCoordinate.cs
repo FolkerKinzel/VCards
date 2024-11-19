@@ -132,7 +132,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// A singleton whose <see cref="IsEmpty"/> property returns <c>true</c>, indicating
     /// that its value should not be evaluated.
     /// </summary>
-    public static GeoCoordinate Empty { get; } = new GeoCoordinate(0, 0);
+    internal static GeoCoordinate Empty { get; } = new GeoCoordinate(0, 0);
 
     /// <summary>
     /// When <c>true</c> the value of the instance should not be evaluated.
