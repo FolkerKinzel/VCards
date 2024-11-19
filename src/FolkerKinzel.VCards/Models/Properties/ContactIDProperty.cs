@@ -16,6 +16,8 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="RelationProperty"/>
 public sealed class ContactIDProperty : VCardProperty
 {
+    #region Remove with 8.0.1
+
     [Obsolete("Use the constructor that takes a ContactID.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [ExcludeFromCodeCoverage]
@@ -23,6 +25,8 @@ public sealed class ContactIDProperty : VCardProperty
     public ContactIDProperty(string? group = null)
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         : base(new ParameterSection(), group) => throw new NotImplementedException();
+
+    #endregion
 
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="ContactIDProperty"/> instance
@@ -32,14 +36,14 @@ public sealed class ContactIDProperty : VCardProperty
 
     /// <summary> Initializes a new <see cref="ContactIDProperty" /> object with a 
     /// specified <see cref="ContactID"/>. </summary>
-    /// <param name="id">A <see cref="Guid" /> value.</param>
+    /// <param name="value">A <see cref="Guid" /> value.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="id"/> is <c>null</c>.</exception>
-    public ContactIDProperty(ContactID id, string? group = null)
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+    public ContactIDProperty(ContactID value, string? group = null)
         : base(new ParameterSection(), group)
-        => Value = id ?? throw new ArgumentNullException(nameof(id));
+        => Value = value ?? throw new ArgumentNullException(nameof(value));
 
     internal ContactIDProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
     {
@@ -68,10 +72,7 @@ public sealed class ContactIDProperty : VCardProperty
 
     /// <summary> The <see cref="ContactID"/> provided by the <see cref="ContactIDProperty" />.
     /// </summary>
-    public new ContactID Value
-    {
-        get;
-    }
+    public new ContactID Value { get; }
 
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;

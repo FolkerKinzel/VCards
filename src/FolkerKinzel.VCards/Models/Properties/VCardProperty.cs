@@ -57,14 +57,14 @@ public abstract class VCardProperty : ICloneable
     /// <summary>Returns <c>true</c>, if the <see cref="VCardProperty" /> object does
     /// not contain any usable data, otherwise <c>false</c>.</summary>
     [MemberNotNullWhen(false, nameof(Value))]
-    public virtual bool IsEmpty => GetVCardPropertyValue() is null;
+    public abstract bool IsEmpty {  get; }
 
     /// <inheritdoc />
     public abstract object Clone();
 
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => Value?.ToString() ?? "<null>";
+    public override string ToString() => IsEmpty ? "<Empty>" : Value.ToString() ?? "";
 
 
     /// <summary>

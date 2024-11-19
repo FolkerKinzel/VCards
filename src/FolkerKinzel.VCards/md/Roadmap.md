@@ -136,7 +136,8 @@ and let it store as string[]
 
 &nbsp;
 - [ ] Make `VCardProperty.Value` non-nullable
-- [ ] Make `VCard.Property.IsEmpty` abstract
+- [x] Make `VCardProperty.IsEmpty` abstract
+- [x] Remove the `MemberNotNullWhenAttribute` from `VCardProperty.IsEmpty`
 - [ ] Ensure that each VCardProperty ctor has a `value` parameter.
 - [ ] Ensure that the corresponding VCardBuilder parameter is also named `value`
 

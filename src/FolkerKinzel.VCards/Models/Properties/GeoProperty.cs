@@ -60,10 +60,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 
     /// <summary> The data provided by the <see cref="GeoProperty" />.
     /// </summary>
-    public new GeoCoordinate Value
-    {
-        get;
-    }
+    public new GeoCoordinate Value  { get; }
 
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;

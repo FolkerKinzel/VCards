@@ -1,5 +1,6 @@
 using System.Collections;
 using System.ComponentModel;
+using System.Security.Principal;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -39,14 +40,14 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
 
     /// <summary> Initializes a new <see cref="GenderProperty" /> object with a specified
     /// <see cref="Gender"/> instance. </summary>
-    /// <param name="gender">The <see cref="Gender"/> instance to use as <see cref="Value"/>.</param>
+    /// <param name="value">The <see cref="Gender"/> instance to use as <see cref="Value"/>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// 
-    /// <exception cref="ArgumentNullException"><paramref name="gender"/> is <c>null</c>.</exception>
-    public GenderProperty(Gender gender, string? group = null) : base(new ParameterSection(), group)
-        => Value = gender ?? throw new ArgumentNullException(nameof(gender));
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+    public GenderProperty(Gender value, string? group = null) : base(new ParameterSection(), group)
+        => Value = value ?? throw new ArgumentNullException(nameof(value));
 
     internal GenderProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
@@ -70,13 +71,10 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     }
 
     /// <summary>The data provided by the <see cref="GenderProperty" />. </summary>
-    public new Gender Value
-    {
-        get;
-    }
+    public new Gender Value { get; }
 
     /// <inheritdoc />
-    public override bool IsEmpty => Value.IsEmpty; // Value ist nie null
+    public override bool IsEmpty => Value.IsEmpty;
 
     /// <inheritdoc />
     public override object Clone() => new GenderProperty(this);
@@ -94,5 +92,16 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected override object? GetVCardPropertyValue() => Value;
 
-    internal override void AppendValue(VcfSerializer serializer) => Value.AppendVCardStringTo(serializer);
+    internal override void AppendValue(VcfSerializer serializer)
+    {
+        if (Value.Sex.HasValue)
+        {
+            _ = serializer.Builder.Append(Value.Sex.ToVcfString());
+        }
+
+        if (Value.Identity is not null)
+        {
+            _ = serializer.Builder.Append(';').AppendValueMasked(Value.Identity, serializer.Version);
+        }
+    }
 }

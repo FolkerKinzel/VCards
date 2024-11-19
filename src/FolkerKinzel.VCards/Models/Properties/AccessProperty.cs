@@ -44,10 +44,7 @@ public sealed class AccessProperty : VCardProperty
     public override bool IsEmpty => false;
 
     /// <summary>The data provided by the <see cref="AccessProperty" />.</summary>
-    public new Access Value
-    {
-        get;
-    }
+    public new Access Value { get; }
 
     /// <inheritdoc />
     public override object Clone() => new AccessProperty(this);

@@ -107,16 +107,16 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     /// specified <see cref="Address"/>.
     /// </summary>
     /// 
-    /// <param name="address">The <see cref="Address"/> instance used as <see cref="Value"/>.</param>
+    /// <param name="value">The <see cref="Address"/> instance used as <see cref="Value"/>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="address"/> is <c>null</c>.</exception>
-    public AddressProperty(Address address, string? group = null)
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+    public AddressProperty(Address value, string? group = null)
         : base(new ParameterSection(), group)
     {
-        _ArgumentNullException.ThrowIfNull(address, nameof(address));
-        Value = address;
+        _ArgumentNullException.ThrowIfNull(value, nameof(value));
+        Value = value;
     }
 
     /// <summary>Copy ctor.</summary>
@@ -141,10 +141,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     }
 
     /// <summary> The data provided by the <see cref="AddressProperty" />.</summary>
-    public new Address Value
-    {
-        get;
-    }
+    public new Address Value { get; }
 
     /// <summary>
     /// <inheritdoc />

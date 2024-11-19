@@ -28,6 +28,47 @@ namespace FolkerKinzel.VCards.BuilderParts;
 #endif
 public readonly struct AddressesBuilder
 {
+    #region Remove this code with version 8.0.0
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use Add(Address?, ...) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public VCardBuilder Add(string? street,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                            string? locality,
+                            string? region,
+                            string? postalCode,
+                            string? country = null,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null,
+                            bool autoLabel = true) => throw new NotImplementedException();
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use Add(Address?, ...) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public VCardBuilder Add(IEnumerable<string?>? street,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                            IEnumerable<string?>? locality,
+                            IEnumerable<string?>? region,
+                            IEnumerable<string?>? postalCode,
+                            IEnumerable<string?>? country = null,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null,
+                            bool autoLabel = true) => throw new NotImplementedException();
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Use Add(Address?, ...) instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public VCardBuilder Add(AddressBuilder builder,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null) => throw new NotImplementedException();
+    #endregion
+
     private readonly VCardBuilder? _builder;
 
     [MemberNotNull(nameof(_builder))]
@@ -159,52 +200,11 @@ public readonly struct AddressesBuilder
     private IEnumerable<AddressProperty> GetProperty()
         => Builder.VCard.Addresses?.OfType<AddressProperty>() ?? [];
 
-    #region Remove this code with version 8.0.0
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use Add(Address?, ...) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public VCardBuilder Add(string? street,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                            string? locality,
-                            string? region,
-                            string? postalCode,
-                            string? country = null,
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null,
-                            bool autoLabel = true) => throw new NotImplementedException();
-
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use Add(Address?, ...) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public VCardBuilder Add(IEnumerable<string?>? street,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                            IEnumerable<string?>? locality,
-                            IEnumerable<string?>? region,
-                            IEnumerable<string?>? postalCode,
-                            IEnumerable<string?>? country = null,
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null,
-                            bool autoLabel = true) => throw new NotImplementedException();
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use Add(Address?, ...) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public VCardBuilder Add(AddressBuilder builder,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null) => throw new NotImplementedException();
-    #endregion
-
     /// <summary>
     /// Adds an <see cref="AddressProperty"/> instance, which is newly 
     /// initialized with the specified <see cref="Name"/>.
     /// </summary>
-    /// <param name="address">The <see cref="Address"/> instance, or <c>null</c>.</param>
+    /// <param name="value">The <see cref="Address"/> instance, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
@@ -222,12 +222,12 @@ public readonly struct AddressesBuilder
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(Address? address,
+    public VCardBuilder Add(Address? value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
-        var prop = new AddressProperty(address ?? new Address(), group?.Invoke(vc));
+        var prop = new AddressProperty(value ?? new Address(), group?.Invoke(vc));
         vc.Set(Prop.Addresses,
                VCardBuilder.Add(prop,
                                 vc.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),

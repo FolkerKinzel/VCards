@@ -92,17 +92,4 @@ public sealed class Gender
 
         return s;
     }
-
-    internal void AppendVCardStringTo(VcfSerializer serializer)
-    {
-        if (Sex.HasValue)
-        {
-            _ = serializer.Builder.Append(Sex.ToVcfString());
-        }
-
-        if (Identity is not null)
-        {
-            _ = serializer.Builder.Append(';').AppendValueMasked(Identity, serializer.Version);
-        }
-    }
 }

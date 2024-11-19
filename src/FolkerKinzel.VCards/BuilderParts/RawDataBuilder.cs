@@ -326,7 +326,7 @@ public readonly struct RawDataBuilder
     /// <see cref="RawData"/> instance, to the specified property of the 
     /// <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="data">A <see cref="RawData"/> instance, or <c>null</c>.</param>
+    /// <param name="value">A <see cref="RawData"/> instance, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
@@ -337,18 +337,18 @@ public readonly struct RawDataBuilder
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="RawDataBuilder"/> 
     /// to be able to chain calls.</returns>
     /// 
-    /// <remarks>If <paramref name="data"/> is <c>null</c>,
+    /// <remarks>If <paramref name="value"/> is <c>null</c>,
     /// an empty <see cref="DataProperty"/> containing an empty <see cref="RawData"/> instance with an empty
     /// <see cref="string"/> will be created.</remarks>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder AddRawData(RawData? data,
+    public VCardBuilder AddRawData(RawData? value,
                                    Action<ParameterSection>? parameters = null,
                                    Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(new DataProperty(data ?? RawData.FromText(""),
+                          VCardBuilder.Add(new DataProperty(value ?? RawData.FromText(""),
                                                             group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop),
                                            parameters)

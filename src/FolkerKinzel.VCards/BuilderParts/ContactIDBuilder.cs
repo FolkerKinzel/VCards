@@ -99,7 +99,7 @@ public readonly struct ContactIDBuilder
     /// Sets the <see cref="VCard.ContactID"/> property to a <see cref="ContactIDProperty"/> instance that is newly 
     /// initialized using a specified <see cref="ContactID"/>.
     /// </summary>
-    /// <param name="id">A <see cref="ContactID" /> instance, or <c>null</c>.</param>
+    /// <param name="value">A <see cref="ContactID" /> instance, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
@@ -111,17 +111,17 @@ public readonly struct ContactIDBuilder
     /// 
     /// <remarks>
     /// The method sets <see cref="VCard.ContactID"/> to an empty <see cref="ContactIDProperty"/> instance if
-    /// <paramref name="id"/> is <c>null</c>. 
+    /// <paramref name="value"/> is <c>null</c>. 
     /// </remarks>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Set(ContactID? id,
+    public VCardBuilder Set(ContactID? value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
-        var property = new ContactIDProperty(id ?? ContactID.Empty, group?.Invoke(vc));
+        var property = new ContactIDProperty(value ?? ContactID.Empty, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 
         vc.Set(Prop.ContactID, property);

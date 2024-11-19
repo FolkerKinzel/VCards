@@ -92,7 +92,7 @@ public sealed class DateAndOrTimeProperty
     /// Initializes a new <see cref="DateAndOrTimeProperty"/> instance with
     /// a specified <see cref="DateAndOrTime"/> object.
     /// </summary>
-    /// <param name="dateAndOrTime">The <see cref="DateAndOrTime"/> instance to use as 
+    /// <param name="value">The <see cref="DateAndOrTime"/> instance to use as 
     /// <see cref="Value"/>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
@@ -110,10 +110,10 @@ public sealed class DateAndOrTimeProperty
     /// </list>
     /// </remarks>
     /// 
-    /// <exception cref="ArgumentNullException"><paramref name="dateAndOrTime"/> is <c>null</c>.</exception>
-    public DateAndOrTimeProperty(DateAndOrTime dateAndOrTime, string? group = null)
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+    public DateAndOrTimeProperty(DateAndOrTime value, string? group = null)
         : base(new ParameterSection(), group)
-        => Value = dateAndOrTime ?? throw new ArgumentNullException(nameof(dateAndOrTime));
+        => Value = value ?? throw new ArgumentNullException(nameof(value));
 
     internal DateAndOrTimeProperty(VcfRow vcfRow, VCdVersion version, VcfDeserializationInfo info)
         : base(vcfRow.Parameters, vcfRow.Group)
@@ -158,10 +158,6 @@ public sealed class DateAndOrTimeProperty
 
     /// <inheritdoc />
     public override object Clone() => new DateAndOrTimeProperty(this);
-
-    /// <inheritdoc />
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => Value?.ToString() ?? base.ToString();
 
     /// <inheritdoc />
     protected override object? GetVCardPropertyValue() => Value;

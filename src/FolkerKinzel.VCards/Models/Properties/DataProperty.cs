@@ -83,16 +83,16 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
     /// Initializes a new <see cref="DataProperty"/> instance with a specified
     /// <see cref="RawData"/> object.
     /// </summary>
-    /// <param name="data">The <see cref="RawData"/> instance to use as <see cref="Value"/>.</param>
+    /// <param name="value">The <see cref="RawData"/> instance to use as <see cref="Value"/>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="data"/> is <c>null</c>.</exception>
-    public DataProperty(RawData data, string? group = null)
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+    public DataProperty(RawData value, string? group = null)
         : base(new ParameterSection(), group)
     {
-        Value = data ?? throw new ArgumentNullException(nameof(data));
-        Parameters.MediaType = data.MediaType;
+        Value = value ?? throw new ArgumentNullException(nameof(value));
+        Parameters.MediaType = value.MediaType;
     }
 
     internal DataProperty(VcfRow vcfRow, VCdVersion version)

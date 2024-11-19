@@ -224,7 +224,7 @@ public readonly struct DateAndOrTimeBuilder
     /// Adds a <see cref="DateAndOrTimeProperty"/> instance, which is newly initialized with a specified
     /// <see cref="DateAndOrTime"/> instance, to the specified property of the <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="dateAndOrTime">A <see cref="DateAndOrTime"/> instance, or <c>null</c>.</param>
+    /// <param name="value">A <see cref="DateAndOrTime"/> instance, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
@@ -248,12 +248,12 @@ public readonly struct DateAndOrTimeBuilder
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(DateAndOrTime? dateAndOrTime,
+    public VCardBuilder Add(DateAndOrTime? value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(new DateAndOrTimeProperty(dateAndOrTime ?? DateAndOrTime.Empty, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new DateAndOrTimeProperty(value ?? DateAndOrTime.Empty, group?.Invoke(_builder.VCard)),
                                            Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop),
                                            parameters)
                           );
