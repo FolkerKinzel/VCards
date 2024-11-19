@@ -36,7 +36,7 @@ public class V2Tests
 
         Vcf.Save(vcard,
             System.IO.Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"), VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteNonStandardProperties));
+            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"), VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardProperties));
     }
 
     [TestMethod]
@@ -112,7 +112,7 @@ public class V2Tests
     [TestMethod]
     public void SerializeVCard()
     {
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V2_1, options: Opts.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V2_1, options: VcfOpts.All);
 
         Assert.IsNotNull(s);
 
@@ -183,7 +183,7 @@ public class V2Tests
 
         var arr = new VCard[] { vc };
 
-        string vcf = vc.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Unset(Opts.AllowMultipleAdrAndLabelInVCard21));
+        string vcf = vc.ToVcfString(VCdVersion.V2_1, options: VcfOpts.Default.Unset(VcfOpts.AllowMultipleAdrAndLabelInVCard21));
         IReadOnlyList<VCard> vCards = Vcf.Parse(vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
@@ -296,7 +296,7 @@ public class V2Tests
     {
         var vCard = new VCard { Photos = new DataProperty(RawData.FromBytes([])) };
 
-        string s = vCard.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteEmptyProperties));
+        string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties));
 
         vCard = Vcf.Parse(s)[0];
         Assert.IsNotNull(vCard.Photos);
@@ -324,7 +324,7 @@ public class V2Tests
             Relations = relProp
         };
 
-        string s = vCard.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Set(Opts.AppendAgentAsSeparateVCard));
+        string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.AppendAgentAsSeparateVCard));
 
         IReadOnlyList<VCard> vCards = Vcf.Parse(s);
         Assert.AreEqual(2, vCards.Count);
@@ -373,7 +373,7 @@ public class V2Tests
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
-        string vcfString = vcard.ToVcfString(version: VCdVersion.V2_1, options: Opts.Default | Opts.WriteNonStandardParameters);
+        string vcfString = vcard.ToVcfString(version: VCdVersion.V2_1, options: VcfOpts.Default | VcfOpts.WriteNonStandardParameters);
 
         // Parse the VCF string:
         vcard = Vcf.Parse(vcfString)[0];
@@ -512,7 +512,7 @@ public class V2Tests
                              group: vc => "GROUP")
             .VCard;
 
-        string serialized = vc.ToVcfString(VCdVersion.V2_1, options: Opts.All);
+        string serialized = vc.ToVcfString(VCdVersion.V2_1, options: VcfOpts.All);
 
         StringAssert.Contains(serialized, "GROUP.X-GENDER;X-TEST=test:Female");
         StringAssert.Contains(serialized, "GROUP.X-WAB-GENDER;X-TEST=test:1");

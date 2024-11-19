@@ -372,7 +372,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         }
 
         if (serializer.Version >= VCdVersion.V4_0
-            && serializer.Options.HasFlag(Opts.WriteRfc9554Extensions)
+            && serializer.Options.HasFlag(VcfOpts.WriteRfc9554Extensions)
             && _dic.Any(x => x.Key >= AdrProp.Room))
         {
             for (int i = STANDARD_COUNT; i < MAX_COUNT; i++)

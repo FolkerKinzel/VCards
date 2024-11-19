@@ -88,7 +88,7 @@ public class Rfc9555Tests
             .ABLabels.Add("uncle", group: v => v.EMails?.Last()?.Group)
             .VCard;
 
-        Opts opts = Opts.Default.Unset(Opts.WriteXExtensions);
+        VcfOpts opts = VcfOpts.Default.Unset(VcfOpts.WriteXExtensions);
         string v4 = vc.ToVcfString(VCdVersion.V4_0, options: opts).ReplaceWhiteSpaceWith("");
         string v3 = vc.ToVcfString(VCdVersion.V3_0, options: opts).ReplaceWhiteSpaceWith("");
         string v2 = vc.ToVcfString(VCdVersion.V2_1, options: opts).ReplaceWhiteSpaceWith("");
@@ -102,7 +102,7 @@ public class Rfc9555Tests
     private static void Serialize(VCard vc, out string v4, out string v4WithoutRfc9555, out string v3, out string v2)
     {
         v4 = vc.ToVcfString(VCdVersion.V4_0);
-        v4WithoutRfc9555 = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteRfc9555Extensions));
+        v4WithoutRfc9555 = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteRfc9555Extensions));
         v3 = vc.ToVcfString(VCdVersion.V3_0);
         v2 = vc.ToVcfString(VCdVersion.V2_1);
     }

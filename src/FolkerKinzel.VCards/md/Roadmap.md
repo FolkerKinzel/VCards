@@ -131,7 +131,8 @@ and let it store as string[]
 - [x] Rename `NonStandardProperty.XName` to `Key`
 
 &nbsp;
-- [ ] Rename `Opts` to `VcfOpts`
+- [x] Rename `Opts` to `VcfOpts`
+- [x] Rename `OptsExtension` to `VcfOptsExtension`
 
 &nbsp;
 - [ ] Make `VCardProperty.Value` non-nullable

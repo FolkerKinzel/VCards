@@ -22,7 +22,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     }
 
     internal Vcf_2_1Serializer(TextWriter writer,
-                               Opts options,
+                               VcfOpts options,
                                ITimeZoneIDConverter? tzConverter)
         : base(writer, options, new ParameterSerializer2_1(options), tzConverter) { }
 
@@ -158,7 +158,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(value is not null);
 
-        bool multiple = Options.IsSet(Opts.AllowMultipleAdrAndLabelInVCard21);
+        bool multiple = Options.IsSet(VcfOpts.AllowMultipleAdrAndLabelInVCard21);
         bool first = true;
 
         foreach (AddressProperty prop in value.OrderByPrefIntl(IgnoreEmptyItems))
@@ -259,7 +259,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override void AppendSocialMediaProfiles(IEnumerable<TextProperty?> value)
     {
-        if (Options.HasFlag(Opts.WriteXExtensions))
+        if (Options.HasFlag(VcfOpts.WriteXExtensions))
         {
             BuildPropertyCollection(VCard.PropKeys.NonStandard.X_SOCIALPROFILE,
                                     value.Where(x => x?.Parameters.DataType != Data.Text));

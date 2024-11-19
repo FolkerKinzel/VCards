@@ -42,7 +42,7 @@ public static class VCardExample
         Vcf.Save(vCard,
                  v4FilePath,
                  VCdVersion.V4_0,
-                 options: Opts.Default.Set(Opts.SetPropertyIDs));
+                 options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
 
         // Load vCard:
         vCard = Vcf.Load(v3FilePath)[0];

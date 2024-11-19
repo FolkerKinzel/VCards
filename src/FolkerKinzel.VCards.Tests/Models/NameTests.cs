@@ -28,7 +28,7 @@ public class NameTests
         var name = new Name(input.AsMemory(), VCdVersion.V4_0);
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
+        var serializer = new Vcf_4_0Serializer(writer, VcfOpts.Default);
         name.AppendVcfString(serializer);
 
         Assert.AreEqual(input, serializer.Builder.ToString());
@@ -72,7 +72,7 @@ public class NameTests
         string vcf2 = vc.ToVcfString(VCdVersion.V2_1);
         string vcf3 = vc.ToVcfString(VCdVersion.V3_0);
         string vcfRfc9554 = vc.ToVcfString(VCdVersion.V4_0);
-        string vcf4 = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteRfc9554Extensions));
+        string vcf4 = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteRfc9554Extensions));
 
         const string standard = "1 6;2;3;4;5 7\r\n";
         const string standardV4 = "1,6;2;3;4;5,7\r\n";

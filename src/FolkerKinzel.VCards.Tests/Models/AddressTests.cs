@@ -42,7 +42,7 @@ public class AddressTests
         var adr = new Address(input.AsMemory(), VCdVersion.V4_0);
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_4_0Serializer(writer, Opts.Default);
+        var serializer = new Vcf_4_0Serializer(writer, VcfOpts.Default);
         adr.AppendVcfString(serializer);
 
         Assert.AreEqual(";;Parkstr.,7a;;;;", serializer.Builder.ToString());

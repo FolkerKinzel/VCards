@@ -402,7 +402,7 @@ public sealed partial class ParameterSection
     /// <summary>Non-standard attributes. <c>(2,3,4)</c></summary>
     /// <remarks>
     /// <para>In order to write non-standardized attributes into a VCF file, the 
-    /// <see cref="Opts.WriteNonStandardParameters">VcfOptions.WriteNonStandardParameters</see> 
+    /// <see cref="VcfOpts.WriteNonStandardParameters">VcfOptions.WriteNonStandardParameters</see> 
     /// flag must be set explicitly when serializing the <see cref="VCard" /> object.
     /// </para>
     /// <para>

@@ -60,7 +60,7 @@ public sealed class SyncOperation
     /// enable the global data synchronization mechanism introduced with vCard&#160;4.0.
     /// </para>
     /// <para>
-    /// The method is called automatically when serializing vCard&#160;4.0 using <see cref="Opts.Default"/>
+    /// The method is called automatically when serializing vCard&#160;4.0 using <see cref="VcfOpts.Default"/>
     /// but it may be called several times without causing any damage.
     /// </para>
     /// </remarks>

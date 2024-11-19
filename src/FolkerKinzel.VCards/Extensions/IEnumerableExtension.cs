@@ -128,7 +128,7 @@ public static class IEnumerableExtension
     /// </para>
     /// </remarks>
     /// 
-    /// <seealso cref="Vcf.Save(IEnumerable{VCard?}, string, VCdVersion, ITimeZoneIDConverter?, Opts)"/>
+    /// <seealso cref="Vcf.Save(IEnumerable{VCard?}, string, VCdVersion, ITimeZoneIDConverter?, VcfOpts)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> or <paramref
@@ -136,7 +136,7 @@ public static class IEnumerableExtension
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// <paramref name="version" /> is not a defined value of the <see cref="Opts"/> 
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
     /// enum.
     /// </exception>
     /// <exception cref="IOException">The file could not be written.</exception>
@@ -145,7 +145,7 @@ public static class IEnumerableExtension
                                string fileName,
                                VCdVersion version = VCard.DEFAULT_VERSION,
                                ITimeZoneIDConverter? tzConverter = null,
-                               Opts options = Opts.Default)
+                               VcfOpts options = VcfOpts.Default)
         => Vcf.Save(vCards, fileName, version, tzConverter, options);
 
     /// <summary>Serializes a collection of <see cref="VCard" /> objects into a <see
@@ -174,7 +174,7 @@ public static class IEnumerableExtension
     /// </para>
     /// </remarks>
     /// 
-    /// <seealso cref="Vcf.Serialize(IEnumerable{VCard?}, Stream, VCdVersion, ITimeZoneIDConverter?, Opts, bool)"/>
+    /// <seealso cref="Vcf.Serialize(IEnumerable{VCard?}, Stream, VCdVersion, ITimeZoneIDConverter?, VcfOpts, bool)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="stream" /> or <paramref
@@ -182,7 +182,7 @@ public static class IEnumerableExtension
     /// <exception cref="ArgumentException"> <paramref name="stream" /> does not support
     /// write operations.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// <paramref name="version" /> is not a defined value of the <see cref="Opts"/> 
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
     /// enum.
     /// </exception>
     /// <exception cref="IOException">I/O error.</exception>
@@ -193,7 +193,7 @@ public static class IEnumerableExtension
                                     Stream stream,
                                     VCdVersion version = VCard.DEFAULT_VERSION,
                                     ITimeZoneIDConverter? tzConverter = null,
-                                    Opts options = Opts.Default,
+                                    VcfOpts options = VcfOpts.Default,
                                     bool leaveStreamOpen = false)
         => Vcf.Serialize(vCards, stream, version, tzConverter, options, leaveStreamOpen);
 
@@ -226,12 +226,12 @@ public static class IEnumerableExtension
     /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
     /// </example>
     /// 
-    /// <seealso cref="Vcf.ToString(IEnumerable{VCard?}, VCdVersion, ITimeZoneIDConverter?, Opts)"/>
+    /// <seealso cref="Vcf.ToString(IEnumerable{VCard?}, VCdVersion, ITimeZoneIDConverter?, VcfOpts)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// <paramref name="version" /> is not a defined value of the <see cref="Opts"/> 
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
     /// enum.
     /// </exception>
     /// <exception cref="OutOfMemoryException">The system is out of memory.</exception>
@@ -239,7 +239,7 @@ public static class IEnumerableExtension
     public static string ToVcfString(this IEnumerable<VCard?> vCards,
                                      VCdVersion version = VCard.DEFAULT_VERSION,
                                      ITimeZoneIDConverter? tzConverter = null,
-                                     Opts options = Opts.Default)
+                                     VcfOpts options = VcfOpts.Default)
         => Vcf.ToString(vCards, version, tzConverter, options);
 
     /// <summary>

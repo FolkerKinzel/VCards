@@ -121,9 +121,9 @@ public class Rfc9554Tests
 
         Serialize(vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2);
 
-        string v4Pure = vc.ToVcfString(VCdVersion.V4_0, options: Opts.None);
-        string v3Pure = vc.ToVcfString(VCdVersion.V3_0, options: Opts.None);
-        string v2Pure = vc.ToVcfString(VCdVersion.V2_1, options: Opts.None);
+        string v4Pure = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.None);
+        string v3Pure = vc.ToVcfString(VCdVersion.V3_0, options: VcfOpts.None);
+        string v2Pure = vc.ToVcfString(VCdVersion.V2_1, options: VcfOpts.None);
 
         Assert.IsTrue(v4.Contains("\nSOCIALPROFILE", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(v4.Contains("\nX-SOCIALPROFILE", StringComparison.OrdinalIgnoreCase));
@@ -290,8 +290,8 @@ public class Rfc9554Tests
 
         Serialize(vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2);
 
-        string v4Pure = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteXExtensions).Unset(Opts.WriteRfc9554Extensions));
-        string v3Pure = vc.ToVcfString(VCdVersion.V3_0, options: Opts.Default.Unset(Opts.WriteXExtensions).Unset(Opts.WriteRfc9554Extensions));
+        string v4Pure = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteXExtensions).Unset(VcfOpts.WriteRfc9554Extensions));
+        string v3Pure = vc.ToVcfString(VCdVersion.V3_0, options: VcfOpts.Default.Unset(VcfOpts.WriteXExtensions).Unset(VcfOpts.WriteRfc9554Extensions));
 
         Assert.IsTrue(v4.Contains("\nIMPP", StringComparison.OrdinalIgnoreCase));
         Assert.IsTrue(v4.Contains(";SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
@@ -432,7 +432,7 @@ public class Rfc9554Tests
     private static void Serialize(VCard vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2)
     {
         v4 = vc.ToVcfString(VCdVersion.V4_0);
-        v4WithoutRfc9554 = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteRfc9554Extensions));
+        v4WithoutRfc9554 = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteRfc9554Extensions));
         v3 = vc.ToVcfString(VCdVersion.V3_0);
         v2 = vc.ToVcfString(VCdVersion.V2_1);
     }

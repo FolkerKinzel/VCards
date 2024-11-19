@@ -52,7 +52,7 @@ public class ReferencedDataPropertyTests
     public void AppendToTest1()
     {
         using var writer = new StringWriter();
-        var serializer = new Vcf_3_0Serializer(writer, Opts.Default, null);
+        var serializer = new Vcf_3_0Serializer(writer, VcfOpts.Default, null);
         new DataProperty(RawData.FromText("")).AppendValue(serializer);
         Assert.AreEqual(0, serializer.Builder.Length);
     }
@@ -62,7 +62,7 @@ public class ReferencedDataPropertyTests
     public void PrepareForVcfSerializationTest1()
     {
         using var writer = new StringWriter();
-        var serializer = new Vcf_2_1Serializer(writer, Opts.Default, null);
+        var serializer = new Vcf_2_1Serializer(writer, VcfOpts.Default, null);
 
         var prop = new DataProperty(RawData.FromText(""));
         prop.Parameters.ContentLocation = Loc.Url;
@@ -77,7 +77,7 @@ public class ReferencedDataPropertyTests
     public void PrepareForVcfSerializationTest2()
     {
         using var writer = new StringWriter();
-        var serializer = new Vcf_2_1Serializer(writer, Opts.Default, null);
+        var serializer = new Vcf_2_1Serializer(writer, VcfOpts.Default, null);
 
         Assert.IsTrue(Uri.TryCreate("cid:something", UriKind.Absolute, out Uri? uri));
         var prop = new DataProperty(RawData.FromUri(uri));

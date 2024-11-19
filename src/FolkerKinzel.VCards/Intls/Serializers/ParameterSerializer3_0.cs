@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer(VCdVersion.V3_0, options)
+internal sealed class ParameterSerializer3_0(VcfOpts options) : ParameterSerializer(VCdVersion.V3_0, options)
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer3_0>> _actionList = new(2);
@@ -337,7 +337,7 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
     protected override void BuildSocialProfilePara()
     {
         // X-SOCIALPROFILE
-        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
+        Debug.Assert(Options.HasFlag(VcfOpts.WriteXExtensions));
 
         string? serviceType = this.ParaSection.ServiceType;
 
@@ -519,7 +519,7 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
             }
         }
 
-        if (Options.HasFlag(Opts.WriteNonStandardParameters))
+        if (Options.HasFlag(VcfOpts.WriteNonStandardParameters))
         {
             IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
 
@@ -563,7 +563,7 @@ internal sealed class ParameterSerializer3_0(Opts options) : ParameterSerializer
 
     private void AppendServiceType()
     {
-        if (Options.HasFlag(Opts.WriteXExtensions) && ParaSection.ServiceType is string serviceType)
+        if (Options.HasFlag(VcfOpts.WriteXExtensions) && ParaSection.ServiceType is string serviceType)
         {
             AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, serviceType);
         }

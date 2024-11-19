@@ -21,7 +21,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     }
 
     internal Vcf_3_0Serializer(TextWriter writer,
-                               Opts options,
+                               VcfOpts options,
                                ITimeZoneIDConverter? tzConverter)
         : base(writer, options, new ParameterSerializer3_0(options), tzConverter) { }
 
@@ -96,7 +96,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
     protected override void AppendCalendarAccessUri(IEnumerable<TextProperty?> value)
     {
-        if (Options.HasFlag(Opts.WriteRfc2739Extensions))
+        if (Options.HasFlag(VcfOpts.WriteRfc2739Extensions))
         {
             BuildPropertyCollection(VCard.PropKeys.Rfc2739.CAPURI, value);
         }
@@ -104,7 +104,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
     protected override void AppendCalendarAddresses(IEnumerable<TextProperty?> value)
     {
-        if (Options.HasFlag(Opts.WriteRfc2739Extensions))
+        if (Options.HasFlag(VcfOpts.WriteRfc2739Extensions))
         {
             BuildPropertyCollection(VCard.PropKeys.Rfc2739.CALURI, value);
         }
@@ -112,7 +112,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
     protected override void AppendCalendarUserAddresses(IEnumerable<TextProperty?> value)
     {
-        if (Options.HasFlag(Opts.WriteRfc2739Extensions))
+        if (Options.HasFlag(VcfOpts.WriteRfc2739Extensions))
         {
             BuildPropertyCollection(VCard.PropKeys.Rfc2739.CALADRURI, value);
         }
@@ -120,7 +120,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
     protected override void AppendFreeBusyUrls(IEnumerable<TextProperty?> value)
     {
-        if (Options.HasFlag(Opts.WriteRfc2739Extensions))
+        if (Options.HasFlag(VcfOpts.WriteRfc2739Extensions))
         {
             BuildPropertyCollection(VCard.PropKeys.Rfc2739.FBURL, value);
         }
@@ -167,7 +167,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
     {
         Debug.Assert(value is not null);
 
-        if (Options.HasFlag(Opts.WriteImppExtension))
+        if (Options.HasFlag(VcfOpts.WriteImppExtension))
         {
             bool first = true;
 
@@ -293,7 +293,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
     protected override void AppendSocialMediaProfiles(IEnumerable<TextProperty?> value)
     {
-        if (Options.HasFlag(Opts.WriteXExtensions))
+        if (Options.HasFlag(VcfOpts.WriteXExtensions))
         {
             BuildPropertyCollection(VCard.PropKeys.NonStandard.X_SOCIALPROFILE, value);
         }

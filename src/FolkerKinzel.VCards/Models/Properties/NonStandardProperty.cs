@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <note type="important">
 /// <para>
 /// To write <see cref="NonStandardProperty" /> objects into a vCard, the flag 
-/// <see cref="Opts.WriteNonStandardProperties" /> must be set. 
+/// <see cref="VcfOpts.WriteNonStandardProperties" /> must be set. 
 /// </para>
 /// <para>
 /// Please note that when using the class, yourself is responsible for the 

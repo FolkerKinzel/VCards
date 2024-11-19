@@ -76,7 +76,7 @@ public class VCardTests
 
         vc.ToVcfString();
 
-        string s = Vcf.Parse(Vcf.ToString(vc, VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteEmptyProperties)))[0].ToString();
+        string s = Vcf.Parse(Vcf.ToString(vc, VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties)))[0].ToString();
         StringAssert.Contains(s, group);
         StringAssert.Contains(s, "2.1");
         StringAssert.Contains(s, "<EMPTY>");

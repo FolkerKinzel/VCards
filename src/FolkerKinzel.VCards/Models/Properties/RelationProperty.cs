@@ -171,7 +171,7 @@ done:
 
             string vcf = vCard.ToVcfString(
                 serializer.Version,
-                options: serializer.Options.Unset(Opts.AppendAgentAsSeparateVCard));
+                options: serializer.Options.Unset(VcfOpts.AppendAgentAsSeparateVCard));
 
             _ = serializer.Version == VCdVersion.V3_0
                 ? builder.AppendValueMasked(vcf, serializer.Version)

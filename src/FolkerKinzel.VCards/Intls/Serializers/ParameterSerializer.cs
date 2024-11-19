@@ -6,7 +6,7 @@ using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal abstract class ParameterSerializer(VCdVersion version, Opts options)
+internal abstract class ParameterSerializer(VCdVersion version, VcfOpts options)
 {
     private readonly VCdVersion _version = version;
 
@@ -15,7 +15,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     internal ParameterSection ParaSection { get; private set; } = ParameterSection.Empty;
 
-    protected Opts Options { get; } = options;
+    protected VcfOpts Options { get; } = options;
 
     internal void AppendTo(StringBuilder builder,
                            ParameterSection vCardPropertyParameter,
@@ -458,7 +458,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     protected void AppendNonStandardParameters()
     {
-        if (!Options.IsSet(Opts.WriteNonStandardParameters))
+        if (!Options.IsSet(VcfOpts.WriteNonStandardParameters))
         {
             return;
         }

@@ -26,7 +26,7 @@ public class Rfc8605Tests
         Assert.IsTrue(vc.ContactUris.Any());
 
         string vcfStr1 = vc.ToVcfString(VCdVersion.V4_0);
-        string vcfStr2 = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteRfc8605Extensions));
+        string vcfStr2 = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteRfc8605Extensions));
         string vcfStr3 = vc.ToVcfString(VCdVersion.V3_0);
         string vcfStr4 = vc.ToVcfString(VCdVersion.V2_1);
 
@@ -60,7 +60,7 @@ public class Rfc8605Tests
             .VCard;
 
         string vcfStr1 = vc.ToVcfString(VCdVersion.V4_0);
-        string vcfStr2 = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteRfc8605Extensions));
+        string vcfStr2 = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteRfc8605Extensions));
         string vcfStr3 = vc.ToVcfString(VCdVersion.V3_0);
         string vcfStr4 = vc.ToVcfString(VCdVersion.V2_1);
 

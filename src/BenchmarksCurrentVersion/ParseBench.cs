@@ -28,10 +28,10 @@ public class ParseBench
 
         _vCardString21 = _vCard.ToVcfString(VCdVersion.V2_1);
         _vCardString30 = _vCard.ToVcfString();
-        _vCardString40 = _vCard.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Set(Opts.SetPropertyIDs));
+        _vCardString40 = _vCard.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
         _vCardStringPhoto21 = _vCardPhoto.ToVcfString(VCdVersion.V2_1);
         _vCardStringPhoto30 = _vCardPhoto.ToVcfString();
-        _vCardStringPhoto40 = _vCardPhoto.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Set(Opts.SetPropertyIDs));
+        _vCardStringPhoto40 = _vCardPhoto.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
     }
 
     [Benchmark]

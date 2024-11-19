@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer(VCdVersion.V2_1, options)
+internal sealed class ParameterSerializer2_1(VcfOpts options) : ParameterSerializer(VCdVersion.V2_1, options)
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer2_1>> _actionList = new(2);
@@ -293,7 +293,7 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
             AppendV2_1Type(ParameterSection.TypeValue.PREF);
         }
 
-        if (Options.HasFlag(Opts.WriteNonStandardParameters))
+        if (Options.HasFlag(VcfOpts.WriteNonStandardParameters))
         {
             IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
 
@@ -327,7 +327,7 @@ internal sealed class ParameterSerializer2_1(Opts options) : ParameterSerializer
     protected override void BuildSocialProfilePara()
     {
         // X-SOCIALPROFILE
-        Debug.Assert(Options.HasFlag(Opts.WriteXExtensions));
+        Debug.Assert(Options.HasFlag(VcfOpts.WriteXExtensions));
 
         string? serviceType = this.ParaSection.ServiceType;
 

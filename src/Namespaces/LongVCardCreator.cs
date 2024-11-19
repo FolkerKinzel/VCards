@@ -44,7 +44,7 @@ internal static class LongVCardCreator
                 );
         }
 
-        Vcf.Save(vCards, "LargeFile.vcf", options: Opts.Default.Unset(Opts.UpdateTimeStamp));
+        Vcf.Save(vCards, "LargeFile.vcf", options: VcfOpts.Default.Unset(VcfOpts.UpdateTimeStamp));
 
     }
 }

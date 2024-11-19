@@ -150,7 +150,7 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest1()
     {
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: Opts.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: VcfOpts.All);
 
         Assert.IsNotNull(s);
 
@@ -195,7 +195,7 @@ public class V3Tests
             .NonStandards.Add("X-DATA", base64, parameters: p => { p.Encoding = Enc.Base64; p.MediaType = octetStream; })
             .VCard;
 
-        string vcf = Vcf.ToString(vc, VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteNonStandardProperties));
+        string vcf = Vcf.ToString(vc, VCdVersion.V3_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardProperties));
         vc = Vcf.Parse(vcf)[0];
 
         Assert.AreEqual(Data.Text, vc.Relations!.First()!.Parameters.DataType);
@@ -242,7 +242,7 @@ END:VCARD";
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
-        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteNonStandardParameters);
+        string vcfString = vcard.ToVcfString(options: VcfOpts.Default | VcfOpts.WriteNonStandardParameters);
         vcard = Vcf.Parse(vcfString)[0];
 
         // Find the WhatsApp number:
@@ -271,7 +271,7 @@ END:VCARD";
             Messengers = whatsAppImpp
         };
 
-        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteXExtensions);
+        string vcfString = vcard.ToVcfString(options: VcfOpts.Default | VcfOpts.WriteXExtensions);
         vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();
@@ -298,7 +298,7 @@ END:VCARD";
             Messengers = whatsAppImpp
         };
 
-        string vcfString = vcard.ToVcfString(options: Opts.Default);
+        string vcfString = vcard.ToVcfString(options: VcfOpts.Default);
         vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();
@@ -335,7 +335,7 @@ END:VCARD";
             Messengers = prop
         };
 
-        string vcfString = vcard.ToVcfString(options: (Opts.Default | Opts.WriteXExtensions).Unset(Opts.WriteImppExtension));
+        string vcfString = vcard.ToVcfString(options: (VcfOpts.Default | VcfOpts.WriteXExtensions).Unset(VcfOpts.WriteImppExtension));
         vcard = Vcf.Parse(vcfString)[0];
 
         Assert.AreEqual(1, vcard.Messengers!.Count());
@@ -359,7 +359,7 @@ END:VCARD";
             Messengers = prop
         };
 
-        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteXExtensions);
+        string vcfString = vcard.ToVcfString(options: VcfOpts.Default | VcfOpts.WriteXExtensions);
         vcard = Vcf.Parse(vcfString)[0];
         Assert.AreEqual(1, vcard.Messengers!.Count());
         prop = vcard.Messengers!.First();
@@ -448,7 +448,7 @@ END:VCARD";
     {
         var vCard = new VCard();
 
-        string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteEmptyProperties));
+        string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties));
 
         vCard = Vcf.Parse(vcf)[0];
 
@@ -614,7 +614,7 @@ END:VCARD";
            .FreeOrBusyUrls.SetPreferences()
            .VCard;
 
-        string serialized = vc.ToVcfString(options: Opts.Default.Unset(Opts.WriteRfc2739Extensions));
+        string serialized = vc.ToVcfString(options: VcfOpts.Default.Unset(VcfOpts.WriteRfc2739Extensions));
 
         vc = Vcf.Parse(serialized)[0];
 

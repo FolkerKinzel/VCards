@@ -61,7 +61,7 @@ public class TimeZonePropertyTests
         Assert.IsTrue(prop.IsEmpty);
 
         using var writer = new StringWriter();
-        var serializer = new Vcf_3_0Serializer(writer, Opts.Default, null);
+        var serializer = new Vcf_3_0Serializer(writer, VcfOpts.Default, null);
 
         prop.AppendValue(serializer);
         Assert.AreEqual(0, serializer.Builder.Length);

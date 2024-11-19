@@ -9,11 +9,11 @@ using ParaKey = FolkerKinzel.VCards.Models.Properties.Parameters.ParameterSectio
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer(VCdVersion.V4_0, options)
+internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSerializer(VCdVersion.V4_0, options)
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
-    private readonly bool _writeRfc9554 = options.HasFlag(Opts.WriteRfc9554Extensions);
+    private readonly bool _writeRfc9554 = options.HasFlag(VcfOpts.WriteRfc9554Extensions);
 
     private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes = CollectPropertyClassTypes;
     private readonly Action<ParameterSerializer4_0> _collectPhoneTypes = CollectPhoneTypes;
@@ -38,7 +38,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private static void CollectAddressTypes(ParameterSerializer4_0 serializer)
     {
-        if (!serializer.Options.HasFlag(Opts.WriteRfc9554Extensions))
+        if (!serializer.Options.HasFlag(VcfOpts.WriteRfc9554Extensions))
         {
             return;
         }
@@ -821,7 +821,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendCC()
     {
-        if (!Options.HasFlag(Opts.WriteRfc8605Extensions))
+        if (!Options.HasFlag(VcfOpts.WriteRfc8605Extensions))
         {
             return;
         }
@@ -834,7 +834,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendComponentOrder()
     {
-        if (!Options.HasFlag(Opts.WriteRfc9555Extensions))
+        if (!Options.HasFlag(VcfOpts.WriteRfc9555Extensions))
         {
             return;
         }
@@ -910,7 +910,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendJSContactPointer()
     {
-        Debug.Assert(Options.HasFlag(Opts.WriteRfc9555Extensions));
+        Debug.Assert(Options.HasFlag(VcfOpts.WriteRfc9555Extensions));
 
         if (ParaSection.JSContactPointer is string ptr)
         {
@@ -1037,7 +1037,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             return;
         }
 
-        if (Options.HasFlag(Opts.WriteXExtensions) && ParaSection.ServiceType is string xServiceType)
+        if (Options.HasFlag(VcfOpts.WriteXExtensions) && ParaSection.ServiceType is string xServiceType)
         {
             AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, xServiceType);
         }
@@ -1084,7 +1084,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             _actionList[i](this);
         }
 
-        if (Options.HasFlag(Opts.WriteNonStandardParameters))
+        if (Options.HasFlag(VcfOpts.WriteNonStandardParameters))
         {
             IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
 
@@ -1147,7 +1147,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendNonStandardWithKey(string key)
     {
-        if (!Options.HasFlag(Opts.WriteNonStandardParameters))
+        if (!Options.HasFlag(VcfOpts.WriteNonStandardParameters))
         {
             return;
         }

@@ -97,7 +97,7 @@ public class V4Tests
     [TestMethod]
     public void SerializeVCard()
     {
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0, options: Opts.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0, options: VcfOpts.All);
 
         Assert.IsNotNull(s);
 
@@ -129,7 +129,7 @@ public class V4Tests
         Assert.IsNotNull(vc.DeathPlaceViews);
         Assert.IsNotNull(vc.DeathDateViews);
 
-        IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.WriteRfc6474Extensions));
+        IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOpts.WriteRfc6474Extensions));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -140,7 +140,7 @@ public class V4Tests
         Assert.IsNotNull(vc.DeathDateViews);
 
 
-        list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.None));
+        list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOpts.None));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -265,7 +265,7 @@ public class V4Tests
 
         Assert.IsNotNull(vc.Members);
 
-        string vcf = vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteEmptyProperties));
+        string vcf = vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties));
 
         IReadOnlyList<VCard> list = Vcf.Parse(vcf);
 
@@ -363,7 +363,7 @@ public class V4Tests
 
         var vcard = new VCard { Messengers = [null, whatsAppImpp] };
 
-        string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: Opts.Default);
+        string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default);
         vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();
@@ -414,7 +414,7 @@ public class V4Tests
             .Interests.Add("Linq", parameters: p => p.NonStandard = [new KeyValuePair<string, string>("LEVEL", "VeryInterested")])
             .VCard;
 
-        string serialized = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteNonStandardParameters));
+        string serialized = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardParameters));
 
         vc = Vcf.Parse(serialized)[0];
         TextProperty expertise = vc.Expertises!.First()!;
@@ -447,9 +447,9 @@ public class V4Tests
             .VCard;
 
         string serialized = vc.ToVcfString(VCdVersion.V4_0,
-            options: Opts.Default.Set(Opts.WriteNonStandardParameters)
-                                 .Set(Opts.WriteNonStandardProperties)
-                                 .Unset(Opts.SetPropertyIDs));
+            options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardParameters)
+                                 .Set(VcfOpts.WriteNonStandardProperties)
+                                 .Unset(VcfOpts.SetPropertyIDs));
 
         vc = Vcf.Parse(serialized)[0];
 
@@ -529,7 +529,7 @@ public class V4Tests
             ])
             .VCard;
 
-        string serialized = Vcf.ToString(vc, VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteNonStandardParameters));
+        string serialized = Vcf.ToString(vc, VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardParameters));
 
         vc = Vcf.Parse(serialized)[0];
 
