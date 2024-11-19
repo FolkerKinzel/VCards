@@ -160,6 +160,8 @@ public readonly struct GeoBuilder
     /// </summary>
     /// <param name="latitude">Latitude (value between -90 and 90).</param>
     /// <param name="longitude">Longitude (value between -180 and 180).</param>
+    /// <param name="uncertainty">The amount of uncertainty in the location as a 
+    /// value in meters, or <c>null</c> to leave this unspecified.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" /> 
@@ -174,20 +176,13 @@ public readonly struct GeoBuilder
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Add(double latitude,
                             double longitude,
+                            float? uncertainty = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        try
-        {
-            return Add(new GeoCoordinate(latitude, longitude), parameters, group);
-        }
-        catch
-        {
-            return Add(null, parameters, group);
-        }
-    }
+        => Add(GeoCoordinate.TryCreate(latitude, longitude, uncertainty), parameters, group);
 
     /// <summary>
     /// Adds a <see cref="GeoProperty"/> instance, which is newly initialized using the specified

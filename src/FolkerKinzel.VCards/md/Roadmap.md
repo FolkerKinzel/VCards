@@ -140,8 +140,14 @@ and let it store as string[]
 - [ ] Ensure that the corresponding VCardBuilder parameter is also named `value`
 
 &nbsp;
-- [ ] Implement `GeoCoordinate? GeoCoordinate.TryCreate(double, double)` that doesn't throw any exception
-- [ ] Write remarks to `GeoCoordinate.IsEmpty`
+- [x] Implement `GeoCoordinate? GeoCoordinate.TryCreate(double, double)` that doesn't throw any exception
+- [x] Write remarks to `GeoCoordinate.IsEmpty`
+
+&nbsp;
+- [ ] Rename in all BuilderParts `TData data` to `TArg arg`
+
+&nbsp;
+- [ ] Check all `Empty` singletons whether they should be public
 
 ### 7.4.3
 - [ ] .NET 9.0 version of the package

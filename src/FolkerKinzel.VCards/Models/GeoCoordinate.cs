@@ -22,13 +22,14 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     private const double MIN_DISTANCE = ONE_DEGREE_DISTANCE * _6;
     private const string GEO_URI_PROTOCOL = "geo:";
 
-    /// <summary> Initializes a new <see cref="GeoCoordinate" /> objekt. </summary>
+    /// <summary> Initializes a new <see cref="GeoCoordinate" /> instance. </summary>
     /// <param name="latitude">Latitude (value between -90 and 90).</param>
     /// <param name="longitude">Longitude (value between -180 and 180).</param>
     /// <param name="uncertainty">The amount of uncertainty in the location as a 
     /// value in meters, or <c>null</c> to leave this unspecified.</param>
-    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="latitude" />
-    /// or <paramref name="longitude" /> does not have a valid value.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="latitude" />,
+    /// or <paramref name="longitude" />, or <paramref name="uncertainty"/> does not 
+    /// have a valid value.</exception>
     /// <seealso cref="GeoProperty"/>
     /// <seealso cref="VCard.GeoCoordinates"/>
     /// <seealso cref="ParameterSection.GeoPosition"/>
@@ -114,6 +115,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         }
     }
 
+
     /// <summary>Latitude.</summary>
     public double Latitude { get; }
 
@@ -137,6 +139,12 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <summary>
     /// When <c>true</c> the value of the instance should not be evaluated.
     /// </summary>
+    /// <remarks>
+    /// Because VCardBuilder needs the ability to create an empty GeoProperty object if the arguments do 
+    /// not allow otherwise, a singleton exists whose <see cref="IsEmpty"/> property is <c>true</c>. 
+    /// The value of this singleton is never written to a VCF file and is not taken into account in 
+    /// comparisons.
+    /// </remarks>
     public bool IsEmpty => ReferenceEquals(this, Empty);
 
     /// <inheritdoc />
@@ -192,6 +200,11 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <returns>The distance in <c>m</c> between this and <paramref name="other"/>.</returns>
     private double ComputeDistanceToCompareEquality(GeoCoordinate other)
     {
+        if(IsEmpty)
+        {
+            return other.IsEmpty ? 0 : Double.PositiveInfinity;
+        }
+
         double diffLat = ONE_DEGREE_DISTANCE * (Latitude - other.Latitude);
 
         // radians of the average latitude
@@ -208,6 +221,29 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         double diffLong = ONE_DEGREE_DISTANCE * Math.Cos(latRad) * diffAngleLong;
 
         return Math.Sqrt(diffLat * diffLat + diffLong * diffLong);
+    }
+
+    /// <summary> Tries to create a new <see cref="GeoCoordinate" /> instance from the
+    /// arguments and returns <c>null</c> if the creation fails. </summary>
+    /// <param name="latitude">Latitude (value between -90 and 90).</param>
+    /// <param name="longitude">Longitude (value between -180 and 180).</param>
+    /// <param name="uncertainty">The amount of uncertainty in the location as a 
+    /// value in meters, or <c>null</c> to leave this unspecified.</param>
+    /// <returns>The newly created <see cref="GeoCoordinate"/> instance, or <c>null</c>
+    /// if one of the arguments is out of range.</returns>
+    /// <seealso cref="GeoProperty"/>
+    /// <seealso cref="VCard.GeoCoordinates"/>
+    /// <seealso cref="ParameterSection.GeoPosition"/>
+    public static GeoCoordinate? TryCreate(double latitude, double longitude, float? uncertainty = null)
+    {
+        try
+        {
+            return new GeoCoordinate(latitude, longitude, uncertainty);
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -318,7 +354,14 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         NumberStyles styles = NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign;
 
-        if (!_Double.TryParse(value.Slice(0, splitIndex),
+        ReadOnlySpan<char> latitudeSpan = value.Slice(0, splitIndex);
+
+        if (latitudeSpan.EndsWith('\\'))
+        {
+            latitudeSpan = latitudeSpan.Slice(0, latitudeSpan.Length - 1);
+        }
+
+        if (!_Double.TryParse(latitudeSpan,
                               styles,
                               CultureInfo.InvariantCulture,
                               out double latitude))
@@ -330,18 +373,25 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
 
         splitIndex = value.IndexOfAny(",;");
 
-        if (!_Double.TryParse(splitIndex == -1 ? value : value.Slice(0, splitIndex),
+        ReadOnlySpan<char> longitudeSpan = splitIndex == -1 ? value : value.Slice(0, splitIndex);
+
+        if (longitudeSpan.EndsWith('\\'))
+        {
+            longitudeSpan = longitudeSpan.Slice(0, longitudeSpan.Length - 1);
+        }
+
+        if (!_Double.TryParse(longitudeSpan,
                               styles,
                               CultureInfo.InvariantCulture,
                               out double longitude))
         {
             return false;
         }
+
         float? uncertainty = null;
 
         if (splitIndex != -1)
         {
-
             value = value.Slice(splitIndex);
 
             int uParameterStart = value.IndexOf(GeoCoordinateConverter.U_PARAMETER, StringComparison.OrdinalIgnoreCase);
@@ -355,6 +405,11 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
                 if (uParameterEnd != -1)
                 {
                     value = value.Slice(0, uParameterEnd);
+
+                    if(value.EndsWith('\\'))
+                    {
+                        value = value.Slice(0, value.Length - 1);
+                    }
                 }
 
                 if (_Float.TryParse(value,
