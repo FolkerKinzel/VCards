@@ -36,20 +36,17 @@ public readonly struct GramBuilder
     /// in that collection and allows to specify whether to skip empty items in that process.
     /// (The first item gets the highest preference <c>1</c>.)
     /// </summary>
-    /// <param name="skipEmptyItems"><c>true</c> to give empty <see cref="VCardProperty"/> 
-    /// objects always the lowest <see cref="ParameterSection.Preference"/> (100), independently
-    /// of their position in the collection, or <c>false</c> to treat empty <see cref="VCardProperty"/> 
-    /// objects like any other. (<c>null</c> references are always skipped.)</param>
+    /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GramBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
-        Edit(static (props, skip) =>
+    public VCardBuilder SetPreferences() =>
+        Edit(static (props) =>
         {
-            props.SetPreferences(skip);
+            props.SetPreferences(false);
             return props;
-        }, skipEmptyItems);
+        });
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Preference"/> properties of 
@@ -72,20 +69,17 @@ public readonly struct GramBuilder
     /// position in that collection and allows to specify whether to skip empty items in that 
     /// process.
     /// </summary>
-    /// <param name="skipEmptyItems"><c>true</c> to reset the <see cref="ParameterSection.Index"/> 
-    /// of empty <see cref="VCardProperty"/> objects to <c>null</c>, or <c>false</c> to treat 
-    /// empty <see cref="VCardProperty"/> objects like any other. (<c>null</c> references are 
-    /// always skipped.)</param>
+    /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GramBuilder"/>
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
-        Edit(static (props, skip) =>
+    public VCardBuilder SetIndexes() =>
+        Edit(static (props) =>
         {
-            props.SetIndexes(skip);
+            props.SetIndexes(false);
             return props;
-        }, skipEmptyItems);
+        });
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
@@ -157,7 +151,7 @@ public readonly struct GramBuilder
     /// <summary>
     /// Adds a new <see cref="GramProperty"/> instance to the <see cref="VCard.GramGenders"/> property.
     /// </summary>
-    /// <param name="value">A <see cref="Gram" /> value or <c>null</c>.</param>
+    /// <param name="value">A member of the <see cref="Gram" /> enum.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
@@ -171,7 +165,7 @@ public readonly struct GramBuilder
     /// be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(Gram? value,
+    public VCardBuilder Add(Gram value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {

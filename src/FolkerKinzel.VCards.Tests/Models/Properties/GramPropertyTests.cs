@@ -28,6 +28,5 @@ public class GramPropertyTests
 
     }
 
-    [TestMethod]
-    public void ToStringTest1() => Assert.IsNotNull(new GramProperty((Gram?)null).ToString());
+    
 }

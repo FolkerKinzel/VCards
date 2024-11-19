@@ -71,6 +71,9 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
     }
 
     /// <inheritdoc />
+    public override bool IsEmpty => Value is null;
+
+    /// <inheritdoc />
     public override object Clone() => new TimeZoneProperty(this);
 
     /// <inheritdoc />

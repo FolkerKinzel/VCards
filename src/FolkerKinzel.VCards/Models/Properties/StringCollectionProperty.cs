@@ -44,13 +44,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
         // StringCollectionProperty is used for NickNames and categories. Neither NickNames nor
         // Categories are known in VCard 2.1. That's why Quoted-Printable encoding can't occur.
-        //if (this.Parameters.Encoding == Enc.QuotedPrintable)
-        //{
-        //    val = QuotedPrintable.Decode(
-        //            val.Span,
-        //            TextEncodingConverter.GetEncoding(this.Parameters.CharSet)).AsMemory(); // null-check not needed
-        //}
-
+        
         if (val.Length == 0)
         {
             return;
@@ -67,6 +61,9 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
     /// <summary>The data provided by the <see cref="StringCollectionProperty" />.</summary>
     public new IReadOnlyList<string>? Value => _value;
+
+    /// <inheritdoc />
+    public override bool IsEmpty => Value is null;
 
     /// <inheritdoc />
     public override string ToString() => _value is null ? "" : string.Join(", ", _value);

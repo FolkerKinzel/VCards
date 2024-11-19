@@ -474,7 +474,14 @@ public sealed partial class VCard
                     Created = new TimeStampProperty(vcfRow, info);
                     break;
                 case PropKeys.Rfc9554.GRAMGENDER:
-                    GramGenders = Concat(GramGenders, new GramProperty(vcfRow));
+                    if(GramProperty.TryParse(vcfRow, out GramProperty? gramProperty))
+                    {
+                        GramGenders = Concat(GramGenders, gramProperty);
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
+                    }
                     break;
                 case PropKeys.Rfc9554.LANGUAGE:
                     Language = new TextProperty(vcfRow, this.Version);

@@ -14,20 +14,29 @@ internal static class GramConverter
         internal const string NEUTER = "neuter";
     }
 
-    internal static Gram? Parse(ReadOnlySpan<char> typeValue)
+    internal static bool TryParse(ReadOnlySpan<char> typeValue, out Gram gram)
     {
         const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return typeValue.Equals(TypeValue.FEMININE, comp) ? Gram.Feminine
+        Gram? result = typeValue.Equals(TypeValue.FEMININE, comp) ? Gram.Feminine
              : typeValue.Equals(TypeValue.MASCULINE, comp) ? Gram.Masculine
              : typeValue.Equals(TypeValue.NEUTER, comp) ? Gram.Neuter
              : typeValue.Equals(TypeValue.ANIMATE, comp) ? Gram.Animate
              : typeValue.Equals(TypeValue.INANIMATE, comp) ? Gram.Inanimate
              : typeValue.Equals(TypeValue.COMMON, comp) ? Gram.Common
              : null;
+
+        if (result.HasValue)
+        {
+            gram = result.Value;
+            return true;
+        }
+
+        gram = default;
+        return false;
     }
 
-    internal static string? ToVcfString(this Gram? value)
+    internal static string? ToVcfString(this Gram value)
         => value switch
         {
             Gram.Feminine => TypeValue.FEMININE,

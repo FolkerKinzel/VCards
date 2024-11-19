@@ -19,23 +19,35 @@ public sealed class GramProperty : VCardProperty, IEnumerable<GramProperty>
         => Value = prop.Value;
 
     /// <summary>  Initializes a new <see cref="GramProperty" /> object. </summary>
-    /// <param name="value">A member of the <see cref="Gram" /> enum or <c>null</c>.</param>
+    /// <param name="value">A member of the <see cref="Gram" /> enum.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public GramProperty(Gram? value, string? group = null)
+    public GramProperty(Gram value, string? group = null)
         : base(new ParameterSection(), group) => Value = value;
 
-    internal GramProperty(VcfRow vcfRow)
+    private GramProperty(Gram value, VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group)
-        => Value = GramConverter.Parse(vcfRow.Value.Span);
+        => Value = value;
+
+    internal static bool TryParse(VcfRow vcfRow, [NotNullWhen(true)] out GramProperty? prop)
+    {
+        if(GramConverter.TryParse(vcfRow.Value.Span, out Gram gram))
+        {
+            prop = new GramProperty(gram, vcfRow);
+            return true;
+        }
+
+        prop = null;
+        return false;
+    }
 
     /// <summary> The data provided by the <see cref="GramProperty" />.
     /// </summary>
-    public new Gram? Value
-    {
-        get;
-    }
+    public new Gram Value { get; }
+
+    /// <inheritdoc />
+    public override bool IsEmpty => false;
 
     /// <inheritdoc />
     public override object Clone() => new GramProperty(this);
