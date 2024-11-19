@@ -150,10 +150,18 @@ and let it store as string[]
 &nbsp;
 - [ ] Check all `Empty` singletons whether they should be public
 
+### 7.4.5
+- [x] Fix an issue that a "geo" URI was not parsed if this "geo" URI was masked.
+- [ ] Update dependencies to contain .NET 9.0 packages.
+
+### 7.4.4
+- [x] .NET 9.0 version of the package
+- [x] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0
+- [x] Dependency update
+
 ### 7.4.3
-- [ ] .NET 9.0 version of the package
-- [ ] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0
-- [ ] Dependency update
+- [x] Fix an issue that with `X-GENDER` and `X-WAB-GENDER` the parameters and the group name were not parsed.
+- [x] Dependency updates
 
 ### 7.4.2
 - [x] Fix issues with `RelationProperty` instances that contain `VCard` objects
