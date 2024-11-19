@@ -33,13 +33,13 @@ public readonly struct NonStandardBuilder
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.NonStandards"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// <see cref="VCard.NonStandards"/> property and <paramref name="data"/> as arguments. Its return 
+    /// <see cref="VCard.NonStandards"/> property and <paramref name="arg"/> as arguments. Its return 
     /// value will be the new content of the <see cref="VCard.NonStandards"/> property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="NonStandardBuilder"/> to be able to chain calls.</returns>
     /// <remarks>
@@ -48,13 +48,13 @@ public readonly struct NonStandardBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(
-        Func<IEnumerable<NonStandardProperty>, TData, IEnumerable<NonStandardProperty?>?> func,
-        TData data)
+    public VCardBuilder Edit<TArg>(
+        Func<IEnumerable<NonStandardProperty>, TArg, IEnumerable<NonStandardProperty?>?> func,
+        TArg arg)
     {
         IEnumerable<NonStandardProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.NonStandards = func(props, data);
+        _builder.VCard.NonStandards = func(props, arg);
         return _builder;
     }
 

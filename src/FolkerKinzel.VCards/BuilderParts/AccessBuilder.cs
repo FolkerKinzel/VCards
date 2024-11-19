@@ -29,13 +29,13 @@ public readonly struct AccessBuilder
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.Access"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// <see cref="VCard.Access"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// <see cref="VCard.Access"/> property and <paramref name="arg"/> as arguments. Its return value 
     /// will be the new content of the <see cref="VCard.Access"/> property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AccessBuilder"/>
     /// to be able to chain calls.</returns>
     /// <remarks>
@@ -44,11 +44,12 @@ public readonly struct AccessBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(Func<AccessProperty?, TData, AccessProperty?> func, TData data)
+    public VCardBuilder Edit<TArg>(Func<AccessProperty?, TArg, AccessProperty?> func,
+                                   TArg arg)
     {
         AccessProperty? prop = Builder.VCard.Access;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Access = func(prop, data);
+        _builder.VCard.Access = func(prop, arg);
         return _builder;
     }
 

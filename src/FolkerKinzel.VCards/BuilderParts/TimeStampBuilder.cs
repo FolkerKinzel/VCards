@@ -35,13 +35,13 @@ public readonly struct TimeStampBuilder
 
     /// <summary>
     /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// specified <see cref="VCard"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// specified <see cref="VCard"/> property and <paramref name="arg"/> as arguments. Its return value 
     /// will be the new content of the specified <see cref="VCard"/> property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeStampBuilder"/>
     /// to be able to chain calls.</returns>
     /// <remarks>
@@ -50,11 +50,12 @@ public readonly struct TimeStampBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(Func<TimeStampProperty?, TData, TimeStampProperty?> func, TData data)
+    public VCardBuilder Edit<TArg>(Func<TimeStampProperty?, TArg, TimeStampProperty?> func,
+                                   TArg arg)
     {
         TimeStampProperty? prop = Builder.VCard.Get<TimeStampProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func(prop, data));
+        _builder.VCard.Set(_prop, func(prop, arg));
         return _builder;
     }
 

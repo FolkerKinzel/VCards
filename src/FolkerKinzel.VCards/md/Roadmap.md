@@ -145,7 +145,7 @@ and let it store as string[]
 - [x] Write remarks to `GeoCoordinate.IsEmpty`
 
 &nbsp;
-- [ ] Rename in all BuilderParts `TData data` to `TArg arg`
+- [x] Rename in all BuilderParts `TData data` to `TArg arg`
 
 &nbsp;
 - [ ] Check all `Empty` singletons whether they should be public
