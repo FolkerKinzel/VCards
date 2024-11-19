@@ -27,7 +27,7 @@ public class AccessPropertyTests
         var row = VcfRow.Parse($"{GROUP}.{VCard.PropKeys.CLASS}:private".AsMemory(), new VcfDeserializationInfo());
         Assert.IsNotNull(row);
 
-        var prop = new AccessProperty(row!);
+        Assert.IsTrue(AccessProperty.TryParse(row, out AccessProperty? prop));
 
         Assert.AreEqual(GROUP, prop.Group);
 

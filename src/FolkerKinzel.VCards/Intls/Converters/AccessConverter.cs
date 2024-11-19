@@ -11,14 +11,30 @@ internal static class AccessConverter
         internal const string CONFIDENTIAL = "CONFIDENTIAL";
     }
 
-    internal static Access Parse(ReadOnlySpan<char> value)
+    internal static bool TryParse(ReadOnlySpan<char> value, out Access access)
     {
         const StringComparison comp = StringComparison.OrdinalIgnoreCase;
 
-        return value.Equals(VCdAccessValue.PUBLIC, comp) ? Access.Public
-             : value.Equals(VCdAccessValue.PRIVATE, comp) ? Access.Private
-             : value.Equals(VCdAccessValue.CONFIDENTIAL, comp) ? Access.Confidential
-             : Access.Public;
+        if (value.Equals(VCdAccessValue.PUBLIC, comp))
+        {
+            access = Access.Public;
+            return true;
+        }
+
+        if (value.Equals(VCdAccessValue.PRIVATE, comp))
+        {
+            access = Access.Private;
+            return true;
+        }
+
+        if (value.Equals(VCdAccessValue.CONFIDENTIAL, comp))
+        {
+            access = Access.Confidential;
+            return true;
+        }
+
+        access = default;
+        return false;
     }
 
     internal static string ToVCardString(this Access kind)

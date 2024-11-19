@@ -687,7 +687,7 @@ public class VCardBuilderTests
         builder.GeoCoordinates.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.GeoCoordinates = new GeoProperty(42, 42).Append(null);
+        builder.VCard.GeoCoordinates = new GeoProperty(new GeoCoordinate(42, 42)).Append(null);
         builder.GeoCoordinates.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

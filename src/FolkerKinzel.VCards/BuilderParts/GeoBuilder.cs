@@ -2,11 +2,10 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -168,10 +167,11 @@ public readonly struct GeoBuilder
     /// <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// 
+    /// <remarks>If the arguments are out of range, an empty <see cref="GeoProperty"/> instance is added.</remarks>
+    /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GeoBuilder"/> to 
     /// be able to chain calls.</returns>
-    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="latitude" />
-    /// or <paramref name="longitude" /> does not have a valid value.</exception>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(double latitude,
@@ -179,12 +179,14 @@ public readonly struct GeoBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop.GeoCoordinates,
-                          VCardBuilder.Add(new GeoProperty(latitude, longitude, group?.Invoke(_builder.VCard)),
-                                           _builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
-                                           parameters)
-                          );
-        return _builder;
+        try
+        {
+            return Add(new GeoCoordinate(latitude, longitude), parameters, group);
+        }
+        catch
+        {
+            return Add(null, parameters, group);
+        }
     }
 
     /// <summary>
@@ -201,6 +203,10 @@ public readonly struct GeoBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GeoBuilder"/> to be 
     /// able to chain calls.</returns>
+    /// 
+    /// <remarks>If <paramref name="value"/> is <c>null</c>, an empty <see cref="GeoProperty"/> instance is added.</remarks>
+    /// 
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(GeoCoordinate? value,
@@ -208,7 +214,7 @@ public readonly struct GeoBuilder
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.GeoCoordinates,
-                          VCardBuilder.Add(new GeoProperty(value, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new GeoProperty(value ?? GeoCoordinate.Empty, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
                                            parameters)
                           );

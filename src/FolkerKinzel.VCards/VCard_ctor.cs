@@ -174,7 +174,14 @@ public sealed partial class VCard
                     Organizations = Concat(Organizations, new OrgProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.GEO:
-                    GeoCoordinates = Concat(GeoCoordinates, new GeoProperty(vcfRow));
+                    if(GeoProperty.TryParse(vcfRow, out GeoProperty? geoProp))
+                    {
+                        GeoCoordinates = Concat(GeoCoordinates, geoProp);
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
+                    }
                     break;
                 case PropKeys.NICKNAME:
                     NickNames = Concat(NickNames, new StringCollectionProperty(vcfRow, this.Version));
@@ -336,7 +343,14 @@ public sealed partial class VCard
                     TimeZones = Concat(TimeZones, new TimeZoneProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.CLASS:
-                    Access = new AccessProperty(vcfRow);
+                    if (AccessProperty.TryParse(vcfRow, out AccessProperty? accessProperty))
+                    {
+                        Access = accessProperty;
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
+                    }
                     break;
                 case PropKeys.MEMBER:
                     Members = Concat(Members, RelationProperty.Parse(vcfRow, this.Version));
@@ -418,6 +432,10 @@ public sealed partial class VCard
                     if (AppIDProperty.TryParse(vcfRow, out AppIDProperty? prop))
                     {
                         AppIDs = AppIDs?.Concat(prop) ?? prop;
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
                     }
                     break;
                 case PropKeys.PRODID:

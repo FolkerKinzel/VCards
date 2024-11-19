@@ -46,10 +46,10 @@ public sealed class AppIDProperty : VCardProperty, IEnumerable<AppIDProperty>
     }
 
     /// <summary> The data provided by the <see cref="AppIDProperty" />. </summary>
-    public new AppID Value
-    {
-        get;
-    }
+    public new AppID Value { get; }
+
+    /// <inheritdoc />
+    public override bool IsEmpty => false;
 
     /// <inheritdoc />
     public override object Clone() => new AppIDProperty(this);

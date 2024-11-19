@@ -1,4 +1,5 @@
 using System.Collections;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -13,6 +14,18 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="VCard.GeoCoordinates"/>
 public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 {
+    #region Remove with 8.0.1
+
+    [Obsolete("Use the ctor that takes a GeoCoordinate.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public GeoProperty(double latitude, double longitude, string? group = null)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        : base(new ParameterSection(), group) => throw new NotImplementedException();
+
+    #endregion
+
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="GenderProperty"/> instance
     /// to clone.</param>
@@ -20,41 +33,40 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
         => Value = prop.Value;
 
     /// <summary>  Initializes a new <see cref="GeoProperty" /> object. </summary>
-    /// <param name="value">A <see cref="GeoCoordinate" /> object or <c>null</c>.</param>
+    /// <param name="value">A <see cref="GeoCoordinate" /> object.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public GeoProperty(GeoCoordinate? value, string? group = null)
-        : base(new ParameterSection(), group) => Value = value;
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+    public GeoProperty(GeoCoordinate value, string? group = null)
+        : base(new ParameterSection(), group) 
+        => Value = value ?? throw new ArgumentNullException(nameof(value));
 
-    /// <summary>
-    /// Initializes a new <see cref="GeoProperty" /> object.
-    /// </summary>
-    /// <param name="latitude">Latitude (value between -90 and 90).</param>
-    /// <param name="longitude">Longitude (value between -180 and 180).</param>
-    /// <param name="group">Identifier of the group of <see cref="VCardProperty"
-    /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
-    /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="latitude" />
-    /// or <paramref name="longitude" /> does not have a valid value.</exception>
-    public GeoProperty(double latitude, double longitude, string? group = null)
-        : this(new GeoCoordinate(latitude, longitude), group) { }
+    private GeoProperty(GeoCoordinate value, VcfRow vcfRow)
+        : base(vcfRow.Parameters, vcfRow.Group)
+        => Value = value;
 
-
-    internal GeoProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
+    internal static bool TryParse(VcfRow vcfRow, [NotNullWhen(true)] out GeoProperty? geoProp)
     {
         if (GeoCoordinate.TryParse(vcfRow.Value.Span, out GeoCoordinate? geo))
         {
-            Value = geo;
+            geoProp = new GeoProperty(geo, vcfRow);
+            return true;
         }
+
+        geoProp = null;
+        return false;
     }
 
     /// <summary> The data provided by the <see cref="GeoProperty" />.
     /// </summary>
-    public new GeoCoordinate? Value
+    public new GeoCoordinate Value
     {
         get;
     }
+
+    /// <inheritdoc />
+    public override bool IsEmpty => Value.IsEmpty;
 
     /// <inheritdoc />
     public override object Clone() => new GeoProperty(this);
@@ -75,6 +87,9 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     {
         Debug.Assert(serializer is not null);
 
-        GeoCoordinateConverter.AppendTo(serializer.Builder, Value, serializer.Version);
+        if (!IsEmpty)
+        {
+            GeoCoordinateConverter.AppendTo(serializer.Builder, Value, serializer.Version);
+        }
     }
 }

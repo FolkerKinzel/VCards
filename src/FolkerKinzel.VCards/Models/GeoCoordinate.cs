@@ -128,16 +128,31 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// uncertainty of about 12 cm.</remarks>
     public float? Uncertainty { get; }
 
+    /// <summary>
+    /// A singleton whose <see cref="IsEmpty"/> property returns <c>true</c>, indicating
+    /// that its value should not be evaluated.
+    /// </summary>
+    public static GeoCoordinate Empty { get; } = new GeoCoordinate(0, 0);
+
+    /// <summary>
+    /// When <c>true</c> the value of the instance should not be evaluated.
+    /// </summary>
+    public bool IsEmpty => ReferenceEquals(this, Empty);
+
     /// <inheritdoc />
     public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as GeoCoordinate);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Equals([NotNullWhen(true)] GeoCoordinate? other)
-        => other is not null
-           && other.Latitude == Latitude
-           && other.Longitude == Longitude
-           && other.Uncertainty == Uncertainty;
+    {
+        if(other is null || (IsEmpty && !other.IsEmpty))
+        {
+            return false; 
+        }
+        
+        return other.Latitude == Latitude && other.Longitude == Longitude && other.Uncertainty == Uncertainty;
+    }
 
     /// <summary>
     /// Indicates whether the current object desribes a geographical location that is 

@@ -54,7 +54,7 @@ public class GeoPropertyTests
     public void IEnumerableTest1()
     {
         const string GROUP = "group";
-        var prop = new GeoProperty(42, 42, GROUP);
+        var prop = new GeoProperty(new GeoCoordinate(42, 42), GROUP);
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
         Assert.AreEqual(GROUP, prop.Group, true);
 
@@ -63,7 +63,7 @@ public class GeoPropertyTests
     [TestMethod]
     public void CloneTest1()
     {
-        var prop1 = new GeoProperty(15.7, 14.8);
+        var prop1 = new GeoProperty(new GeoCoordinate(15.7, 14.8));
 
         var prop2 = (GeoProperty)prop1.Clone();
 

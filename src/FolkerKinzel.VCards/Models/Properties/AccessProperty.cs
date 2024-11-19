@@ -24,9 +24,21 @@ public sealed class AccessProperty : VCardProperty
     public AccessProperty(Access value, string? group = null)
         : base(new ParameterSection(), group) => Value = value;
 
+    private AccessProperty(Access value, VcfRow vcfRow) 
+        : base(vcfRow.Parameters, vcfRow.Group)
+        => Value = value;
 
-    internal AccessProperty(VcfRow vcfRow) : base(vcfRow.Parameters, vcfRow.Group)
-        => Value = AccessConverter.Parse(vcfRow.Value.Span);
+    internal static bool TryParse(VcfRow vcfRow, [NotNullWhen(true)] out AccessProperty? result)
+    {
+        if(AccessConverter.TryParse(vcfRow.Value.Span, out Access access))
+        {
+            result = new AccessProperty(access, vcfRow);
+            return true;
+        }
+
+        result = null;
+        return false;
+    }
 
     /// <inheritdoc />
     public override bool IsEmpty => false;
