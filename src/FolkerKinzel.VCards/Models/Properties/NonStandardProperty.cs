@@ -67,6 +67,13 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
         Value = value ?? "";
     }
 
+    internal NonStandardProperty(string? group)
+        : base(new ParameterSection(), group)
+    {
+        Key = "Empty";
+        Value = "";
+    }
+
     internal NonStandardProperty(VcfRow vcfRow)
         : base(vcfRow.Parameters, vcfRow.Group)
     {

@@ -7,6 +7,7 @@ using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -100,8 +101,12 @@ public readonly struct NonStandardBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NonStandardBuilder"/>
     /// to be able to chain calls.</returns>
-    /// <exception cref="ArgumentNullException"> <paramref name="key" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="key" /> is not a valid X-NAME.</exception>
+    /// 
+    /// <remarks>
+    /// If the arguments are not valid, an empty <see cref="NonStandardProperty"/> with the key "Empty" will be 
+    /// added. In any case such a <see cref="NonStandardProperty"/> won't be written to a VCF file.
+    /// </remarks>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(string key,
@@ -109,8 +114,21 @@ public readonly struct NonStandardBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop.NonStandards,
-                          VCardBuilder.Add(new NonStandardProperty(key, value, group?.Invoke(_builder.VCard)),
+        VCard vCard = Builder.VCard;
+        NonStandardProperty prop;
+
+        try
+        {
+            prop = new NonStandardProperty(key, value, group?.Invoke(vCard));
+        }
+        catch
+        {
+            prop = new NonStandardProperty(group?.Invoke(vCard));
+        }
+
+
+        vCard.Set(Prop.NonStandards,
+                          VCardBuilder.Add(prop,
                                            _builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards),
                                            parameters)
                           );
