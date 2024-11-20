@@ -205,7 +205,7 @@ public readonly struct OrgBuilder
     /// Adds an <see cref="OrgProperty"/> instance, which is newly 
     /// initialized using the specified arguments, to the <see cref="VCard.Organizations"/> property.
     /// </summary>
-    /// <param name="org">An <see cref="Organization"/> object, or <c>null</c>.</param>
+    /// <param name="value">An <see cref="Organization"/> object, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
@@ -223,14 +223,14 @@ public readonly struct OrgBuilder
     /// </example>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(Organization? org,
+    public VCardBuilder Add(Organization? value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null,
                             Action<TextBuilder, OrgProperty>? displayName = null)
     {
         VCard vc = Builder.VCard;
-        org ??= new Organization(null);
-        var prop = new OrgProperty(org, group?.Invoke(_builder.VCard));
+        value ??= new Organization(null);
+        var prop = new OrgProperty(value, group?.Invoke(_builder.VCard));
 
         Builder.VCard.Set(Prop.Organizations,
                           VCardBuilder.Add(prop,

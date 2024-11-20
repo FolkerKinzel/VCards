@@ -40,14 +40,14 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
     /// Initializes a new <see cref="OrgProperty" /> instance with an existing
     /// <see cref="Organization"/> object.
     /// </summary>
-    /// <param name="org">The <see cref="Organization"/> instance to use as the new 
+    /// <param name="value">The <see cref="Organization"/> instance to use as the new 
     /// <see cref="Value"/>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty" /> objects,
     /// which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="org"/> is <c>null</c>.</exception>
-    public OrgProperty(Organization org, string? group = null)
-        : base(new ParameterSection(), group) => Value = org ?? throw new ArgumentNullException(nameof(org));
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+    public OrgProperty(Organization value, string? group = null)
+        : base(new ParameterSection(), group) => Value = value ?? throw new ArgumentNullException(nameof(value));
 
     internal OrgProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
@@ -77,10 +77,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
     }
 
     /// <summary> The data provided by the  <see cref="OrgProperty" />. </summary>
-    public new Organization Value
-    {
-        get;
-    }
+    public new Organization Value { get; }
 
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;

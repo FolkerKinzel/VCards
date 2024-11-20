@@ -361,10 +361,10 @@ public readonly struct RelationBuilder
     /// <see cref="Relation"/> instance that encapsulates the data that describes a person or organization 
     /// with whom a relationship exists, to the specified property of the <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="relation">The <see cref="Relation"/> that describes a person or organization
+    /// <param name="value">The <see cref="Relation"/> that describes a person or organization
     /// with whom there is a relationship, or <c>null</c>.</param>
     /// <param name="relationType">Standardized description of the relationship with the person 
-    /// or organization that the <paramref name="relation"/> represents.
+    /// or organization that the <paramref name="value"/> represents.
     /// The <see cref="ParameterSection.RelationType"/> property of the added instance will be set to this 
     /// value.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
@@ -378,13 +378,13 @@ public readonly struct RelationBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(Relation? relation,
+    public VCardBuilder Add(Relation? value,
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
-        var relProp = new RelationProperty(relation ?? Relation.Empty, group?.Invoke(_builder.VCard));
+        var relProp = new RelationProperty(value ?? Relation.Empty, group?.Invoke(_builder.VCard));
         relProp.Parameters.RelationType = relationType;
 
         vc.Set(_prop,

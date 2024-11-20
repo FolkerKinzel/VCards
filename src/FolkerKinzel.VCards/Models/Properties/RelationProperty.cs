@@ -30,16 +30,16 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
     /// <summary>
     /// Creates a new <see cref="RelationProperty"/> instance from a <see cref="Relation"/>.
     /// </summary>
-    /// <param name="relation">A <see cref="Relation"/> instance that identifies the person
+    /// <param name="value">A <see cref="Relation"/> instance that identifies the person
     /// or organization with whome there is a relationship.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="relation"/> is <c>null</c>.</exception>
-    public RelationProperty(Relation relation,
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+    public RelationProperty(Relation value,
                             string? group = null)
         : base(new ParameterSection(), group)
-        => Value = relation ?? throw new ArgumentNullException(nameof(relation));
+        => Value = value ?? throw new ArgumentNullException(nameof(value));
 
     /// <summary>
     /// The data provided by the <see cref="RelationProperty"/>.
@@ -48,10 +48,6 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
 
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;
-
-    /// <inheritdoc />
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => Value?.ToString() ?? base.ToString();
 
     /// <inheritdoc />
     IEnumerator<RelationProperty> IEnumerable<RelationProperty>.GetEnumerator()
