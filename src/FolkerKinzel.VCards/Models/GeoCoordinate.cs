@@ -1,6 +1,7 @@
 using System.Globalization;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
+using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
@@ -115,7 +116,6 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         }
     }
 
-
     /// <summary>Latitude.</summary>
     public double Latitude { get; }
 
@@ -137,11 +137,12 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     internal static GeoCoordinate Empty { get; } = new GeoCoordinate(0, 0);
 
     /// <summary>
-    /// When <c>true</c> the value of the instance should not be evaluated.
+    /// If <c>true</c>, the value of the instance should not be evaluated.
     /// </summary>
     /// <remarks>
-    /// Because VCardBuilder needs the ability to create an empty GeoProperty object if the arguments do 
-    /// not allow otherwise, a singleton exists whose <see cref="IsEmpty"/> property is <c>true</c>. 
+    /// Because <see cref="VCardBuilder"/> needs the ability to create an empty <see cref="GeoProperty"/>
+    /// object if the arguments do not allow otherwise, a singleton exists whose <see cref="IsEmpty"/> 
+    /// property is <c>true</c>. 
     /// The value of this singleton is never written to a VCF file and is not taken into account in 
     /// comparisons.
     /// </remarks>
@@ -154,12 +155,13 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Equals([NotNullWhen(true)] GeoCoordinate? other)
     {
-        if(other is null || (IsEmpty && !other.IsEmpty))
-        {
-            return false; 
-        }
-        
-        return other.Latitude == Latitude && other.Longitude == Longitude && other.Uncertainty == Uncertainty;
+        return other is not null
+        && (IsEmpty
+            ? other.IsEmpty
+            : !other.IsEmpty
+            && other.Latitude == Latitude
+            && other.Longitude == Longitude
+            && other.Uncertainty == Uncertainty);
     }
 
     /// <summary>
@@ -202,7 +204,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     {
         if(IsEmpty)
         {
-            return other.IsEmpty ? 0 : Double.PositiveInfinity;
+            return other.IsEmpty ? 0 : double.PositiveInfinity;
         }
 
         double diffLat = ONE_DEGREE_DISTANCE * (Latitude - other.Latitude);
@@ -394,11 +396,11 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         {
             value = value.Slice(splitIndex);
 
-            int uParameterStart = value.IndexOf(GeoCoordinateConverter.U_PARAMETER, StringComparison.OrdinalIgnoreCase);
+            int uParameterStart = value.IndexOf(GeoCoordinateSerializer.U_PARAMETER, StringComparison.OrdinalIgnoreCase);
 
             if (uParameterStart != -1)
             {
-                value = value.Slice(uParameterStart + GeoCoordinateConverter.U_PARAMETER.Length);
+                value = value.Slice(uParameterStart + GeoCoordinateSerializer.U_PARAMETER.Length);
 
                 int uParameterEnd = value.IndexOf(';');
 

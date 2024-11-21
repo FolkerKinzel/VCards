@@ -28,22 +28,14 @@ public class OrgPropertyTests
 
 
     [DataTestMethod()]
-    [DataRow(GROUP + @".ORG:ABC\, Inc.;North American Division;Marketing",
-        GROUP, "ABC, Inc.", new string[] { "North American Division", "Marketing" })]
-    [DataRow(@"ORG:ABC\, Inc.;North American Division;Marketing",
-        null, "ABC, Inc.", new string[] { "North American Division", "Marketing" })]
-    [DataRow(@"ORG:;North American Division;Marketing",
-        null, null, new string[] { "North American Division", "Marketing" })]
-    [DataRow(@"ORG: ;  ;North American Division;;Marketing; ",
-        null, null, new string[] { "North American Division", "Marketing" })]
-    [DataRow(@"ORG:ABC\, Inc.;;Marketing",
-        null, "ABC, Inc.", new string[] { "Marketing" })]
-    [DataRow(@"ORG:ABC\, Inc.",
-        null, "ABC, Inc.", null)]
-    [DataRow(@"ORG:ABC\, Inc.;",
-        null, "ABC, Inc.", null)]
-    [DataRow(@"ORG:ABC\, Inc.;  ;",
-        null, "ABC, Inc.", null)]
+    [DataRow(GROUP + @".ORG:ABC\, Inc.;North American Division;Marketing", GROUP, "ABC, Inc.", new string[] { "North American Division", "Marketing" })]
+    [DataRow(@"ORG:ABC\, Inc.;North American Division;Marketing", null, "ABC, Inc.", new string[] { "North American Division", "Marketing" })]
+    [DataRow(@"ORG:;North American Division;Marketing", null, null, new string[] { "North American Division", "Marketing" })]
+    [DataRow(@"ORG: ;  ;North American Division;;Marketing; ", null, null, new string[] { "  ", "North American Division", "Marketing", " " })]
+    [DataRow(@"ORG:ABC\, Inc.;;Marketing", null, "ABC, Inc.", new string[] { "Marketing" })]
+    [DataRow(@"ORG:ABC\, Inc.", null, "ABC, Inc.", null)]
+    [DataRow(@"ORG:ABC\, Inc.;", null, "ABC, Inc.", null)]
+    [DataRow(@"ORG:ABC\, Inc.;  ;", null, "ABC, Inc.", new string[] { "  " })]
     public void OrganizationPropertyTest2(
         string s, string? expectedGroup, string? expectedOrganizationName, string[] expectedOrganizationalUnits)
     {

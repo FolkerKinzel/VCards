@@ -878,7 +878,7 @@ internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSeriali
 
         AppendParameter(ParameterSection.ParameterKey.GEO, "");
         Builder.Append('"');
-        GeoCoordinateConverter.AppendTo(Builder, geo, VCdVersion.V4_0);
+        GeoCoordinateSerializer.AppendTo(Builder, geo, VCdVersion.V4_0);
         Builder.Append('"');
     }
 
@@ -1126,7 +1126,7 @@ internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSeriali
         }
 
         AppendParameter(ParaKey.TZ, null);
-        tz.AppendTo(Builder, VCdVersion.V4_0, null, asParameter: true);
+        TimeZoneIDSerializer.AppendTo(Builder, tz, VCdVersion.V4_0, null, asParameter: true);
     }
 
     private void AppendValue(Data? dataType)

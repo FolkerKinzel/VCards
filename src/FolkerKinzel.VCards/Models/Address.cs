@@ -155,11 +155,11 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
             }
 
             ReadOnlySpan<char> span = mem.Span;
-            string[]? coll = span.Contains(',')
-                ? StringArrayConverter.AsNonEmptyStringArray(ToArray(in mem, version))
-                : StringArrayConverter.AsNonEmptyStringArray(span.UnMaskValue(version));
+            string[] coll = span.Contains(',')
+                ? Splitted(in mem, version).ToArray()
+                : StringArrayConverter.ToStringArray(span.UnMaskValue(version));
 
-            if (coll is null)
+            if (coll.Length == 0)
             {
                 continue;
             }
@@ -196,12 +196,12 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         ////////////////////////////////////////////////
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static string[] ToArray(in ReadOnlyMemory<char> mem, VCdVersion version)
+        static IEnumerable<string> Splitted(in ReadOnlyMemory<char> mem, VCdVersion version)
         => PropertyValueSplitter.Split(mem,
                                 ',',
                                 StringSplitOptions.RemoveEmptyEntries,
                                 unMask: true,
-                                version).ToArray();
+                                version);
     }
 
     private void Add(ReadOnlySpan<AdrProp> keys, Dictionary<AdrProp, List<string>> dic, AdrProp target)

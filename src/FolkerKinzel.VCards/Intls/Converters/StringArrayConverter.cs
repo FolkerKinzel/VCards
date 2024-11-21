@@ -4,29 +4,23 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class StringArrayConverter
 {
-    internal static string[]? AsNonEmptyStringArray(string?[]? coll)
+    internal static string[] ToStringArray(IEnumerable<string?> coll)
     {
-        if (coll is null)
-        {
-            return null;
-        }
-
+        string?[] arr = coll.ToArray();
         bool containsWS = false;
 
-        foreach (string? s in coll.AsSpan())
+        foreach (string? str in arr.AsSpan())
         {
-            if(string.IsNullOrWhiteSpace(s))
+            if(string.IsNullOrEmpty(str))
             {
                 containsWS = true;
                 break;
             }
         }
 
-        string[] arr = (containsWS ? coll.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray() : coll)!;
-
-        return arr.Length == 0 ? null : arr;
+        return (containsWS ? arr.Where(x => !string.IsNullOrEmpty(x)).ToArray() : arr)!;
     }
 
-    internal static string[]? AsNonEmptyStringArray(string? s)
-         => string.IsNullOrWhiteSpace(s) ? null : [ s ];
+    internal static string[] ToStringArray(string? s)
+         => string.IsNullOrEmpty(s) ? [] : [ s ];
 }

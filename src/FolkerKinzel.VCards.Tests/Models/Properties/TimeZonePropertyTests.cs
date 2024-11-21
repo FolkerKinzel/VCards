@@ -56,15 +56,8 @@ public class TimeZonePropertyTests
     public void TimeZonePropertyTest3()
     {
         VcfRow row = VcfRow.Parse("TZ:    ".AsMemory(), new VcfDeserializationInfo())!;
-        var prop = new TimeZoneProperty(row, VCdVersion.V3_0);
 
-        Assert.IsTrue(prop.IsEmpty);
-
-        using var writer = new StringWriter();
-        var serializer = new Vcf_3_0Serializer(writer, VcfOpts.Default, null);
-
-        prop.AppendValue(serializer);
-        Assert.AreEqual(0, serializer.Builder.Length);
+        Assert.IsFalse(TimeZoneProperty.TryParse(row, VCdVersion.V3_0, out _));
     }
 
     [TestMethod]
@@ -74,9 +67,9 @@ public class TimeZonePropertyTests
 
         Assert.IsNotNull(row);
         Assert.AreEqual(Enc.QuotedPrintable, row.Parameters.Encoding);
-        var prop = new TimeZoneProperty(row, VCdVersion.V2_1);
+        Assert.IsTrue(TimeZoneProperty.TryParse(row, VCdVersion.V2_1, out TimeZoneProperty? prop));
 
-        Assert.IsNotNull(prop.Value);
+        Assert.IsFalse(prop.IsEmpty);
         Assert.IsTrue(prop.Value.TryGetUtcOffset(out _));
     }
 

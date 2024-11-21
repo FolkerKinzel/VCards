@@ -28,7 +28,6 @@ public sealed class TimeStampProperty : VCardProperty
     internal TimeStampProperty(string? group = null)
         : this(DateTimeOffset.UtcNow, group) { }
 
-
     /// <summary>  Initializes a new <see cref="TimeStampProperty" /> object with
     /// the specified time stamp. </summary>
     /// <param name="value">The <see cref="DateTimeOffset" /> value to embed.</param>
@@ -55,10 +54,7 @@ public sealed class TimeStampProperty : VCardProperty
     }
 
     /// <summary> The data provided by the <see cref="TimeStampProperty" />. </summary>
-    public new DateTimeOffset Value
-    {
-        get;
-    }
+    public new DateTimeOffset Value { get; }
 
     /// <inheritdoc />
     public override bool IsEmpty => Value < new DateTimeOffset(1900, 1, 1, 0, 0, 0, TimeSpan.Zero);

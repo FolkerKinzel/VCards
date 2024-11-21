@@ -177,7 +177,7 @@ public readonly struct TimeZoneBuilder
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.TimeZones,
-                          VCardBuilder.Add(new TimeZoneProperty(value, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new TimeZoneProperty(value ?? new TimeZoneID(), group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones),
                                            parameters)
                           );
@@ -212,23 +212,14 @@ public readonly struct TimeZoneBuilder
     /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
     /// </example>
     /// 
-    /// <exception cref="ArgumentNullException"> <paramref name="value" /> is <c>null</c>.
-    /// </exception>
-    /// <exception cref="ArgumentException"> <paramref name="value" /> is an empty
-    /// <see cref="string" /> or consists only of white space characters.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(string value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        Builder.VCard.Set(Prop.TimeZones,
-                          VCardBuilder.Add(new TimeZoneProperty(value, group?.Invoke(_builder.VCard)),
-                                           _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones),
-                                           parameters)
-                          );
-        return _builder;
-    }
+        => TimeZoneID.TryParse(value, out TimeZoneID? tzID)
+            ? Add(tzID, parameters, group) 
+            : Add((TimeZoneID?)null, parameters, group);
 
     /// <summary>
     /// Sets the <see cref="VCard.TimeZones"/> property to <c>null</c>.

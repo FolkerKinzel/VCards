@@ -2,9 +2,9 @@ using System.Globalization;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
 
-namespace FolkerKinzel.VCards.Intls.Converters;
+namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal static class GeoCoordinateConverter
+internal static class GeoCoordinateSerializer
 {
     private const string FLOAT_FORMAT = "0.0#####";
     internal const string U_PARAMETER = ";u=";

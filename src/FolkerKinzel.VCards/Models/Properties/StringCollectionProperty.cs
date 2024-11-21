@@ -13,7 +13,7 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="VCard.Categories"/>
 public sealed class StringCollectionProperty : VCardProperty, IEnumerable<StringCollectionProperty>
 {
-    private readonly string[]? _value;
+    private readonly string[] _value;
 
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="StringCollectionProperty"/>
@@ -26,47 +26,47 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
-    public StringCollectionProperty(IEnumerable<string?>? value, string? group = null)
-        : base(new ParameterSection(), group) => _value = StringArrayConverter.AsNonEmptyStringArray(value?.ToArray());
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+    public StringCollectionProperty(IEnumerable<string?> value, string? group = null)
+        : base(new ParameterSection(), group)
+        => _value = StringArrayConverter.ToStringArray(value ?? throw new ArgumentNullException(nameof(value)));
 
     /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
-    /// <param name="value">A <see cref="string" /> or <c>null</c>.</param>
+    /// <param name="value">A <see cref="string" />, or <c>null</c>.</param>
     /// <param name="group">Identifier of the group of <see cref="VCardProperty"
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public StringCollectionProperty(string? value, string? group = null)
-        : base(new ParameterSection(), group) => _value = StringArrayConverter.AsNonEmptyStringArray(value);
+        : base(new ParameterSection(), group) => _value = StringArrayConverter.ToStringArray(value);
 
     internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        ReadOnlyMemory<char> val = vcfRow.Value;
-
         // StringCollectionProperty is used for NickNames and categories. Neither NickNames nor
         // Categories are known in VCard 2.1. That's why Quoted-Printable encoding can't occur.
-        
-        if (val.Length == 0)
-        {
-            return;
-        }
 
-        string[] arr = PropertyValueSplitter.Split(
-                val, ',', StringSplitOptions.RemoveEmptyEntries, unMask: true, version).ToArray();
+        ReadOnlySpan<char> span = vcfRow.Value.Span;
+        _value = span.Contains(',')
+            ? Splitted(vcfRow, version).ToArray()
+            : StringArrayConverter.ToStringArray(span.UnMaskValue(version));
 
-        if (arr.Length != 0)
-        {
-            _value = arr;
-        }
+        /////////////////////////////////////////////////////////////////////////
+
+        static IEnumerable<string> Splitted(VcfRow vcfRow, VCdVersion version)
+            => PropertyValueSplitter.Split(vcfRow.Value,
+                                           ',',
+                                           StringSplitOptions.RemoveEmptyEntries,
+                                           unMask: true, version);
     }
 
     /// <summary>The data provided by the <see cref="StringCollectionProperty" />.</summary>
-    public new IReadOnlyList<string>? Value => _value;
+    public new IReadOnlyList<string> Value => _value;
 
     /// <inheritdoc />
-    public override bool IsEmpty => Value is null;
+    public override bool IsEmpty => Value.Count == 0;
 
     /// <inheritdoc />
-    public override string ToString() => _value is null ? "" : string.Join(", ", _value);
+    public override string ToString() => IsEmpty ? base.ToString() : string.Join(", ", _value);
 
     /// <inheritdoc />
     public override object Clone() => new StringCollectionProperty(this);
@@ -89,7 +89,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     {
         Debug.Assert(serializer is not null);
 
-        if (Value is null)
+        if (IsEmpty)
         {
             return;
         }

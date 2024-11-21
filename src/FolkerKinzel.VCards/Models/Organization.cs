@@ -45,10 +45,17 @@ public sealed class Organization
     }
 
     private static (string?, string[]?) ParseProperties(string? orgName,
-                                                                     IEnumerable<string?>? orgUnits)
+                                                        IEnumerable<string?>? orgUnits)
     {
         orgName = string.IsNullOrWhiteSpace(orgName) ? null : orgName;
-        string[]? orgUnitsColl = StringArrayConverter.AsNonEmptyStringArray(orgUnits?.ToArray());
+
+        string[]? orgUnitsColl = null;
+
+        if (orgUnits is not null)
+        {
+            orgUnitsColl = StringArrayConverter.ToStringArray(orgUnits);
+            orgUnitsColl = orgUnitsColl.Length == 0 ? null : orgUnitsColl;
+        }
 
         return (orgName, orgUnitsColl);
     }

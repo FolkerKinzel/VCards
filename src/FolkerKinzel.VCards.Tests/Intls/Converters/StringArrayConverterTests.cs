@@ -6,10 +6,10 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 public class StringArrayConverterTests
 {
     [TestMethod]
-    public void AsNonEmptyStringArrayTest1() => Assert.IsNotNull(StringArrayConverter.AsNonEmptyStringArray(["Hello"]));
+    public void ToStringArrayTest1() => Assert.IsNotNull(StringArrayConverter.ToStringArray(["Hello"]));
 
 
     [TestMethod]
-    public void AsNonEmptyStringArrayTest2() => Assert.IsNull(StringArrayConverter.AsNonEmptyStringArray(["    "]));
+    public void ToStringArrayTest2() => Assert.IsNotNull(StringArrayConverter.ToStringArray(["    "]));
 
 }

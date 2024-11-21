@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Serializers;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -101,7 +102,7 @@ public class TimeZoneIDTests
         var id = TimeZoneID.Parse(input);
         var builder = new StringBuilder();
 
-        id.AppendTo(builder, VCdVersion.V3_0, null);
+        TimeZoneIDSerializer.AppendTo(builder, id, VCdVersion.V3_0, null, false);
 
         Assert.AreEqual(input, builder.ToString());
     }
@@ -114,7 +115,7 @@ public class TimeZoneIDTests
         var id = TimeZoneID.Parse(input);
         var builder = new StringBuilder();
 
-        id.AppendTo(builder, VCdVersion.V4_0, null);
+        TimeZoneIDSerializer.AppendTo(builder, id, VCdVersion.V4_0, null, false);
 
         Assert.AreEqual(input, builder.ToString());
     }

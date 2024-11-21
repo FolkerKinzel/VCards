@@ -347,7 +347,14 @@ public sealed partial class VCard
                     Mailer = new TextProperty(vcfRow, this.Version);
                     break;
                 case PropKeys.TZ:
-                    TimeZones = Concat(TimeZones, new TimeZoneProperty(vcfRow, this.Version));
+                    if (TimeZoneProperty.TryParse(vcfRow, Version,  out TimeZoneProperty? tzProp))
+                    {
+                        TimeZones = Concat(TimeZones, tzProp);
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
+                    }
                     break;
                 case PropKeys.CLASS:
                     if (AccessProperty.TryParse(vcfRow, out AccessProperty? accessProperty))

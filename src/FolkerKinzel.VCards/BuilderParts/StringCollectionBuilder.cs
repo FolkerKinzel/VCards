@@ -202,7 +202,7 @@ public readonly struct StringCollectionBuilder
     /// from a collection of <see cref="string" />s, to the specified property of the 
     /// <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="value">A collection of <see cref="string" />s or <c>null</c>.</param>
+    /// <param name="value">A collection of <see cref="string" />s, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
@@ -219,7 +219,7 @@ public readonly struct StringCollectionBuilder
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(new StringCollectionProperty(value, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new StringCollectionProperty(value ?? [], group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(_prop),
                                            parameters)
                           );

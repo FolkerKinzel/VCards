@@ -8,7 +8,7 @@ public class OrganizationTests
     [TestMethod]
     public void ToStringTest1()
     {
-        var org = new Organization(null, ["  "]);
+        var org = new Organization(null, [""]);
         string s = org.ToString();
 
         Assert.IsTrue(org.IsEmpty);

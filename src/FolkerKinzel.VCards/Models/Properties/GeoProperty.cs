@@ -1,6 +1,5 @@
 using System.Collections;
 using System.ComponentModel;
-using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
@@ -86,7 +85,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 
         if (!IsEmpty)
         {
-            GeoCoordinateConverter.AppendTo(serializer.Builder, Value, serializer.Version);
+            GeoCoordinateSerializer.AppendTo(serializer.Builder, Value, serializer.Version);
         }
     }
 }

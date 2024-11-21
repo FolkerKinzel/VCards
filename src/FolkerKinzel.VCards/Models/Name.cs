@@ -73,29 +73,30 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
         Justification = "Performance: Collection initializer initializes a new List.")]
     internal Name(NameBuilder builder)
     {
-        List<string> surnames, surname2, suffixes, generation;
-        surnames = surname2 = suffixes = generation = [];
+        string[] surnames, surnames2, suffixes, generation;
+        surnames = surnames2 = suffixes = generation = [];
 
         foreach (KeyValuePair<NameProp, List<string>> kvp in builder.Data)
         {
             if (kvp.Value.Count != 0)
             {
                 // Copy kvp.Value because it comes from NameBuilder and can be reused!
-                _dic[kvp.Key] = kvp.Value.ToArray();
+                string[] val = kvp.Value.ToArray();
+                _dic[kvp.Key] = val;
 
                 switch (kvp.Key)
                 {
                     case NameProp.Surnames:
-                        surnames = kvp.Value;
+                        surnames = val;
                         break;
                     case NameProp.Surnames2:
-                        surname2 = kvp.Value;
+                        surnames2 = val;
                         break;
                     case NameProp.Suffixes:
-                        suffixes = kvp.Value;
+                        suffixes = val;
                         break;
                     case NameProp.Generations:
-                        generation = kvp.Value;
+                        generation = val;
                         break;
                     default:
                         break;
@@ -103,12 +104,12 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
             }
         }
 
-        if (surname2.Count != 0)
+        if (surnames2.Length != 0)
         {
-            AddOldValueForCompatibility(NameProp.Surnames, surnames, surname2, builder.Worker);
+            AddOldValueForCompatibility(NameProp.Surnames, surnames, surnames2, builder.Worker);
         }
 
-        if (generation.Count != 0)
+        if (generation.Length != 0)
         {
             AddOldValueForCompatibility(NameProp.Suffixes, suffixes, generation, builder.Worker);
         }
@@ -119,41 +120,38 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
 
     [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
         Justification = "Performance: Collection initializer allocate a new List<string>")]
-    private void AddOldValueForCompatibility(NameProp oldPropKey, List<string> oldPropVals, IReadOnlyList<string> newPropVals, List<string> newValuesNotInOldProp)
+    private void AddOldValueForCompatibility(NameProp oldPropKey, string[] oldPropVals, string[] newPropVals, List<string> list)
     {
-        GetNewValuesNotInOldProp(oldPropVals, newPropVals, newValuesNotInOldProp);
+        Debug.Assert(newPropVals.Length != 0);
 
-        if (newValuesNotInOldProp.Count != 0)
+        if(oldPropVals.Length == 0)
         {
-            if (oldPropVals.Count != 0)
-            {
-                oldPropVals.AddRange(newValuesNotInOldProp);
-
-                // Copy oldPropVals because it comes from NameBuilder and can be reused!
-                _dic[oldPropKey] = oldPropVals.ToArray();
-            }
-            else
-            {
-                _dic[oldPropKey] = newValuesNotInOldProp.ToArray();
-            }
+            _dic[oldPropKey] = newPropVals;
         }
 
-        static void GetNewValuesNotInOldProp(IReadOnlyList<string> oldPropVals, IReadOnlyList<string> newPropVals, List<string> newValuesNotInOldProp)
+        GetNewValuesNotInOldProp(oldPropVals, newPropVals, list);
+
+        if (list.Count != 0)
+        {
+            list.AddRange(oldPropVals);
+            _dic[oldPropKey] = list.ToArray();
+        }
+
+        static void GetNewValuesNotInOldProp(ReadOnlySpan<string> oldPropVals, ReadOnlySpan<string> newPropVals, List<string> newValuesNotInOldProp)
         {
             newValuesNotInOldProp.Clear();
 
-            foreach (string newVal in newPropVals)
+            foreach(string newVal in newPropVals)
             {
-                foreach (string oldVal in oldPropVals)
+                foreach(string oldPropVal in oldPropVals)
                 {
-                    if (oldVal.Contains(newVal, StringComparison.CurrentCultureIgnoreCase))
+                    if (oldPropVal.Contains(newVal, StringComparison.CurrentCultureIgnoreCase))
                     {
                         goto repeat;
                     }
                 }
 
                 newValuesNotInOldProp.Add(newVal);
-
 repeat:
                 continue;
             }
@@ -180,10 +178,10 @@ repeat:
 
             ReadOnlySpan<char> span = mem.Span;
             string[]? coll = span.Contains(',')
-                ? StringArrayConverter.AsNonEmptyStringArray(ToArray(in mem, version))
-                : StringArrayConverter.AsNonEmptyStringArray(span.UnMaskValue(version));
+                ? Splitted(in mem, version).ToArray()
+                : StringArrayConverter.ToStringArray(span.UnMaskValue(version));
 
-            if (coll is null)
+            if (coll.Length == 0)
             {
                 continue;
             }
@@ -197,12 +195,12 @@ repeat:
         /////////////////////////////////////////
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static string[] ToArray(in ReadOnlyMemory<char> mem, VCdVersion version)
+        static IEnumerable<string> Splitted(in ReadOnlyMemory<char> mem, VCdVersion version)
             => PropertyValueSplitter.Split(mem,
                                     ',',
                                     StringSplitOptions.RemoveEmptyEntries,
                                     unMask: true,
-                                    version).ToArray();
+                                    version);
     }
 
     /// <summary>Surname(s) (also known as "family name(s)"). (2,3,4)</summary>

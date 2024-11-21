@@ -2,6 +2,7 @@ using System.Globalization;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
@@ -14,6 +15,12 @@ namespace FolkerKinzel.VCards.Models;
 public sealed class TimeZoneID
 {
     private enum TzError { None, Null, Empty }
+
+    internal TimeZoneID()
+    {
+        Value = "";
+        IsEmpty = true;
+    }
 
     private TimeZoneID(string timeZoneID) => Value = timeZoneID.Trim();
 
@@ -84,6 +91,17 @@ public sealed class TimeZoneID
     /// /> object was initialized.</value>
     public string Value { get; }
 
+    /// <summary>
+    /// If <c>true</c>, the instance doesn't represent an existing time zone, otherwise, <c>false</c>.
+    /// </summary>
+    /// <remarks>
+    /// The possibility to create an empty <see cref="TimeZoneID"/> exists because <see cref="VCardBuilder"/> 
+    /// needs the ability to create an empty <see cref="TimeZoneProperty"/>. 
+    /// The value of of an empty <see cref="TimeZoneID"/> is never written to a VCF file and is not taken
+    /// into account in conversions.
+    /// </remarks>
+    public bool IsEmpty { get; }
+
     /// <summary>Tries to find a corresponding UTC offset for the <see cref="TimeZoneID" />
     /// object.</summary>
     /// <param name="utcOffset">Contains the UTC offset after the method has been successfully
@@ -94,6 +112,12 @@ public sealed class TimeZoneID
     /// <seealso cref="ITimeZoneIDConverter" />
     public bool TryGetUtcOffset(out TimeSpan utcOffset, ITimeZoneIDConverter? converter = null)
     {
+        if(IsEmpty)
+        {
+            utcOffset = default;
+            return false;
+        }
+
         if (this.IsUtcOffset())
         {
             int startIndex = 0;
@@ -150,45 +174,6 @@ public sealed class TimeZoneID
 
     /// <inheritdoc/>
     public override string ToString() => Value;
-
-
-    internal void AppendTo(
-        StringBuilder builder, VCdVersion version, ITimeZoneIDConverter? converter, bool asParameter = false)
-    {
-        Debug.Assert(builder is not null);
-
-        switch (version)
-        {
-            case VCdVersion.V2_1:
-            case VCdVersion.V3_0:
-                {
-                    if (TryGetUtcOffset(out TimeSpan utcOffset, converter))
-                    {
-                        string format = utcOffset < TimeSpan.Zero ? @"\-hh\:mm" : @"\+hh\:mm";
-                        _ = builder.Append(utcOffset.ToString(format, CultureInfo.InvariantCulture));
-                    }
-                    else
-                    {
-                        _ = builder.Append(Value);
-                    }
-                    break;
-                }
-            default:
-                {
-                    if (this.IsUtcOffset() && TryGetUtcOffset(out TimeSpan utcOffset))
-                    {
-                        string format = utcOffset < TimeSpan.Zero ? @"\-hhmm" : @"\+hhmm";
-                        _ = builder.Append(utcOffset.ToString(format, CultureInfo.InvariantCulture));
-                    }
-                    else
-                    {
-                        _ = asParameter ? builder.AppendParameterValueEscapedAndQuoted(Value, version)
-                                        : builder.Append(Value);
-                    }
-                    break;
-                }
-        }
-    }
 }
 
 

@@ -12,19 +12,19 @@ public class StringCollectionPropertyTests
 
     [DataTestMethod]
     [DataRow(new string?[] { "Bodo, der Blöde", "Dumbo" }, GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
-    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
-    [DataRow(new string?[] { "", null, "  " }, GROUP, null)]
-    [DataRow(new string?[] { }, GROUP, null)]
+    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, GROUP, new string[] { "Bodo, der Blöde", "  ",  "Dumbo" })]
+    [DataRow(new string?[] { "", null, "  " }, GROUP, new string[] { "  " })]
+    [DataRow(new string[] { }, GROUP, new string[] { })]
     [DataRow(new string?[] { "Bodo, der Blöde", "Dumbo" }, null, new string[] { "Bodo, der Blöde", "Dumbo" })]
-    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, null, new string[] { "Bodo, der Blöde", "Dumbo" })]
-    [DataRow(new string?[] { "", null, "  " }, null, null)]
-    [DataRow(new string?[] { }, null, null)]
-    public void StringCollectionPropertyTest1(string?[]? inputNickNames, string? expectedGroup, string[]? expectedNickNames)
+    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, null, new string[] { "Bodo, der Blöde",  "  ", "Dumbo" })]
+    [DataRow(new string?[] { "", null, "  " }, null, new string[] { "  " })]
+    [DataRow(new string[] { }, null, new string[] { })]
+    public void StringCollectionPropertyTest1(string?[] inputNickNames, string? expectedGroup, string[]? expectedNickNames)
     {
         var nickNameProp = new StringCollectionProperty(inputNickNames, expectedGroup);
 
         Assert.AreEqual(expectedGroup, nickNameProp.Group);
-        CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value?.ToArray());
+        CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value.ToArray());
     }
 
 
@@ -79,10 +79,10 @@ public class StringCollectionPropertyTests
     public void ToStringTest2()
     {
         string? s = null;
-        s = new StringCollectionProperty(s).ToString();
+        var prop = new StringCollectionProperty(s);
 
-        Assert.IsNotNull(s);
-        Assert.AreEqual(0, s.Length);
+        Assert.IsTrue(prop.IsEmpty);
+        Assert.IsNotNull(prop.ToString());
     }
 
     [TestMethod]
