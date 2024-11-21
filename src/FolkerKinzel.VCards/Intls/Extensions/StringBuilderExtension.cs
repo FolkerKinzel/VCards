@@ -155,6 +155,11 @@ internal static class StringBuilderExtension
     {
         ReadOnlySpan<char> span = s.AsSpan();
 
+        if(span.IsEmpty)
+        {
+            return true;
+        }
+
         bool mustBeQuoted = false;
 
         for (int i = 0; i < span.Length; i++)
@@ -207,7 +212,12 @@ internal static class StringBuilderExtension
                                                        bool isLabel)
     {
         ReadOnlySpan<char> span = paramVal.AsSpan();
-        
+
+        if (span.IsEmpty)
+        {
+            return true;
+        }
+
         bool mustBeQuoted = false;
         bool rFound = false;
 
@@ -249,6 +259,4 @@ internal static class StringBuilderExtension
 
         return mustBeQuoted;
     }
-
-    
 }

@@ -1045,7 +1045,7 @@ internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSeriali
 
     private void AppendSortAs()
     {
-        IEnumerable<string>? sortAs = ParaSection.SortAs;
+        IReadOnlyList<string>? sortAs = ParaSection.SortAs;
 
         if (sortAs is null)
         {
@@ -1057,10 +1057,8 @@ internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSeriali
 
         AppendParameter(ParaKey.SORT_AS, "");
 
-        foreach (string item in sortAs)
+        foreach (string item in ((string[])sortAs).AsSpan())
         {
-            Debug.Assert(!string.IsNullOrWhiteSpace(item));
-
             rollBack = false;
             _ = Builder.AppendParameterValueEscapedAndQuoted(item, VCdVersion.V4_0).Append(',');
         }

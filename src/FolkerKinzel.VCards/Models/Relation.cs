@@ -68,7 +68,7 @@ public sealed class Relation
     /// <summary>
     /// A singleton whose <see cref="IsEmpty"/> property returns <c>true</c>.
     /// </summary>
-    public static Relation Empty { get; } = new Relation(ContactID.Empty);
+    internal static Relation Empty { get; } = new Relation(ContactID.Empty);
 
     /// <summary>
     /// Gets the encapsulated <see cref="VCards.VCard"/>,

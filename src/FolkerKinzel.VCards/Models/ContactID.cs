@@ -104,7 +104,7 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <summary>
     /// A singleton whose <see cref="IsEmpty"/> property returns <c>true</c>.
     /// </summary>
-    public static ContactID Empty { get; } = new ContactID("");
+    internal static ContactID Empty { get; } = new ContactID("");
 
     /// <summary>
     /// Gets the encapsulated <see cref="Guid"/>,

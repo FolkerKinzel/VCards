@@ -149,7 +149,7 @@ and let it store as string[]
 - [x] Rename in all BuilderParts `TData data` to `TArg arg`
 
 &nbsp;
-- [ ] Check all `Empty` singletons whether they should be public
+- [x] Check all `Empty` singletons whether they should be public
 
 ### 7.4.5
 - [x] Fix an issue that a "geo" URI was not parsed if this "geo" URI was masked.

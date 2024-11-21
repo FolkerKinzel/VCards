@@ -144,7 +144,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <summary>
     /// A singleton whose <see cref="IsEmpty"/> property returns <c>true</c>.
     /// </summary>
-    public static DateAndOrTime Empty { get; } = new DateAndOrTime("");
+    internal static DateAndOrTime Empty { get; } = new DateAndOrTime("");
 
     /// <summary>
     /// <c>true</c> if the instance contains no data, otherwise <c>false</c>.

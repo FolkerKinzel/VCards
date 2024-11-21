@@ -128,8 +128,7 @@ public sealed partial class ParameterSection
                     break;
                 case ParameterKey.SORT_AS:
                     {
-                        this.SortAs = ParameterValueSplitter.Split(parameter.Value)
-                                                            .ToArray();
+                        SetSortAs(ParameterValueSplitter.Split(parameter.Value).ToArray());
                         break;
                     }
                 case ParameterKey.CALSCALE:

@@ -224,7 +224,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
         BuildProperty(VCard.PropKeys.N, name);
 
-        string? sortString = name.Parameters.SortAs?.FirstOrDefault();
+        string? sortString = name.Parameters.SortAs.FirstOrNull();
 
         if (sortString is not null)
         {
@@ -251,7 +251,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
         BuildProperty(VCard.PropKeys.ORG, pref);
 
-        string? sortString = pref.Parameters.SortAs?.FirstOrDefault();
+        string? sortString = pref.Parameters.SortAs.FirstOrNull();
 
         if (sortString is not null)
         {
@@ -260,7 +260,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
             if (VCardToSerialize.NameViews!
                                 .FirstOrNullIntl(IgnoreEmptyItems)?
-                                .Parameters.SortAs?.Any() ?? false)
+                                .Parameters.SortAs.FirstOrNull() is not null)
             {
                 return;
             }

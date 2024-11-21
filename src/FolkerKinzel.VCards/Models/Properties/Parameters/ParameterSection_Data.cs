@@ -1,4 +1,5 @@
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Resources;
@@ -396,7 +397,9 @@ public sealed partial class ParameterSection
     public string? MediaType
     {
         get => Get<string?>(VCdParam.MediaType);
-        set => Set<string?>(VCdParam.MediaType, value);
+        set => Set<string?>(VCdParam.MediaType, 
+                            string.IsNullOrWhiteSpace(value) ? null
+                                                             : value.Trim());
     }
 
     /// <summary>Non-standard attributes. <c>(2,3,4)</c></summary>
@@ -586,11 +589,14 @@ public sealed partial class ParameterSection
     /// <remarks>When serializing a file as vCard&#160;3.0, a separate <c>SORT-STRING</c>-property,
     /// which contains the first <see cref="string" />, is automatically inserted into
     /// the vCard.</remarks>
-    public IEnumerable<string>? SortAs
+    public IReadOnlyList<string>? SortAs
     {
-        get => Get<IEnumerable<string>?>(VCdParam.SortAs)?.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim());
-        set => Set(VCdParam.SortAs, value);
+        get => Get<string[]?>(VCdParam.SortAs);
+        set => Set(VCdParam.SortAs, value is null ? null 
+                                                  : StringArrayConverter.ToStringArray(value));
     }
+
+    internal void SetSortAs(string[] value) => Set(VCdParam.SortAs, value);
 
     /// <summary><c>TZ</c>: Time zone <c>(4)</c></summary>
     /// <remarks> 

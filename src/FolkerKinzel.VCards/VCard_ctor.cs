@@ -221,17 +221,17 @@ public sealed partial class VCard
                         {
                             if (NameViews is not null)
                             {
-                                NameViews.FirstOrNullIntl(ignoreEmptyItems: false)!.Parameters.SortAs = [textProp.Value];
+                                NameViews.FirstOrNullIntl(ignoreEmptyItems: false)!.Parameters.SetSortAs([textProp.Value]);
                             }
                             // this is not legal: N property is required in VCard 3.0
                             else if (Organizations is not null)
                             {
-                                Organizations.PrefOrNullIntl(ignoreEmptyItems: false)!.Parameters.SortAs = [textProp.Value];
+                                Organizations.PrefOrNullIntl(ignoreEmptyItems: false)!.Parameters.SetSortAs([textProp.Value]);
                             }
                             else
                             {
                                 var name = new NameProperty(Name.Empty);
-                                name.Parameters.SortAs = [textProp.Value];
+                                name.Parameters.SetSortAs([textProp.Value]);
                                 NameViews = name;
                             }
                         }
