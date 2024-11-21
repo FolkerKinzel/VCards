@@ -2,10 +2,9 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -114,7 +113,7 @@ public readonly struct GramBuilder
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit<TArg>(
-        Func<IEnumerable<GramProperty>, TArg, IEnumerable<GramProperty?>?> func, 
+        Func<IEnumerable<GramProperty>, TArg, IEnumerable<GramProperty?>?> func,
         TArg arg)
     {
         IEnumerable<GramProperty> props = GetProperty();

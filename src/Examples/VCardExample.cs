@@ -106,7 +106,7 @@ public static class VCardExample
                      {
                          p.PropertyClass = PCl.Work;
                          p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel|Adr.Billing|Adr.Delivery;
-                         p.TimeZone = TimeZoneID.Parse("Europe/Berlin");
+                         p.TimeZone = TimeZoneID.TryCreate("Europe/Berlin");
                          p.GeoPosition = GeoCoordinate.TryCreate(52.51182050685474, 13.389581454284256, 10);
                      },
                      // Applying a group name to the AddressProperty helps to automatically preserve its Label,

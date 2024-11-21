@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel;
-using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -245,7 +244,7 @@ public readonly struct NameViewsBuilder
 
         IEnumerable<NameProperty?>? names = vc.NameViews;
 
-        if(names is null)
+        if (names is null)
         {
             return _builder;
         }
@@ -260,10 +259,10 @@ public readonly struct NameViewsBuilder
             }
 
             _builder.DisplayNames.Add(
-                nameFormatter.ToDisplayName(nameProp, vc), 
+                nameFormatter.ToDisplayName(nameProp, vc),
                 parameters: p => { p.Language = language; p.Derived = true; },
                 group: v => nameProp.Group
-                ); 
+                );
         }
 
         return _builder;

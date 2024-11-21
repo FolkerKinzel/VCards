@@ -2,11 +2,10 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -148,7 +147,7 @@ public readonly struct GenderBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
         => Add(Gender.Create(sex, identity), parameters, group);
-    
+
 
     /// <summary>
     /// Adds a <see cref="GenderProperty"/> instance, which is newly initialized using the specified 

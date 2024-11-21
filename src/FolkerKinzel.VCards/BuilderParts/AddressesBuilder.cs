@@ -3,11 +3,10 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -262,20 +261,20 @@ public readonly struct AddressesBuilder
         VCard vc = Builder.VCard;
         _ArgumentNullException.ThrowIfNull(addressFormatter, nameof(addressFormatter));
         IEnumerable<AddressProperty?>? addresses = vc.Addresses;
-        
-        if(addresses is null)
+
+        if (addresses is null)
         {
             return _builder;
         }
 
         foreach (AddressProperty? adrProp in addresses)
         {
-            if(adrProp is null)
+            if (adrProp is null)
             {
                 continue;
             }
 
-            if(adrProp.Parameters.Label is null)
+            if (adrProp.Parameters.Label is null)
             {
                 adrProp.Parameters.Label = addressFormatter.ToLabel(adrProp);
             }

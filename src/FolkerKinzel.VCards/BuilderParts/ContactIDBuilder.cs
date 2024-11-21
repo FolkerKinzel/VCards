@@ -46,7 +46,7 @@ public readonly struct ContactIDBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TArg>(Func<ContactIDProperty?, TArg, ContactIDProperty?> func, 
+    public VCardBuilder Edit<TArg>(Func<ContactIDProperty?, TArg, ContactIDProperty?> func,
                                    TArg arg)
     {
         ContactIDProperty? prop = Builder.VCard.ContactID;

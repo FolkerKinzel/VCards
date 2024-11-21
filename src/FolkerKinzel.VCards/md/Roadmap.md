@@ -138,8 +138,8 @@ and let it store as string[]
 - [x] Make `VCardProperty.Value` non-nullable
 - [x] Make `VCardProperty.IsEmpty` abstract
 - [x] Remove the `MemberNotNullWhenAttribute` from `VCardProperty.IsEmpty`
-- [ ] Ensure that each VCardProperty ctor has a `value` parameter.
-- [ ] Ensure that the corresponding VCardBuilder parameter is also named `value`
+- [x] Ensure that each VCardProperty ctor has a `value` parameter.
+- [x] Ensure that the corresponding VCardBuilder parameter is also named `value`
 
 &nbsp;
 - [x] Implement `GeoCoordinate? GeoCoordinate.TryCreate(double, double)` that doesn't throw any exception

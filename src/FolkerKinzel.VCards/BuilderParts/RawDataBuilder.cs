@@ -204,7 +204,7 @@ public readonly struct RawDataBuilder
                                 Action<ParameterSection>? parameters = null,
                                 Func<VCard, string?>? group = null)
     {
-        if(filePath is null)
+        if (filePath is null)
         {
             return AddRawData(RawData.FromBytes([], mediaType ?? MimeString.OctetStream), parameters, group);
         }

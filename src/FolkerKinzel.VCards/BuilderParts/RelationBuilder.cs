@@ -3,11 +3,10 @@ using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -177,10 +176,10 @@ public readonly struct RelationBuilder
     /// <see cref="VCard.ContactID"/> property (<c>UID</c>), to the specified property of the 
     /// <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="uuid">A <see cref="Guid"/> that refers to the vCard of the person
+    /// <param name="guid">A <see cref="Guid"/> that refers to the vCard of the person
     /// or organization via its <see cref="VCard.ContactID"/> property (<c>UID</c>).</param>
     /// <param name="relationType">Standardized description of the relationship with the
-    /// person or organization to whose vCard the <paramref name="uuid"/> refers. 
+    /// person or organization to whose vCard the <paramref name="guid"/> refers. 
     /// The <see cref="ParameterSection.RelationType"/> property of the added instance will be
     /// set to this value.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
@@ -195,11 +194,11 @@ public readonly struct RelationBuilder
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public VCardBuilder Add(Guid uuid,
+    public VCardBuilder Add(Guid guid,
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-        => Add(Relation.Create(ContactID.Create(uuid)), relationType, parameters, group);
+        => Add(Relation.Create(ContactID.Create(guid)), relationType, parameters, group);
 
     /// <summary>
     /// Adds a <see cref="RelationProperty"/> instance, which is newly 
@@ -241,9 +240,9 @@ public readonly struct RelationBuilder
                             Rel? relationType = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-        => Add(string.IsNullOrWhiteSpace(text) 
-               ? Relation.Empty 
-               : Relation.Create(ContactID.Create(text)), 
+        => Add(string.IsNullOrWhiteSpace(text)
+               ? Relation.Empty
+               : Relation.Create(ContactID.Create(text)),
                 relationType, parameters, group);
 
     /// <summary>
@@ -325,7 +324,7 @@ public readonly struct RelationBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
         => Add(vCard is null ? Relation.Empty : Relation.Create(vCard), relationType, parameters, group);
-    
+
 
     /// <summary>
     /// Adds a <see cref="RelationProperty"/> instance, which is newly initialized using a 

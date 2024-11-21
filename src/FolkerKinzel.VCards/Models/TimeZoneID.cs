@@ -86,6 +86,20 @@ public sealed class TimeZoneID
         return true;
     }
 
+    /// <summary> Tries to create a new <see cref="TimeZoneID" /> instance from
+    /// <paramref name="value"/> and returns <c>null</c> if the creation fails. </summary>
+    /// <param name="value">Identifier of the time zone. It should be an identifier
+    /// from the "IANA Time Zone Database". (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    /// .)</param>
+    /// <returns>The newly created <see cref="TimeZoneID"/> instance, or <c>null</c>
+    /// if one of the arguments is out of range.</returns>
+    /// <seealso cref="TimeZoneProperty"/>
+    /// <seealso cref="VCard.TimeZones"/>
+    /// <seealso cref="ParameterSection.TimeZone"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static TimeZoneID? TryCreate(string? value)
+        => TryParse(value, out TimeZoneID? timeZoneID) ? timeZoneID : null;
+
     /// <summary>Standardized name of the time zone.</summary>
     /// <value> That's the String with which the <see cref="TimeZoneID"
     /// /> object was initialized.</value>

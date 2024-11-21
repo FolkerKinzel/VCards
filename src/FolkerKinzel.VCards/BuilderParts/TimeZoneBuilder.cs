@@ -2,11 +2,10 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.Properties;
-using FolkerKinzel.VCards.Resources;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
 
@@ -218,7 +217,7 @@ public readonly struct TimeZoneBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
         => TimeZoneID.TryParse(value, out TimeZoneID? tzID)
-            ? Add(tzID, parameters, group) 
+            ? Add(tzID, parameters, group)
             : Add((TimeZoneID?)null, parameters, group);
 
     /// <summary>
