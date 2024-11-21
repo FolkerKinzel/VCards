@@ -47,7 +47,7 @@ public class NameTests
     [TestMethod]
     public void ToStringTest2()
     {
-        var name = new Name();
+        Name name = Name.Empty;
         Assert.IsTrue(name.IsEmpty);
         Assert.IsNotNull(name.ToString());
     }
@@ -103,8 +103,8 @@ public class NameTests
         Assert.IsNotNull(vc.NameViews);
         Name name = vc.NameViews.First()!.Value;
 
-        Assert.AreEqual("surname2", name.Surnames2.First());
-        Assert.AreEqual("generation", name.Generations.First());
+        Assert.AreEqual("surname2", name.Surnames2[0]);
+        Assert.AreEqual("generation", name.Generations[0]);
     }
 
     [TestMethod]

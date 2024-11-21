@@ -136,7 +136,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         }
 
         Value = val.Span.IsWhiteSpace()
-            ? new Address()
+            ? Address.Empty
             : new Address(in val, version);
     }
 
@@ -181,7 +181,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

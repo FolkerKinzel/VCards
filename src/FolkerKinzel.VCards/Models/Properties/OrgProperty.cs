@@ -62,7 +62,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
         }
 
         var orgList = new List<string>(
-            PropertyValueSplitter.Split(val, ';', StringSplitOptions.None, unMask: true, version));
+            PropertyValueSplitter.Split(val, ';', unMask: true, version: version));
 
         if (orgList.Count == 0)
         {
@@ -96,7 +96,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

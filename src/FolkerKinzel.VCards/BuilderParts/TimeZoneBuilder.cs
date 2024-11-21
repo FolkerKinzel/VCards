@@ -177,7 +177,7 @@ public readonly struct TimeZoneBuilder
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.TimeZones,
-                          VCardBuilder.Add(new TimeZoneProperty(value ?? new TimeZoneID(), group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new TimeZoneProperty(value ?? TimeZoneID.Empty, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones),
                                            parameters)
                           );

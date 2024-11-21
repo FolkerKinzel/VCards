@@ -53,7 +53,7 @@ public sealed class KindProperty : VCardProperty
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void AppendValue(VcfSerializer serializer)
     {

@@ -53,7 +53,7 @@ public sealed class TextProperty : VCardProperty, IEnumerable<TextProperty>
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

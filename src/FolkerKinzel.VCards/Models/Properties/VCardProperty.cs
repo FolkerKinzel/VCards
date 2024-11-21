@@ -35,13 +35,13 @@ public abstract class VCardProperty : ICloneable
     }
 
     /// <summary>The data provided by the <see cref="VCardProperty" />.</summary>
-    public object? Value => GetVCardPropertyValue();
+    public object Value => GetVCardPropertyValue();
 
     /// <summary>Abstract access method to get the data from <see cref="VCardProperty"
     /// />.</summary>
     /// <returns>The data provided by the <see cref="VCardProperty" />.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected abstract object? GetVCardPropertyValue();
+    protected abstract object GetVCardPropertyValue();
 
     /// <summary>Corresponds to the group identifier of a vCard property, or is <c>null</c>
     /// if the <see cref="VCardProperty"/> does not belong to any group.</summary>
@@ -56,7 +56,6 @@ public abstract class VCardProperty : ICloneable
 
     /// <summary>Returns <c>true</c>, if the <see cref="VCardProperty" /> object does
     /// not contain any usable data, otherwise <c>false</c>.</summary>
-    [MemberNotNullWhen(false, nameof(Value))]
     public abstract bool IsEmpty {  get; }
 
     /// <inheritdoc />
@@ -65,7 +64,6 @@ public abstract class VCardProperty : ICloneable
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => IsEmpty ? "<Empty>" : Value.ToString() ?? "";
-
 
     /// <summary>
     /// Fills <see cref="VcfSerializer.Builder"/> with the serialized <see cref="VCardProperty"/>.

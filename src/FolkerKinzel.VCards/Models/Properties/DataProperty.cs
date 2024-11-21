@@ -166,7 +166,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     /// <inheritdoc/>
     public override object Clone() => new DataProperty(this);

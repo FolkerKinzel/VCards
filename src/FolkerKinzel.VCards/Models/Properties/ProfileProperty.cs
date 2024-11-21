@@ -34,7 +34,7 @@ public sealed class ProfileProperty : VCardProperty
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     /// <inheritdoc />
     public override object Clone() => new ProfileProperty(this);

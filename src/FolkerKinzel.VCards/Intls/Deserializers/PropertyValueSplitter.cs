@@ -9,17 +9,12 @@ internal static class PropertyValueSplitter
 {
     public static IEnumerable<string> Split(ReadOnlyMemory<char> mem,
                                             char splitChar,
-                                            StringSplitOptions options,
                                             bool unMask,
                                             VCdVersion version)
     {
         if (mem.IsEmpty)
         {
-            if(!options.HasFlag(StringSplitOptions.RemoveEmptyEntries))
-            {
-                yield return string.Empty;
-            }
-
+            yield return string.Empty;
             yield break;
         }
 
@@ -29,12 +24,9 @@ internal static class PropertyValueSplitter
 
             ReadOnlyMemory<char> nextChunk = mem.Slice(0, splitIndex);
 
-            if (!options.HasFlag(StringSplitOptions.RemoveEmptyEntries) || !nextChunk.Span.IsWhiteSpace())
-            {
-                yield return unMask
-                             ? nextChunk.Span.UnMaskValue(version)
-                             : nextChunk.ToString();
-            }
+            yield return unMask
+                         ? nextChunk.Span.UnMaskValue(version)
+                         : nextChunk.ToString();
 
             if (splitIndex == mem.Length)
             {
@@ -48,9 +40,9 @@ internal static class PropertyValueSplitter
     public static IEnumerable<ReadOnlyMemory<char>> SplitIntoMemories(ReadOnlyMemory<char> mem,
                                                                       char splitChar)
     {
-        if(mem.IsEmpty)
+        if (mem.IsEmpty)
         {
-            yield break ;
+            yield break;
         }
 
         while (true)

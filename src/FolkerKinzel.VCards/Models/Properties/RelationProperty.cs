@@ -61,7 +61,7 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal static RelationProperty Parse(VcfRow vcfRow, VCdVersion version)
     {

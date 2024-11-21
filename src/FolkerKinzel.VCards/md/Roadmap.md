@@ -135,7 +135,7 @@ and let it store as string[]
 - [x] Rename `OptsExtension` to `VcfOptsExtension`
 
 &nbsp;
-- [ ] Make `VCardProperty.Value` non-nullable
+- [x] Make `VCardProperty.Value` non-nullable
 - [x] Make `VCardProperty.IsEmpty` abstract
 - [x] Remove the `MemberNotNullWhenAttribute` from `VCardProperty.IsEmpty`
 - [ ] Ensure that each VCardProperty ctor has a `value` parameter.

@@ -93,7 +93,7 @@ public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandard
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     /// <inheritdoc/>
     public override string ToString()

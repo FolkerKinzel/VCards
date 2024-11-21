@@ -7,18 +7,17 @@ internal static class StringArrayConverter
     internal static string[] ToStringArray(IEnumerable<string?> coll)
     {
         string?[] arr = coll.ToArray();
-        bool containsWS = false;
+        Span<string?> span = arr;
 
-        foreach (string? str in arr.AsSpan())
+        for (int i = 0; i < span.Length; i++)
         {
-            if(string.IsNullOrEmpty(str))
+            if(span[i] is null)
             {
-                containsWS = true;
-                break;
+                span[i] = "";
             }
         }
 
-        return (containsWS ? arr.Where(x => !string.IsNullOrEmpty(x)).ToArray() : arr)!;
+        return arr!;
     }
 
     internal static string[] ToStringArray(string? s)

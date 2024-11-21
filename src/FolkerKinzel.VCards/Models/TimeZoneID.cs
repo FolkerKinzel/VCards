@@ -16,7 +16,7 @@ public sealed class TimeZoneID
 {
     private enum TzError { None, Null, Empty }
 
-    internal TimeZoneID()
+    private TimeZoneID()
     {
         Value = "";
         IsEmpty = true;
@@ -101,6 +101,8 @@ public sealed class TimeZoneID
     /// into account in conversions.
     /// </remarks>
     public bool IsEmpty { get; }
+
+    internal static TimeZoneID Empty => new(); // Not a singleton
 
     /// <summary>Tries to find a corresponding UTC offset for the <see cref="TimeZoneID" />
     /// object.</summary>

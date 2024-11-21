@@ -77,7 +77,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<GeoProperty>)this).GetEnumerator();
 
     /// <inheritdoc />
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void AppendValue(VcfSerializer serializer)
     {

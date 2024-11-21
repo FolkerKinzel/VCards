@@ -56,7 +56,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         Justification = "Performance: Collection initializer initializes a new List.")]
     internal Address(AddressBuilder builder)
     {
-        Dictionary<AdrProp, List<string>>? newVals = null;
+        Dictionary<AdrProp, string[]>? newVals = null;
         bool streetHasData = false;
         bool extendedHasData = false;
         bool newStreetHasData = false;
@@ -67,7 +67,8 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
             if (kvp.Value.Count != 0)
             {
                 // Copy kvp.Value because it comes from AddressBuilder and can be reused!
-                _dic[kvp.Key] = kvp.Value.ToArray();
+                string[] val = kvp.Value.ToArray();
+                _dic[kvp.Key] = val;
 
                 switch (kvp.Key)
                 {
@@ -82,7 +83,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
                     case AdrProp.Floor:
                     case AdrProp.Building:
                         newVals ??= [];
-                        newVals[kvp.Key] = kvp.Value;
+                        newVals[kvp.Key] = val;
                         newExtendedHasData = true;
                         break;
                     case AdrProp.Block:
@@ -93,7 +94,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
                     case AdrProp.Landmark:
                     case AdrProp.Direction:
                         newVals ??= [];
-                        newVals[kvp.Key] = kvp.Value;
+                        newVals[kvp.Key] = val;
                         newStreetHasData = true;
                         break;
                     default:
@@ -114,7 +115,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
                                           AdrProp.SubDistrict,
                                           AdrProp.District];
 
-            Add(keys, newVals, AdrProp.Street);
+            AddForCompatibility(keys, newVals, AdrProp.Street);
         }
 
         if (!extendedHasData && newExtendedHasData)
@@ -125,17 +126,24 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
                                           AdrProp.Apartment,
                                           AdrProp.Room];
 
-            Add(keys, newVals, AdrProp.Extended);
+            AddForCompatibility(keys, newVals, AdrProp.Extended);
         }
 
         Street = newStreetHasData ? [] : Get(AdrProp.Street);
         Extended = newExtendedHasData ? [] : Get(AdrProp.Extended);
+
+        IsEmpty = _dic.Count == 0;
     }
 
-    internal Address() => Street = Extended = [];
+    private Address()
+    {
+        Street = Extended = [];
+        IsEmpty = true;
+    }
 
     internal Address(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
+        IsEmpty = true;
         int index = -1;
         bool newStreetHasData = false;
         bool newExtendedHasData = false;
@@ -159,10 +167,12 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
                 ? Splitted(in mem, version).ToArray()
                 : StringArrayConverter.ToStringArray(span.UnMaskValue(version));
 
-            if (coll.Length == 0)
+            if (!coll.ContainsData())
             {
                 continue;
             }
+
+            IsEmpty = false;
 
             var key = (AdrProp)index;
             _dic[key] = coll;
@@ -199,27 +209,33 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         static IEnumerable<string> Splitted(in ReadOnlyMemory<char> mem, VCdVersion version)
         => PropertyValueSplitter.Split(mem,
                                 ',',
-                                StringSplitOptions.RemoveEmptyEntries,
                                 unMask: true,
-                                version);
+                                version: version);
     }
 
-    private void Add(ReadOnlySpan<AdrProp> keys, Dictionary<AdrProp, List<string>> dic, AdrProp target)
+    /// <summary>
+    /// Collects the new RFC 9554 properties and adds them to the corresponding vCard 4.0 property for
+    /// compatibility.
+    /// </summary>
+    /// <param name="newKeys">Keys of the corresponding RFC 9554 properties.</param>
+    /// <param name="newVals">Dictionary containing all RFC 9554 values.</param>
+    /// <param name="oldProp">Key of the corresponding vCard 4.0 property.</param>
+    private void AddForCompatibility(ReadOnlySpan<AdrProp> newKeys, Dictionary<AdrProp, string[]> newVals, AdrProp oldProp)
     {
         List<string> list = [];
 
-        for (int i = 0; i < keys.Length; i++)
+        for (int i = 0; i < newKeys.Length; i++)
         {
-            if (dic.TryGetValue(keys[i], out List<string>? strings))
+            if (newVals.TryGetValue(newKeys[i], out string[]? strings))
             {
-                Debug.Assert(strings.Count != 0);
+                Debug.Assert(strings.Length != 0);
                 list.AddRange(strings);
             }
         }
 
         Debug.Assert(list.Count != 0);
 
-        _dic[target] = [.. list];
+        _dic[oldProp] = [.. list];
     }
 
     /// <summary>The post office box.</summary>
@@ -314,7 +330,9 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
     /// <summary>Returns <c>true</c>, if the <see cref="Address" /> object does not
     /// contain any usable data.</summary>
-    public bool IsEmpty => _dic.Count == 0;
+    public bool IsEmpty {  get; }
+
+    internal static Address Empty => new(); // Not a singleton
 
     /// <inheritdoc/>
     int IReadOnlyCollection<IReadOnlyList<string>>.Count => MAX_COUNT;

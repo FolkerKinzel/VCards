@@ -36,7 +36,7 @@ public class PropertyValueSplitterTests
     {
         int count = 0;
 
-        IEnumerable<string> valueSplitter = PropertyValueSplitter.Split(valueString.AsMemory(), splitChar, options, false, VCdVersion.V4_0);
+        IEnumerable<string> valueSplitter = PropertyValueSplitter.Split(valueString.AsMemory(), splitChar, false, VCdVersion.V4_0);
 
         foreach (string s in valueSplitter)
         {
@@ -55,7 +55,7 @@ public class PropertyValueSplitterTests
         Justification = "Better for testing")]
     public void SplitTest2(string? valueString, char splitChar, string[] expected)
     {
-        IEnumerable<string> valueSplitter = PropertyValueSplitter.Split(valueString.AsMemory(), splitChar, StringSplitOptions.None, false, VCdVersion.V3_0);
+        IEnumerable<string> valueSplitter = PropertyValueSplitter.Split(valueString.AsMemory(), splitChar, false, VCdVersion.V3_0);
 
         string[] arr = [.. valueSplitter];
         CollectionAssert.AreEqual(arr, expected, StringComparer.Ordinal);
@@ -69,7 +69,7 @@ public class PropertyValueSplitterTests
         Justification = "Better for testing")]
     public void SplitTest3(string? valueString, char splitChar, string[] expected)
     {
-        IEnumerable<string> valueSplitter = PropertyValueSplitter.Split(valueString.AsMemory(), splitChar, StringSplitOptions.None, false, VCdVersion.V3_0);
+        IEnumerable<string> valueSplitter = PropertyValueSplitter.Split(valueString.AsMemory(), splitChar, false, VCdVersion.V3_0);
 
         IEnumerable enumerable = valueSplitter;
 
@@ -86,14 +86,14 @@ public class PropertyValueSplitterTests
     [TestMethod]
     public void SplitTest4()
     {
-        IEnumerable<string> splitter = PropertyValueSplitter.Split(",,,".AsMemory(), ',', StringSplitOptions.RemoveEmptyEntries, false, VCdVersion.V2_1);
+        IEnumerable<string> splitter = PropertyValueSplitter.Split(",,,".AsMemory(), ',', false, VCdVersion.V2_1);
         Assert.AreEqual(0, splitter.Count());
     }
 
     [TestMethod]
     public void SplitTest5()
     {
-        IEnumerable<string> splitter = PropertyValueSplitter.Split("abc".AsMemory(), ',', StringSplitOptions.None, false, VCdVersion.V4_0);
+        IEnumerable<string> splitter = PropertyValueSplitter.Split("abc".AsMemory(), ',', false, VCdVersion.V4_0);
         Assert.AreEqual(1, splitter.Count());
     }
 }

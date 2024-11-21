@@ -194,7 +194,7 @@ public readonly struct NameViewsBuilder
                             Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
-        var prop = new NameProperty(value ?? new Name(),
+        var prop = new NameProperty(value ?? Name.Empty,
                                     group?.Invoke(vc));
         vc.Set(Prop.NameViews,
                VCardBuilder.Add(prop,

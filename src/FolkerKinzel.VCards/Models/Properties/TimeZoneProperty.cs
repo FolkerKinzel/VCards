@@ -85,7 +85,7 @@ public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProper
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void AppendValue(VcfSerializer serializer)
         => TimeZoneIDSerializer.AppendTo(serializer.Builder,

@@ -97,7 +97,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
         }
 
         Value = val.Span.IsWhiteSpace()
-            ? new Name()
+            ? Name.Empty
             : new Name(in val, version);
     }
 
@@ -130,7 +130,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

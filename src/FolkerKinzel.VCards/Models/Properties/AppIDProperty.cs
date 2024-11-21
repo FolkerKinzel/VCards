@@ -66,7 +66,7 @@ public sealed class AppIDProperty : VCardProperty, IEnumerable<AppIDProperty>
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void AppendValue(VcfSerializer serializer) => Value.AppendTo(serializer.Builder);
 }

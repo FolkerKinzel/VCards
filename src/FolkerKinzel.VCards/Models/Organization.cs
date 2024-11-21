@@ -54,7 +54,7 @@ public sealed class Organization
         if (orgUnits is not null)
         {
             orgUnitsColl = StringArrayConverter.ToStringArray(orgUnits);
-            orgUnitsColl = orgUnitsColl.Length == 0 ? null : orgUnitsColl;
+            orgUnitsColl = orgUnitsColl.ContainsData() ? orgUnitsColl : null;
         }
 
         return (orgName, orgUnitsColl);

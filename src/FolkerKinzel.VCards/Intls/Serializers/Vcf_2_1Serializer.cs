@@ -233,7 +233,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         NameProperty? name = value.FirstOrNullIntl(IgnoreEmptyItems)
                              ?? (IgnoreEmptyItems
                                    ? new NameProperty(NameBuilder.AddSurname("?").Build())
-                                   : new NameProperty(new Name()));
+                                   : new NameProperty(Name.Empty));
         BuildProperty(VCard.PropKeys.N, name);
     }
 

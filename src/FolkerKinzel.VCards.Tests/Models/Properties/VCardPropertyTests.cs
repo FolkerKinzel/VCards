@@ -11,7 +11,9 @@ public class VCardPropertyTests
         public override bool IsEmpty => throw new NotImplementedException();
 
         public override object Clone() => throw new NotImplementedException();
-        protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
+
+        protected override object GetVCardPropertyValue() => throw new NotImplementedException();
+
         internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
     }
 

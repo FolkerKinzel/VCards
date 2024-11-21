@@ -29,7 +29,10 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
     public StringCollectionProperty(IEnumerable<string?> value, string? group = null)
         : base(new ParameterSection(), group)
-        => _value = StringArrayConverter.ToStringArray(value ?? throw new ArgumentNullException(nameof(value)));
+    {
+        _value = StringArrayConverter.ToStringArray(value ?? throw new ArgumentNullException(nameof(value)));
+        IsEmpty = !_value.ContainsData();
+    }
 
     /// <summary>Initializes a new <see cref="StringCollectionProperty" /> object.</summary>
     /// <param name="value">A <see cref="string" />, or <c>null</c>.</param>
@@ -37,7 +40,11 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
     /// /> objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     public StringCollectionProperty(string? value, string? group = null)
-        : base(new ParameterSection(), group) => _value = StringArrayConverter.ToStringArray(value);
+        : base(new ParameterSection(), group)
+    {
+        _value = StringArrayConverter.ToStringArray(value);
+        IsEmpty = !string.IsNullOrWhiteSpace(value);
+    }
 
     internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
@@ -50,20 +57,22 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
             ? Splitted(vcfRow, version).ToArray()
             : StringArrayConverter.ToStringArray(span.UnMaskValue(version));
 
+        IsEmpty = !_value.ContainsData();
+
         /////////////////////////////////////////////////////////////////////////
 
         static IEnumerable<string> Splitted(VcfRow vcfRow, VCdVersion version)
             => PropertyValueSplitter.Split(vcfRow.Value,
                                            ',',
-                                           StringSplitOptions.RemoveEmptyEntries,
-                                           unMask: true, version);
+                                           unMask: true,
+                                           version: version);
     }
 
     /// <summary>The data provided by the <see cref="StringCollectionProperty" />.</summary>
     public new IReadOnlyList<string> Value => _value;
 
     /// <inheritdoc />
-    public override bool IsEmpty => Value.Count == 0;
+    public override bool IsEmpty { get; }
 
     /// <inheritdoc />
     public override string ToString() => IsEmpty ? base.ToString() : string.Join(", ", _value);
@@ -83,7 +92,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void AppendValue(VcfSerializer serializer)
     {

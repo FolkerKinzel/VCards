@@ -90,7 +90,7 @@ public sealed class GenderProperty : VCardProperty, IEnumerable<GenderProperty>
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void AppendValue(VcfSerializer serializer)
     {

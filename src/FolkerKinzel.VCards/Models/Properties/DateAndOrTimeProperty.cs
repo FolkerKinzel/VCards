@@ -160,7 +160,7 @@ public sealed class DateAndOrTimeProperty
     public override object Clone() => new DateAndOrTimeProperty(this);
 
     /// <inheritdoc />
-    protected override object? GetVCardPropertyValue() => Value;
+    protected override object GetVCardPropertyValue() => Value;
 
     internal override void PrepareForVcfSerialization(VcfSerializer serializer)
     {

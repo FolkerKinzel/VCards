@@ -89,7 +89,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V2_1;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new(new Address());
+        AddressProperty adr = new(Address.Empty);
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard
@@ -131,7 +131,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V3_0;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new(new Address());
+        AddressProperty adr = new(Address.Empty);
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard
@@ -173,7 +173,7 @@ public class AddressPropertyTests
         const VCdVersion version = VCdVersion.V4_0;
         const string labelText = "Nice Label";
 
-        AddressProperty adr = new(new Address());
+        AddressProperty adr = new(Address.Empty);
         Assert.IsTrue(adr.IsEmpty);
 
         var vc = new VCard
@@ -212,7 +212,7 @@ public class AddressPropertyTests
     [TestMethod]
     public void IsEmptyTest1()
     {
-        AddressProperty adr = new(new Address());
+        AddressProperty adr = new(Address.Empty);
         Assert.IsTrue(adr.IsEmpty);
 
         adr.Parameters.Label = "Nice label";
@@ -265,7 +265,7 @@ public class AddressPropertyTests
     [TestMethod]
     public void ItemTest1()
     {
-        ICompoundProperty prop = new AddressProperty(new Address());
+        ICompoundProperty prop = new AddressProperty(Address.Empty);
         Assert.IsNotNull(prop[prop.Count - 1]);
     }
 

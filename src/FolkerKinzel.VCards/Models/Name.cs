@@ -60,7 +60,11 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
     private string[] Get(NameProp prop)
         => _dic.TryGetValue(prop, out string[]? coll) ? coll : [];
 
-    internal Name() => Surnames = Suffixes = [];
+    private Name()
+    {
+        Surnames = Suffixes = [];
+        IsEmpty = true;
+    }
 
     /// <summary>
     /// Initializes a new <see cref="Name"/> instance with the content of a 
@@ -116,6 +120,8 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
 
         Surnames = GetSurnamesView();
         Suffixes = GetSuffixesView();
+
+       IsEmpty = _dic.Count == 0;
     }
 
     [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
@@ -160,6 +166,7 @@ repeat:
 
     internal Name(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
+        IsEmpty = true;
         int index = -1;
 
         foreach (ReadOnlyMemory<char> mem in PropertyValueSplitter.SplitIntoMemories(vCardValue, ';'))
@@ -177,16 +184,15 @@ repeat:
             }
 
             ReadOnlySpan<char> span = mem.Span;
-            string[]? coll = span.Contains(',')
+            string[] coll = span.Contains(',')
                 ? Splitted(in mem, version).ToArray()
                 : StringArrayConverter.ToStringArray(span.UnMaskValue(version));
 
-            if (coll.Length == 0)
+            if (coll.ContainsData())
             {
-                continue;
+                _dic[(NameProp)index] = coll;
+                IsEmpty = false;
             }
-
-            _dic[(NameProp)index] = coll;
         }//foreach
 
         Surnames = GetSurnamesView();
@@ -198,9 +204,8 @@ repeat:
         static IEnumerable<string> Splitted(in ReadOnlyMemory<char> mem, VCdVersion version)
             => PropertyValueSplitter.Split(mem,
                                     ',',
-                                    StringSplitOptions.RemoveEmptyEntries,
                                     unMask: true,
-                                    version);
+                                    version: version);
     }
 
     /// <summary>Surname(s) (also known as "family name(s)"). (2,3,4)</summary>
@@ -235,7 +240,9 @@ repeat:
 
     /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
     /// any usable data, otherwise <c>false</c>.</summary>
-    public bool IsEmpty => _dic.Count == 0;
+    public bool IsEmpty {  get; }
+
+    internal static Name Empty => new(); // Not a singleton
 
     /// <inheritdoc/>
     int IReadOnlyCollection<IReadOnlyList<string>>.Count => MAX_COUNT;

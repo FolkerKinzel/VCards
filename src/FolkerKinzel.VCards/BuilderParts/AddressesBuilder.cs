@@ -227,7 +227,7 @@ public readonly struct AddressesBuilder
                             Func<VCard, string?>? group = null)
     {
         VCard vc = Builder.VCard;
-        var prop = new AddressProperty(value ?? new Address(), group?.Invoke(vc));
+        var prop = new AddressProperty(value ?? Address.Empty, group?.Invoke(vc));
         vc.Set(Prop.Addresses,
                VCardBuilder.Add(prop,
                                 vc.Get<IEnumerable<AddressProperty?>?>(Prop.Addresses),
