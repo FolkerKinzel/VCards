@@ -43,7 +43,7 @@ public class KindPropertyTests
 
         prop = vcard.Kind;
 
-        Assert.AreEqual(kind, prop!.Value);
+        Assert.AreEqual(kind, prop.Value);
         Assert.IsFalse(prop.IsEmpty);
     }
 

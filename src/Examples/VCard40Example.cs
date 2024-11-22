@@ -76,7 +76,7 @@ public static class VCard40Example
         {
             string fileName = Path.Combine(
                 directoryPath,
-                $"{vCard.DisplayNames!.First()!.Value}{vcfExtension}");
+                $"{vCard.DisplayNames?.First()?.Value ?? "unknown"}{vcfExtension}");
 
             vCard.SaveVcf(fileName, VCdVersion.V4_0);
         }

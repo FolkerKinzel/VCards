@@ -18,13 +18,13 @@ public class WhatsAppIssueTests
         IEnumerable<TextProperty?>? phoneNumbers = list[0].Phones;
         Assert.IsNotNull(phoneNumbers);
 
-        TextProperty? whatsAppNumber = phoneNumbers!.ElementAtOrDefault(1);
+        TextProperty? whatsAppNumber = phoneNumbers.ElementAtOrDefault(1);
         Assert.IsNotNull(whatsAppNumber);
 
-        KeyValuePair<string, string>? parameter = whatsAppNumber!.Parameters.NonStandard?.FirstOrDefault();
+        KeyValuePair<string, string>? parameter = whatsAppNumber.Parameters.NonStandard?.FirstOrDefault();
 
         Assert.IsTrue(parameter.HasValue);
-        Assert.AreEqual("TYPE", parameter!.Value.Key);
-        Assert.AreEqual("WhatsApp", parameter!.Value.Value);
+        Assert.AreEqual("TYPE", parameter.Value.Key);
+        Assert.AreEqual("WhatsApp", parameter.Value.Value);
     }
 }

@@ -189,9 +189,9 @@ public class V2Tests
         Assert.AreEqual(1, vCards.Count);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
         Assert.IsNotNull(addresses);
-        Assert.AreEqual(1, addresses!.Count());
-        Assert.AreEqual(100, addresses!.First()!.Parameters.Preference);
-        Assert.IsNotNull(addresses!.FirstOrDefault(x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
+        Assert.AreEqual(1, addresses.Count());
+        Assert.AreEqual(100, addresses.First()!.Parameters.Preference);
+        Assert.IsNotNull(addresses.FirstOrDefault(x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
 
     }
 
@@ -286,7 +286,8 @@ public class V2Tests
 
         Assert.IsNotNull(vCard.Addresses);
         adr = vCard.Addresses.First();
-        Assert.IsNotNull(adr!.Parameters.Label);
+        Assert.IsNotNull(adr);
+        Assert.IsNotNull(adr.Parameters.Label);
         Assert.IsNotNull(adr.Parameters.GeoPosition);
         Assert.IsNotNull(adr.Parameters.TimeZone);
     }

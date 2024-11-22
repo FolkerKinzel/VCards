@@ -74,7 +74,7 @@ public class TelTypesCollectorTests
             Tel? comp = TelConverter.Parse(list[0].AsSpan());
 
             Assert.IsTrue(comp.HasValue);
-            Assert.AreEqual(comp!.Value, item);
+            Assert.AreEqual(comp.Value, item);
 
             var comp2 = (Tel)Enum.Parse(typeof(Tel), list[0], true);
 

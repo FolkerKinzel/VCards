@@ -69,7 +69,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
             // AddressProperty.Parameters.Label or
             // AddressProperty.Parameters.GeoPosition or
             // AddressProperty.Parameters.TimeZone is not null:
-            if (!prop!.Value.IsEmpty || !IgnoreEmptyItems)
+            if (!prop.Value.IsEmpty || !IgnoreEmptyItems)
             {
                 BuildProperty(VCard.PropKeys.ADR, prop, isPref);
             }

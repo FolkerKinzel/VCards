@@ -10,7 +10,7 @@ public class RelationTypesConverterTests
     {
         foreach (Rel rel in (Rel[])Enum.GetValues(typeof(Rel)))
         {
-            Rel? rel2 = RelConverter.Parse(RelConverter.ToVcfString(rel)!.AsSpan());
+            Rel? rel2 = RelConverter.Parse(RelConverter.ToVcfString(rel).AsSpan());
             Assert.AreEqual(rel, rel2);
         }
 

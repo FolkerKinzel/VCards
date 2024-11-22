@@ -1101,10 +1101,11 @@ public class VCardBuilderTests
         Assert.IsNotNull(vc.NameViews);
         vc.NameViews = vc.NameViews.Append(null);
 
-        NameProperty prop1 = vc.NameViews!.First()!;
-        NameProperty prop2 = vc.NameViews!.ElementAt(1)!;
+        NameProperty? prop1 = vc.NameViews.First();
+        NameProperty? prop2 = vc.NameViews.ElementAt(1)!;
+        Assert.IsNotNull(prop1);
 
-        Assert.IsNotNull(vc.NameViews?.FirstOrDefault());
+        Assert.IsNotNull(vc.NameViews.FirstOrDefault());
 
         Assert.AreEqual("Miller", prop1.Value.Surnames[0]);
         Assert.AreEqual("en", prop1.Parameters.Language);

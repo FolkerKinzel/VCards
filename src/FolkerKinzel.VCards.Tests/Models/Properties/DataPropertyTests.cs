@@ -141,7 +141,7 @@ public class DataPropertyTests
         DataProperty? photo = vcard.Photos!.First();
         Assert.IsNotNull(photo);
         Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
-        Assert.AreEqual("blabla", photo!.Parameters.MediaType);
+        Assert.AreEqual("blabla", photo.Parameters.MediaType);
     }
 
     [TestMethod]
@@ -228,7 +228,7 @@ public class DataPropertyTests
         DataProperty? photo = vcard.Photos!.First();
         Assert.IsNotNull(photo);
         Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
-        Assert.AreEqual("image/png", photo!.Parameters.MediaType);
+        Assert.AreEqual("image/png", photo.Parameters.MediaType);
     }
 
     [TestMethod]
@@ -249,7 +249,7 @@ public class DataPropertyTests
         DataProperty? photo = vcard.Photos!.First();
         Assert.IsNotNull(photo);
         Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
-        Assert.AreEqual("image/gif", photo!.Parameters.MediaType);
+        Assert.AreEqual("image/gif", photo.Parameters.MediaType);
     }
 
     [TestMethod]

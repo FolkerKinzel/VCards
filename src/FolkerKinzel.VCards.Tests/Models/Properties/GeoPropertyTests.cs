@@ -43,9 +43,9 @@ public class GeoPropertyTests
 
         Assert.IsNotNull(vcard.GeoCoordinates);
 
-        prop = vcard.GeoCoordinates!.First();
-
-        Assert.AreEqual(geo, prop!.Value);
+        prop = vcard.GeoCoordinates.FirstOrNull();
+        Assert.IsNotNull(prop);
+        Assert.AreEqual(geo, prop.Value);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
     }

@@ -81,11 +81,11 @@ public class GenderPropertyTests
 
         Assert.IsNotNull(vcard.GenderViews);
 
-        prop = vcard.GenderViews!.First() as GenderProperty;
+        prop = vcard.GenderViews.FirstOrNull();
 
         Assert.IsNotNull(prop);
-        Assert.AreEqual(Sex.Female, prop!.Value.Sex);
-        Assert.AreEqual(IDENTITY, prop!.Value.Identity);
+        Assert.AreEqual(Sex.Female, prop.Value.Sex);
+        Assert.AreEqual(IDENTITY, prop.Value.Identity);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsFalse(prop.IsEmpty);
     }

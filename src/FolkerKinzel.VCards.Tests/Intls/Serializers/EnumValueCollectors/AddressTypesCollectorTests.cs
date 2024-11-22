@@ -65,7 +65,7 @@ public class AddressTypesCollectorTests
             Adr? comp = AdrConverter.Parse(list[0].AsSpan());
 
             Assert.IsTrue(comp.HasValue);
-            Assert.AreEqual(comp!.Value, item);
+            Assert.AreEqual(comp.Value, item);
 
             var comp2 = (Adr)Enum.Parse(
                 typeof(Adr), list[0], true);

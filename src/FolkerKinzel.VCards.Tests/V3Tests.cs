@@ -385,7 +385,8 @@ END:VCARD";
 
         Assert.IsNotNull(vCard.Addresses);
         adr = vCard.Addresses.First();
-        Assert.IsNotNull(adr!.Parameters.Label);
+        Assert.IsNotNull(adr);
+        Assert.IsNotNull(adr.Parameters.Label);
         Assert.IsNotNull(adr.Parameters.GeoPosition);
         Assert.IsNotNull(adr.Parameters.TimeZone);
     }

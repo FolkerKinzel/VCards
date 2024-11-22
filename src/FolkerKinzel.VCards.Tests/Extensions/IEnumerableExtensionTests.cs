@@ -212,7 +212,7 @@ public class IEnumerableExtensionTests
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);
 
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
+        TextProperty? dispNameProp = list[0].DisplayNames.FirstOrNull();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
         Assert.AreEqual(version, list[0].Version);
@@ -391,7 +391,7 @@ public class IEnumerableExtensionTests
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);
 
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
+        TextProperty? dispNameProp = list[0].DisplayNames.FirstOrNull();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
         Assert.AreEqual(version, list[0].Version);

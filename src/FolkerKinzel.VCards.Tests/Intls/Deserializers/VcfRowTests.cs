@@ -22,7 +22,7 @@ public class VcfRowTests
         }
 
         Assert.IsNotNull(row);
-        Assert.IsNotNull(row!.Parameters);
+        Assert.IsNotNull(row.Parameters);
         Assert.AreEqual(parametersCount, row.Parameters.Count);
         Assert.AreEqual(key, row.Key, false);
         Assert.AreEqual(group, row.Group, false);

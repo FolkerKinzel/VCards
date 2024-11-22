@@ -44,8 +44,9 @@ public class TimeZonePropertyTests
 
         Assert.IsNotNull(vcard.TimeZones);
 
-        prop = vcard.TimeZones!.First();
-        Assert.IsFalse(prop!.IsEmpty);
+        prop = vcard.TimeZones.FirstOrNull();
+        Assert.IsNotNull(prop);
+        Assert.IsFalse(prop.IsEmpty);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsTrue(tz.TryGetUtcOffset(out TimeSpan utc1));
         Assert.IsTrue(prop.Value.TryGetUtcOffset(out TimeSpan utc2));
