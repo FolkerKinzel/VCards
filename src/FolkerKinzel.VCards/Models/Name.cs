@@ -108,48 +108,49 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
             }
         }
 
+        Surnames = GetSurnamesView();
+        Suffixes = GetSuffixesView();
+
         if (surnames2.Length != 0)
         {
-            AddOldValueForCompatibility(NameProp.Surnames, surnames, surnames2, builder.Worker);
+            AddToOldValuesForCompatibility(NameProp.Surnames, surnames, surnames2, builder.Worker);
         }
 
         if (generation.Length != 0)
         {
-            AddOldValueForCompatibility(NameProp.Suffixes, suffixes, generation, builder.Worker);
+            AddToOldValuesForCompatibility(NameProp.Suffixes, suffixes, generation, builder.Worker);
         }
 
-        Surnames = GetSurnamesView();
-        Suffixes = GetSuffixesView();
-
-       IsEmpty = _dic.Count == 0;
+        IsEmpty = _dic.Count == 0;
     }
 
     [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
         Justification = "Performance: Collection initializer allocate a new List<string>")]
-    private void AddOldValueForCompatibility(NameProp oldPropKey, string[] oldPropVals, string[] newPropVals, List<string> list)
+    private void AddToOldValuesForCompatibility(NameProp oldPropKey, string[] oldPropVals, string[] newPropVals, List<string> list)
     {
         Debug.Assert(newPropVals.Length != 0);
 
-        if(oldPropVals.Length == 0)
+        if (oldPropVals.Length == 0)
         {
             _dic[oldPropKey] = newPropVals;
+            return;
         }
 
-        GetNewValuesNotInOldProp(oldPropVals, newPropVals, list);
+        list.Clear();
+        list.AddRange(oldPropVals);
 
-        if (list.Count != 0)
+        AddNewValuesNotInOldProp(oldPropVals, newPropVals, list);
+
+        if (list.Count != oldPropVals.Length)
         {
-            list.AddRange(oldPropVals);
             _dic[oldPropKey] = list.ToArray();
         }
 
-        static void GetNewValuesNotInOldProp(ReadOnlySpan<string> oldPropVals, ReadOnlySpan<string> newPropVals, List<string> newValuesNotInOldProp)
+        static void AddNewValuesNotInOldProp(ReadOnlySpan<string> oldPropVals, ReadOnlySpan<string> newPropVals, List<string> list)
         {
-            newValuesNotInOldProp.Clear();
-
-            foreach(string newVal in newPropVals)
+            foreach (string newVal in newPropVals)
             {
-                foreach(string oldPropVal in oldPropVals)
+                foreach (string oldPropVal in oldPropVals)
                 {
                     if (oldPropVal.Contains(newVal, StringComparison.CurrentCultureIgnoreCase))
                     {
@@ -157,7 +158,7 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
                     }
                 }
 
-                newValuesNotInOldProp.Add(newVal);
+                list.Add(newVal);
 repeat:
                 continue;
             }
@@ -240,7 +241,7 @@ repeat:
 
     /// <summary>Returns <c>true</c>, if the <see cref="Name" /> object does not contain
     /// any usable data, otherwise <c>false</c>.</summary>
-    public bool IsEmpty {  get; }
+    public bool IsEmpty { get; }
 
     internal static Name Empty => new(); // Not a singleton
 
@@ -330,12 +331,12 @@ repeat:
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private IReadOnlyList<string> GetSurnamesView() => GetDiffView(NameProp.Surnames, NameProp.Surnames2);
+    private IReadOnlyList<string> GetSurnamesView() => GetOldValuesNotInNewValues(NameProp.Surnames, NameProp.Surnames2);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private IReadOnlyList<string> GetSuffixesView() => GetDiffView(NameProp.Suffixes, NameProp.Generations);
+    private IReadOnlyList<string> GetSuffixesView() => GetOldValuesNotInNewValues(NameProp.Suffixes, NameProp.Generations);
 
-    private IReadOnlyList<string> GetDiffView(NameProp oldIdx, NameProp newIdx)
+    private IReadOnlyList<string> GetOldValuesNotInNewValues(NameProp oldIdx, NameProp newIdx)
     {
         if (!_dic.TryGetValue(oldIdx, out string[]? oldProps))
         {
