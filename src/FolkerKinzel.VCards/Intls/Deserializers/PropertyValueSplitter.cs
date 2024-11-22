@@ -9,7 +9,6 @@ internal static class PropertyValueSplitter
 {
     public static IEnumerable<string> Split(ReadOnlyMemory<char> mem,
                                             char splitChar,
-                                            bool unMask,
                                             VCdVersion version)
     {
         if (mem.IsEmpty)
@@ -24,9 +23,7 @@ internal static class PropertyValueSplitter
 
             ReadOnlyMemory<char> nextChunk = mem.Slice(0, splitIndex);
 
-            yield return unMask
-                         ? nextChunk.Span.UnMaskValue(version)
-                         : nextChunk.ToString();
+            yield return nextChunk.Span.UnMaskValue(version);
 
             if (splitIndex == mem.Length)
             {

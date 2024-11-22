@@ -205,7 +205,6 @@ repeat:
         static IEnumerable<string> Splitted(in ReadOnlyMemory<char> mem, VCdVersion version)
             => PropertyValueSplitter.Split(mem,
                                     ',',
-                                    unMask: true,
                                     version: version);
     }
 

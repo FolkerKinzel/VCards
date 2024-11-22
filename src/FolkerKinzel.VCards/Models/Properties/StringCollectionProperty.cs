@@ -64,7 +64,6 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         static IEnumerable<string> Splitted(VcfRow vcfRow, VCdVersion version)
             => PropertyValueSplitter.Split(vcfRow.Value,
                                            ',',
-                                           unMask: true,
                                            version: version);
     }
 

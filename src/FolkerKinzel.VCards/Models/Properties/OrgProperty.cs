@@ -62,7 +62,7 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
         }
 
         var orgList = new List<string>(
-            PropertyValueSplitter.Split(val, ';', unMask: true, version: version));
+            PropertyValueSplitter.Split(val, ';', version: version));
 
         if (orgList.Count == 0)
         {
