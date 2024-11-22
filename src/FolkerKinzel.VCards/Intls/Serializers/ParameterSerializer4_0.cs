@@ -1057,6 +1057,8 @@ internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSeriali
 
         AppendParameter(ParaKey.SORT_AS, "");
 
+        Debug.Assert(sortAs is string[]);
+
         foreach (string item in ((string[])sortAs).AsSpan())
         {
             rollBack = false;

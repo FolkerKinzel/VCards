@@ -516,9 +516,9 @@ internal abstract class VcfSerializer : IDisposable
         Debug.Assert(value is not null);
 
         if (value.WhereNotEmpty()
-                 .FirstOrDefault(static x => x.Value!.TryAsDateOnly(out _)) is DateAndOrTimeProperty prop)
+                 .FirstOrDefault(static x => x.Value.TryAsDateOnly(out _)) is DateAndOrTimeProperty prop)
         {
-            _ = prop.Value!.TryAsDateOnly(out DateOnly dto);
+            _ = prop.Value.TryAsDateOnly(out DateOnly dto);
 
             if (Options.HasFlag(VcfOpts.WriteXExtensions))
             {

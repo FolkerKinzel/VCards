@@ -64,7 +64,7 @@ public class DateTimeTextPropertyTests
         var prop = new DateAndOrTimeProperty(test);
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsNotNull(prop.Value);
-        Assert.AreEqual(test, prop.Value!.String);
+        Assert.AreEqual(test, prop.Value.String);
     }
 
     [TestMethod]
@@ -83,7 +83,7 @@ public class DateTimeTextPropertyTests
 
         var prop2 = (DateAndOrTimeProperty)prop1.Clone();
 
-        Assert.AreSame(prop1.Value!.String, prop2.Value!.String);
+        Assert.AreSame(prop1.Value.String, prop2.Value.String);
         Assert.AreNotSame(prop1, prop2);
     }
 }

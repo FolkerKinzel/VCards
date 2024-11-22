@@ -18,7 +18,7 @@ public class DateTimeOffsetPropertyTests
 
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsNotNull(prop!.Value!.DateTimeOffset);
+        Assert.IsNotNull(prop.Value.DateTimeOffset);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.AreNotEqual(DateTimeOffset.MinValue, prop.Value.DateTimeOffset!.Value);
 

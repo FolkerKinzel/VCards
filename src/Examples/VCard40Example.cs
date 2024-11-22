@@ -124,13 +124,13 @@ public static class VCard40Example
         DateOnly date = default;
         bool found = composersVCard.Members
                 .OrderByPref()
-                .Select(x => x.Value?.VCard)
+                .Select(x => x.Value.VCard)
                 .OfType<VCard>()
                 .FirstOrDefault(x => x.DisplayNames
                                       .Items()
                                       .Any(x => x.Value == "Ludwig van Beethoven"))?
                     .BirthDayViews
-                    .FirstOrNull(x => x.Value?.TryAsDateOnly(out date) ?? false)
+                    .FirstOrNull(x => x.Value.TryAsDateOnly(out date))
                      is not null;
 
         birthDay = date;

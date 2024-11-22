@@ -71,9 +71,9 @@ public class V4Tests
 
         _ = Vcf.Parse(s);
 
-        Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
+        Assert.AreEqual(vcard.Keys?.First()?.Value.String, ASCIITEXT);
         Assert.AreEqual("image/jpeg", vcard.Photos?.First()?.Parameters.MediaType);
-        Assert.IsTrue(vcard.Photos?.First()?.Value?.Bytes?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(vcard.Photos?.First()?.Value.Bytes?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()
@@ -222,7 +222,9 @@ public class V4Tests
         };
 
         Assert.IsNotNull(vc.Members);
-        Assert.IsNull(vc.Members!.First()?.Value?.VCard?.ContactID);
+        VCard? firstMembersVCard = vc.Members.First()?.Value.VCard;
+        Assert.IsNotNull(firstMembersVCard);
+        Assert.IsNull(firstMembersVCard.ContactID);
 
         IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 

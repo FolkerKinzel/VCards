@@ -15,7 +15,7 @@ public class DateOnlyPropertyTests
         Assert.IsNotNull(prop);
         Assert.IsTrue(prop.Value.DateOnly.HasValue);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.AreEqual(dateOnly, prop.Value!.DateOnly);
+        Assert.AreEqual(dateOnly, prop.Value.DateOnly);
     }
 
     [TestMethod]

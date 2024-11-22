@@ -48,7 +48,7 @@ public class TimeZonePropertyTests
         Assert.IsFalse(prop!.IsEmpty);
         Assert.AreEqual(GROUP, prop.Group);
         Assert.IsTrue(tz.TryGetUtcOffset(out TimeSpan utc1));
-        Assert.IsTrue(prop.Value!.TryGetUtcOffset(out TimeSpan utc2));
+        Assert.IsTrue(prop.Value.TryGetUtcOffset(out TimeSpan utc2));
         Assert.AreEqual(utc1, utc2);
     }
 

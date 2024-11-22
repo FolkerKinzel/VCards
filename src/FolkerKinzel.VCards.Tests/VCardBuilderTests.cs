@@ -1736,7 +1736,7 @@ public class VCardBuilderTests
 
         Assert.IsNotNull(vc.Xmls);
         Assert.AreEqual(2, vc.Xmls.Count());
-        Assert.AreEqual("Second", XElement.Parse(vc.Xmls.First()!.Value!).Value);
+        Assert.AreEqual("Second", XElement.Parse(vc.Xmls.First()!.Value).Value);
 
         VCardBuilder
             .Create(vc)

@@ -35,8 +35,8 @@ public class AppIDPropertyTests
         AppIDProperty? prop2 = vcard.AppIDs!.First();
 
         Assert.IsNotNull(prop);
-        Assert.AreEqual(prop2!.Value!.LocalID, prop!.Value?.LocalID);
-        Assert.AreEqual(prop2!.Value!.GlobalID, prop!.Value?.GlobalID);
+        Assert.AreEqual(prop2.Value.LocalID, prop.Value.LocalID);
+        Assert.AreEqual(prop2.Value.GlobalID, prop.Value.GlobalID);
         Assert.IsNull(prop.Group);
         Assert.IsFalse(prop.IsEmpty);
     }

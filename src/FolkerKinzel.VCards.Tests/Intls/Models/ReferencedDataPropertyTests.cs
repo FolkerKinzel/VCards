@@ -20,10 +20,10 @@ public class ReferencedDataPropertyTests
         Assert.IsInstanceOfType<Uri>(prop2.Value.Object);
         Assert.IsNotNull(prop1.Value);
         Assert.IsNotNull(prop2.Value);
-        Assert.IsNotNull(prop1.Value!.Uri);
-        Assert.IsNotNull(prop2.Value!.Uri);
+        Assert.IsNotNull(prop1.Value.Uri);
+        Assert.IsNotNull(prop2.Value.Uri);
 
-        Assert.AreSame(prop1.Value!.Uri, prop2.Value!.Uri);
+        Assert.AreSame(prop1.Value.Uri, prop2.Value.Uri);
     }
 
 

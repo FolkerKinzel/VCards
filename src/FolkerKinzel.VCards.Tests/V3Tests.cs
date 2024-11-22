@@ -99,9 +99,9 @@ public class V3Tests
 
         _ = Vcf.Parse(s);
 
-        Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
+        Assert.AreEqual(vcard.Keys?.First()?.Value.String, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(vcard.Photos?.First()?.Value?.Bytes?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(vcard.Photos?.First()?.Value.Bytes?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()

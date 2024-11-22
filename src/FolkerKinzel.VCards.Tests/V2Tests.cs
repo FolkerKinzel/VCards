@@ -89,9 +89,9 @@ public class V2Tests
 
         _ = Vcf.Parse(s);
 
-        Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
+        Assert.AreEqual(vcard.Keys?.First()?.Value.String, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(vcard.Photos?.First()?.Value?.Bytes?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(vcard.Photos?.First()?.Value.Bytes?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()
@@ -584,7 +584,7 @@ public class V2Tests
         VCard vc = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vc.Photos);
-        Assert.AreEqual("http://käse.com", vc.Photos.First()!.Value?.Uri?.OriginalString);
+        Assert.AreEqual("http://käse.com", vc.Photos.First()!.Value.Uri?.OriginalString);
     }
 
     [TestMethod]
