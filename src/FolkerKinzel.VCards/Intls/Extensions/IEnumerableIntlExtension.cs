@@ -115,16 +115,56 @@ internal static class IEnumerableIntlExtension
         IEnumerable<TSource?> values,
         Func<TSource, int> sortingCriterion,
         bool ignoreEmptyItems) where TSource : VCardProperty
-    => ignoreEmptyItems ? values.WhereNotEmpty().OrderBy(sortingCriterion).FirstOrDefault()
-                        : values.OfType<TSource>().OrderBy(sortingCriterion).FirstOrDefault();
+    {
+        TSource? prop = null;
+        int sort = int.MaxValue;
+
+        foreach (TSource? value in values)
+        {
+            if (value is null || (ignoreEmptyItems && value.IsEmpty))
+            {
+                continue;
+            }
+
+            int tmpSort = sortingCriterion(value);
+
+            if (tmpSort < sort)
+            {
+                prop = value;
+                sort = tmpSort;
+            }
+        }
+
+        return prop;
+    }
 
     private static TSource? ItemOrNullIntl<TSource>(
         IEnumerable<TSource?> values,
         Func<TSource, int> sortingCriterion,
         Func<TSource, bool> filter,
         bool ignoreEmptyItems) where TSource : VCardProperty
-         => ignoreEmptyItems ? values.WhereNotEmptyAnd(filter).OrderBy(sortingCriterion).FirstOrDefault()
-                             : values.WhereNotNullAnd(filter).OrderBy(sortingCriterion).FirstOrDefault();
+    {
+        TSource? prop = null;
+        int sort = int.MaxValue;
+
+        foreach (TSource? value in values)
+        {
+            if (value is null || (ignoreEmptyItems && value.IsEmpty) || !filter(value))
+            {
+                continue;
+            }
+
+            int tmpSort = sortingCriterion(value);
+
+            if (tmpSort < sort)
+            {
+                prop = value;
+                sort = tmpSort;
+            }
+        }
+
+        return prop;
+    }
 
     private static int GetPreference(VCardProperty prop) => prop.Parameters.Preference;
 

@@ -155,6 +155,9 @@ and let it store as string[]
 - [x] Check all `Value?` operators
 - [x] Check all `Value!` operators
 
+&nbsp;
+- [x] Refactor ItemOrNullIntl( ... )
+
 ### 7.4.5
 - [x] Fix an issue that a "geo" URI was not parsed if this "geo" URI was masked.
 - [ ] Update dependencies to contain .NET 9.0 packages.
