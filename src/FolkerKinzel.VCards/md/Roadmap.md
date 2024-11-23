@@ -79,7 +79,7 @@ and let it store as string[]
 - [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
 
 ### 7.4.5
-- [ ] Fix an issue that a "geo" URI was not parsed if this "geo" URI was masked.
+- [x] Fix an issue that a "geo" URI was not parsed if this "geo" URI was masked.
 - [ ] Update dependencies to contain .NET 9.0 packages.
 
 ### 7.4.4

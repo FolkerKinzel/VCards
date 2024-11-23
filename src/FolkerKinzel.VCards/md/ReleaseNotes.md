@@ -1,5 +1,4 @@
-- .NET 9.0 version of the package
-- Changes the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0
+- Fixes an issue that a "geo" URI was not parsed if this "geo" URI was masked.
 - Dependency update
 
 &nbsp;
