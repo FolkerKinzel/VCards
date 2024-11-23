@@ -167,7 +167,6 @@ repeat:
 
     internal Name(in ReadOnlyMemory<char> vCardValue, VCdVersion version)
     {
-        IsEmpty = true;
         int index = -1;
 
         foreach (ReadOnlyMemory<char> mem in PropertyValueSplitter.SplitIntoMemories(vCardValue, ';'))
@@ -192,12 +191,13 @@ repeat:
             if (coll.ContainsData())
             {
                 _dic[(NameProp)index] = coll;
-                IsEmpty = false;
             }
         }//foreach
 
         Surnames = GetSurnamesView();
         Suffixes = GetSuffixesView();
+
+        IsEmpty = _dic.Count == 0;
 
         /////////////////////////////////////////
 
