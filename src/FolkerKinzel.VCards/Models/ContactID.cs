@@ -6,7 +6,8 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
 /// Encapsulates a globally unique identifier corresponding to the entity associated 
-/// with the vCard.
+/// with the vCard. The value of this identifier can be either a <see cref="System.Guid"/>,
+/// a <see cref="System.Uri"/>, or a <see cref="string"/>.
 /// </summary>
 public sealed class ContactID : IEquatable<ContactID>
 {

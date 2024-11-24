@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
 /// Encapsulates data that describes a date and/or a time.
-/// This can be a <see cref="System.DateOnly"/> value, a 
+/// This can be either a <see cref="System.DateOnly"/> value, a 
 /// <see cref="System.DateTimeOffset"/> value, a <see cref="System.TimeOnly"/>
 /// value, or a <see cref="string"/>.
 /// </summary>
