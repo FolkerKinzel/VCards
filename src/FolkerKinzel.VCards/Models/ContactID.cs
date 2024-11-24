@@ -12,7 +12,6 @@ namespace FolkerKinzel.VCards.Models;
 public sealed class ContactID : IEquatable<ContactID>
 {
     private readonly object? _object;
-    //private bool _boxed;
 
     private ContactID(Guid guid) => Guid = guid;
 
