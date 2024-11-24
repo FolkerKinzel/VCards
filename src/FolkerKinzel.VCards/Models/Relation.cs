@@ -17,7 +17,9 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="ContactID"/>
 public sealed class Relation
 {
-    private Relation(object obj) => Object = obj;
+    private readonly object _object;
+
+    private Relation(object obj) => _object = obj;
 
     /// <summary>
     /// Creates a new <see cref="Relation"/> instance, which is newly initialized using the 
@@ -63,18 +65,18 @@ public sealed class Relation
     /// <c>true</c> if the instance if the instance does not relate to anything, otherwise 
     /// <c>false</c>.
     /// </summary>
-    public bool IsEmpty => ReferenceEquals(this, Empty);
+    public bool IsEmpty => ContactID?.IsEmpty ?? false;
 
     /// <summary>
-    /// A singleton whose <see cref="IsEmpty"/> property returns <c>true</c>.
+    /// An instance whose <see cref="IsEmpty"/> property returns <c>true</c>.
     /// </summary>
-    internal static Relation Empty { get; } = new Relation(ContactID.Empty);
+    internal static Relation Empty => new(ContactID.Empty);
 
     /// <summary>
     /// Gets the encapsulated <see cref="VCards.VCard"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
-    public VCard? VCard => Object as VCard;
+    public VCard? VCard => _object as VCard;
 
     /// <summary>
     /// Gets the encapsulated <see cref="Models.ContactID"/>,
@@ -84,12 +86,8 @@ public sealed class Relation
     /// The <see cref="Models.ContactID"/> references another <see cref="VCard"/> with
     /// its <see cref="VCard.ContactID"/> property.
     /// </remarks>
-    public ContactID? ContactID => Object as ContactID;
-
-    /// <summary>
-    /// Gets the encapsulated value.
-    /// </summary>
-    public object Object { get; }
+    public ContactID? ContactID => _object as ContactID;
+    
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
@@ -103,13 +101,13 @@ public sealed class Relation
     public void Switch(Action<VCard>? vCardAction = null,
                        Action<ContactID>? contactIDAction = null)
     {
-        if (Object is VCard vc)
+        if (_object is VCard vc)
         {
             vCardAction?.Invoke(vc);
         }
         else
         {
-            contactIDAction?.Invoke((ContactID)Object);
+            contactIDAction?.Invoke((ContactID)_object);
         }
     }
 
@@ -128,13 +126,13 @@ public sealed class Relation
                              Action<ContactID, TArg>? contactIDAction,
                              TArg arg)
     {
-        if (Object is VCard vc)
+        if (_object is VCard vc)
         {
             vCardAction?.Invoke(vc, arg);
         }
         else
         {
-            contactIDAction?.Invoke((ContactID)Object, arg);
+            contactIDAction?.Invoke((ContactID)_object, arg);
         }
     }
 
@@ -154,12 +152,11 @@ public sealed class Relation
     /// </exception>
     public TResult Convert<TResult>(Func<VCard, TResult> vCardFunc,
                                     Func<ContactID, TResult> contactIDFunc)
-        => Object is VCard vCard
+        => _object is VCard vCard
             ? vCardFunc is null ? throw new ArgumentNullException(nameof(vCardFunc))
                                 : vCardFunc(vCard)
             : contactIDFunc is null ? throw new ArgumentNullException(nameof(contactIDFunc))
-                                    : contactIDFunc((ContactID)Object);
-
+                                    : contactIDFunc((ContactID)_object);
 
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/> and allows to specify an
@@ -181,16 +178,16 @@ public sealed class Relation
     public TResult Convert<TArg, TResult>(Func<VCard, TArg, TResult> vCardFunc,
                                           Func<ContactID, TArg, TResult> contactIDFunc,
                                           TArg arg)
-        => Object is VCard vCard
+        => _object is VCard vCard
             ? vCardFunc is null ? throw new ArgumentNullException(nameof(vCardFunc))
                                 : vCardFunc(vCard, arg)
             : contactIDFunc is null ? throw new ArgumentNullException(nameof(contactIDFunc))
-                                    : contactIDFunc((ContactID)Object, arg);
+                                    : contactIDFunc((ContactID)_object, arg);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => Object is VCard vc
+    public override string ToString() => _object is VCard vc
                                             ? $"{{ {nameof(VCard)}: {vc.DisplayNames.FirstOrNull()?.Value} }}"
-                                            : $"{Object.GetType().FullName}: {Object}";
+                                            : $"{_object.GetType().FullName}: {_object}";
 }
 

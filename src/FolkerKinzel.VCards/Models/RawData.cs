@@ -166,6 +166,8 @@ public sealed class RawData
     /// <summary>
     /// Gets the encapsulated value.
     /// </summary>
+    /// <value>Either a <see cref="byte"/>-Array, or a <see cref="System.Uri"/>,
+    /// or a <see cref="string"/>.</value>
     public object Object { get; }
 
     /// <summary>Specifies the MIME type for the data.</summary>

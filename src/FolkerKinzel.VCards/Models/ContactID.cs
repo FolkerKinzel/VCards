@@ -10,16 +10,12 @@ namespace FolkerKinzel.VCards.Models;
 /// </summary>
 public sealed class ContactID : IEquatable<ContactID>
 {
-    private object? _object;
-    private bool _boxed;
+    private readonly object? _object;
+    //private bool _boxed;
 
     private ContactID(Guid guid) => Guid = guid;
 
-    private ContactID(object value)
-    {
-        _object = value;
-        _boxed = true;
-    }
+    private ContactID(object value) => _object = value; //_boxed = true;
 
     /// <summary>
     /// Creates a new <see cref="ContactID"/> instance from a newly
@@ -117,32 +113,13 @@ public sealed class ContactID : IEquatable<ContactID>
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <value>An absolute <see cref="System.Uri"/> or <c>null</c>.</value>
-    public Uri? Uri => Object as Uri;
+    public Uri? Uri => _object as Uri;
 
     /// <summary>
     /// Gets the encapsulated <see cref="string"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
-    public string? String => Object as string;
-
-    /// <summary>
-    /// Gets the encapsulated value.
-    /// </summary>
-    public object Object
-    {
-        get
-        {
-            // Box the Guid only once, and only if
-            // needed:
-            if (!_boxed)
-            {
-                _object = Guid!.Value;
-                _boxed = true;
-            }
-
-            return _object!;
-        }
-    }
+    public string? String => _object as string;
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
@@ -163,13 +140,13 @@ public sealed class ContactID : IEquatable<ContactID>
         {
             guidAction?.Invoke(Guid.Value);
         }
-        else if (Object is Uri uri)
+        else if (_object is Uri uri)
         {
             uriAction?.Invoke(uri);
         }
         else
         {
-            stringAction?.Invoke((string)Object);
+            stringAction?.Invoke((string)_object!);
         }
     }
 
@@ -195,13 +172,13 @@ public sealed class ContactID : IEquatable<ContactID>
         {
             guidAction?.Invoke(Guid.Value, arg);
         }
-        else if (Object is Uri uri)
+        else if (_object is Uri uri)
         {
             uriAction?.Invoke(uri, arg);
         }
         else
         {
-            stringAction?.Invoke((string)Object, arg);
+            stringAction?.Invoke((string)_object!, arg);
         }
     }
 
@@ -225,13 +202,13 @@ public sealed class ContactID : IEquatable<ContactID>
         => Guid.HasValue ? guidFunc is null 
                               ? throw new ArgumentNullException(nameof(guidFunc))
                               : guidFunc(Guid.Value)
-                         : Object is Uri uri 
+                         : _object is Uri uri 
                               ? uriFunc is null 
                                       ? throw new ArgumentNullException(nameof(uriFunc))
                                       : uriFunc(uri)
                               : stringFunc is null 
                                       ? throw new ArgumentNullException(nameof(stringFunc))
-                                      : stringFunc((string)Object);
+                                      : stringFunc((string)_object!);
 
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/> and allows to specify an
@@ -259,16 +236,20 @@ public sealed class ContactID : IEquatable<ContactID>
         => Guid.HasValue ? guidFunc is null 
                              ? throw new ArgumentNullException(nameof(guidFunc))
                              : guidFunc(Guid.Value, arg)
-                         : Object is Uri uri 
+                         : _object is Uri uri 
                                  ? uriFunc is null 
                                       ? throw new ArgumentNullException(nameof(uriFunc))
                                       : uriFunc(uri, arg)
                                  : stringFunc is null 
                                       ? throw new ArgumentNullException(nameof(stringFunc))
-                                      : stringFunc((string)Object, arg);
+                                      : stringFunc((string)_object!, arg);
 
     /// <inheritdoc/>
-    public override string ToString() => IsEmpty ? "<Empty>" : $"{Object.GetType().FullName}: {Object}";
+    public override string ToString() 
+        => IsEmpty ? "<Empty>" 
+                   : Guid.HasValue 
+                        ? $"{typeof(Guid).FullName}: {Guid.Value}" 
+                        :  $"{_object!.GetType().FullName}: {_object}";
 
     /// <inheritdoc/>
     ///
@@ -290,7 +271,7 @@ public sealed class ContactID : IEquatable<ContactID>
     public override bool Equals(object? obj) => Equals(obj as ContactID);
 
     /// <inheritdoc/>
-    public override int GetHashCode() => Object.GetHashCode();
+    public override int GetHashCode() => HashCode.Combine(Guid, _object);
 
     /// <summary>
     /// Overloads the equality operator for <see cref="ContactID"/> instances.
