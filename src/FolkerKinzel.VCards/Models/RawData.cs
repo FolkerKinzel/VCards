@@ -4,7 +4,6 @@ using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Resources;
-using OneOf;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -133,9 +132,12 @@ public sealed class RawData
         string mediaType = dataUrlInfo.MimeType.ToString();
         Debug.Assert(mediaType.Length > 0);
 
-        return dataUrlInfo.TryGetEmbeddedData(out OneOf<string, byte[]> data)
-            ? data.IsT0 ? new(data.AsT0, mediaType, data.AsT0.Length == 0)
-                        : new(data.AsT1, mediaType, data.AsT1.Length == 0)
+        return dataUrlInfo.TryGetData(out EmbeddedData data)
+            ? data.Convert<string, RawData>( 
+                mediaType,
+                static (bytes, mediaType) => new(bytes, mediaType, bytes.Length == 0),
+                static (str, mediaType) => new(str, mediaType, str.Length == 0)
+                                            )
             : new RawData(Array.Empty<byte>(), mediaType, true);
     }
 
@@ -225,17 +227,17 @@ public sealed class RawData
     /// </summary>
     /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
     /// to the delegates.</typeparam>
+    /// <param name="arg">The argument to pass to the delegates.</param>
     /// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
     /// is an array of <see cref="byte"/>s, or <c>null</c>.</param>
     /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
     /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="string"/>, or <c>null</c>.</param>
-    /// <param name="arg">The argument to pass to the delegates.</param>
-    public void Switch<TArg>(Action<byte[], TArg>? bytesAction,
-                             Action<Uri, TArg>? uriAction,
-                             Action<string, TArg>? stringAction,
-                             TArg arg)
+    public void Switch<TArg>(TArg arg,
+                             Action<byte[], TArg>? bytesAction = null,
+                             Action<Uri, TArg>? uriAction = null,
+                             Action<string, TArg>? stringAction = null)
     {
         if (Object is byte[] bytes)
         {
@@ -284,21 +286,21 @@ public sealed class RawData
     /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
     /// to the delegates.</typeparam>
     /// <typeparam name="TResult">Generic type parameter for the return type of the delegates.</typeparam>
+    /// <param name="arg">The argument to pass to the delegates.</param>
     /// <param name="bytesFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated 
     /// value is an array of <see cref="byte"/>s.</param>
     /// <param name="uriFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.Uri"/>.</param>
     /// <param name="stringFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="string"/>.</param>
-    /// <param name="arg">The argument to pass to the delegates.</param>
     /// <returns>A <typeparamref name="TResult"/>.</returns>
     /// <exception cref="ArgumentNullException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
-    public TResult Convert<TArg, TResult>(Func<byte[], TArg, TResult> bytesFunc,
+    public TResult Convert<TArg, TResult>(TArg arg,
+                                          Func<byte[], TArg, TResult> bytesFunc,
                                           Func<Uri, TArg, TResult> uriFunc,
-                                          Func<string, TArg, TResult> stringFunc,
-                                          TArg arg)
+                                          Func<string, TArg, TResult> stringFunc)
     {
         return Object switch
         {

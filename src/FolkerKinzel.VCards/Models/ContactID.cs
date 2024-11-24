@@ -156,17 +156,17 @@ public sealed class ContactID : IEquatable<ContactID>
     /// </summary>
     /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
     /// to the delegates.</typeparam>
+    /// <param name="arg">The argument to pass to the delegates.</param>
     /// <param name="guidAction">The <see cref="Action{T}"/> to perform if the encapsulated value
     /// is a <see cref="Guid"/>, or <c>null</c>.</param>
     /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
     /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="string"/>, or <c>null</c>.</param>
-    /// <param name="arg">The argument to pass to the delegates.</param>
-    public void Switch<TArg>(Action<Guid, TArg>? guidAction,
-                             Action<Uri, TArg>? uriAction,
-                             Action<string, TArg>? stringAction,
-                             TArg arg)
+    public void Switch<TArg>(TArg arg,
+                             Action<Guid, TArg>? guidAction = null,
+                             Action<Uri, TArg>? uriAction = null,
+                             Action<string, TArg>? stringAction = null)
     {
         if (Guid.HasValue)
         {
@@ -218,21 +218,21 @@ public sealed class ContactID : IEquatable<ContactID>
     /// to the delegates.</typeparam>
     /// <typeparam name="TResult">Generic type parameter for the return type of the delegates.</typeparam>
     /// 
+    /// <param name="arg">The argument to pass to the delegates.</param>
     /// <param name="guidFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated 
     /// value is a <see cref="Guid"/>.</param>
     /// <param name="uriFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.Uri"/>.</param>
     /// <param name="stringFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="string"/>.</param>
-    /// <param name="arg">The argument to pass to the delegates.</param>
     /// <returns>A <typeparamref name="TResult"/>.</returns>
     /// <exception cref="ArgumentNullException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
-    public TResult Convert<TArg, TResult>(Func<Guid, TArg, TResult> guidFunc,
+    public TResult Convert<TArg, TResult>(TArg arg,
+                                          Func<Guid, TArg, TResult> guidFunc,
                                           Func<Uri, TArg, TResult> uriFunc,
-                                          Func<string, TArg, TResult> stringFunc,
-                                          TArg arg)
+                                          Func<string, TArg, TResult> stringFunc)
         => Guid.HasValue ? guidFunc is null 
                              ? throw new ArgumentNullException(nameof(guidFunc))
                              : guidFunc(Guid.Value, arg)
@@ -249,7 +249,7 @@ public sealed class ContactID : IEquatable<ContactID>
         => IsEmpty ? "<Empty>" 
                    : Guid.HasValue 
                         ? $"{typeof(Guid).FullName}: {Guid.Value}" 
-                        :  $"{_object!.GetType().FullName}: {_object}";
+                        : $"{_object!.GetType().FullName}: {_object}";
 
     /// <inheritdoc/>
     ///

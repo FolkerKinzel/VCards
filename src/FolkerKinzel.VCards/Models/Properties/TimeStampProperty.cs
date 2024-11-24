@@ -4,7 +4,6 @@ using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
-using OneOf;
 
 namespace FolkerKinzel.VCards.Models.Properties;
 

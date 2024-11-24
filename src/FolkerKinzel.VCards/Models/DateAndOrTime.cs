@@ -317,12 +317,12 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     {
         return Convert<IFormatProvider?, string>
             (
+                formatProvider
+,
                 static (date, fp) => date.ToString(CultureInfo.CurrentCulture),
                 static (dtOffset, fp) => dtOffset.ToString(CultureInfo.CurrentCulture),
                 static (time, fp) => time.ToString(CultureInfo.CurrentCulture),
-                static (str, fp) => str,
-                formatProvider
-            );
+                static (str, fp) => str);
     }
 
     /// <summary>
@@ -368,6 +368,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// </summary>
     /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
     /// to the delegates.</typeparam>
+    /// <param name="arg">The argument to pass to the delegates.</param>
     /// <param name="dateAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="System.DateOnly"/>, or <c>null</c>.</param>
     /// <param name="dtoAction">The <see cref="Action{T}"/> to perform if the encapsulated
@@ -376,12 +377,11 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// value is a <see cref="System.TimeOnly"/>, or <c>null</c>.</param>
     /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
     /// value is a <see cref="string"/>, or <c>null</c>.</param>
-    /// <param name="arg">The argument to pass to the delegates.</param>
-    public void Switch<TArg>(Action<DateOnly, TArg>? dateAction,
-                       Action<DateTimeOffset, TArg>? dtoAction,
-                       Action<TimeOnly, TArg>? timeAction,
-                       Action<string, TArg>? stringAction,
-                       TArg arg)
+    public void Switch<TArg>(TArg arg,
+                             Action<DateOnly, TArg>? dateAction = null,
+                             Action<DateTimeOffset, TArg>? dtoAction = null,
+                             Action<TimeOnly, TArg>? timeAction = null,
+                             Action<string, TArg>? stringAction = null)
     {
         if (DateOnly.HasValue)
         {
@@ -437,6 +437,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
     /// to the delegates.</typeparam>
     /// <typeparam name="TResult">Generic type parameter for the return type of the delegates.</typeparam>
+    /// <param name="arg">The argument to pass to the delegates.</param>
     /// <param name="dateFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="System.DateOnly"/> value.</param>
     /// <param name="dtoFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
@@ -445,17 +446,16 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// value is a <see cref="System.TimeOnly"/> value.</param>
     /// <param name="stringFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="string"/>.</param>
-    /// <param name="arg">The argument to pass to the delegates.</param>
     /// <returns>A <typeparamref name="TResult"/>.</returns>
     /// <exception cref="ArgumentNullException">
     /// One of the arguments is <c>null</c> and the encapsulated value is of that <see cref="Type"/>.
     /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public TResult Convert<TArg, TResult>(Func<DateOnly, TArg, TResult> dateFunc,
-                                    Func<DateTimeOffset, TArg, TResult> dtoFunc,
-                                    Func<TimeOnly, TArg, TResult> timeFunc,
-                                    Func<string, TArg, TResult> stringFunc,
-                                    TArg arg)
+    public TResult Convert<TArg, TResult>(TArg arg,
+                                          Func<DateOnly, TArg, TResult> dateFunc,
+                                          Func<DateTimeOffset, TArg, TResult> dtoFunc,
+                                          Func<TimeOnly, TArg, TResult> timeFunc,
+                                          Func<string, TArg, TResult> stringFunc)
         => DateOnly.HasValue
             ? dateFunc is null ? throw new ArgumentNullException(nameof(dateFunc)) : dateFunc(DateOnly.Value, arg)
             : DateTimeOffset.HasValue
