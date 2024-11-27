@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class StringCollectionBuilderTests
@@ -50,7 +52,7 @@ public class StringCollectionBuilderTests
 
         VCard vc = builder.VCard;
 
-        var property = vc.NickNames;
+        IEnumerable<StringCollectionProperty?>? property = vc.NickNames;
 
         Assert.IsNotNull(property);
         Assert.AreEqual(2, property.Count());

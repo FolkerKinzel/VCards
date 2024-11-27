@@ -128,7 +128,7 @@ internal static class IEnumerableIntlExtension
 
             int tmpSort = sortingCriterion(value);
 
-            if (tmpSort < sort)
+            if (prop is null || tmpSort < sort)
             {
                 prop = value;
                 sort = tmpSort;
@@ -156,7 +156,7 @@ internal static class IEnumerableIntlExtension
 
             int tmpSort = sortingCriterion(value);
 
-            if (tmpSort < sort)
+            if (prop is null || tmpSort < sort)
             {
                 prop = value;
                 sort = tmpSort;

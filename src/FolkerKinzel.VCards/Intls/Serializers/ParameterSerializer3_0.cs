@@ -96,7 +96,6 @@ internal sealed class ParameterSerializer3_0(VcfOpts options) : ParameterSeriali
 
     #endregion
     
-
     #region Build
 
     protected override void BuildAdrPara(bool isPref)
@@ -559,7 +558,6 @@ internal sealed class ParameterSerializer3_0(VcfOpts options) : ParameterSeriali
             --Builder.Length;
         }
     }
-
 
     private void AppendServiceType()
     {

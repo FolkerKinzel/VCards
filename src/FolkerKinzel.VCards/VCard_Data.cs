@@ -292,8 +292,6 @@ public sealed partial class VCard
         set => Set(Prop.Created, value);
     }
 
-    
-
     /// <summary> <c>DEATHDATE</c>: The individual's time of death. <c>(4 - RFC&#160;6474)</c></summary>
     /// <remarks>Multiple instances are only allowed if all of them
     /// have the same <see cref="ParameterSection.AltID" /> parameter. This can,

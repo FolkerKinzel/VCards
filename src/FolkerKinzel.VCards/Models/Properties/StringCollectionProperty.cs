@@ -43,7 +43,7 @@ public sealed class StringCollectionProperty : VCardProperty, IEnumerable<String
         : base(new ParameterSection(), group)
     {
         _value = StringArrayConverter.ToStringArray(value);
-        IsEmpty = !string.IsNullOrWhiteSpace(value);
+        IsEmpty = !_value.ContainsData();
     }
 
     internal StringCollectionProperty(VcfRow vcfRow, VCdVersion version)

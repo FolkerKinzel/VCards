@@ -85,21 +85,19 @@ public class ParameterSectionTests
         var prop = new OrgProperty(new Organization("Contoso", ["Computer", "Internet"]));
         prop.Parameters.SortAs = list!;
 
-        IEnumerable<string> result = prop.Parameters.SortAs;
+        IReadOnlyList<string> result = prop.Parameters.SortAs;
 
         Assert.IsNotNull(result);
         Assert.IsTrue(!result.Any(x => x is null));
-        Assert.IsTrue(result.All(x => StringComparer.Ordinal.Equals(x, x.Trim())));
-        Assert.AreEqual(2, result.Count());
+        Assert.AreEqual(5, result.Count());
 
         list.Add(null);
         Assert.IsTrue(!result.Any(x => x is null));
-        Assert.AreEqual(2, result.Count());
+        Assert.AreEqual(5, result.Count());
 
         list.Add(" Web ");
         Assert.IsTrue(!result.Any(x => x is null));
-        Assert.AreEqual(3, result.Count());
-        Assert.IsTrue(result.All(x => StringComparer.Ordinal.Equals(x, x.Trim())));
+        Assert.AreEqual(5, result.Count());
     }
 
     [TestMethod]

@@ -12,12 +12,12 @@ public class StringCollectionPropertyTests
 
     [DataTestMethod]
     [DataRow(new string?[] { "Bodo, der Blöde", "Dumbo" }, GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
-    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, GROUP, new string[] { "Bodo, der Blöde", "  ",  "Dumbo" })]
-    [DataRow(new string?[] { "", null, "  " }, GROUP, new string[] { "  " })]
+    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, GROUP, new string[] { "", "", "Bodo, der Blöde", "  ",  "Dumbo" })]
+    [DataRow(new string?[] { "", null, "  " }, GROUP, new string[] { "", "", "  " })]
     [DataRow(new string[] { }, GROUP, new string[] { })]
     [DataRow(new string?[] { "Bodo, der Blöde", "Dumbo" }, null, new string[] { "Bodo, der Blöde", "Dumbo" })]
-    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, null, new string[] { "Bodo, der Blöde",  "  ", "Dumbo" })]
-    [DataRow(new string?[] { "", null, "  " }, null, new string[] { "  " })]
+    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, null, new string[] { "", "", "Bodo, der Blöde",  "  ", "Dumbo" })]
+    [DataRow(new string?[] { "", null, "  " }, null, new string[] { "", "", "  " })]
     [DataRow(new string[] { }, null, new string[] { })]
     public void StringCollectionPropertyTest1(string?[] inputNickNames, string? expectedGroup, string[]? expectedNickNames)
     {
@@ -30,13 +30,13 @@ public class StringCollectionPropertyTests
 
     [DataTestMethod]
     [DataRow("Dumbo", GROUP, new string[] { "Dumbo" })]
-    [DataRow(null, GROUP, null)]
-    [DataRow("", GROUP, null)]
-    [DataRow("  ", GROUP, null)]
+    [DataRow(null, GROUP, new string[0])]
+    [DataRow("", GROUP, new string[0])]
+    [DataRow("  ", GROUP, new string[] { "  " })]
     [DataRow("Dumbo", null, new string[] { "Dumbo" })]
-    [DataRow(null, null, null)]
-    [DataRow("", null, null)]
-    [DataRow("  ", null, null)]
+    [DataRow(null, null, new string[0])]
+    [DataRow("", null, new string[0])]
+    [DataRow("  ", null, new string[] { "  " })]
     public void StringCollectionPropertyTest2(string? s, string? expectedGroup, string[]? expectedNickNames)
     {
         var nickNameProp = new StringCollectionProperty(s, expectedGroup);
@@ -47,12 +47,12 @@ public class StringCollectionPropertyTests
 
 
     [DataTestMethod]
-    [DataRow(GROUP + ".NICKNAME:", GROUP, null)]
+    [DataRow(GROUP + ".NICKNAME:", GROUP, new string[0])]
     [DataRow(GROUP + @".NICKNAME:Bodo\, der Blöde,Dumbo", GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
     [DataRow(@"NICKNAME:Bodo\, der Blöde,Dumbo", null, new string[] { "Bodo, der Blöde", "Dumbo" })]
-    [DataRow(@"NICKNAME:,Bodo\, der Blöde,  ,Dumbo, ", null, new string[] { "Bodo, der Blöde", "Dumbo" })]
-    [DataRow(@"NICKNAME: , ,,", null, null)]
-    [DataRow(@"NICKNAME:Dumbo, ", null, new string[] { "Dumbo" })]
+    [DataRow(@"NICKNAME:,Bodo\, der Blöde,  ,Dumbo, ", null, new string[] { "", "Bodo, der Blöde", "  ", "Dumbo", " " })]
+    [DataRow(@"NICKNAME: , ,,", null, new string[] { " ", " ", "", ""})]
+    [DataRow(@"NICKNAME:Dumbo, ", null, new string[] { "Dumbo", " " })]
     public void StringCollectionPropertyTest3(string s, string? expectedGroup, string[]? expectedNickNames)
     {
         var vcfRow = VcfRow.Parse(s.AsMemory(), new VcfDeserializationInfo());

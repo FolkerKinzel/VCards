@@ -22,8 +22,8 @@ public sealed class TextProperty : VCardProperty, IEnumerable<TextProperty>
     public TextProperty(string? value, string? group = null)
         : base(new ParameterSection(), group)
     {
-        Value = value ?? "";
-        IsEmpty = string.IsNullOrWhiteSpace(Value);
+        Value = string.IsNullOrWhiteSpace(value) ? "" : value;
+        IsEmpty = Value.Length == 0;
     }
 
     internal TextProperty(VcfRow vcfRow, VCdVersion version)
