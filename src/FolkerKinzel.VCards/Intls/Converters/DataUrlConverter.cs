@@ -105,16 +105,16 @@ internal static class DataUrlConverter
 
     private static DataProperty FromDataUrlInfo(VcfRow vcfRow, in DataUrlInfo dataUrlInfo)
     {
-        DataProperty prop = dataUrlInfo.TryGetEmbeddedData(out OneOf<string, byte[]> data)
-                ? data.Match<DataProperty>
+        DataProperty prop = dataUrlInfo.TryGetData(out EmbeddedData data)
+                ? data.Convert<VcfRow, DataProperty>
                    (
-                    s => new EmbeddedTextProperty(new TextProperty(s, vcfRow)),
-                    b => new EmbeddedBytesProperty(b, vcfRow.Group, vcfRow.Parameters)
-                    )
+                    vcfRow,
+                    static (bytes, vcfRow) => new EmbeddedBytesProperty(bytes, vcfRow.Group, vcfRow.Parameters),
+                    static (text, vcfRow) => new EmbeddedTextProperty(new TextProperty(text, vcfRow))
+                   )
                 : DataProperty.FromText(vcfRow.Value.ToString(), dataUrlInfo.MimeType.ToString(), vcfRow.Group);
 
         prop.Parameters.MediaType = dataUrlInfo.MimeType.ToString();
-
         return prop;
     }
 }
