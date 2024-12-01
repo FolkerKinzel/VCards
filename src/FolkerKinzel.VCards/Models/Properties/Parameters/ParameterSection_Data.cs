@@ -329,7 +329,7 @@ public sealed partial class ParameterSection
     /// <c>JSPTR</c>: This parameter is used with the instances in <see cref="VCard.JSContactProps"/>. Its value
     /// points to the JSContact property whose value is stored in the <see cref="VCardProperty"/>. <c>(4 - RFC&#160;9555)</c>
     /// </summary>
-    /// <value>A valid JSON pointer as defined in RFC&#160;6901.</value>
+    /// <value>A valid JSON pointer as defined in RFC&#160;6901, or <c>null</c>.</value>
     public string? JSContactPointer
     {
         get => Get<string?>(VCdParam.JSContactPointer);

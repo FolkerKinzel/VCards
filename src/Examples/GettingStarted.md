@@ -5,7 +5,7 @@ Read here:
   - [The VCard class](#the-vcard-class)
   - [The VCardProperty class](#the-vcardproperty-class)
   - [Naming conventions](#naming-conventions)
-- [Efficient building and editing of VCard instances using VCardBuilder](#efficient-building-and-editing-of-vcard-instances-using-vcardbuilder)
+- [Efficient building and editing of VCard instances using Fluent APIs](#efficient-building-and-editing-of-vcard-instances-using-fluent-apis)
 - [Parsing and serializing VCF files using the Vcf class](#parsing-and-serializing-vcf-files-using-the-vcf-class)
 - [Extension methods](#extension-methods)
 - [The vCard 4.0 data synchronization mechanism](#the-vcard-40-data-synchronization)
@@ -21,13 +21,14 @@ public static void WritingAndReadingVCard(string filePath)
             .Create()
             .NameViews.Add(NameBuilder
                 .Create()
-                .AddGivenName("Susi")
-                .AddFamilyName("Sonntag")
+                .AddGiven("Susi")
+                .AddSurname("Sonntag")
+                .Build()
                           )
             .NameViews.ToDisplayNames(NameFormatter.Default)
             .GenderViews.Add(Sex.Female)
             .Phones.Add("+49-321-1234567",
-                         parameters: p =>  p.PhoneType = Tel.Cell
+                         parameters: p => p.PhoneType = Tel.Cell
                        )
             .EMails.Add("susi@contoso.com")
             .EMails.Add("susi@home.de")
@@ -46,14 +47,19 @@ public static void WritingAndReadingVCard(string filePath)
 
     // Use Linq and/or extension methods to query the data:
     string? susisPrefMail = vCard.EMails.PrefOrNull()?.Value;
+
+    Console.WriteLine("Susis preferred email address is {0}", susisPrefMail);
+
+    Console.WriteLine("\nvCard:\n");
+    Console.WriteLine(File.ReadAllText(filePath));
 }
 ```
 The VCF file the method creates is:
 ```
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-10-12T14:10:09Z
-UID:27d7b637-b806-430a-a345-d6604406fec8
+REV:2024-12-01T14:37:03Z
+UID:019382a7-515c-7486-a956-107bc79c1525
 FN:Susi Sonntag
 N:Sonntag;Susi;;;
 X-GENDER:Female
@@ -66,22 +72,28 @@ END:VCARD
 
 ## The usage of the namespaces
 ```csharp
-// Publish this namespace - it contains the VCard class,
-// the VCardBuilder class, and the VCF class:
+// Publish this namespace - it contains commonly used classes such as
+// the VCard class, the VCardBuilder class, the NameBuilder class, and the
+// AddressBuilder class:
 using FolkerKinzel.VCards;
 
-// It's recommended to publish also this namespace -
+// It's recommended to publish this namespace too -
 // it contains useful extension methods:
 using FolkerKinzel.VCards.Extensions;
 
 // This namespace contains often used enums. Decide
 // yourself whether to publish this namespace or to use
-// a namespace alias.
+// a namespace alias:
 using FolkerKinzel.VCards.Enums;
 
-// Since VCardBuilder exists, the model classes normally
-// don't need to be instantiated in own code:
-// using FolkerKinzel.VCards.Models;
+// This namespace contains the model classes such as GeoCoordinate or
+// TimeZoneID:
+using FolkerKinzel.VCards.Models;
+
+// Contains the implementations of VCardProperty. If you use VCardBuilder to
+// create and manipulate VCard objects, you usually do not need to publish this
+// namespace:
+//using FolkerKinzel.VCards.Models.Properties;
 ```
 
 ## The data model
@@ -91,7 +103,8 @@ The data model used by this library is aligned to the vCard 4.0 standard (RFC 63
 A VCF file consists of one or more vCards. The content of a vCard is represented by the `VCard` class.
 
 ### The VCardProperty class
-A vCard consists of several "properties". Accordingly the data model of the `VCard` class is built on classes that are derived from `VCardProperty`.
+A vCard consists of several "properties". Accordingly the data model of the `VCard` class is built on 
+classes that are derived from the abstract `VCardProperty` class.
 
 `VCardProperty` exposes the following members:
 ```csharp
@@ -101,7 +114,7 @@ public abstract class VCardProperty
 
     public ParameterSection Parameters { get; }
 
-    public virtual object? Value { get; protected set; }
+    public virtual object Value { get; protected set; }
 }
 ```
 This reflects the structure of a data row in a VCF file:
@@ -113,7 +126,8 @@ In this example corresponds
 - `TEL;TYPE=home,voice;VALUE=uri` to VCardProperty.Parameters and
 - `tel:+49-123-4567` to VCardProperty.Value.
             
-(Classes derived from `VCardProperty` hide the generic implementation of `VCardProperty.Value` in order to return derived classes instead of `System.Object?`.)
+(Classes derived from `VCardProperty` hide the generic implementation of `VCardProperty.Value` in order 
+to return derived classes instead of `System.Object`.)
 
 ### Naming conventions
 Most properties of the `VCard` class are collections. It has to do with that many properties are allowed to have more than one instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.
@@ -124,12 +138,13 @@ Most classes derived from `VCardProperty` implement `IEnumerable<T>` in order to
 
 Use Linq and the built-in [extension methods](#extension-methods) when querying the data.
 
-## Efficient building and editing of VCard instances using VCardBuilder
-The VCard data model consists of numerous classes. Fortunately, you only 
-need one to create and edit VCard instances: VCardBuilder provides a 
-fluent API that handles all the complicated operations in the background.
+## Efficient building and editing of VCard instances using Fluent APIs
+The VCard data model consists of numerous classes. Some of them encapsulate a lot of properties. 
 
-[Learn more](https://github.com/FolkerKinzel/VCards/wiki/The-VCardBuilder-class) about this important class.
+Fortunately, there are Fluent APIs like `VCardBuilder`, `AddressBuilder` and `NameBuilder` that handle 
+all the complicated operations in the background.
+
+[Learn more](https://github.com/FolkerKinzel/VCards/wiki/The-VCardBuilder-class) about these Fluent APIs.
 
 ## Parsing and serializing VCF files using the Vcf class
 The `Vcf` class is a static class that contains a lot of methods for serializing and parsing `VCard` objects to or from VCF files.
@@ -162,7 +177,7 @@ Parse errors, caused by not well-formed VCF files, are silently ignored by the l
 
 When converting from a higher vCard standard to a lower one, not all data is compliant. To minimize 
 data loss, the library tries to preserve incompliant data using well-known x-name properties. 
-The usage of such x-name properties can be controlled with the `Opts` enum.
+The usage of such x-name properties can be controlled with the `VcfOpts` enum.
 
 ## Reading the project reference
 At the [GitHub Releases page](https://github.com/FolkerKinzel/VCards/releases) there is a detailed project reference to each version of the Nuget package as CHM file in the Assets. On some systems the content of this CHM file is blocked. Before opening the file right click on the file icon, select Properties, and check the "Allow" checkbox - if it is present - in the lower right corner of the General tab in the Properties dialog.
@@ -181,6 +196,7 @@ The vCard standard is defined in the following documents:
 - [vCard.The Electronic Business Card.Version 2.1 (vCard 2.1)](https://web.archive.org/web/20120501162958/http://www.imc.org/pdi/vcard-21.doc)
 
 Extensions of the standard describe, e.g., the following documents:
+- [RFC 9555: JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/rfc9555)
 - [RFC 9554: vCard Format Extensions for JSContact](https://datatracker.ietf.org/doc/html/rfc9554)
 - [RFC 8605: vCard Format Extensions: ICANN Extensions for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc8605)
 - [RFC 6474: vCard Format Extensions: Place of Birth, Place and Date of Death](https://tools.ietf.org/html/rfc6474)

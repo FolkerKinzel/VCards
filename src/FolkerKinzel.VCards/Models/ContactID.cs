@@ -5,7 +5,7 @@ using FolkerKinzel.VCards.Resources;
 namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
-/// Encapsulates a globally unique identifier corresponding to the entity associated 
+/// A union that encapsulates a globally unique identifier corresponding to the entity associated 
 /// with the vCard. The value of this identifier can be either a <see cref="System.Guid"/>,
 /// a <see cref="System.Uri"/>, or a <see cref="string"/>.
 /// </summary>
@@ -125,12 +125,12 @@ public sealed class ContactID : IEquatable<ContactID>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
     /// encapsulated value.
     /// </summary>
-    /// <param name="guidAction">The <see cref="Action{T}"/> to perform if the encapsulated value
-    /// is a <see cref="Guid"/>, or <c>null</c>.</param>
-    /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
-    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="string"/>, or <c>null</c>.</param>
+    /// <param name="guidAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated value
+    /// is a <see cref="Guid"/>.</param>
+    /// <param name="uriAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.Uri"/>.</param>
+    /// <param name="stringAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="string"/>.</param>
     /// 
     public void Switch(Action<Guid>? guidAction = null,
                        Action<Uri>? uriAction = null,
@@ -157,12 +157,12 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
     /// to the delegates.</typeparam>
     /// <param name="arg">The argument to pass to the delegates.</param>
-    /// <param name="guidAction">The <see cref="Action{T}"/> to perform if the encapsulated value
-    /// is a <see cref="Guid"/>, or <c>null</c>.</param>
-    /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
-    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="string"/>, or <c>null</c>.</param>
+    /// <param name="guidAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated value
+    /// is a <see cref="Guid"/>.</param>
+    /// <param name="uriAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.Uri"/>.</param>
+    /// <param name="stringAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="string"/>.</param>
     public void Switch<TArg>(TArg arg,
                              Action<Guid, TArg>? guidAction = null,
                              Action<Uri, TArg>? uriAction = null,

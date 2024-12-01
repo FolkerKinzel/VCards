@@ -105,16 +105,18 @@ public static class VCardExample
                      parameters: p =>
                      {
                          p.PropertyClass = PCl.Work;
-                         p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel|Adr.Billing|Adr.Delivery;
+                         p.AddressType = Adr.Dom | Adr.Intl | Adr.Postal | Adr.Parcel | Adr.Billing | Adr.Delivery;
                          p.TimeZone = TimeZoneID.TryCreate("Europe/Berlin");
                          p.GeoPosition = GeoCoordinate.TryCreate(52.51182050685474, 13.389581454284256, 10);
+                         // Specifying the country or the ParameterSection.CountryCode property helps to format
+                         // automatically appended address labels correctly:
+                         p.CountryCode = "de-DE";
                      },
                      // Applying a group name to the AddressProperty helps to automatically preserve its Label,
                      // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
                      group: vc => vc.NewGroup()
                               )
-                // Specifying the country or the ParameterSection.CountryCode property helps to format automatically
-                // appended address labels correctly.
+                // Append automatically formatted address labels:
                 .Addresses.AttachLabels(AddressFormatter.Default)
                 .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work)
                 .EMails.Add("mailto:kaethe_at_home@internet.com",
@@ -190,8 +192,8 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2024-11-19T20:37:56Z
-UID:01934625-6308-7541-ad4e-070878d7f286
+REV:2024-12-01T15:10:23Z
+UID:019382c5-bd15-73cd-991f-bb4dab32656d
 0.FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8;LANGUAGE=de-DE:Prof. Dr. K=C3=
 =A4the Alexandra Caroline M=C3=BCller-Risinowsky II.
 0.N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8;LANGUAGE=de-DE:M=C3=BCller-Ris=
@@ -216,8 +218,8 @@ X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 NOTE:Very experienced in Blazor.
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- bi6Y0Ny3abtApQ6qMsWxkiAs5TpMDO5Rug2bMp+nmgLBVtDuvsSxeZOW0jx17jp6yn/f76dqmX
- 4yp1Ah
+ SI1xaBnjqjNK1Opj3d/ycBQ01HAp5lwi+y4Gm6Inuj2D0YA0XomsuZ1sVixn7P+yrAfpEy4smV
+ WgOXqw
 
 END:VCARD
 
@@ -226,8 +228,8 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-11-19T20:37:56Z
-UID:01934625-6308-7541-ad4e-070878d7f286
+REV:2024-12-01T15:10:23Z
+UID:019382c5-bd15-73cd-991f-bb4dab32656d
 0.FN;LANGUAGE=de-DE:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
  II.
 0.N;LANGUAGE=de-DE:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;I
@@ -251,8 +253,8 @@ X-SOCIALPROFILE;X-SERVICE-TYPE=Y:https://y.com/Semaphore
 IMPP;X-SERVICE-TYPE=WhatsDown:https://wd.me/0123456789
 X-SPOUSE:Paul Müller-Risinowsky
 NOTE:Very experienced in Blazor.
-PHOTO;ENCODING=b;TYPE=JPEG:bi6Y0Ny3abtApQ6qMsWxkiAs5TpMDO5Rug2bMp+nmgLBVtDu
- vsSxeZOW0jx17jp6yn/f76dqmX4yp1Ah
+PHOTO;ENCODING=b;TYPE=JPEG:SI1xaBnjqjNK1Opj3d/ycBQ01HAp5lwi+y4Gm6Inuj2D0YA0
+ XomsuZ1sVixn7P+yrAfpEy4smVWgOXqw
 END:VCARD
 
 
@@ -260,9 +262,9 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-CREATED;VALUE=TIMESTAMP:20241119T203755Z
-REV:20241119T203756Z
-UID:urn:uuid:01934625-6308-7541-ad4e-070878d7f286
+CREATED;VALUE=TIMESTAMP:20241201T151017Z
+REV:20241201T151023Z
+UID:urn:uuid:019382c5-bd15-73cd-991f-bb4dab32656d
 0.FN;DERIVED=TRUE;LANGUAGE=de-DE;PID=1.1:Prof. Dr. Käthe Alexandra Carolin
  e Müller-Risinowsky II.
 0.N;LANGUAGE=de-DE;PID=1.1:Müller-Risinowsky;Käthe;Alexandra,Caroline;Pro
@@ -273,8 +275,8 @@ ORG;PID=1.1:Millers Company;C#;Webdesign
 BDAY;VALUE=DATE;PID=1.1:19840328
 ANNIVERSARY;VALUE=DATE;PID=1.1:20060714
 1.ADR;TYPE=WORK,billing,delivery;LABEL=Friedrichstraße 22\n10117 Berlin\nG
- ermany;GEO="geo:52.511821,13.389581;u=10";TZ=Europe/Berlin;PID=1.1:;;Fried
- richstraße,22;Berlin;;10117;Germany;;;;22;Friedrichstraße;;;;;;
+ ermany;GEO="geo:52.511821,13.389581;u=10";TZ=Europe/Berlin;PID=1.1;CC=de-D
+ E:;;Friedrichstraße,22;Berlin;;10117;Germany;;;;22;Friedrichstraße;;;;;;
 TEL;TYPE=WORK,VOICE,CELL,TEXT;VALUE=URI;PID=1.1;INDEX=1:tel:+49-321-1234567
 TEL;TYPE=HOME,VOICE;VALUE=URI;PID=2.1;INDEX=2:tel:+49-123-9876543
 EMAIL;TYPE=WORK;PREF=1;PID=1.1:kaethe_mueller@internet.com
@@ -285,9 +287,9 @@ IMPP;SERVICE-TYPE=WhatsDown;PID=1.1:https://wd.me/0123456789
 RELATED;TYPE=colleague,co-resident,spouse;VALUE=TEXT;PID=1.1:Paul Müller-R
  isinowsky
 NOTE;PID=1.1;AUTHOR-NAME=Satya Nadella;AUTHOR="https://www.microsoft.com/";
- CREATED=20241119T203756Z:Very experienced in Blazor.
-PHOTO;PID=1.1:data:image/jpeg;base64,bi6Y0Ny3abtApQ6qMsWxkiAs5TpMDO5Rug2bMp
- +nmgLBVtDuvsSxeZOW0jx17jp6yn/f76dqmX4yp1Ah
+ CREATED=20241201T151023Z:Very experienced in Blazor.
+PHOTO;PID=1.1:data:image/jpeg;base64,SI1xaBnjqjNK1Opj3d/ycBQ01HAp5lwi+y4Gm6
+ Inuj2D0YA0XomsuZ1sVixn7P+yrAfpEy4smVWgOXqw
 CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
 GRAMGENDER;LANGUAGE=de;PID=1.1:feminine
 END:VCARD
@@ -298,9 +300,9 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-Updated: 11/19/2024 20:37:56 +00:00
+Updated: 12/01/2024 15:10:23 +00:00
 
-ContactID: System.Guid: 01934625-6308-7541-ad4e-070878d7f286
+ContactID: System.Guid: 019382c5-bd15-73cd-991f-bb4dab32656d
 
 GenderViews: Female
 

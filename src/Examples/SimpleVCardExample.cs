@@ -19,7 +19,7 @@ public static class SimpleVCardExample
                 .NameViews.ToDisplayNames(NameFormatter.Default)
                 .GenderViews.Add(Sex.Female)
                 .Phones.Add("+49-321-1234567",
-                             parameters: p =>  p.PhoneType = Tel.Cell
+                             parameters: p => p.PhoneType = Tel.Cell
                            )
                 .EMails.Add("susi@contoso.com")
                 .EMails.Add("susi@home.de")
@@ -46,16 +46,14 @@ public static class SimpleVCardExample
     }
 }
 /*
-Console output:
-
 Susis preferred email address is susi@contoso.com
 
 vCard:
 
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-10-12T14:10:09Z
-UID:27d7b637-b806-430a-a345-d6604406fec8
+REV:2024-12-01T14:37:03Z
+UID:019382a7-515c-7486-a956-107bc79c1525
 FN:Susi Sonntag
 N:Sonntag;Susi;;;
 X-GENDER:Female

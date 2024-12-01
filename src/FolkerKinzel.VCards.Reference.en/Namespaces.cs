@@ -9,7 +9,7 @@ using FolkerKinzel.VCards.Extensions;
 
 // This namespace contains often used enums. Decide
 // yourself whether to publish this namespace or to use
-// a namespace alias:
+// a namespace alias.
 using FolkerKinzel.VCards.Enums;
 
 // This namespace contains the model classes such as GeoCoordinate or
@@ -18,6 +18,6 @@ using FolkerKinzel.VCards.Models;
 
 // Contains the implementations of VCardProperty. If you use VCardBuilder to
 // create and manipulate VCard objects, you usually do not need to publish this
-// namespace:
+// namespace.
 //using FolkerKinzel.VCards.Models.Properties;
 

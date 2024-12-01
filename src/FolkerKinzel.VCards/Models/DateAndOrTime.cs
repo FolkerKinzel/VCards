@@ -8,8 +8,8 @@ using FolkerKinzel.VCards.Models.Properties;
 namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
-/// Encapsulates data that describes a date and/or a time.
-/// This can be either a <see cref="System.DateOnly"/> value, a 
+/// A union that encapsulates data that describes a date and/or a time.
+/// The encapsulated data can be either a <see cref="System.DateOnly"/> value, a 
 /// <see cref="System.DateTimeOffset"/> value, a <see cref="System.TimeOnly"/>
 /// value, or a <see cref="string"/>.
 /// </summary>
@@ -53,7 +53,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <returns>The newly created <see cref="DateAndOrTime"/> instance.</returns>
     /// <remarks>
     /// If <paramref name="value"/> has neither a date nor a time, the method returns
-    /// <see cref="Empty"/>.
+    /// an empty instance.
     /// </remarks>
     public static DateAndOrTime Create(DateTimeOffset value)
         => !DateAndOrTimeConverter.HasDate(value) && !DateAndOrTimeConverter.HasTime(value)
@@ -111,6 +111,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <see cref="DateAndOrTime"/> object.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <returns>The newly created <see cref="DateAndOrTime"/> instance.</returns>
     public static implicit operator DateAndOrTime(DateOnly value) => Create(value);
 
     /// <summary>
@@ -118,6 +119,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <see cref="DateAndOrTime"/> object.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <returns>The newly created <see cref="DateAndOrTime"/> instance.</returns>
     public static implicit operator DateAndOrTime(DateTimeOffset value) => Create(value);
 
     /// <summary>
@@ -125,6 +127,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <see cref="DateAndOrTime"/> object.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <returns>The newly created <see cref="DateAndOrTime"/> instance.</returns>
     public static implicit operator DateAndOrTime(DateTime value) => Create(value);
 
     /// <summary>
@@ -132,6 +135,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <see cref="DateAndOrTime"/> object.
     /// </summary>
     /// <param name="value">The value to convert.</param>
+    /// <returns>The newly created <see cref="DateAndOrTime"/> instance.</returns>
     public static implicit operator DateAndOrTime(TimeOnly value) => Create(value);
 
     /// <summary>
@@ -139,6 +143,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <see cref="DateAndOrTime"/> object.
     /// </summary>
     /// <param name="value">The <see cref="string"/> to convert, or <c>null</c>.</param>
+    /// <returns>The newly created <see cref="DateAndOrTime"/> instance.</returns>
     public static implicit operator DateAndOrTime(string? value) => Create(value);
 
     /// <summary>
@@ -310,33 +315,44 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <returns>The encapsulated data as <see cref="string"/>.
     /// </returns>
     /// <remarks>
-    /// The conversion succeeds only if the encapsulated value is a
-    /// <see cref="string"/>.
+    /// If the encapsulated value is a <see cref="DateTimeOffset"/>, or a <see cref="string"/>, 
+    /// <paramref name="formatProvider"/> is ignored.
     /// </remarks>
     public string AsString(IFormatProvider? formatProvider = null)
     {
         return Convert<IFormatProvider?, string>
             (
-                formatProvider
-,
-                static (date, fp) => date.ToString(CultureInfo.CurrentCulture),
-                static (dtOffset, fp) => dtOffset.ToString(CultureInfo.CurrentCulture),
-                static (time, fp) => time.ToString(CultureInfo.CurrentCulture),
-                static (str, fp) => str);
+                formatProvider ?? CultureInfo.CurrentCulture,
+    
+                static (date, fp) => date.HasYear() ? date.ToString(fp) : date.ToString(fp).Replace(date.Year.ToString(), "", StringComparison.Ordinal),
+                static (dtOffset, fp) => DateTimeOffsetToString(dtOffset),
+                static (time, fp) => time.ToString(fp),
+                static (str, fp) => str
+            );
+
+        static string DateTimeOffsetToString(DateTimeOffset dtOffset)
+        {
+            if (dtOffset.HasDate()) { return dtOffset.ToString("O"); }
+
+            var sb = new StringBuilder();
+
+            DateAndOrTimeConverter.AppendDateTimeOffsetTo(sb, dtOffset, VCdVersion.V3_0);
+            return sb.ToString();
+        }
     }
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
     /// encapsulated value.
     /// </summary>
-    /// <param name="dateAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.DateOnly"/>, or <c>null</c>.</param>
-    /// <param name="dtoAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.DateTimeOffset"/>, or <c>null</c>.</param>
-    /// <param name="timeAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.TimeOnly"/>, or <c>null</c>.</param>
-    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="string"/>, or <c>null</c>.</param>
+    /// <param name="dateAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.DateOnly"/>.</param>
+    /// <param name="dtoAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.DateTimeOffset"/>.</param>
+    /// <param name="timeAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.TimeOnly"/>.</param>
+    /// <param name="stringAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="string"/>.</param>
     /// 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Switch(Action<DateOnly>? dateAction = null,
@@ -369,14 +385,14 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
     /// to the delegates.</typeparam>
     /// <param name="arg">The argument to pass to the delegates.</param>
-    /// <param name="dateAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.DateOnly"/>, or <c>null</c>.</param>
-    /// <param name="dtoAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.DateTimeOffset"/>, or <c>null</c>.</param>
-    /// <param name="timeAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.TimeOnly"/>, or <c>null</c>.</param>
-    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="string"/>, or <c>null</c>.</param>
+    /// <param name="dateAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.DateOnly"/>.</param>
+    /// <param name="dtoAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.DateTimeOffset"/>.</param>
+    /// <param name="timeAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.TimeOnly"/>.</param>
+    /// <param name="stringAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="string"/>.</param>
     public void Switch<TArg>(TArg arg,
                              Action<DateOnly, TArg>? dateAction = null,
                              Action<DateTimeOffset, TArg>? dtoAction = null,

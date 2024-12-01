@@ -7,7 +7,7 @@ using FolkerKinzel.VCards.Models.Properties.Parameters;
 namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
-/// Encapsulates the data that describes a person or organization 
+/// A union that encapsulates the data that describes a person or organization 
 /// with whom a relationship exists.
 /// This can be either a 
 /// <see cref="VCards.VCard"/>, or a <see cref="ContactID"/>.
@@ -87,16 +87,16 @@ public sealed class Relation
     /// its <see cref="VCard.ContactID"/> property.
     /// </remarks>
     public ContactID? ContactID => _object as ContactID;
-    
+
 
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
     /// encapsulated value.
     /// </summary>
-    /// <param name="vCardAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="VCards.VCard"/>, or <c>null</c>.</param>
-    /// <param name="contactIDAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="ContactID"/>, or <c>null</c>.</param>
+    /// <param name="vCardAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="VCards.VCard"/>.</param>
+    /// <param name="contactIDAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="ContactID"/>.</param>
     ///
     public void Switch(Action<VCard>? vCardAction = null,
                        Action<ContactID>? contactIDAction = null)
@@ -118,10 +118,10 @@ public sealed class Relation
     /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
     /// to the delegates.</typeparam>
     /// <param name="arg">The argument to pass to the delegates.</param>
-    /// <param name="vCardAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="VCards.VCard"/>, or <c>null</c>.</param>
-    /// <param name="contactIDAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="ContactID"/>, or <c>null</c>.</param>
+    /// <param name="vCardAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="VCards.VCard"/>.</param>
+    /// <param name="contactIDAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="ContactID"/>.</param>
     public void Switch<TArg>(TArg arg,
                              Action<VCard, TArg>? vCardAction = null,
                              Action<ContactID, TArg>? contactIDAction = null)
@@ -144,7 +144,6 @@ public sealed class Relation
     /// value is a <see cref="VCards.VCard"/>.</param>
     /// <param name="contactIDFunc">The <see cref="Func{T, TResult}"/> to call if the encapsulated
     /// value is a <see cref="ContactID"/>.</param>
-    /// 
     /// 
     /// <returns>A <typeparamref name="TResult"/>.</returns>
     /// <exception cref="ArgumentNullException">

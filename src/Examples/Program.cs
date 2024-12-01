@@ -33,6 +33,8 @@ internal class Program
 
         //NoPidExample.RemovePropertyIdentification();
 
+        //UidIssue.Test();
+
 
         //WhatsAppDemo1.IntegrateWhatsAppNumberUsingIMPP();
         //WhatsAppDemo2.UsingTheWhatsAppType();

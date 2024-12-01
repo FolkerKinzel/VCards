@@ -8,7 +8,7 @@ using FolkerKinzel.VCards.Resources;
 namespace FolkerKinzel.VCards.Models;
 
 /// <summary>
-/// Encapsulates external data in a <see cref="VCard"/>.
+/// A union that encapsulates raw data in a <see cref="VCard"/>.
 /// This can be either an array of <see cref="byte"/>s,
 /// an absolute <see cref="System.Uri"/>, or a <see cref="string"/>.
 /// </summary>
@@ -196,12 +196,12 @@ public sealed class RawData
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
     /// encapsulated value.
     /// </summary>
-    /// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
-    /// is an array of <see cref="byte"/>s, or <c>null</c>.</param>
-    /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
-    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="string"/>, or <c>null</c>.</param>
+    /// <param name="bytesAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated value
+    /// is an array of <see cref="byte"/>s.</param>
+    /// <param name="uriAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.Uri"/>.</param>
+    /// <param name="stringAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="string"/>.</param>
     /// 
     public void Switch(Action<byte[]>? bytesAction = null,
                        Action<Uri>? uriAction = null,
@@ -228,12 +228,12 @@ public sealed class RawData
     /// <typeparam name="TArg">Generic type parameter for the type of the argument to pass
     /// to the delegates.</typeparam>
     /// <param name="arg">The argument to pass to the delegates.</param>
-    /// <param name="bytesAction">The <see cref="Action{T}"/> to perform if the encapsulated value
-    /// is an array of <see cref="byte"/>s, or <c>null</c>.</param>
-    /// <param name="uriAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="System.Uri"/>, or <c>null</c>.</param>
-    /// <param name="stringAction">The <see cref="Action{T}"/> to perform if the encapsulated
-    /// value is a <see cref="string"/>, or <c>null</c>.</param>
+    /// <param name="bytesAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated value
+    /// is an array of <see cref="byte"/>s.</param>
+    /// <param name="uriAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="System.Uri"/>.</param>
+    /// <param name="stringAction"><c>null</c>, or the <see cref="Action{T}"/> to perform if the encapsulated
+    /// value is a <see cref="string"/>.</param>
     public void Switch<TArg>(TArg arg,
                              Action<byte[], TArg>? bytesAction = null,
                              Action<Uri, TArg>? uriAction = null,
