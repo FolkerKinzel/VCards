@@ -198,7 +198,7 @@ public class V3Tests
         string vcf = Vcf.ToString(vc, VCdVersion.V3_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardProperties));
         vc = Vcf.Parse(vcf)[0];
 
-        Assert.AreEqual(Data.Text, vc.Relations!.First()!.Parameters.DataType);
+        Assert.AreEqual(Data.Uri, vc.Relations!.First()!.Parameters.DataType);
         Assert.AreEqual(Enc.Base64, vc.Logos!.First()!.Parameters.Encoding);
         Assert.AreEqual(Enc.Base64, vc.Keys!.First()!.Parameters.Encoding);
         Assert.AreEqual(Enc.Base64, vc.Sounds!.First()!.Parameters.Encoding);

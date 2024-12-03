@@ -759,7 +759,7 @@ internal abstract class VcfSerializer : IDisposable
         RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Spouse),
                                                         IgnoreEmptyItems);
 
-        if (spouse is null || (spouse.Value.ContactID?.Guid is Guid))
+        if (spouse is null)
         {
             return;
         }
@@ -768,7 +768,7 @@ internal abstract class VcfSerializer : IDisposable
 
         if (spouse.Value.VCard is VCard vc)
         {
-            prop = ConvertSpouseVCardToRelationTextProperty(spouse.Value.VCard, spouse.Group);
+            prop = ConvertSpouseVCardToTextProperty(spouse.Value.VCard, spouse.Group);
 
             if (prop is null)
             {
@@ -796,7 +796,7 @@ internal abstract class VcfSerializer : IDisposable
             BuildProperty(VCard.PropKeys.NonStandard.X_WAB_SPOUSE_NAME, prop);
         }
 
-        static TextProperty? ConvertSpouseVCardToRelationTextProperty(VCard spousesVCard, string? group)
+        static TextProperty? ConvertSpouseVCardToTextProperty(VCard spousesVCard, string? group)
         {
             string? name = spousesVCard.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value;
 

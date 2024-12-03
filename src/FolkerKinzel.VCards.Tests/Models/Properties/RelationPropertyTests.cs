@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -7,36 +8,54 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
-//internal class RelationPropertyDerived : RelationProperty
-//{
-//    public RelationPropertyDerived(RelationProperty prop) : base(prop)
-//    {
-//    }
-
-//    public RelationPropertyDerived(ParameterSection parameters, string? group)
-//        : base(parameters, group)
-//    {
-//    }
-
-//    public RelationPropertyDerived(Rel? relation, string? group)
-//        : base(relation, group)
-//    {
-//    }
-
-//    public override object Clone() => throw new NotImplementedException();
-//    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-//}
-
 [TestClass]
 public class RelationPropertyTests
 {
-    //private class TestIEnumerable : RelationProperty
-    //{
-    //    public TestIEnumerable() : base(Rel.Contact, null) { }
-    //    public override object Clone() => throw new NotImplementedException();
-    //    protected override object? GetVCardPropertyValue() => throw new NotImplementedException();
-    //    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-    //}
+    private const string GROUP = "myGroup";
+
+    [TestMethod]
+    public void RelationTextPropertyTest1()
+    {
+        const Rel relation = Rel.Acquaintance;
+        string text = "Bruno Hübchen";
+
+        VCard vc = VCardBuilder.Create().Relations.Add(text, relation, group: v => GROUP).VCard;
+
+        vc = Vcf.Parse(vc.ToVcfString(VCdVersion.V4_0))[0];
+
+        RelationProperty? prop = vc.Relations.FirstOrNull();
+
+        Assert.IsNotNull(prop);
+        Assert.AreEqual(text, prop.Value.ContactID?.String);
+        Assert.AreEqual(GROUP, prop.Group);
+        Assert.IsFalse(prop.IsEmpty);
+
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Text, prop.Parameters.DataType);
+    }
+
+    [TestMethod]
+    public void RelationTextPropertyTest2()
+    {
+        const Rel relation = Rel.Agent;
+        string text = "Bruno Hübchen";
+
+        VCard vc = VCardBuilder.Create().Relations.Add(text, relation, group: v => GROUP).VCard;
+
+        var vcard = Vcf.Parse(vc.ToVcfString(VCdVersion.V2_1))[0];
+
+        Assert.IsNotNull(vcard.Relations);
+
+        var prop = vcard.Relations!.FirstOrNull();
+
+        Assert.IsNotNull(prop);
+        Assert.AreEqual(text, prop!.Value.ContactID?.String);
+        Assert.AreEqual(GROUP, prop.Group);
+        Assert.IsFalse(prop.IsEmpty);
+
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Text, prop.Parameters.DataType);
+    }
 
     [TestMethod]
     public void IEnumerableTest()

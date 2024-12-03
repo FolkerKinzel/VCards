@@ -118,18 +118,28 @@ done:
     {
         base.PrepareForVcfSerialization(serializer);
 
-        if (Value.ContactID?.String is not null)
+        if (Value.ContactID is not null)
         {
-            Parameters.DataType = Data.Text;
-
-            if (serializer.Version == VCdVersion.V2_1 && Value.ContactID.String.NeedsToBeQpEncoded())
+            if (Value.ContactID.Uri is not null)
             {
-                Parameters.Encoding = Enc.QuotedPrintable;
-                Parameters.CharSet = VCard.DEFAULT_CHARSET;
+                Parameters.DataType = Data.Uri;
+            }
+            else if (Value.ContactID.String is not null)
+            {
+                Parameters.DataType = Data.Text;
+
+                if (serializer.Version == VCdVersion.V2_1 && Value.ContactID.String.NeedsToBeQpEncoded())
+                {
+                    Parameters.Encoding = Enc.QuotedPrintable;
+                    Parameters.CharSet = VCard.DEFAULT_CHARSET;
+                }
             }
         }
-
-        if (Value.VCard is not null) { Parameters.DataType = Data.VCard; }
+        else
+        { 
+            Debug.Assert(Value.VCard is not null);
+            Parameters.DataType = Data.VCard;
+        }
     }
 
     internal override void AppendValue(VcfSerializer serializer)
