@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using FolkerKinzel.DataUrls;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
@@ -9,23 +10,6 @@ using FolkerKinzel.VCards.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
-
-//internal class DataPropertyDerived : DataProperty
-//{
-//    public DataPropertyDerived(DataProperty prop) : base(prop)
-//    {
-//    }
-
-//    public DataPropertyDerived(ParameterSection parameters, string? group)
-//        : base(parameters, group)
-//    {
-//    }
-
-//    public override object Clone() => throw new NotImplementedException();
-//    public override string GetFileTypeExtension() => throw new NotImplementedException();
-//    internal override void AppendValue(VcfSerializer serializer) => throw new NotImplementedException();
-//}
-
 
 [TestClass]
 public class DataPropertyTests
@@ -39,7 +23,6 @@ public class DataPropertyTests
 
         Assert.IsNotNull(prop.Value);
     }
-
 
     [TestMethod]
     public void ValueTest1()
@@ -75,6 +58,35 @@ public class DataPropertyTests
         VCardProperty prop = new DataProperty(RawData.FromBytes([1, 2, 3]));
         Assert.IsFalse(prop.IsEmpty);
         Assert.IsInstanceOfType<RawData>(prop.Value);
+    }
+
+    [TestMethod]
+    public void EmbeddedBytesPropertyTest1()
+    {
+        var prop = new DataProperty(RawData.FromBytes([], "image/png"));
+
+        Assert.IsNotNull(prop.Value.Bytes);
+        Assert.IsNotNull(prop.Value);
+        Assert.IsTrue(prop.IsEmpty);
+        Assert.IsNotNull(prop.ToString());
+
+        Assert.AreEqual(".png", prop.Value.GetFileTypeExtension());
+
+        var vc = new VCard() { Photos = prop };
+        string vcf = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default | VcfOpts.WriteEmptyProperties);
+        Assert.IsNotNull(Vcf.Parse(vcf)[0].Photos);
+    }
+
+    [TestMethod]
+    public void EmbeddedBytesPropertyTest3()
+    {
+        var prop = new DataProperty(RawData.FromBytes([1, 2, 3]));
+        Assert.IsFalse(prop.IsEmpty);
+
+        byte[]? val1 = prop.Value.Bytes;
+        Assert.IsNotNull(val1);
+        byte[]? val2 = prop.Value.Bytes;
+        Assert.AreSame(val1, val2);
     }
 
     [TestMethod]
@@ -488,5 +500,89 @@ public class DataPropertyTests
     {
         var prop = new DataProperty(RawData.FromText("Hi"));
         Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+    }
+
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new DataProperty(RawData.FromBytes([1, 2, 3]));
+        var prop2 = (DataProperty)prop1.Clone();
+
+        Assert.IsNotNull(prop2);
+        Assert.IsNotNull(prop1.Value);
+        Assert.IsNotNull(prop2.Value);
+        Assert.IsNotNull(prop1.Value.Bytes);
+        Assert.IsNotNull(prop2.Value.Bytes);
+
+        CollectionAssert.AreEqual(prop1.Value.Bytes, prop2.Value.Bytes);
+    }
+
+    [TestMethod]
+    public void CloneTest2()
+    {
+        var prop1 = new DataProperty(RawData.FromText("abc"));
+        var prop2 = (DataProperty)prop1.Clone();
+
+        Assert.IsNotNull(prop2);
+        Assert.IsNotNull(prop1.Value);
+        Assert.IsNotNull(prop2.Value);
+        Assert.IsNotNull(prop1.Value.String);
+        Assert.IsNotNull(prop2.Value.String);
+
+        Assert.AreSame(prop1.Value.String, prop2.Value.String);
+    }
+
+    [TestMethod]
+    public void CloneTest3()
+    {
+        Assert.IsTrue(Uri.TryCreate("http://folker.de/index.htm", UriKind.Absolute, out Uri? uri));
+        var prop1 = new DataProperty(RawData.FromUri(uri));
+        var prop2 = (DataProperty)prop1.Clone();
+
+        Assert.IsNotNull(prop2);
+        Assert.IsNotNull(prop1.Value);
+        Assert.IsNotNull(prop2.Value);
+        Assert.IsNotNull(prop1.Value.Uri);
+        Assert.IsNotNull(prop2.Value.Uri);
+
+        Assert.AreSame(prop1.Value.Uri, prop2.Value.Uri);
+    }
+
+    [TestMethod]
+    public void PrepareForVcfSerializationTest1()
+    {
+        using var writer = new StringWriter();
+        var serializer = new Vcf_2_1Serializer(writer, VcfOpts.Default, null);
+
+        var prop = new DataProperty(RawData.FromText(""));
+        prop.Parameters.ContentLocation = Loc.Url;
+        prop.Parameters.DataType = Data.Uri;
+
+        prop.PrepareForVcfSerialization(serializer);
+        Assert.AreEqual(Loc.Inline, prop.Parameters.ContentLocation);
+    }
+
+
+    [TestMethod]
+    public void PrepareForVcfSerializationTest2()
+    {
+        using var writer = new StringWriter();
+        var serializer = new Vcf_2_1Serializer(writer, VcfOpts.Default, null);
+
+        Assert.IsTrue(Uri.TryCreate("cid:something", UriKind.Absolute, out Uri? uri));
+        var prop = new DataProperty(RawData.FromUri(uri));
+
+        prop.PrepareForVcfSerialization(serializer);
+        Assert.AreEqual(Loc.Cid, prop.Parameters.ContentLocation);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
+    }
+
+    [TestMethod]
+    public void AppendToTest1()
+    {
+        using var writer = new StringWriter();
+        var serializer = new Vcf_3_0Serializer(writer, VcfOpts.Default, null);
+        new DataProperty(RawData.FromText("")).AppendValue(serializer);
+        Assert.AreEqual(0, serializer.Builder.Length);
     }
 }

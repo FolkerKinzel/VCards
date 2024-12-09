@@ -67,4 +67,46 @@ public class RawDataTests
         string s = prop.ToString();
         StringAssert.Contains(s, passWord);
     }
+
+    [TestMethod]
+    public void ToStringTest4() => Assert.IsNotNull(new DataProperty(RawData.FromText("")).ToString());
+
+
+    [TestMethod]
+    public void GetFileTypeExtensionTest1()
+        => Assert.AreEqual(".htm", RawData.FromUri(new Uri("http://folker.de/", UriKind.Absolute)).GetFileTypeExtension(), false);
+
+
+    [TestMethod]
+    public void GetFileTypeExtensionTest2()
+    {
+        Assert.IsTrue(Uri.TryCreate("http://folker.de/test.txt", UriKind.Absolute, out Uri? uri));
+
+        var prop = RawData.FromUri(uri, "image/png");
+        Assert.AreEqual(".png", prop.GetFileTypeExtension());
+
+        prop = RawData.FromUri(uri);
+        Assert.AreEqual(".txt", prop.GetFileTypeExtension());
+    }
+
+    [TestMethod]
+    public void GetFileTypeExtensionTest3()
+    {
+        var prop = RawData.FromText("");
+        Assert.AreEqual(".txt", prop.GetFileTypeExtension());
+    }
+
+    [TestMethod]
+    public void GetFileTypeExtensionTest4()
+    {
+        const string group = "gr1";
+        const string mimeString = "text/html";
+        var prop = new DataProperty(RawData.FromText("text", mimeString), group);
+
+        Assert.AreEqual(group, prop.Group);
+        Assert.AreEqual(mimeString, prop.Parameters.MediaType);
+
+        string? ext = prop.Value.GetFileTypeExtension();
+        Assert.AreEqual(".htm", ext);
+    }
 }
