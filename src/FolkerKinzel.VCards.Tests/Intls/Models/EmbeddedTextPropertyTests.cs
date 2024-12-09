@@ -35,8 +35,6 @@ public class EmbeddedTextPropertyTests
         var prop2 = (DataProperty)prop1.Clone();
 
         Assert.IsNotNull(prop2);
-        Assert.IsInstanceOfType<string>(prop1.Value.Object);
-        Assert.IsInstanceOfType<string>(prop2.Value.Object);
         Assert.IsNotNull(prop1.Value);
         Assert.IsNotNull(prop2.Value);
         Assert.IsNotNull(prop1.Value.String);

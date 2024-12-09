@@ -256,7 +256,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendLogos(IEnumerable<DataProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.LOGO,
-                                   value.Where(static x => x?.Value.Object is not string));
+                                   value.Where(static x => x?.Value.String is null));
 
     protected override void AppendMembers(IEnumerable<RelationProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.MEMBER, value);
@@ -286,7 +286,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendPhotos(IEnumerable<DataProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.PHOTO,
-                                   value.Where(static x => x?.Value.Object is not string));
+                                   value.Where(static x => x?.Value.String is null));
 
     protected override void AppendProdID(TextProperty value)
         => BuildProperty(VCard.PropKeys.PRODID, value);
@@ -324,7 +324,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
 
     protected override void AppendSounds(IEnumerable<DataProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.SOUND,
-                                   value.Where(static x => x?.Value.Object is not string));
+                                   value.Where(static x => x?.Value.String is null));
     protected override void AppendSources(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.SOURCE, value);
 

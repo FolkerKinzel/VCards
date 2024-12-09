@@ -175,39 +175,48 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
     {
         base.PrepareForVcfSerialization(serializer);
 
-        if (Value.Object is byte[])
+        Value.Switch(
+            (Parameters, serializer),
+            static (bytes, tuple) => PrepareForBytes(tuple.Parameters),
+            PrepareForUri,
+            PrepareForText
+            );
+
+        static void PrepareForBytes(ParameterSection parameters)
         {
-            Parameters.ContentLocation = Loc.Inline;
-            Parameters.DataType = Data.Binary;
-            Parameters.Encoding = Enc.Base64;
+            parameters.ContentLocation = Loc.Inline;
+            parameters.DataType = Data.Binary;
+            parameters.Encoding = Enc.Base64;
         }
-        else if (Value.Object is Uri uri)
+
+        static void PrepareForUri(Uri uri, (ParameterSection parameters, VcfSerializer serializer) tuple)
         {
-            if (serializer.Version == VCdVersion.V2_1)
+            if (tuple.serializer.Version == VCdVersion.V2_1)
             {
                 if (UriConverter.IsContentId(uri))
                 {
-                    Parameters.ContentLocation = Loc.Cid;
+                    tuple.parameters.ContentLocation = Loc.Cid;
                 }
-                else if (Parameters.ContentLocation != Loc.Cid)
+                else if (tuple.parameters.ContentLocation != Loc.Cid)
                 {
-                    Parameters.ContentLocation = Loc.Url;
+                    tuple.parameters.ContentLocation = Loc.Url;
                 }
             }
             else
             {
-                Parameters.DataType = Data.Uri;
+                tuple.parameters.DataType = Data.Uri;
             }
         }
-        else
-        {
-            Parameters.DataType = Data.Text;
-            Parameters.ContentLocation = Loc.Inline;
 
-            if (serializer.Version == VCdVersion.V2_1 && Value.String.NeedsToBeQpEncoded())
+        static void PrepareForText(string text, (ParameterSection parameters, VcfSerializer serializer) tuple)
+        {
+            tuple.parameters.DataType = Data.Text;
+            tuple.parameters.ContentLocation = Loc.Inline;
+
+            if (tuple.serializer.Version == VCdVersion.V2_1 && text.NeedsToBeQpEncoded())
             {
-                Parameters.Encoding = Enc.QuotedPrintable;
-                Parameters.CharSet = VCard.DEFAULT_CHARSET;
+                tuple.parameters.Encoding = Enc.QuotedPrintable;
+                tuple.parameters.CharSet = VCard.DEFAULT_CHARSET;
             }
         }
     }
@@ -219,17 +228,11 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
             return;
         }
 
-        if (Value.Object is byte[] bytes)
-        {
-            serializer.AppendBase64EncodedData(bytes);
-        }
-        else if (Value.Object is Uri uri)
-        {
-            _ = serializer.Builder.Append(uri.AbsoluteUri);
-        }
-        else
-        {
-            StringSerializer.AppendVcf(serializer.Builder, Value.String, Parameters, serializer.Version);
-        }
+        Value.Switch(
+            (serializer, Parameters),
+            static (bytes, tuple) => tuple.serializer.AppendBase64EncodedData(bytes),
+            static (uri, tuple) => _ = tuple.serializer.Builder.Append(uri.AbsoluteUri),
+            static (text, tuple) => StringSerializer.AppendVcf(tuple.serializer.Builder, text, tuple.Parameters, tuple.serializer.Version)
+            );
     }
 }

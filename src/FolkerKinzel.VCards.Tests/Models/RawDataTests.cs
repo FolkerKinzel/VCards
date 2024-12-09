@@ -18,7 +18,6 @@ public class RawDataTests
     public void ValueTest1()
     {
         var rel = RawData.FromText("Hi");
-        Assert.IsNotNull(rel.Object);
         Assert.IsNotNull(rel.String);
         Assert.IsNull(rel.Bytes);
         Assert.IsNull(rel.Uri);
@@ -29,7 +28,6 @@ public class RawDataTests
     public void ValueTest2()
     {
         var rel = RawData.FromUri(new Uri("http://folker.de/"));
-        Assert.IsNotNull(rel.Object);
         Assert.IsNull(rel.String);
         Assert.IsNull(rel.Bytes);
         Assert.IsNotNull(rel.Uri);
@@ -40,7 +38,6 @@ public class RawDataTests
     public void ValueTest3()
     {
         var rel = RawData.FromBytes([]);
-        Assert.IsNotNull(rel.Object);
         Assert.IsNull(rel.String);
         Assert.IsNotNull(rel.Bytes);
         Assert.IsNull(rel.Uri);

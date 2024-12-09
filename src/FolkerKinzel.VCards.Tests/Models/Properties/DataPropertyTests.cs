@@ -33,7 +33,7 @@ public class DataPropertyTests
     [TestMethod]
     public void DataPropertyTest3()
     {
-        VcfRow? row = VcfRow.Parse("PHOTO:".AsMemory(), new VcfDeserializationInfo());
+        var row = VcfRow.Parse("PHOTO:".AsMemory(), new VcfDeserializationInfo());
         Assert.IsNotNull(row);
         var prop = new DataProperty(row, VCdVersion.V3_0);
 
@@ -132,7 +132,7 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard.Keys);
         DataProperty? key = vcard.Keys!.First();
         Assert.IsNotNull(key);
-        Assert.IsInstanceOfType<string>(key.Value.Object);
+        Assert.IsNotNull(key.Value.String);
         Assert.IsNotNull(key.Value);
         Assert.AreEqual("The password", key.Value.String);
         Assert.AreEqual("text/plain", key.Parameters.MediaType);
@@ -140,7 +140,7 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard.Photos);
         DataProperty? photo = vcard.Photos!.First();
         Assert.IsNotNull(photo);
-        Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
+        Assert.IsNotNull(photo.Value.Bytes);
         Assert.AreEqual("blabla", photo.Parameters.MediaType);
     }
 
@@ -160,7 +160,7 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard.Keys);
         DataProperty? key = vcard.Keys.First();
         Assert.IsNotNull(key);
-        Assert.IsInstanceOfType<string>(key.Value.Object);
+        Assert.IsNotNull(key.Value.String);
         Assert.IsNotNull(key.Value);
         Assert.AreEqual("The password", key.Value.String);
         Assert.AreEqual("text/plain", key.Parameters.MediaType);
@@ -182,7 +182,7 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard.Keys);
         DataProperty? key = vcard.Keys.First();
         Assert.IsNotNull(key);
-        Assert.IsInstanceOfType<string>(key.Value.Object);
+        Assert.IsNotNull(key.Value.String);
         Assert.IsNotNull(key.Value);
         Assert.AreEqual("The password", key.Value.String);
         Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
@@ -204,7 +204,7 @@ public class DataPropertyTests
         Assert.IsNotNull(vcard.Keys);
         DataProperty? key = vcard.Keys.First();
         Assert.IsNotNull(key);
-        Assert.IsInstanceOfType<string>(key.Value.Object);
+        Assert.IsNotNull(key.Value.String);
         Assert.IsNotNull(key.Value);
         Assert.AreEqual("The password", key.Value.String);
         Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
@@ -227,7 +227,7 @@ public class DataPropertyTests
 
         DataProperty? photo = vcard.Photos!.First();
         Assert.IsNotNull(photo);
-        Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
+        Assert.IsNotNull(photo.Value.Bytes);
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
     }
 
@@ -248,7 +248,7 @@ public class DataPropertyTests
 
         DataProperty? photo = vcard.Photos!.First();
         Assert.IsNotNull(photo);
-        Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
+        Assert.IsNotNull(photo.Value.Bytes);
         Assert.AreEqual("image/gif", photo.Parameters.MediaType);
     }
 
@@ -269,7 +269,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsTrue(photo.IsEmpty);
-        Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
+        Assert.IsNotNull(photo.Value.Bytes);
         Assert.AreEqual("image/gif", photo.Parameters.MediaType);
     }
 
@@ -291,7 +291,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
-        Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
+        Assert.IsNotNull(photo.Value.Bytes);
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
         CollectionAssert.AreEqual(arr, photo.Value.Bytes);
     }
@@ -314,7 +314,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
-        Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
+        Assert.IsNotNull(photo.Value.Bytes);
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
         CollectionAssert.AreEqual(arr, photo.Value.Bytes);
     }
@@ -337,7 +337,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
-        Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
+        Assert.IsNotNull(photo.Value.Bytes);
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
         CollectionAssert.AreEqual(arr, photo.Value.Bytes);
     }
@@ -360,31 +360,10 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
-        Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
+        Assert.IsNotNull(photo.Value.Bytes);
         Assert.AreEqual("image/png", photo.Parameters.MediaType);
         CollectionAssert.AreEqual(arr, photo.Value.Bytes);
     }
-
-    //[TestMethod]
-    //public void ParseTest6()
-    //{
-    //    string vcf = $"""
-    //    BEGIN:VCARD
-    //    VERSION:4.0
-    //    PHOTO:data:image/png\;base64\,{Convert.ToBase64String([1, 2, 3])}
-    //    END:VCARD
-    //    """;
-
-    //    VCard vcard = Vcf.Parse(vcf)[0];
-
-    //    Assert.IsNotNull(vcard);
-    //    Assert.IsNotNull(vcard.Photos);
-
-    //    DataProperty photo = vcard.Photos!.First()!;
-    //    Assert.IsFalse(photo.IsEmpty);
-    //    Assert.IsInstanceOfType(photo, typeof(EmbeddedBytesProperty));
-    //    Assert.AreEqual("image/png", photo.Parameters.MediaType);
-    //}
 
     [TestMethod]
     public void ParseTest7()
@@ -403,7 +382,7 @@ public class DataPropertyTests
 
         DataProperty photo = vcard.Photos!.First()!;
         Assert.IsFalse(photo.IsEmpty);
-        Assert.IsInstanceOfType<byte[]>(photo.Value.Object);
+        Assert.IsNotNull(photo.Value.Bytes);
         Assert.AreEqual("image/png;parameter=value", photo.Parameters.MediaType);
     }
 
@@ -425,7 +404,7 @@ public class DataPropertyTests
 
         DataProperty key = vcard.Keys!.First()!;
         Assert.IsTrue(key.IsEmpty);
-        Assert.IsInstanceOfType<string>(key.Value.Object);
+        Assert.IsNotNull(key.Value.String);
         Assert.AreEqual("text/plain", key.Parameters.MediaType);
     }
 
@@ -449,7 +428,7 @@ public class DataPropertyTests
 
         DataProperty key = vcard.Keys!.First()!;
         Assert.IsFalse(key.IsEmpty);
-        Assert.IsInstanceOfType<string>(key.Value.Object);
+        Assert.IsNotNull(key.Value.String);
         Assert.AreEqual("text/plain", key.Parameters.MediaType);
         Assert.AreEqual(PASSWORD, key.Value.String);
     }
@@ -474,7 +453,7 @@ public class DataPropertyTests
 
         DataProperty key = vcard.Keys!.First()!;
         Assert.IsFalse(key.IsEmpty);
-        Assert.IsInstanceOfType<string>(key.Value.Object);
+        Assert.IsNotNull(key.Value.String);
         Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
         Assert.AreEqual(PASSWORD, key.Value.String);
     }
@@ -499,18 +478,10 @@ public class DataPropertyTests
 
         DataProperty key = vcard.Keys!.First()!;
         Assert.IsFalse(key.IsEmpty);
-        Assert.IsInstanceOfType<string>(key.Value.Object);
+        Assert.IsNotNull(key.Value.String);
         Assert.AreEqual("text/plain;charset=utf-8", key.Parameters.MediaType);
         Assert.AreEqual(PASSWORD, key.Value.String);
     }
-
-
-    //[TestMethod]
-    //public void IsEmptyTest1()
-    //{
-    //    DataProperty prop = new DataPropertyDerived(DataProperty.FromText("Hello"));
-    //    Assert.IsTrue(prop.IsEmpty);
-    //}
 
     [TestMethod]
     public void IEnumerableTest1()

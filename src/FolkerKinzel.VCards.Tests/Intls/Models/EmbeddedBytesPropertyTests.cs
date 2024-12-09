@@ -14,7 +14,7 @@ public class EmbeddedBytesPropertyTests
     {
         var prop = new DataProperty(RawData.FromBytes([], "image/png"));
 
-        Assert.IsInstanceOfType<byte[]>(prop.Value.Object);
+        Assert.IsNotNull(prop.Value.Bytes);
         Assert.IsNotNull(prop.Value);
         Assert.IsTrue(prop.IsEmpty);
         Assert.IsNotNull(prop.ToString());
@@ -48,8 +48,6 @@ public class EmbeddedBytesPropertyTests
         var prop2 = (DataProperty)prop1.Clone();
 
         Assert.IsNotNull(prop2);
-        Assert.IsInstanceOfType<byte[]>(prop1.Value.Object);
-        Assert.IsInstanceOfType<byte[]>(prop2.Value.Object);
         Assert.IsNotNull(prop1.Value);
         Assert.IsNotNull(prop2.Value);
         Assert.IsNotNull(prop1.Value.Bytes);

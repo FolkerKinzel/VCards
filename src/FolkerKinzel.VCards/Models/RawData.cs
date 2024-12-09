@@ -15,9 +15,11 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="DataProperty"/>
 public sealed class RawData
 {
+    private readonly object _object;
+
     internal RawData(object obj, string? mediaType, bool isEmpty)
     {
-        Object = obj;
+        _object = obj;
         MediaType = mediaType;
         IsEmpty = isEmpty;
     }
@@ -150,27 +152,20 @@ public sealed class RawData
     /// Gets the encapsulated <see cref="byte"/> array,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
-    public byte[]? Bytes => Object as byte[];
+    public byte[]? Bytes => _object as byte[];
 
     /// <summary>
     /// Gets the encapsulated <see cref="System.Uri"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <value>An absolute <see cref="System.Uri"/> or <c>null</c>.</value>
-    public Uri? Uri => Object as Uri;
+    public Uri? Uri => _object as Uri;
 
     /// <summary>
     /// Gets the encapsulated <see cref="string"/>,
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
-    public string? String => Object as string;
-
-    /// <summary>
-    /// Gets the encapsulated value.
-    /// </summary>
-    /// <value>Either a <see cref="byte"/>-Array, or a <see cref="System.Uri"/>,
-    /// or a <see cref="string"/>.</value>
-    public object Object { get; }
+    public string? String => _object as string;
 
     /// <summary>Specifies the MIME type for the data.</summary>
     /// <value>Internet Media Type (&quot;MIME type&quot;) according to RFC&#160;2046.</value>
@@ -182,13 +177,13 @@ public sealed class RawData
     /// </summary>
     /// <returns>The file type extension.</returns>
     /// <remarks>
-    /// If <see cref="Object"/> is a <see cref="Uri"/>, the file type extension is for
+    /// If <see cref="_object"/> is a <see cref="Uri"/>, the file type extension is for
     /// the data the <see cref="System.Uri"/> references.
     /// </remarks>
     public string GetFileTypeExtension()
         => MediaType is not null
             ? MimeString.ToFileTypeExtension(MediaType)
-            : Object is Uri uri
+            : _object is Uri uri
                 ? UriConverter.GetFileTypeExtensionFromUri(uri)
                 : ".txt";
 
@@ -207,17 +202,17 @@ public sealed class RawData
                        Action<Uri>? uriAction = null,
                        Action<string>? stringAction = null)
     {
-        if (Object is byte[] bytes)
+        if (_object is byte[] bytes)
         {
             bytesAction?.Invoke(bytes);
         }
-        else if (Object is Uri uri)
+        else if (_object is Uri uri)
         {
             uriAction?.Invoke(uri);
         }
         else
         {
-            stringAction?.Invoke((string)Object);
+            stringAction?.Invoke((string)_object);
         }
     }
 
@@ -239,17 +234,17 @@ public sealed class RawData
                              Action<Uri, TArg>? uriAction = null,
                              Action<string, TArg>? stringAction = null)
     {
-        if (Object is byte[] bytes)
+        if (_object is byte[] bytes)
         {
             bytesAction?.Invoke(bytes, arg);
         }
-        else if (Object is Uri uri)
+        else if (_object is Uri uri)
         {
             uriAction?.Invoke(uri, arg);
         }
         else
         {
-            stringAction?.Invoke((string)Object, arg);
+            stringAction?.Invoke((string)_object, arg);
         }
     }
 
@@ -271,11 +266,11 @@ public sealed class RawData
                                     Func<Uri, TResult> uriFunc,
                                     Func<string, TResult> stringFunc)
     {
-        return Object switch
+        return _object switch
         {
             byte[] bytes => bytesFunc is null ? throw new ArgumentNullException(nameof(bytesFunc)) : bytesFunc(bytes),
             Uri uri => uriFunc is null ? throw new ArgumentNullException(nameof(uriFunc)) : uriFunc(uri),
-            _ => stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc((string)Object)
+            _ => stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc((string)_object)
         };
     }
 
@@ -302,19 +297,19 @@ public sealed class RawData
                                           Func<Uri, TArg, TResult> uriFunc,
                                           Func<string, TArg, TResult> stringFunc)
     {
-        return Object switch
+        return _object switch
         {
             byte[] bytes => bytesFunc is null ? throw new ArgumentNullException(nameof(bytesFunc)) : bytesFunc(bytes, arg),
             Uri uri => uriFunc is null ? throw new ArgumentNullException(nameof(uriFunc)) : uriFunc(uri, arg),
-            _ => stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc((string)Object, arg)
+            _ => stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc((string)_object, arg)
         };
     }
 
     /// <inheritdoc/>
     public override string ToString()
-        => Object is byte[] bytes
+        => _object is byte[] bytes
               ? $"{bytes}: {bytes.Length} Bytes"
-              : Object.ToString() ?? string.Empty;
+              : _object.ToString() ?? string.Empty;
 
     /// <summary>
     /// Loads the file referenced by <paramref name="filePath"/>.
