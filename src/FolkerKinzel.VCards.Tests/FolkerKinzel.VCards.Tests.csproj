@@ -85,6 +85,10 @@
     <Using Include="FolkerKinzel.Strings" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Intls\Models\" />
+	</ItemGroup>
+
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net7.0'">
 		<Exec Command="echo $(ProjectDir) &gt; &quot;$(ProjectDir)\Resources\ProjDir.txt&quot;" />
 	</Target>

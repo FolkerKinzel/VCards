@@ -1,9 +1,9 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.Testing.Platform.Extensions.Messages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
@@ -94,6 +94,42 @@ public class RelationPropertyTests
     {
         var prop = new RelationProperty(Relation.Empty);
         Assert.IsTrue(prop.IsEmpty);
+        Assert.IsNotNull(prop.Value);
+    }
+
+    [TestMethod]
+    public void IsEmptyTest2()
+    {
+        var prop = new RelationProperty(Relation.Create(ContactID.Create(Guid.Empty)));
+        Assert.IsTrue(prop.IsEmpty);
+        Assert.IsNotNull(prop.Value);
+    }
+
+    [TestMethod]
+    public void IsEmptyTest3()
+    {
+        var prop = new RelationProperty(Relation.Create(ContactID.Create(Guid.NewGuid())));
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsNotNull(prop.Value.ContactID);
+    }
+
+    [TestMethod]
+    public void ToStringTest1()
+    {
+        const string phone = "12345";
+        VCard vc = VCardBuilder
+            .Create()
+            .DisplayNames.Add("John Doe")
+            .NameViews.Add(NameBuilder.Create().AddSurname("Doe").AddGiven("John").Build())
+            .Phones.Add(phone)
+            .VCard;
+
+        var prop = new RelationProperty(Relation.Create(vc));
+        string s = prop.ToString();
+
+        Assert.IsNotNull(s);
+        StringAssert.Contains(s, phone);
+        Assert.IsTrue(s.Length > phone.Length);
     }
 
 
@@ -144,4 +180,117 @@ public class RelationPropertyTests
         Assert.IsInstanceOfType<Relation>(prop.Value);
     }
 
+    [TestMethod]
+    public void CloneTest1()
+    {
+        var prop1 = new RelationProperty(Relation.Create(ContactID.Create(new Uri("http://folker.de/", UriKind.Absolute))));
+
+        var prop2 = (RelationProperty)prop1.Clone();
+
+        Assert.IsNotNull(prop1.Value.ContactID?.Uri);
+        Assert.AreSame(prop1.Value.ContactID.Uri, prop2.Value.ContactID?.Uri);
+        Assert.AreNotSame(prop1, prop2);
+    }
+
+    [TestMethod]
+    public void PrepareForVcfSerializationTest1()
+    {
+        var prop = new RelationProperty(Relation.Create(ContactID.Create(new Uri("http://folker.de/"))));
+        prop.Parameters.Clear();
+
+        using var writer = new StringWriter();
+        var serializer = new Vcf_4_0Serializer(writer, VcfOpts.Default);
+
+        prop.PrepareForVcfSerialization(serializer);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
+    }
+
+    
+
+    [TestMethod]
+    public void RelationUriPropertyTest2()
+    {
+        const Rel relation = Rel.Acquaintance;
+        var uri = new Uri("http://test.com/", UriKind.Absolute);
+
+        VCard vcard = VCardBuilder.Create().Relations.Add(uri, relation, group: v => GROUP).VCard;
+
+        string s = vcard.ToVcfString(VCdVersion.V4_0);
+
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
+
+        Assert.IsNotNull(list);
+        Assert.AreEqual(1, list.Count);
+
+        vcard = list[0];
+
+        Assert.IsNotNull(vcard.Relations);
+
+        RelationProperty? prop = vcard.Relations!.First();
+
+        Assert.IsNotNull(prop);
+        Assert.AreEqual(uri, prop.Value.ContactID?.Uri);
+        Assert.AreEqual(GROUP, prop.Group);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
+    }
+
+    [TestMethod]
+    public void RelationUriPropertyTest3()
+    {
+        const Rel relation = Rel.Agent;
+        var uri = new Uri("http://test.ääh.com/", UriKind.Absolute);
+
+        VCard vcard = VCardBuilder.Create().Relations.Add(uri, relation, group: v => GROUP).VCard;
+
+        string s = vcard.ToVcfString(VCdVersion.V2_1);
+
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
+
+        Assert.IsNotNull(list);
+        Assert.AreEqual(1, list.Count);
+
+        vcard = list[0];
+
+        Assert.IsNotNull(vcard.Relations);
+
+        RelationProperty? prop = vcard.Relations!.First();
+
+        Assert.IsNotNull(prop);
+        Assert.AreEqual(uri, prop.Value.ContactID?.Uri);
+        Assert.AreEqual(GROUP, prop.Group);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
+    }
+
+    [TestMethod]
+    public void RelationUriPropertyTest4()
+    {
+        const Rel relation = Rel.Agent;
+        var uri = new Uri("cid:test.com/", UriKind.Absolute);
+
+        VCard vcard = VCardBuilder.Create().Relations.Add(uri, relation, group: v => GROUP).VCard;
+
+        string s = vcard.ToVcfString(VCdVersion.V2_1);
+
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
+
+        Assert.IsNotNull(list);
+        Assert.AreEqual(1, list.Count);
+
+        vcard = list[0];
+
+        Assert.IsNotNull(vcard.Relations);
+
+        RelationProperty? prop = vcard.Relations!.First();
+
+        Assert.IsNotNull(prop);
+        Assert.AreEqual(uri, prop.Value.ContactID?.Uri);
+        Assert.AreEqual(GROUP, prop.Group);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.AreEqual(relation, prop.Parameters.RelationType);
+        Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
+    }
 }

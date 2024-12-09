@@ -25,25 +25,7 @@ public class RelationVCardPropertyTests
         Assert.AreEqual(0, serializer.Builder.Length);
     }
 
-    [TestMethod]
-    public void ToStringTest1()
-    {
-        const string phone = "12345";
-        var vc = new VCard
-        {
-            DisplayNames = new TextProperty("John Doe"),
-            NameViews = new NameProperty("Doe", "John"),
-            Phones = new TextProperty(phone)
-        };
-
-        var prop = RelationProperty.FromVCard(vc);
-        string s = prop.ToString();
-
-        Assert.IsNotNull(s);
-        StringAssert.Contains(s, phone);
-        Assert.IsTrue(s.Length > phone.Length);
-    }
-
+    
 
     [TestMethod]
     public void CircularReferenceTest1()
