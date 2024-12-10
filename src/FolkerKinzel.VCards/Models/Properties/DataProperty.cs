@@ -178,8 +178,8 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
         Value.Switch(
             (Parameters, serializer),
             static (bytes, tuple) => PrepareForBytes(tuple.Parameters),
-            PrepareForUri,
-            PrepareForText
+            VCardPropertyPreparer.PrepareForUri,
+            VCardPropertyPreparer.PrepareForText
             );
 
         static void PrepareForBytes(ParameterSection parameters)
@@ -187,37 +187,6 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
             parameters.ContentLocation = Loc.Inline;
             parameters.DataType = Data.Binary;
             parameters.Encoding = Enc.Base64;
-        }
-
-        static void PrepareForUri(Uri uri, (ParameterSection parameters, VcfSerializer serializer) tuple)
-        {
-            if (tuple.serializer.Version == VCdVersion.V2_1)
-            {
-                if (UriConverter.IsContentId(uri))
-                {
-                    tuple.parameters.ContentLocation = Loc.Cid;
-                }
-                else if (tuple.parameters.ContentLocation != Loc.Cid)
-                {
-                    tuple.parameters.ContentLocation = Loc.Url;
-                }
-            }
-            else
-            {
-                tuple.parameters.DataType = Data.Uri;
-            }
-        }
-
-        static void PrepareForText(string text, (ParameterSection parameters, VcfSerializer serializer) tuple)
-        {
-            tuple.parameters.DataType = Data.Text;
-            tuple.parameters.ContentLocation = Loc.Inline;
-
-            if (tuple.serializer.Version == VCdVersion.V2_1 && text.NeedsToBeQpEncoded())
-            {
-                tuple.parameters.Encoding = Enc.QuotedPrintable;
-                tuple.parameters.CharSet = VCard.DEFAULT_CHARSET;
-            }
         }
     }
 

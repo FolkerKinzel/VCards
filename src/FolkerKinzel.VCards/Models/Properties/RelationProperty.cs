@@ -120,20 +120,10 @@ done:
 
         if (Value.ContactID is not null)
         {
-            if (Value.ContactID.Uri is not null)
-            {
-                Parameters.DataType = Data.Uri;
-            }
-            else if (Value.ContactID.String is not null)
-            {
-                Parameters.DataType = Data.Text;
-
-                if (serializer.Version == VCdVersion.V2_1 && Value.ContactID.String.NeedsToBeQpEncoded())
-                {
-                    Parameters.Encoding = Enc.QuotedPrintable;
-                    Parameters.CharSet = VCard.DEFAULT_CHARSET;
-                }
-            }
+            Value.ContactID.Switch((Parameters, serializer),
+                                   null,
+                                   VCardPropertyPreparer.PrepareForUri,
+                                   VCardPropertyPreparer.PrepareForText);
         }
         else
         { 
