@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -94,7 +93,7 @@ public class V3Tests
 
         Assert.IsNotNull(s);
 
-        Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
+        Assert.IsTrue(s.Split([VCard.NewLine], StringSplitOptions.None)
             .All(x => x is not null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
         _ = Vcf.Parse(s);
@@ -728,7 +727,7 @@ END:VCARD";
         Assert.IsNull(vc.Organizations.First()!.Parameters.SortAs);
         Assert.IsNotNull(vc.NameViews);
         Assert.IsNotNull(vc.NameViews.First()!.Parameters.SortAs);
-        Assert.AreEqual("Org", vc.NameViews.First()!.Parameters.SortAs!.First());
+        Assert.AreEqual("Org", vc.NameViews.First()!.Parameters.SortAs![0]);
     }
 
     [TestMethod]

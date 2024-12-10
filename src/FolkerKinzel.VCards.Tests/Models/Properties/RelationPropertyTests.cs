@@ -42,11 +42,11 @@ public class RelationPropertyTests
 
         VCard vc = VCardBuilder.Create().Relations.Add(text, relation, group: v => GROUP).VCard;
 
-        var vcard = Vcf.Parse(vc.ToVcfString(VCdVersion.V2_1))[0];
+        VCard vcard = Vcf.Parse(vc.ToVcfString(VCdVersion.V2_1))[0];
 
         Assert.IsNotNull(vcard.Relations);
 
-        var prop = vcard.Relations!.FirstOrNull();
+        RelationProperty? prop = vcard.Relations!.FirstOrNull();
 
         Assert.IsNotNull(prop);
         Assert.AreEqual(text, prop!.Value.ContactID?.String);
