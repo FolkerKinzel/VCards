@@ -30,11 +30,6 @@
 		<Compile Remove="Intls\Deserializers\DigitParserTests.cs" />
 		<Compile Remove="Intls\Extensions\CharExtensionTests.cs" />
 		<Compile Remove="Intls\Extensions\DoubleExtensionsTests.cs" />
-		<Compile Remove="Intls\Models\RelationTextPropertyTests.cs" />
-		<Compile Remove="Intls\Models\RelationUriPropertyTests.cs" />
-		<Compile Remove="Intls\Models\RelationUuidPropertyTests.cs" />
-		<Compile Remove="Intls\Models\RelationVCardPropertyTests.cs" />
-		<Compile Remove="Intls\Models\UriPropertyTests.cs" />
 		<Compile Remove="Models\DataUrlTests.cs" />
 		<Compile Remove="Models\MimeTypeTests.cs" />
 		<Compile Remove="Models\Properties\XmlPropertyTest.cs" />
@@ -83,10 +78,6 @@
 		<Using Remove="System.Net.Http" />
 		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
     <Using Include="FolkerKinzel.Strings" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Intls\Models\" />
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net7.0'">

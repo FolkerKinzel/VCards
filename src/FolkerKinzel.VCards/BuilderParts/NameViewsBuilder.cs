@@ -180,6 +180,10 @@ public readonly struct NameViewsBuilder
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameViewsBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
+    /// <remarks>
+    /// <note type="tip">Use a <see cref="NameBuilder"/> to create a new <see cref="Name"/>.</note>
+    /// </remarks>
+    /// 
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>

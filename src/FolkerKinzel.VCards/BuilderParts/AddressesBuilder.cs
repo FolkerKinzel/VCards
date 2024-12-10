@@ -213,6 +213,12 @@ public readonly struct AddressesBuilder
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
+    /// <remarks>
+    /// <note type="tip">
+    /// Use an <see cref="AddressesBuilder"/> to create a new <see cref="Address"/>.
+    /// </note>
+    /// </remarks>
+    /// 
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>

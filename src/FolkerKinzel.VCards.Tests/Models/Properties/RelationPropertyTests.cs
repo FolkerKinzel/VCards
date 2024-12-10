@@ -293,4 +293,33 @@ public class RelationPropertyTests
         Assert.AreEqual(relation, prop.Parameters.RelationType);
         Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
+
+    
+
+    [TestMethod]
+    public void CircularReferenceTest1()
+    {
+        var vc = new VCard() { DisplayNames = new TextProperty("Donald Duck") };
+
+        vc.Relations = new RelationProperty(Relation.Create(vc));
+        string s = vc.ToString();
+        Assert.IsNotNull(s);
+    }
+
+    [TestMethod]
+    public void CircularReferenceTest2()
+    {
+        var donald = new VCard() { DisplayNames = new TextProperty("Donald Duck") };
+
+        var dagobert = new VCard
+        {
+            DisplayNames = new TextProperty("Dagobert Duck"),
+            Relations = new RelationProperty(Relation.Create(donald))
+        };
+
+        donald.Relations = new RelationProperty(Relation.Create(dagobert));
+
+        string s = donald.ToString();
+        Assert.IsNotNull(s);
+    }
 }
