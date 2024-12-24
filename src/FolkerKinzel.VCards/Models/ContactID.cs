@@ -248,8 +248,8 @@ public sealed class ContactID : IEquatable<ContactID>
     public override string ToString() 
         => IsEmpty ? "<Empty>" 
                    : Guid.HasValue 
-                        ? $"{typeof(Guid).FullName}: {Guid.Value}" 
-                        : $"{_object!.GetType().FullName}: {_object}";
+                        ? $"{typeof(Guid).Name}: {Guid.Value}" 
+                        : $"{_object!.GetType().Name}: {_object}";
 
     /// <inheritdoc/>
     ///

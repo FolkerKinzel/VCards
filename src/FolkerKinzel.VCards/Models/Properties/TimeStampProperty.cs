@@ -59,6 +59,9 @@ public sealed class TimeStampProperty : VCardProperty
     public override bool IsEmpty => Value < new DateTimeOffset(1900, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
     /// <inheritdoc />
+    public override string ToString() => IsEmpty ? base.ToString() : Value.ToString("u");
+
+    /// <inheritdoc />
     public override object Clone() => new TimeStampProperty(this);
 
     /// <inheritdoc />

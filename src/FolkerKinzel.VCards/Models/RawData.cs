@@ -308,8 +308,8 @@ public sealed class RawData
     /// <inheritdoc/>
     public override string ToString()
         => _object is byte[] bytes
-              ? $"{bytes}: {bytes.Length} Bytes"
-              : _object.ToString() ?? string.Empty;
+              ? $"{bytes.GetType().Name}: {bytes.Length} Bytes"
+              : $"{_object.GetType().Name}: {_object}";
 
     /// <summary>
     /// Loads the file referenced by <paramref name="filePath"/>.

@@ -491,10 +491,10 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
 
         (string? type, string value) = Convert
         (
-            static date => (typeof(System.DateOnly).FullName, date.ToString(CultureInfo.CurrentCulture)),
-            static dateTimeOffset => (typeof(System.DateTimeOffset).FullName, dateTimeOffset.ToString(CultureInfo.CurrentCulture)),
-            static time => (typeof(System.TimeOnly).FullName, time.ToString(CultureInfo.CurrentCulture)),
-            static str => (typeof(string).FullName, str)
+            static date => (typeof(System.DateOnly).Name, date.ToString(CultureInfo.CurrentCulture)),
+            static dateTimeOffset => (typeof(System.DateTimeOffset).Name, dateTimeOffset.ToString(CultureInfo.CurrentCulture)),
+            static time => (typeof(System.TimeOnly).Name, time.ToString(CultureInfo.CurrentCulture)),
+            static str => (typeof(string).Name, str)
         );
 
         return $"{type}: {value}";

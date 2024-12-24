@@ -88,7 +88,6 @@ public sealed class Relation
     /// </remarks>
     public ContactID? ContactID => _object as ContactID;
 
-
     /// <summary>
     /// Performs an <see cref="Action{T}"/> depending on the <see cref="Type"/> of the 
     /// encapsulated value.
@@ -186,7 +185,7 @@ public sealed class Relation
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _object is VCard vc
-                                            ? $"{{ {nameof(VCard)}: {vc.DisplayNames.FirstOrNull()?.Value} }}"
-                                            : $"{_object.GetType().FullName}: {_object}";
+                                            ? $"VCard: {vc.DisplayNames.FirstOrNull()?.Value}"
+                                            : _object.ToString() ?? "";
 }
 

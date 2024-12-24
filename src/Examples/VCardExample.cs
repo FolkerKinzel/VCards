@@ -192,8 +192,8 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2024-12-01T15:10:23Z
-UID:019382c5-bd15-73cd-991f-bb4dab32656d
+REV:2024-12-24T13:04:47Z
+UID:0193f8c5-1bf4-70a2-ab40-fa6e125077e4
 0.FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8;LANGUAGE=de-DE:Prof. Dr. K=C3=
 =A4the Alexandra Caroline M=C3=BCller-Risinowsky II.
 0.N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8;LANGUAGE=de-DE:M=C3=BCller-Ris=
@@ -218,8 +218,8 @@ X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 NOTE:Very experienced in Blazor.
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- SI1xaBnjqjNK1Opj3d/ycBQ01HAp5lwi+y4Gm6Inuj2D0YA0XomsuZ1sVixn7P+yrAfpEy4smV
- WgOXqw
+ iBMZMgWNkPwdc3tUO6jdt3lmnH8FwAkKF53iOR7OHN3z3kiLfaKRVxy+GNHAcXaqMCZ/C6rJlc
+ lDETKq
 
 END:VCARD
 
@@ -228,8 +228,8 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-12-01T15:10:23Z
-UID:019382c5-bd15-73cd-991f-bb4dab32656d
+REV:2024-12-24T13:04:48Z
+UID:0193f8c5-1bf4-70a2-ab40-fa6e125077e4
 0.FN;LANGUAGE=de-DE:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
  II.
 0.N;LANGUAGE=de-DE:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;I
@@ -253,8 +253,8 @@ X-SOCIALPROFILE;X-SERVICE-TYPE=Y:https://y.com/Semaphore
 IMPP;X-SERVICE-TYPE=WhatsDown:https://wd.me/0123456789
 X-SPOUSE:Paul Müller-Risinowsky
 NOTE:Very experienced in Blazor.
-PHOTO;ENCODING=b;TYPE=JPEG:SI1xaBnjqjNK1Opj3d/ycBQ01HAp5lwi+y4Gm6Inuj2D0YA0
- XomsuZ1sVixn7P+yrAfpEy4smVWgOXqw
+PHOTO;ENCODING=b;TYPE=JPEG:iBMZMgWNkPwdc3tUO6jdt3lmnH8FwAkKF53iOR7OHN3z3kiL
+ faKRVxy+GNHAcXaqMCZ/C6rJlclDETKq
 END:VCARD
 
 
@@ -262,9 +262,9 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-CREATED;VALUE=TIMESTAMP:20241201T151017Z
-REV:20241201T151023Z
-UID:urn:uuid:019382c5-bd15-73cd-991f-bb4dab32656d
+CREATED;VALUE=TIMESTAMP:20241224T130447Z
+REV:20241224T130448Z
+UID:urn:uuid:0193f8c5-1bf4-70a2-ab40-fa6e125077e4
 0.FN;DERIVED=TRUE;LANGUAGE=de-DE;PID=1.1:Prof. Dr. Käthe Alexandra Carolin
  e Müller-Risinowsky II.
 0.N;LANGUAGE=de-DE;PID=1.1:Müller-Risinowsky;Käthe;Alexandra,Caroline;Pro
@@ -287,9 +287,9 @@ IMPP;SERVICE-TYPE=WhatsDown;PID=1.1:https://wd.me/0123456789
 RELATED;TYPE=colleague,co-resident,spouse;VALUE=TEXT;PID=1.1:Paul Müller-R
  isinowsky
 NOTE;PID=1.1;AUTHOR-NAME=Satya Nadella;AUTHOR="https://www.microsoft.com/";
- CREATED=20241201T151023Z:Very experienced in Blazor.
-PHOTO;PID=1.1:data:image/jpeg;base64,SI1xaBnjqjNK1Opj3d/ycBQ01HAp5lwi+y4Gm6
- Inuj2D0YA0XomsuZ1sVixn7P+yrAfpEy4smVWgOXqw
+ CREATED=20241224T130447Z:Very experienced in Blazor.
+PHOTO;PID=1.1:data:image/jpeg;base64,iBMZMgWNkPwdc3tUO6jdt3lmnH8FwAkKF53iOR
+ 7OHN3z3kiLfaKRVxy+GNHAcXaqMCZ/C6rJlclDETKq
 CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
 GRAMGENDER;LANGUAGE=de;PID=1.1:feminine
 END:VCARD
@@ -300,9 +300,9 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-Updated: 12/01/2024 15:10:23 +00:00
+Updated: 2024-12-24 13:04:48Z
 
-ContactID: System.Guid: 019382c5-bd15-73cd-991f-bb4dab32656d
+ContactID: Guid: 0193f8c5-1bf4-70a2-ab40-fa6e125077e4
 
 GenderViews: Female
 
@@ -313,9 +313,9 @@ Organizations:
     Units: C#; Webdesign
 
 [DataType: Date]
-BirthDayViews: System.DateOnly: 03/28/1984
+BirthDayViews: DateOnly: 03/28/1984
 
-AnniversaryViews: System.DateOnly: 07/14/2006
+AnniversaryViews: DateOnly: 07/14/2006
 
 [PropertyClass: Work]
 [PhoneType: Voice, Msg, Cell, BBS]
@@ -340,13 +340,13 @@ Messengers: https://wd.me/0123456789
 
 [RelationType: Spouse]
 [DataType: Text]
-Relations: FolkerKinzel.VCards.Models.ContactID: System.String: Paul Müller-Risinowsky
+Relations: String: Paul Müller-Risinowsky
 
 Notes: Very experienced in Blazor.
 
 [Encoding: Base64]
 [MediaType: image/jpeg]
-Photos: System.Byte[]: 60 Bytes
+Photos: Byte[]: 60 Bytes
 
 [Language: de-DE]
 [Group: 0]

@@ -39,14 +39,14 @@ public static class SimpleVCardExample
         // Use Linq and/or extension methods to query the data:
         string? susisPrefMail = vCard.EMails.PrefOrNull()?.Value;
 
-        Console.WriteLine("Susis preferred email address is {0}", susisPrefMail);
+        Console.WriteLine("Susis preferred e-mail address is {0}.", susisPrefMail);
 
         Console.WriteLine("\nvCard:\n");
         Console.WriteLine(File.ReadAllText(filePath));
     }
 }
 /*
-Susis preferred email address is susi@contoso.com
+Susis preferred e-mail address is susi@contoso.com.
 
 vCard:
 
