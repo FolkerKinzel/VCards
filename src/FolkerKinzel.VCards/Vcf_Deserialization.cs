@@ -93,7 +93,7 @@ public static partial class Vcf
         }
     }
 
-    /// <summary>Parses a <see cref="string" />, that represents the content of a VCF
+    /// <summary>Parses a <see cref="string" /> that represents the content of a VCF
     /// file.</summary>
     /// <param name="vcf">A <see cref="string" /> that represents the content of a VCF
     /// file.</param>
