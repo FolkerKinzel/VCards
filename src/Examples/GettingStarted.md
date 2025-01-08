@@ -18,23 +18,23 @@ Read here:
 public static void WritingAndReadingVCard(string filePath)
 {
     VCard vCard = VCardBuilder
-            .Create()
-            .NameViews.Add(NameBuilder
-                .Create()
-                .AddGiven("Susi")
-                .AddSurname("Sonntag")
-                .Build()
-                          )
-            .NameViews.ToDisplayNames(NameFormatter.Default)
-            .GenderViews.Add(Sex.Female)
-            .Phones.Add("+49-321-1234567",
-                         parameters: p => p.PhoneType = Tel.Cell
-                       )
-            .EMails.Add("susi@contoso.com")
-            .EMails.Add("susi@home.de")
-            .EMails.SetPreferences()
-            .BirthDayViews.Add(1984, 3, 28)
-            .VCard;
+      .Create()
+      .NameViews.Add(NameBuilder
+          .Create()
+          .AddGiven("Susi")
+          .AddSurname("Sonntag")
+          .Build()
+                    )
+      .NameViews.ToDisplayNames(NameFormatter.Default)
+      .GenderViews.Add(Sex.Female)
+      .Phones.Add("+49-321-1234567",
+                   parameters: p => p.PhoneType = Tel.Cell
+                 )
+      .EMails.Add("susi@contoso.com")
+      .EMails.Add("susi@home.de")
+      .EMails.SetPreferences()
+      .BirthDayViews.Add(1984, 3, 28)
+      .VCard;
 
     // Save vCard as vCard 3.0:
     // (You don't need to specify the version: Version 3.0 is the default.)
@@ -47,19 +47,14 @@ public static void WritingAndReadingVCard(string filePath)
 
     // Use Linq and/or extension methods to query the data:
     string? susisPrefMail = vCard.EMails.PrefOrNull()?.Value;
-
-    Console.WriteLine("Susis preferred email address is {0}", susisPrefMail);
-
-    Console.WriteLine("\nvCard:\n");
-    Console.WriteLine(File.ReadAllText(filePath));
 }
 ```
 The VCF file the method creates is:
 ```
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-12-01T14:37:03Z
-UID:019382a7-515c-7486-a956-107bc79c1525
+REV:2025-01-08T22:33:17Z
+UID:0194480c-f808-7751-8415-050b56089698
 FN:Susi Sonntag
 N:Sonntag;Susi;;;
 X-GENDER:Female
