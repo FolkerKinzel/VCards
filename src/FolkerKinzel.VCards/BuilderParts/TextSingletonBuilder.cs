@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
@@ -36,13 +36,13 @@ public readonly struct TextSingletonBuilder
 
     /// <summary>
     /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// specified property and <paramref name="data"/> as arguments. Its return value 
+    /// specified property and <paramref name="arg"/> as arguments. Its return value 
     /// will be the new content of the specified property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="TextSingletonBuilder"/> to be able to chain calls.</returns>
     /// <remarks>
@@ -51,11 +51,12 @@ public readonly struct TextSingletonBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(Func<TextProperty?, TData, TextProperty?> func, TData data)
+    public VCardBuilder Edit<TArg>(Func<TextProperty?, TArg, TextProperty?> func,
+                                   TArg arg)
     {
         TextProperty? prop = Builder.VCard.Get<TextProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func.Invoke(prop, data));
+        _builder.VCard.Set(_prop, func(prop, arg));
         return _builder;
     }
 
@@ -75,9 +76,9 @@ public readonly struct TextSingletonBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<TextProperty?, TextProperty?> func)
     {
-        var prop = Builder.VCard.Get<TextProperty?>(_prop);
+        TextProperty? prop = Builder.VCard.Get<TextProperty?>(_prop);
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Set(_prop, func.Invoke(prop));
+        _builder.VCard.Set(_prop, func(prop));
         return _builder;
     }
 
@@ -100,7 +101,7 @@ public readonly struct TextSingletonBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        var vc = Builder.VCard;
+        VCard vc = Builder.VCard;
         var property = new TextProperty(value, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 

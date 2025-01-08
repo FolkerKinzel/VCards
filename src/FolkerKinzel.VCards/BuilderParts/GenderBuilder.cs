@@ -2,9 +2,9 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
@@ -71,13 +71,13 @@ public readonly struct GenderBuilder
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.GenderViews"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// <see cref="VCard.GenderViews"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// <see cref="VCard.GenderViews"/> property and <paramref name="arg"/> as arguments. Its return value 
     /// will be the new content of the <see cref="VCard.GenderViews"/> property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GenderBuilder"/>
     /// to be able to chain calls.</returns>
     /// <remarks>
@@ -86,11 +86,12 @@ public readonly struct GenderBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(Func<IEnumerable<GenderProperty>, TData, IEnumerable<GenderProperty?>?> func, TData data)
+    public VCardBuilder Edit<TArg>(Func<IEnumerable<GenderProperty>, TArg, IEnumerable<GenderProperty?>?> func,
+                                   TArg arg)
     {
-        var props = GetProperty();
+        IEnumerable<GenderProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.GenderViews = func.Invoke(props, data);
+        _builder.VCard.GenderViews = func(props, arg);
         return _builder;
     }
 
@@ -110,15 +111,15 @@ public readonly struct GenderBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<GenderProperty>, IEnumerable<GenderProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<GenderProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.GenderViews = func.Invoke(props);
+        _builder.VCard.GenderViews = func(props);
         return _builder;
     }
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<GenderProperty> GetProperty() =>
-        Builder.VCard.GenderViews?.WhereNotNull() ?? [];
+        Builder.VCard.GenderViews?.OfType<GenderProperty>() ?? [];
 
     /// <summary>
     /// Adds a <see cref="GenderProperty"/> instance, which is newly initialized using the specified 
@@ -140,13 +141,36 @@ public readonly struct GenderBuilder
     /// </example>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Add(Sex? sex,
                             string? identity = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
+        => Add(Gender.Create(sex, identity), parameters, group);
+
+
+    /// <summary>
+    /// Adds a <see cref="GenderProperty"/> instance, which is newly initialized using the specified 
+    /// <see cref="Gender"/> instance, to the <see cref="VCard.GenderViews"/> property.
+    /// </summary>
+    /// <param name="value">A <see cref="Gender"/> instance, or <c>null</c>.</param>
+    /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
+    /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
+    /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" /> 
+    /// objects, which the <see cref="VCardProperty" /> should belong to, or <c>null</c> to indicate that 
+    /// the <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
+    /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
+    /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GenderBuilder"/> 
+    /// to be able to chain calls.</returns>
+    /// 
+    /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
+    /// been initialized using the default constructor.</exception>
+    public VCardBuilder Add(Gender? value,
+                            Action<ParameterSection>? parameters = null,
+                            Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.GenderViews,
-                          VCardBuilder.Add(new GenderProperty(sex, identity, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new GenderProperty(value ?? Gender.Empty, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<GenderProperty?>?>(Prop.GenderViews),
                                            parameters)
                           );

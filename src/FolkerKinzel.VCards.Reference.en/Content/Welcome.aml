@@ -44,7 +44,7 @@
       <content>
         <autoOutline/>
         <para>
-          The data model used by this library is aligned to the vCard 4.0 standard (RFC6350). This means that every
+          The data model used by this library is aligned to the vCard 4.0 standard (RFC 6350). This means that every
           vCard of version 2.1 and 3.0 is internally converted to vCard 4.0. When saved and serialized, they are
           converted back.
         </para>
@@ -63,7 +63,7 @@
           <title>The VCardProperty Class</title>
           <content>
             <para>
-              The data model of the <codeInline>VCard</codeInline> class is built on classes that are derived from <codeInline>VCardProperty</codeInline>.
+              The data model of the <codeInline>VCard</codeInline> class is built on classes that are derived from the abstract <codeInline>VCardProperty</codeInline> class.
             </para>
             <para>
               <codeInline>VCardProperty</codeInline> exposes the following members:
@@ -95,7 +95,7 @@
             <para>
               (Classes that are derived from <codeInline>VCardProperty</codeInline> hide the generic implementation of
               <codeInline>VCardProperty.Value</codeInline> in order to return
-              derived classes instead of <codeInline>System.Object?</codeInline>.)
+              derived classes instead of <codeInline>System.Object</codeInline>.)
             </para>
           </content>
         </section>
@@ -122,20 +122,31 @@
       </sections>
     </section>
 
-    <section address="VCardBuilder">
-      <title>Efficient building and editing of VCard objects using VCardBuilder</title>
+    <section address="Fluent_APIs">
+      <title>Efficient building and editing of VCard objects using Fluent APIs</title>
       <content>
-        <para>The `VCardBuilder` class provides a fluent API for building and editing VCard objects.</para>
         <para>
-          The properties of the VCardBuilder class have the same names as those of the VCard class. Each of these
+          The <codeInline>VCardBuilder</codeInline> class provides a fluent API for building and editing VCard objects. 
+          Since <codeInline>Name</codeInline> and <codeInline>Address</codeInline> are also complicated classes, the classes
+          <codeInline>NameBuilder</codeInline> and <codeInline>AddressBuilder</codeInline>
+          also exist to create instances of these classes using a Fluent API.
+        </para>
+        <para>
+          The properties of the <codeInline>VCardBuilder</codeInline> class have the same names as those 
+          of the VCard class. Each of these
           properties gets a struct that provides methods to edit the corresponding VCard property.
-          Each of these methods return the VCardBuilder instance so that the calls can be chained.
+          Each of these methods return this struct so that the calls can be chained.
         </para>
         <para>
           The <codeInline>VCardBuilder.Create</codeInline> method overloads initialize a VCardBuilder, 
           which creates a new
           VCard instance or edits an existing one. The <codeInline>VCardBuilder.VCard</codeInline> property gets the VCard
           object that the VCardBuilder created or manipulated.
+        </para>
+        <para>
+          VCardBuilder doesn't throw exceptions and makes the most from the input arguments. If strong
+          input validation is required, the model classes can be instantiated separately and used with
+          VCardBuilder.
         </para>
       </content>
     </section>
@@ -175,7 +186,7 @@
           </listItem>
           <listItem>
             <para>
-              Some operations work with collections of VCard objects (e.g., saving several VCard objects together in a common VCF file).
+              Some operations work with collections of <codeInline>VCard</codeInline> objects (e.g., saving several VCard objects together in a common VCF file).
               Extension methods allow these operations to be performed directly on these collections.
             </para>
           </listItem>
@@ -205,7 +216,7 @@
           // Registering the executing application with the VCard class is a technical requirement
           // when using the data synchronization mechanism introduced with vCard 4.0 (PID and
           // CLIENTPIDMAP). To do this, call the static method VCard.RegisterApp with an absolute
-          // Uri once when the program starts. (UUID URNs are ideal for this.)
+          // Uri once when the application starts. (UUID URNs are ideal for this.)
           VCard.RegisterApp(new Uri("urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556"));
 
           //Write a vCard 4.0 with the option VcfOptions.SetPropertyIDs:

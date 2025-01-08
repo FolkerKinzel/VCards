@@ -3,8 +3,7 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
@@ -20,14 +19,14 @@ internal abstract class VcfSerializer : IDisposable
     protected readonly TextWriter _writer;
 
     protected VcfSerializer(TextWriter writer,
-                            Opts options,
+                            VcfOpts options,
                             ParameterSerializer parameterSerializer,
                             ITimeZoneIDConverter? tzConverter)
     {
         this.Options = options;
 
         // Store this for performance:
-        this.IgnoreEmptyItems = !options.IsSet(Opts.WriteEmptyProperties);
+        this.IgnoreEmptyItems = !options.IsSet(VcfOpts.WriteEmptyProperties);
 
         this.ParameterSerializer = parameterSerializer;
         this._writer = writer;
@@ -41,7 +40,7 @@ internal abstract class VcfSerializer : IDisposable
 
     internal abstract VCdVersion Version { get; }
 
-    internal Opts Options { get; }
+    internal VcfOpts Options { get; }
 
     internal bool IgnoreEmptyItems { get; }
 
@@ -105,7 +104,7 @@ internal abstract class VcfSerializer : IDisposable
     internal static VcfSerializer GetSerializer(Stream stream,
                                                 bool leaveStreamOpen,
                                                 VCdVersion version,
-                                                Opts options,
+                                                VcfOpts options,
                                                 ITimeZoneIDConverter? tzConverter)
     {
         // UTF-8 must be written without BOM, otherwise it cannot be read
@@ -132,12 +131,12 @@ internal abstract class VcfSerializer : IDisposable
         VCardToSerialize = vCard;
         ReplenishRequiredProperties();
 
-        if (Options.HasFlag(Opts.SetPropertyIDs))
+        if (Options.HasFlag(VcfOpts.SetPropertyIDs))
         {
             SetPropertyIDs();
         }
 
-        if (Options.HasFlag(Opts.SetIndexes))
+        if (Options.HasFlag(VcfOpts.SetIndexes))
         {
             SetIndexes();
         }
@@ -193,11 +192,11 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.ProductID:
                     AppendProdID((TextProperty)kvp.Value);
                     break;
-                case Prop.TimeStamp:
+                case Prop.Updated:
                     AppendLastRevision((TimeStampProperty)kvp.Value);
                     break;
-                case Prop.ID:
-                    AppendUniqueIdentifier((IDProperty)kvp.Value);
+                case Prop.ContactID:
+                    AppendUniqueIdentifier((ContactIDProperty)kvp.Value);
                     break;
                 case Prop.Categories:
                     AppendCategories((IEnumerable<StringCollectionProperty?>)kvp.Value);
@@ -301,14 +300,14 @@ internal abstract class VcfSerializer : IDisposable
                 case Prop.Hobbies:
                     AppendHobbies((IEnumerable<TextProperty?>)kvp.Value);
                     break;
-                case Prop.Languages:
+                case Prop.SpokenLanguages:
                     AppendLanguages((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case Prop.Notes:
                     AppendNotes((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case Prop.Xmls:
-                    AppendXmlProperties((IEnumerable<XmlProperty?>)kvp.Value);
+                    AppendXmlProperties((IEnumerable<TextProperty?>)kvp.Value);
                     break;
                 case Prop.Logos:
                     AppendLogos((IEnumerable<DataProperty?>)kvp.Value);
@@ -389,7 +388,7 @@ internal abstract class VcfSerializer : IDisposable
     {
         Debug.Assert(value is not null);
 
-        if (Options.HasFlag(Opts.WriteXExtensions))
+        if (Options.HasFlag(VcfOpts.WriteXExtensions))
         {
             bool first = true;
 
@@ -449,7 +448,7 @@ internal abstract class VcfSerializer : IDisposable
             }
         }
 
-        if (Options.HasFlag(Opts.WriteKAddressbookExtensions))
+        if (Options.HasFlag(VcfOpts.WriteKAddressbookExtensions))
         {
             TextProperty? prop = value.PrefOrNullIntl(IgnoreEmptyItems);
 
@@ -517,46 +516,48 @@ internal abstract class VcfSerializer : IDisposable
         Debug.Assert(value is not null);
 
         if (value.WhereNotEmpty()
-                 .FirstOrDefault(static x => x.Value!.TryAsDateOnly(out _)) is DateAndOrTimeProperty prop)
+                 .FirstOrDefault(static x => x.Value.TryAsDateOnly(out _)) is DateAndOrTimeProperty prop)
         {
-            _ = prop.Value!.TryAsDateOnly(out DateOnly dto);
+            _ = prop.Value.TryAsDateOnly(out DateOnly dto);
 
-            if (Options.HasFlag(Opts.WriteXExtensions))
+            if (Options.HasFlag(VcfOpts.WriteXExtensions))
             {
-                BuildAnniversary(dto, VCard.PropKeys.NonStandard.X_ANNIVERSARY, prop.Group);
+                BuildAnniversary(dto, VCard.PropKeys.NonStandard.X_ANNIVERSARY, prop);
             }
 
-            if (Options.HasFlag(Opts.WriteEvolutionExtensions))
+            if (Options.HasFlag(VcfOpts.WriteEvolutionExtensions))
             {
-                BuildAnniversary(dto, VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY, prop.Group);
+                BuildAnniversary(dto, VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY, prop);
             }
 
-            if (Options.HasFlag(Opts.WriteKAddressbookExtensions))
+            if (Options.HasFlag(VcfOpts.WriteKAddressbookExtensions))
             {
-                BuildAnniversary(dto, VcfSerializer.X_KADDRESSBOOK_X_Anniversary, prop.Group);
+                BuildAnniversary(dto, VcfSerializer.X_KADDRESSBOOK_X_Anniversary, prop);
             }
 
-            if (Options.HasFlag(Opts.WriteWabExtensions))
+            if (Options.HasFlag(VcfOpts.WriteWabExtensions))
             {
-                BuildAnniversary(dto, VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY, prop.Group);
+                BuildAnniversary(dto, VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY, prop);
             }
         }
     }
 
-    private void BuildAnniversary(DateOnly dto, string propKey, string? group)
+    private void BuildAnniversary(DateOnly dto, string propKey, VCardProperty prop)
     {
         var xAnniversary = new NonStandardProperty(
             propKey,
             string.Format(CultureInfo.InvariantCulture, "{0:0000}-{1:00}-{2:00}",
                           dto.Year, dto.Month, dto.Day),
-            group);
+            prop.Group);
+
+        xAnniversary.Parameters.Assign(prop.Parameters);
 
         BuildProperty(propKey, xAnniversary);
     }
 
     private void AppendABLabels(IEnumerable<TextProperty?> value)
     {
-        if(this.Options.HasFlag(Opts.WriteXExtensions))
+        if (this.Options.HasFlag(VcfOpts.WriteXExtensions))
         {
             BuildPropertyCollection(VCard.PropKeys.NonStandard.X_AB_LABEL, value);
         }
@@ -611,35 +612,39 @@ internal abstract class VcfSerializer : IDisposable
     {
         Debug.Assert(value is not null);
 
-        if (value.FirstOrDefault(x => x?.Value.Sex is not null) is GenderProperty pref)
+        if (value.FirstOrDefault(x => x?.Value.Sex is not null) is GenderProperty genderProp)
         {
-            Sex sex = pref.Value.Sex!.Value;
+            Sex sex = genderProp.Value.Sex!.Value;
 
             if (sex is not Sex.Male and not Sex.Female)
             {
                 return;
             }
 
-            if (Options.HasFlag(Opts.WriteXExtensions))
+            if (Options.HasFlag(VcfOpts.WriteXExtensions))
             {
                 string propKey = VCard.PropKeys.NonStandard.X_GENDER;
 
                 var xGender = new NonStandardProperty(
                     propKey,
-                    sex == Sex.Male ? "Male" : "Female", pref.Group);
+                    sex == Sex.Male ? "Male" : "Female", genderProp.Group);
+
+                xGender.Parameters.Assign(genderProp.Parameters);
 
                 BuildProperty(propKey, xGender);
             }
 
-            if (Options.HasFlag(Opts.WriteWabExtensions))
+            if (Options.HasFlag(VcfOpts.WriteWabExtensions))
             {
                 string propKey = VCard.PropKeys.NonStandard.X_WAB_GENDER;
 
-                var xGender = new NonStandardProperty(
+                var xWabGender = new NonStandardProperty(
                     propKey,
-                    sex == Sex.Male ? "2" : "1", pref.Group);
+                    sex == Sex.Male ? "2" : "1", genderProp.Group);
 
-                BuildProperty(propKey, xGender);
+                xWabGender.Parameters.Assign(genderProp.Parameters);
+
+                BuildProperty(propKey, xWabGender);
             }
         }
     }
@@ -693,19 +698,19 @@ internal abstract class VcfSerializer : IDisposable
     {
         Debug.Assert(value is not null);
 
-        if (!this.Options.HasFlag(Opts.WriteNonStandardProperties))
+        if (!this.Options.HasFlag(VcfOpts.WriteNonStandardProperties))
         {
             return;
         }
 
         foreach (NonStandardProperty? nonStandardProp in value)
         {
-            if (nonStandardProp is null)
+            if (nonStandardProp is null || !nonStandardProp.IsXNameProperty())
             {
                 continue;
             }
 
-            BuildProperty(nonStandardProp.XName,
+            BuildProperty(nonStandardProp.Key,
                           nonStandardProp,
                           nonStandardProp.Parameters.Preference == 1);
         }
@@ -754,38 +759,44 @@ internal abstract class VcfSerializer : IDisposable
         RelationProperty? spouse = value.PrefOrNullIntl(static x => x.Parameters.RelationType.IsSet(Rel.Spouse),
                                                         IgnoreEmptyItems);
 
-        if (spouse is not null)
+        if (spouse is null)
         {
-            if (spouse is RelationVCardProperty vCardProp && !vCardProp.IsEmpty)
+            return;
+        }
+
+        VCardProperty? prop = spouse;
+
+        if (spouse.Value.VCard is VCard vc)
+        {
+            prop = ConvertSpouseVCardToTextProperty(spouse.Value.VCard, spouse.Group);
+
+            if (prop is null)
             {
-                spouse = ConvertSpouseVCardToRelationTextProperty(vCardProp.Value, vCardProp.Group);
-            }
-
-            if (spouse is RelationTextProperty)
-            {
-                if (Options.HasFlag(Opts.WriteXExtensions))
-                {
-                    BuildProperty(VCard.PropKeys.NonStandard.X_SPOUSE, spouse);
-                }
-
-                if (Options.HasFlag(Opts.WriteKAddressbookExtensions))
-                {
-                    BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_SpouseName, spouse);
-                }
-
-                if (Options.HasFlag(Opts.WriteEvolutionExtensions))
-                {
-                    BuildProperty(VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE, spouse);
-                }
-
-                if (Options.HasFlag(Opts.WriteWabExtensions))
-                {
-                    BuildProperty(VCard.PropKeys.NonStandard.X_WAB_SPOUSE_NAME, spouse);
-                }
+                return;
             }
         }
 
-        static RelationProperty? ConvertSpouseVCardToRelationTextProperty(VCard spousesVCard, string? group)
+        if (Options.HasFlag(VcfOpts.WriteXExtensions))
+        {
+            BuildProperty(VCard.PropKeys.NonStandard.X_SPOUSE, prop);
+        }
+
+        if (Options.HasFlag(VcfOpts.WriteKAddressbookExtensions))
+        {
+            BuildProperty(VcfSerializer.X_KADDRESSBOOK_X_SpouseName, prop);
+        }
+
+        if (Options.HasFlag(VcfOpts.WriteEvolutionExtensions))
+        {
+            BuildProperty(VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE, prop);
+        }
+
+        if (Options.HasFlag(VcfOpts.WriteWabExtensions))
+        {
+            BuildProperty(VCard.PropKeys.NonStandard.X_WAB_SPOUSE_NAME, prop);
+        }
+
+        static TextProperty? ConvertSpouseVCardToTextProperty(VCard spousesVCard, string? group)
         {
             string? name = spousesVCard.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value;
 
@@ -803,9 +814,7 @@ internal abstract class VcfSerializer : IDisposable
                 }
             }
 
-            return RelationProperty.FromText(name,
-                                             Rel.Spouse,
-                                             group);
+            return new TextProperty(name, group);
         }
     }
 
@@ -828,13 +837,13 @@ internal abstract class VcfSerializer : IDisposable
     protected virtual void AppendTitles(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendUniqueIdentifier(IDProperty value) { }
+    protected virtual void AppendUniqueIdentifier(ContactIDProperty value) { }
 
     [ExcludeFromCodeCoverage]
     protected virtual void AppendURLs(IEnumerable<TextProperty?> value) { }
 
     [ExcludeFromCodeCoverage]
-    protected virtual void AppendXmlProperties(IEnumerable<XmlProperty?> value) { }
+    protected virtual void AppendXmlProperties(IEnumerable<TextProperty?> value) { }
 
     internal abstract void AppendBase64EncodedData(byte[]? data);
 

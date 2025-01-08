@@ -3,9 +3,9 @@ using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
@@ -108,13 +108,13 @@ public readonly struct OrgBuilder
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.Organizations"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// <see cref="VCard.Organizations"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// <see cref="VCard.Organizations"/> property and <paramref name="arg"/> as arguments. Its return value 
     /// will be the new content of the <see cref="VCard.Organizations"/> property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="OrgBuilder"/>
     /// to be able to chain calls.</returns>
     /// <remarks>
@@ -123,11 +123,12 @@ public readonly struct OrgBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(Func<IEnumerable<OrgProperty>, TData, IEnumerable<OrgProperty?>?> func, TData data)
+    public VCardBuilder Edit<TArg>(Func<IEnumerable<OrgProperty>, TArg, IEnumerable<OrgProperty?>?> func,
+                                   TArg arg)
     {
-        var props = GetProperty();
+        IEnumerable<OrgProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Organizations = func.Invoke(props, data);
+        _builder.VCard.Organizations = func(props, arg);
         return _builder;
     }
 
@@ -146,15 +147,15 @@ public readonly struct OrgBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<OrgProperty>, IEnumerable<OrgProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<OrgProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Organizations = func.Invoke(props);
+        _builder.VCard.Organizations = func(props);
         return _builder;
     }
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<OrgProperty> GetProperty()
-        => Builder.VCard.Organizations?.WhereNotNull() ?? [];
+        => Builder.VCard.Organizations?.OfType<OrgProperty>() ?? [];
 
     /// <summary>
     /// Adds an <see cref="OrgProperty"/> instance, which is newly 
@@ -186,8 +187,8 @@ public readonly struct OrgBuilder
                             Func<VCard, string?>? group = null,
                             Action<TextBuilder, OrgProperty>? displayName = null)
     {
-        var vc = Builder.VCard;
-        var prop = new OrgProperty(orgName, orgUnits, group?.Invoke(_builder.VCard));
+        VCard vc = Builder.VCard;
+        var prop = new OrgProperty(new Organization(orgName, orgUnits), group?.Invoke(_builder.VCard));
 
         Builder.VCard.Set(Prop.Organizations,
                           VCardBuilder.Add(prop,
@@ -203,7 +204,7 @@ public readonly struct OrgBuilder
     /// Adds an <see cref="OrgProperty"/> instance, which is newly 
     /// initialized using the specified arguments, to the <see cref="VCard.Organizations"/> property.
     /// </summary>
-    /// <param name="org">An <see cref="Organization"/> object.</param>
+    /// <param name="value">An <see cref="Organization"/> object, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
@@ -219,16 +220,16 @@ public readonly struct OrgBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    /// <exception cref="ArgumentNullException"><paramref name="org"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(Organization org,
+    public VCardBuilder Add(Organization? value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null,
                             Action<TextBuilder, OrgProperty>? displayName = null)
     {
-        var vc = Builder.VCard;
-        var prop = new OrgProperty(org, group?.Invoke(_builder.VCard));
+        VCard vc = Builder.VCard;
+        value ??= new Organization(null);
+        var prop = new OrgProperty(value, group?.Invoke(_builder.VCard));
 
         Builder.VCard.Set(Prop.Organizations,
                           VCardBuilder.Add(prop,

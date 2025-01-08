@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
@@ -17,7 +18,7 @@ internal static class ParameterValueSplitter
     /// </summary>
     /// <param name="mem">The read-only memory region containing the compound
     /// parameter value to split.</param>
-    /// <returns>An IEnumerable of strings. Empty values are removed.</returns>
+    /// <returns>An IEnumerable of strings.</returns>
     public static IEnumerable<string> Split(ReadOnlyMemory<char> mem)
     {
         if (mem.IsEmpty)
@@ -33,10 +34,7 @@ internal static class ParameterValueSplitter
 
             ReadOnlySpan<char> nextSpan = span.Slice(0, splitIndex).Trim(ParameterSection.TRIM_CHARS);
 
-            if (!nextSpan.IsWhiteSpace())
-            {
-                yield return nextSpan.UnMaskParameterValue(isLabel: false);
-            }
+            yield return nextSpan.UnMaskParameterValue(isLabel: false);
 
             if (splitIndex == mem.Length)
             {

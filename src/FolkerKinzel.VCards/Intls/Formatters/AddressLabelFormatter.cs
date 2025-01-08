@@ -1,7 +1,7 @@
 using System.Globalization;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Intls.Formatters;
 
@@ -13,22 +13,12 @@ internal static class AddressLabelFormatter
 
     static AddressLabelFormatter() => _defaultAddressOrder = AddressOrderConverter.ParseCultureInfo(CultureInfo.CurrentCulture);
 
-    [Obsolete()]
-    internal static string? ToLabel(Address address)
-    {
-        return address.IsEmpty
-            ? null
-            : DoConvertToLabel(address, AddressOrderConverter.ParseAddress(address) ?? _defaultAddressOrder);
-    }
-
     internal static string ToLabel(AddressProperty prop)
-    {
-        Debug.Assert(!prop.Value.IsEmpty);
-        return DoConvertToLabel(prop.Value, AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder);
-    }
+    { 
+        AddressOrder addressOrder = AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder;
+        Address address = prop.Value;
+        Debug.Assert(!address.IsEmpty);
 
-    private static string DoConvertToLabel(Address address, AddressOrder addressOrder)
-    {
         return new StringBuilder(BUILDER_CAPACITY)
             .AppendStreet(address)
             .AppendLocality(address, addressOrder)
@@ -39,7 +29,7 @@ internal static class AddressLabelFormatter
 
     private static StringBuilder AppendStreet(this StringBuilder builder, Address address)
     {
-        IReadOnlyList<string> poBox = address.PostOfficeBox;
+        IReadOnlyList<string> poBox = address.POBox;
 
         if (poBox.Count != 0)
         {
@@ -64,7 +54,7 @@ internal static class AddressLabelFormatter
             strings.AddRange(address.District);
         }
 
-        IReadOnlyList<string> extAddress = address.ExtendedAddress;
+        IReadOnlyList<string> extAddress = address.Extended;
 
         if (extAddress.Count != 0)
         {

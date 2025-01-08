@@ -1,6 +1,8 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -119,9 +121,9 @@ public class Rfc9554Tests
 
         Serialize(vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2);
 
-        string v4Pure = vc.ToVcfString(VCdVersion.V4_0, options: Opts.None);
-        string v3Pure = vc.ToVcfString(VCdVersion.V3_0, options: Opts.None);
-        string v2Pure = vc.ToVcfString(VCdVersion.V2_1, options: Opts.None);
+        string v4Pure = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.None);
+        string v3Pure = vc.ToVcfString(VCdVersion.V3_0, options: VcfOpts.None);
+        string v2Pure = vc.ToVcfString(VCdVersion.V2_1, options: VcfOpts.None);
 
         Assert.IsTrue(v4.Contains("\nSOCIALPROFILE", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(v4.Contains("\nX-SOCIALPROFILE", StringComparison.OrdinalIgnoreCase));
@@ -257,7 +259,7 @@ public class Rfc9554Tests
 
         vc = Vcf.Parse(v4Conserved)[0];
 
-        VCards.Models.PropertyParts.ParameterSection? par = vc.DisplayNames?.First()?.Parameters;
+        ParameterSection? par = vc.DisplayNames?.First()?.Parameters;
         Assert.IsNotNull(par);
         Assert.IsTrue(par.Derived);
 
@@ -288,8 +290,8 @@ public class Rfc9554Tests
 
         Serialize(vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2);
 
-        string v4Pure = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteXExtensions).Unset(Opts.WriteRfc9554Extensions));
-        string v3Pure = vc.ToVcfString(VCdVersion.V3_0, options: Opts.Default.Unset(Opts.WriteXExtensions).Unset(Opts.WriteRfc9554Extensions));
+        string v4Pure = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteXExtensions).Unset(VcfOpts.WriteRfc9554Extensions));
+        string v3Pure = vc.ToVcfString(VCdVersion.V3_0, options: VcfOpts.Default.Unset(VcfOpts.WriteXExtensions).Unset(VcfOpts.WriteRfc9554Extensions));
 
         Assert.IsTrue(v4.Contains("\nIMPP", StringComparison.OrdinalIgnoreCase));
         Assert.IsTrue(v4.Contains(";SERVICE-TYPE", StringComparison.OrdinalIgnoreCase));
@@ -323,7 +325,7 @@ public class Rfc9554Tests
 
         vc = Vcf.Parse(v4)[0];
 
-        VCards.Models.PropertyParts.ParameterSection? par = vc.Messengers?.First()?.Parameters;
+        ParameterSection? par = vc.Messengers?.First()?.Parameters;
         Assert.IsNotNull(par);
         Assert.AreEqual(serviceType, par.ServiceType);
         Assert.AreEqual(userName, par.UserName);
@@ -362,7 +364,7 @@ public class Rfc9554Tests
     {
         VCard vc = VCardBuilder
            .Create(false, false)
-           .NameViews.Add(NameBuilder.Create().AddFamilyName("Kinzel"),
+           .NameViews.Add(NameBuilder.Create().AddSurname("Kinzel").Build(),
            p =>
            {
                p.Phonetic = Phonetic.Ipa;
@@ -386,7 +388,7 @@ public class Rfc9554Tests
 
         vc = Vcf.Parse(v4)[0];
 
-        VCards.Models.PropertyParts.ParameterSection? par = vc.NameViews?.First()?.Parameters;
+        ParameterSection? par = vc.NameViews?.First()?.Parameters;
         Assert.IsNotNull(par);
         Assert.IsTrue(par.Phonetic.HasValue);
         Assert.IsNotNull(par.Script);
@@ -397,7 +399,7 @@ public class Rfc9554Tests
     {
         VCard vc = VCardBuilder
            .Create(false, false)
-           .Addresses.Add(AddressBuilder.Create().AddLocality("Berlin"),
+           .Addresses.Add(AddressBuilder.Create().AddLocality("Berlin").Build(),
            p =>
            {
                p.Phonetic = Phonetic.Ipa;
@@ -421,7 +423,7 @@ public class Rfc9554Tests
 
         vc = Vcf.Parse(v4)[0];
 
-        VCards.Models.PropertyParts.ParameterSection? par = vc.Addresses?.First()?.Parameters;
+        ParameterSection? par = vc.Addresses?.First()?.Parameters;
         Assert.IsNotNull(par);
         Assert.IsTrue(par.Phonetic.HasValue);
         Assert.IsNotNull(par.Script);
@@ -430,7 +432,7 @@ public class Rfc9554Tests
     private static void Serialize(VCard vc, out string v4, out string v4WithoutRfc9554, out string v3, out string v2)
     {
         v4 = vc.ToVcfString(VCdVersion.V4_0);
-        v4WithoutRfc9554 = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteRfc9554Extensions));
+        v4WithoutRfc9554 = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteRfc9554Extensions));
         v3 = vc.ToVcfString(VCdVersion.V3_0);
         v2 = vc.ToVcfString(VCdVersion.V2_1);
     }

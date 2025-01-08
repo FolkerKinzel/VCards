@@ -2,9 +2,8 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
@@ -110,13 +109,13 @@ public readonly struct StringCollectionBuilder
 
     /// <summary>
     /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// specified property and <paramref name="data"/> as arguments. Its return value 
+    /// specified property and <paramref name="arg"/> as arguments. Its return value 
     /// will be the new content of the specified property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="StringCollectionBuilder"/> to be able to chain calls.</returns>
     /// <remarks>
@@ -125,13 +124,13 @@ public readonly struct StringCollectionBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(
-        Func<IEnumerable<StringCollectionProperty>, TData, IEnumerable<StringCollectionProperty?>?> func,
-        TData data)
+    public VCardBuilder Edit<TArg>(
+        Func<IEnumerable<StringCollectionProperty>, TArg, IEnumerable<StringCollectionProperty?>?> func,
+        TArg arg)
     {
-        var props = GetProperty();
+        IEnumerable<StringCollectionProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        SetProperty(func.Invoke(props, data));
+        SetProperty(func(props, arg));
         return _builder;
     }
 
@@ -151,17 +150,17 @@ public readonly struct StringCollectionBuilder
     public VCardBuilder Edit(
         Func<IEnumerable<StringCollectionProperty>, IEnumerable<StringCollectionProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<StringCollectionProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        SetProperty(func.Invoke(props));
+        SetProperty(func(props));
         return _builder;
     }
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<StringCollectionProperty> GetProperty() =>
         Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(_prop)?
-                                 .WhereNotNull()
-                    ?? [];
+                                 .OfType<StringCollectionProperty>()
+                                 ?? [];
 
     private void SetProperty(IEnumerable<StringCollectionProperty?>? value)
     {
@@ -202,7 +201,7 @@ public readonly struct StringCollectionBuilder
     /// from a collection of <see cref="string" />s, to the specified property of the 
     /// <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="value">A collection of <see cref="string" />s or <c>null</c>.</param>
+    /// <param name="value">A collection of <see cref="string" />s, or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" />
@@ -219,7 +218,7 @@ public readonly struct StringCollectionBuilder
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(_prop,
-                          VCardBuilder.Add(new StringCollectionProperty(value, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new StringCollectionProperty(value ?? [], group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(_prop),
                                            parameters)
                           );

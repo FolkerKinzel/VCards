@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace Benchmarks;
 

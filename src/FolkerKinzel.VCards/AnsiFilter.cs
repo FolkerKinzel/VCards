@@ -1,7 +1,7 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards;
@@ -101,11 +101,11 @@ public sealed class AnsiFilter
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    internal IList<VCard> Load(string fileName)
+    internal IReadOnlyList<VCard> Load(string fileName)
     {
         Reset();
 
-        IList<VCard> vCards = Vcf.Load(fileName, _utf8);
+        IReadOnlyList<VCard> vCards = Vcf.Load(fileName, _utf8);
 
         if (!HasError)
         {
@@ -123,7 +123,7 @@ public sealed class AnsiFilter
 
     [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
         Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
-    internal IList<VCard> Deserialize(Func<Stream?> factory)
+    internal IReadOnlyList<VCard> Deserialize(Func<Stream?> factory)
     {
         _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
 
@@ -138,7 +138,7 @@ public sealed class AnsiFilter
 
         long initialPosition = stream.CanSeek ? stream.Position : 0;
 
-        IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
+        IReadOnlyList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
 
         if (!HasError)
         {
@@ -168,8 +168,8 @@ public sealed class AnsiFilter
 
     [SuppressMessage("Style", "IDE0301:Simplify collection initialization",
         Justification = "Performance: The collection expression creates a new List<VCard> instead of Array.Empty<VCard>().")]
-    internal async Task<IList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
-                                                       CancellationToken token)
+    internal async Task<IReadOnlyList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
+                                                               CancellationToken token)
     {
         _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
 
@@ -184,7 +184,7 @@ public sealed class AnsiFilter
 
         long initialPosition = stream.CanSeek ? stream.Position : 0;
 
-        IList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
+        IReadOnlyList<VCard> vCards = Vcf.Deserialize(stream, _utf8, leaveStreamOpen: true);
 
         if (!HasError)
         {
@@ -212,7 +212,7 @@ public sealed class AnsiFilter
         }
     }
 
-    private static string? GetCharsetFromVCards(IList<VCard> vCards)
+    private static string? GetCharsetFromVCards(IReadOnlyList<VCard> vCards)
     {
         foreach (VCard vCard in vCards.Where(x => x.Version == VCdVersion.V2_1))
         {

@@ -4,5 +4,5 @@
 
     public ParameterSection Parameters { get; }
 
-    public virtual object? Value { get; protected set; }
+    public virtual object Value { get; protected set; }
 }

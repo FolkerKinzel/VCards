@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -11,20 +12,19 @@ public class V2Tests
     [TestMethod]
     public void Parse()
     {
-        IList<VCard> vcard = Vcf.Load(fileName: TestFiles.V2vcf);
+        IReadOnlyList<VCard> vcard = Vcf.Load(fileName: TestFiles.V2vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
     }
 
-
     [TestMethod]
     public void ParseOutlook()
     {
-        IList<VCard> vcard = Vcf.Load(fileName: TestFiles.OutlookV2vcf);
+        IReadOnlyList<VCard> vcard = Vcf.Load(fileName: TestFiles.OutlookV2vcf);
 
         Assert.IsNotNull(vcard);
-        Assert.IsNotNull(vcard.FirstOrDefault());
+        Assert.AreNotEqual(0, vcard.Count);
 
         //string s = vcard[0].ToString();
 
@@ -34,11 +34,10 @@ public class V2Tests
         Assert.AreEqual(photo?.Parameters.MediaType, "image/jpeg");
         //System.IO.File.WriteAllBytes(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"Testbild{dataUrl.GetFileExtension()}"), dataUrl.GetEmbeddedBytes());
 
-        Vcf.Save(vcard!,
+        Vcf.Save(vcard,
             System.IO.Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"), VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteNonStandardProperties));
+            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"TestV2.1.vcf"), VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardProperties));
     }
-
 
     [TestMethod]
     public void WriteEmptyVCard()
@@ -46,7 +45,7 @@ public class V2Tests
         var vcard = new VCard();
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
-        IList<VCard> cards = Vcf.Parse(s);
+        IReadOnlyList<VCard> cards = Vcf.Parse(s);
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -58,7 +57,6 @@ public class V2Tests
         Assert.AreEqual(vcard.NameViews!.Count(), 1);
         Assert.IsNotNull(vcard.NameViews!.First());
     }
-
 
     [TestMethod]
     public void TestLineWrapping()
@@ -79,21 +77,21 @@ public class V2Tests
                 new(UNITEXT)
         ];
 
-        vcard.Keys = DataProperty.FromText(ASCIITEXT);
-        vcard.Photos = DataProperty.FromBytes(bytes, "image/jpeg");
+        vcard.Keys = new DataProperty(RawData.FromText(ASCIITEXT));
+        vcard.Photos = new DataProperty(RawData.FromBytes(bytes, "image/jpeg"));
 
         string s = vcard.ToVcfString(VCdVersion.V2_1);
 
         Assert.IsNotNull(s);
 
-        Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
+        Assert.IsTrue(s.Split([VCard.NewLine], StringSplitOptions.None)
             .All(x => x is not null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
         _ = Vcf.Parse(s);
 
-        Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
+        Assert.AreEqual(vcard.Keys?.First()?.Value.String, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(vcard.Photos?.First()?.Value?.Bytes?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(vcard.Photos?.First()?.Value.Bytes?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()
@@ -111,15 +109,14 @@ public class V2Tests
         }
     }
 
-
     [TestMethod]
     public void SerializeVCard()
     {
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V2_1, options: Opts.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V2_1, options: VcfOpts.All);
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = Vcf.Parse(s);
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -128,20 +125,19 @@ public class V2Tests
         Assert.AreEqual(VCdVersion.V2_1, vcard.Version);
     }
 
-
     [TestMethod]
     public void MoreThanOneAddressTest1()
     {
         const string label0 = "Elmstreet 13";
         const string label1 = "Sackgasse 5";
 
-        var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", autoLabel: false);
+        var addr0 = new AddressProperty(AddressBuilder.Create().AddStreet(label0).AddLocality("Entenhausen").AddPostalCode("01234").Build());
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
         addr0.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr0.Parameters.PropertyClass = PCl.Home;
 
-        var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", autoLabel: false);
+        var addr1 = new AddressProperty(AddressBuilder.Create().AddStreet(label1).AddLocality("Borna").AddPostalCode("43210").Build());
         addr1.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr1.Parameters.PropertyClass = PCl.Work;
         addr1.Parameters.Label = label1;
@@ -152,7 +148,7 @@ public class V2Tests
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
-        IList<VCard> vCards = Vcf.Parse(vcf);
+        IReadOnlyList<VCard> vCards = Vcf.Parse(vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
@@ -169,13 +165,13 @@ public class V2Tests
         const string label0 = "Elmstreet 13";
         const string label1 = "Sackgasse 5";
 
-        var addr0 = new AddressProperty(label0, "Entenhausen", null, postalCode: "01234", autoLabel: false);
+        var addr0 = new AddressProperty(AddressBuilder.Create().AddStreet(label0).AddLocality("Entenhausen").AddPostalCode("01234").Build());
         addr0.Parameters.Preference = 1;
         addr0.Parameters.Label = label0;
         addr0.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr0.Parameters.PropertyClass = PCl.Home;
 
-        var addr1 = new AddressProperty(label1, "Borna", null, postalCode: "43210", autoLabel: false);
+        var addr1 = new AddressProperty(AddressBuilder.Create().AddStreet(label1).AddLocality("Borna").AddPostalCode("43210").Build());
         addr1.Parameters.AddressType = Adr.Postal | Adr.Parcel;
         addr1.Parameters.PropertyClass = PCl.Work;
         addr1.Parameters.Label = label1;
@@ -187,24 +183,31 @@ public class V2Tests
 
         var arr = new VCard[] { vc };
 
-        string vcf = vc.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Unset(Opts.AllowMultipleAdrAndLabelInVCard21));
-        IList<VCard> vCards = Vcf.Parse(vcf);
+        string vcf = vc.ToVcfString(VCdVersion.V2_1, options: VcfOpts.Default.Unset(VcfOpts.AllowMultipleAdrAndLabelInVCard21));
+        IReadOnlyList<VCard> vCards = Vcf.Parse(vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
         Assert.IsNotNull(addresses);
-        Assert.AreEqual(1, addresses!.Count());
-        Assert.AreEqual(100, addresses!.First()!.Parameters.Preference);
-        Assert.IsNotNull(addresses!.FirstOrDefault(x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
+        Assert.AreEqual(1, addresses.Count());
+        Assert.AreEqual(100, addresses.First()!.Parameters.Preference);
+        Assert.IsNotNull(addresses.FirstOrDefault(x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
 
     }
 
     [TestMethod]
     public void SpouseTest1()
     {
+        var relProp = new RelationProperty(
+            Relation.Create(new VCard { NameViews = new NameProperty(NameBuilder.Create()
+                                                                                .AddSurname("wife")
+                                                                                .AddGiven("best")
+                                                                                .Build()) }));
+        relProp.Parameters.RelationType = Rel.Spouse;
+
         var vc = new VCard
         {
-            Relations = RelationProperty.FromVCard(new VCard { NameViews = new NameProperty("wife", "best") }, Rel.Spouse)
+            Relations = relProp
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
@@ -218,9 +221,11 @@ public class V2Tests
     [TestMethod]
     public void SpouseTest2()
     {
+        var relProp = new RelationProperty(Relation.Create(new VCard()));
+        relProp.Parameters.RelationType = Rel.Spouse;
         var vc = new VCard
         {
-            Relations = RelationProperty.FromVCard(new VCard(), Rel.Spouse)
+            Relations = relProp
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
@@ -232,9 +237,12 @@ public class V2Tests
     [TestMethod]
     public void SpouseTest3()
     {
+        var relProp = new RelationProperty(Relation.Create(new VCard { DisplayNames = new TextProperty("Mausi") }));
+        relProp.Parameters.RelationType = Rel.Spouse;
+
         var vc = new VCard
         {
-            Relations = RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty("Mausi") }, Rel.Spouse)
+            Relations = relProp
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
@@ -248,9 +256,11 @@ public class V2Tests
     [TestMethod]
     public void SpouseTest4()
     {
+        var relProp = new RelationProperty(Relation.Create(new VCard { DisplayNames = new TextProperty(null) }));
+        relProp.Parameters.RelationType = Rel.Spouse;
         var vc = new VCard
         {
-            Relations = RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(null) }, Rel.Spouse)
+            Relations = relProp
         };
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
@@ -262,9 +272,10 @@ public class V2Tests
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest1()
     {
-        var adr = new AddressProperty("1", "", "", "", "");
+        var adr = new AddressProperty(AddressBuilder.Create().AddStreet("1").Build());
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
+        adr.Parameters.Label = AddressFormatter.Default.ToLabel(adr);
         Assert.IsNotNull(adr.Parameters.Label);
 
         var vCard = new VCard { Addresses = adr };
@@ -275,7 +286,8 @@ public class V2Tests
 
         Assert.IsNotNull(vCard.Addresses);
         adr = vCard.Addresses.First();
-        Assert.IsNotNull(adr!.Parameters.Label);
+        Assert.IsNotNull(adr);
+        Assert.IsNotNull(adr.Parameters.Label);
         Assert.IsNotNull(adr.Parameters.GeoPosition);
         Assert.IsNotNull(adr.Parameters.TimeZone);
     }
@@ -283,12 +295,9 @@ public class V2Tests
     [TestMethod]
     public void EmbeddedBytesTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
+        var vCard = new VCard { Photos = new DataProperty(RawData.FromBytes([])) };
 
-        var vCard = new VCard { Photos = DataProperty.FromBytes(null) };
-
-        string s = vCard.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteEmptyProperties));
+        string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties));
 
         vCard = Vcf.Parse(s)[0];
         Assert.IsNotNull(vCard.Photos);
@@ -303,18 +312,22 @@ public class V2Tests
         {
             DisplayNames = new TextProperty("007"),
             Notes = new TextProperty("ÄÖÜ Veeeeeeeeeeeeeeeeeeeeeeeeeery veeeeeeeeeeeeeeeeeeeeeeeeeeeery looooooooooooooooooooooooooooooooong Quoted-Printable text"),
-            Photos = DataProperty.FromBytes(bytes)
+            Photos = new DataProperty(RawData.FromBytes(bytes))
         };
+
+        var relProp = new RelationProperty(Relation.Create(agent));
+        relProp.Parameters.RelationType = Rel.Agent | Rel.Colleague;
 
         var vCard = new VCard
         {
             DisplayNames = new TextProperty("Secret Service"),
-            Relations = RelationProperty.FromVCard(agent, Rel.Agent | Rel.Colleague)
+
+            Relations = relProp
         };
 
-        string s = vCard.ToVcfString(VCdVersion.V2_1, options: Opts.Default.Set(Opts.AppendAgentAsSeparateVCard));
+        string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.AppendAgentAsSeparateVCard));
 
-        IList<VCard> vCards = Vcf.Parse(s);
+        IReadOnlyList<VCard> vCards = Vcf.Parse(s);
         Assert.AreEqual(2, vCards.Count);
         Assert.IsNotNull(vCards[0].Relations);
     }
@@ -336,7 +349,7 @@ public class V2Tests
 
             """;
 
-        IList<VCard> vcs = Vcf.Parse(agent);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(agent);
         Assert.AreEqual(1, vcs.Count);
         Assert.IsNotNull(vcs[0].Relations);
     }
@@ -354,25 +367,14 @@ public class V2Tests
         // Initialize the VCard:
         var vcard = new VCard
         {
-            NameViews =
-            [
-                    new(familyName: null, givenName: "zzMad Perla 45")
-            ],
-
-            DisplayNames =
-            [
-                    new("zzMad Perla 45")
-            ],
-
-            Phones =
-            [
-                    xiamoiMobilePhone
-            ]
+            NameViews = new NameProperty(NameBuilder.Create().AddSurname("").AddGiven("zzMad Perla 45").Build()),
+            DisplayNames = new TextProperty("zzMad Perla 45"),
+            Phones = xiamoiMobilePhone
         };
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
-        string vcfString = vcard.ToVcfString(version: VCdVersion.V2_1, options: Opts.Default | Opts.WriteNonStandardParameters);
+        string vcfString = vcard.ToVcfString(version: VCdVersion.V2_1, options: VcfOpts.Default | VcfOpts.WriteNonStandardParameters);
 
         // Parse the VCF string:
         vcard = Vcf.Parse(vcfString)[0];
@@ -416,7 +418,7 @@ public class V2Tests
             TEL;WORK;FAX:+1-213-555-5678
             """;
 
-        IList<VCard> vcs = Vcf.Parse(cropped);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(cropped);
 
         Assert.IsNotNull(vcs);
         Assert.AreEqual(1, vcs.Count);
@@ -430,7 +432,7 @@ public class V2Tests
             BEGIN:VCARD
             """;
 
-        IList<VCard> vcs = Vcf.Parse(cropped);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(cropped);
 
         Assert.IsNotNull(vcs);
         Assert.AreEqual(0, vcs.Count);
@@ -472,7 +474,7 @@ public class V2Tests
             end:vcard
             """;
 
-        IList<VCard> vcs = Vcf.Parse(s);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(s);
 
         Assert.IsNotNull(vcs);
         Assert.AreEqual(1, vcs.Count);
@@ -492,7 +494,7 @@ public class V2Tests
             ENvcnBvcmF0aW9uMRwwGgYDVQQLExNJbmZvcm1hdGlvbiBTeXN0ZW1zMRwwGgYDVQQD
             """;
 
-        IList<VCard> vcs = Vcf.Parse(s);
+        IReadOnlyList<VCard> vcs = Vcf.Parse(s);
 
         Assert.IsNotNull(vcs);
         Assert.AreEqual(1, vcs.Count);
@@ -506,23 +508,26 @@ public class V2Tests
     {
         VCard vc = VCardBuilder
             .Create()
-            .GenderViews.Add(Sex.Female,
+            .GenderViews.Add(Sex.Female, 
+                             parameters: p => p.NonStandard = new Dictionary<string, string> { { "X-TEST", "test"} },
                              group: vc => "GROUP")
             .VCard;
 
-        string serialized = vc.ToVcfString(VCdVersion.V2_1, options: Opts.All);
+        string serialized = vc.ToVcfString(VCdVersion.V2_1, options: VcfOpts.All);
 
-        StringAssert.Contains(serialized, "GROUP.X-GENDER:Female");
-        StringAssert.Contains(serialized, "GROUP.X-WAB-GENDER:1");
+        StringAssert.Contains(serialized, "GROUP.X-GENDER;X-TEST=test:Female");
+        StringAssert.Contains(serialized, "GROUP.X-WAB-GENDER;X-TEST=test:1");
 
         vc = Vcf.Parse(serialized)[0];
 
         Assert.IsNotNull(vc);
         Assert.IsNotNull(vc.GenderViews);
         Assert.AreEqual(1, vc.GenderViews.Count());
+
         GenderProperty prop = vc.GenderViews.First()!;
         Assert.AreEqual(Sex.Female, prop.Value.Sex);
         Assert.AreEqual("GROUP", prop.Group);
+        Assert.IsNotNull(prop.Parameters.NonStandard);
     }
 
     [TestMethod]
@@ -537,7 +542,6 @@ public class V2Tests
 
         StringAssert.Contains(vcf, "BDAY", StringComparison.Ordinal);
     }
-
 
     [TestMethod]
     public void BirthdayTest2()
@@ -581,9 +585,8 @@ public class V2Tests
         VCard vc = Vcf.Parse(vcf)[0];
 
         Assert.IsNotNull(vc.Photos);
-        Assert.AreEqual("http://käse.com", vc.Photos.First()!.Value?.Uri?.OriginalString);
+        Assert.AreEqual("http://käse.com", vc.Photos.First()!.Value.Uri?.OriginalString);
     }
-
 
     [TestMethod]
     public void EmptyImppTest1()

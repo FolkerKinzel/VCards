@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
@@ -42,9 +42,9 @@ public readonly struct ProfileBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<ProfileProperty?, ProfileProperty?> func)
     {
-        var prop = Builder.VCard.Profile;
+        ProfileProperty? prop = Builder.VCard.Profile;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Profile = func.Invoke(prop);
+        _builder.VCard.Profile = func(prop);
         return _builder;
     }
 

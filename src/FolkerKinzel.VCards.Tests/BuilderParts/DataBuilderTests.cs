@@ -5,7 +5,7 @@ public class DataBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void SetPreferencesTest1() => new DataBuilder().SetPreferences();
+    public void SetPreferencesTest1() => new RawDataBuilder().SetPreferences();
 
     [TestMethod]
     public void SetPreferencesTest2()
@@ -33,11 +33,11 @@ public class DataBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetPreferencesTest1() => new DataBuilder().UnsetPreferences();
+    public void UnsetPreferencesTest1() => new RawDataBuilder().UnsetPreferences();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void SetIndexesTest1() => new DataBuilder().SetIndexes();
+    public void SetIndexesTest1() => new RawDataBuilder().SetIndexes();
 
     [TestMethod]
     public void SetIndexesTest2()
@@ -67,11 +67,11 @@ public class DataBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetIndexesTest1() => new DataBuilder().UnsetIndexes();
+    public void UnsetIndexesTest1() => new RawDataBuilder().UnsetIndexes();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new DataBuilder().Edit(p => p);
+    public void EditTest1() => new RawDataBuilder().Edit(p => p);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -79,7 +79,7 @@ public class DataBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new DataBuilder().Edit((p, d) => p, true);
+    public void EditTest3() => new RawDataBuilder().Edit((p, d) => p, true);
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
@@ -87,37 +87,37 @@ public class DataBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddFileTest1() => new DataBuilder().AddFile("file");
+    public void AddFileTest1() => new RawDataBuilder().AddFile("file");
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddUriTest1() => new DataBuilder().AddUri(null);
+    public void AddUriTest1() => new RawDataBuilder().AddUri(null);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddBytesTest1() => new DataBuilder().AddBytes(null);
+    public void AddBytesTest1() => new RawDataBuilder().AddBytes(null);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTextTest1() => new DataBuilder().AddText(null);
+    public void AddTextTest1() => new RawDataBuilder().AddText(null);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new DataBuilder().Clear();
+    public void ClearTest1() => new RawDataBuilder().Clear();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new DataBuilder().Remove(p => true);
+    public void RemoveTest1() => new RawDataBuilder().Remove(p => true);
 
     [TestMethod]
     public void EqualsTest1()
     {
-        Assert.IsFalse(new DataBuilder().Equals((DataBuilder?)null));
+        Assert.IsFalse(new RawDataBuilder().Equals((RawDataBuilder?)null));
 
-        var builder = new DataBuilder();
+        var builder = new RawDataBuilder();
         Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
     }
 
     [TestMethod]
-    public void ToStringTest1() => Assert.IsNotNull(new DataBuilder().ToString());
+    public void ToStringTest1() => Assert.IsNotNull(new RawDataBuilder().ToString());
 }

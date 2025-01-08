@@ -144,4 +144,7 @@
   <data name="StreamNotWritable" xml:space="preserve">
     <value>The Stream is not writable.</value>
   </data>
+  <data name="Whitespace" xml:space="preserve">
+    <value>{0} is empty or consists only of white space.</value>
+  </data>
 </root>

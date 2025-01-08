@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class TextSingletonBuilderTests
@@ -23,8 +25,8 @@ public class TextSingletonBuilderTests
     public void EditTest5()
     {
         VCard vc = VCardBuilder
-            .Create(setID: false)
-            .DirectoryName.Edit((p, d) => new Models.TextProperty(d), "The directory")
+            .Create(setContactID: false)
+            .DirectoryName.Edit((p, d) => new TextProperty(d), "The directory")
             .VCard;
 
         Assert.IsNotNull(vc.DirectoryName);

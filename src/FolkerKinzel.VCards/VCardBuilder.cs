@@ -1,7 +1,9 @@
-﻿using FolkerKinzel.VCards.BuilderParts;
+﻿using System.ComponentModel;
+using FolkerKinzel.VCards.BuilderParts;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards;
 
@@ -20,24 +22,49 @@ namespace FolkerKinzel.VCards;
 /// </example>
 public sealed class VCardBuilder
 {
+    #region Remove with version 8.0.1
+
+    [Obsolete("Use SpokenLanguages instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public TextBuilder Languages => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use Updated instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public TimeStampBuilder TimeStamp => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use ContactID instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ContactIDBuilder ID => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    #endregion
+
     private VCardBuilder(VCard vCard) => VCard = vCard;
 
     /// <summary>
     /// Returns a <see cref="VCardBuilder"/> that creates a new <see cref="VCard"/>
     /// object.
     /// </summary>
-    /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/> property
-    /// of the newly created <see cref="VCard"/> object automatically to a new 
-    /// <see cref="Guid"/>, otherwise <c>false</c>.</param>
+    /// <param name="setContactID"><c>true</c> to set the <see cref="VCard.ContactID"/> property
+    /// of the newly created <see cref="VCard"/> object automatically with a newly created 
+    /// <see cref="ContactIDProperty"/> instance, otherwise <c>false</c>.</param>
     /// <param name="setCreated">
     /// <c>true</c> to set the <see cref="VCard.Created"/>
-    /// property with a newly created <see cref="TimeStampProperty"/>, otherwise
+    /// property with a newly created <see cref="TimeStampProperty"/> instance, otherwise
     /// <c>false</c>.
     /// </param>
     /// <returns>The <see cref="VCardBuilder"/> that creates a new <see cref="VCard"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static VCardBuilder Create(bool setID = true, bool setCreated = true)
-        => new(new VCard(setID: setID, setCreated: setCreated));
+    public static VCardBuilder Create(bool setContactID = true, bool setCreated = true)
+        => new(new VCard(setContactID: setContactID, setCreated: setCreated));
 
     /// <summary>
     /// Returns a <see cref="VCardBuilder"/> that edits the <see cref="VCard"/>
@@ -92,7 +119,7 @@ public sealed class VCardBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public BuilderParts.AddressBuilder Addresses => new(this);
+    public BuilderParts.AddressesBuilder Addresses => new(this);
 
     /// <summary> <c>ANNIVERSARY</c>: Defines the person's anniversary. <c>(4)</c></summary>
     /// <remarks>Multiple instances are only allowed in vCard&#160;4.0, and only if all of them
@@ -135,6 +162,14 @@ public sealed class VCardBuilder
     /// object represented by this vCard. <c>(3,4)</c></summary>
     public StringCollectionBuilder Categories => new(this, Prop.Categories);
 
+    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
+    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
+    /// </summary>
+    /// 
+    /// <remarks>As a default setting each newly created <see cref="VCard"/> gets an <see cref="ContactID"/>
+    /// automatically.</remarks>
+    public ContactIDBuilder ContactID => new(this);
+
     /// <summary>
     /// <c>CONTACT-URI</c> URIs representing an email address or a location for a web form.<c>(4 - RFC&#160;8605)</c>
     /// </summary>
@@ -155,7 +190,7 @@ public sealed class VCardBuilder
     /// stays unchanged for the existence of the vCard.
     /// </para>
     /// <para>
-    /// Use the <see cref="TimeStamp"/> property to specify the last revision.
+    /// Use the <see cref="Updated"/> property to specify the last revision.
     /// </para>
     /// </remarks>
     public TimeStampBuilder Created => new(this, Prop.Created);
@@ -185,13 +220,13 @@ public sealed class VCardBuilder
     /// presented to the users of the application. 
     /// </para>
     /// <note type="tip">
-    /// You can use the <see cref="BuilderParts.NameBuilder.ToDisplayNames(Formatters.INameFormatter)" /> method to convert the 
+    /// You can use the <see cref="BuilderParts.NameViewsBuilder.ToDisplayNames(Formatters.INameFormatter)" /> method to convert the 
     /// structured name representations that are stored in the <see cref="NameViews" /> 
     /// property to produce formatted representations readable by the users of the 
     /// application.  
     /// </note>
     /// </remarks>
-    /// <seealso cref="BuilderParts.NameBuilder.ToDisplayNames(Formatters.INameFormatter)" />
+    /// <seealso cref="BuilderParts.NameViewsBuilder.ToDisplayNames(Formatters.INameFormatter)" />
     /// <seealso cref="NameFormatter"/>
     public TextBuilder DisplayNames => new(this, Prop.DisplayNames);
 
@@ -258,15 +293,6 @@ public sealed class VCardBuilder
     /// <see cref="ParameterSection.Interest" />.</remarks>
     public TextBuilder Hobbies => new(this, Prop.Hobbies);
 
-    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
-    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>Although the standard allows any strings for identification, the library
-    /// only supports UUIDs.</value>
-    /// <remarks>As a default setting each newly created <see cref="VCard"/> gets an <see cref="ID"/>
-    /// automatically.</remarks>
-    public IDBuilder ID => new(this);
-
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
     /// in, but does not necessarily take part in. <c>(4 - RFC&#160;6715)</c></summary>
     /// <remarks> Define the level of interest in the parameter 
@@ -283,7 +309,7 @@ public sealed class VCardBuilder
     /// <c>(2,3,4)</c></summary>
     /// <value>It may point to an external URL, may be plain text, or may be embedded
     /// in the VCF file as a Base64 encoded block of text.</value>
-    public DataBuilder Keys => new(this, Prop.Keys);
+    public RawDataBuilder Keys => new(this, Prop.Keys);
 
     /// <summary> <c>KIND</c>: Defines the type of entity, that this vCard represents.
     /// <c>(4)</c></summary>
@@ -306,13 +332,10 @@ public sealed class VCardBuilder
     /// <value>RFC 5646 language tag.</value>
     public TextSingletonBuilder Language => new(this, Prop.Language);
 
-    /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
-    public TextBuilder Languages => new(this, Prop.Languages);
-
     /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
     /// is associated with the individual to which the <see cref="VCard"/> belongs. 
     /// <c>(2,3,4)</c></summary>
-    public DataBuilder Logos => new(this, Prop.Logos);
+    public RawDataBuilder Logos => new(this, Prop.Logos);
 
     /// <summary> <c>MAILER</c>: Name of the e-mail program. <c>(2,3)</c></summary>
     public TextSingletonBuilder Mailer => new(this, Prop.Mailer);
@@ -346,7 +369,7 @@ public sealed class VCardBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public BuilderParts.NameBuilder NameViews => new(this);
+    public BuilderParts.NameViewsBuilder NameViews => new(this);
 
     /// <summary> <c>NICKNAME</c>: One or more descriptive/familiar names for the object
     /// represented by this vCard. <c>(3,4)</c></summary>
@@ -358,14 +381,14 @@ public sealed class VCardBuilder
     /// <see cref="NonStandards" /> contains all vCard properties that could not 
     /// be evaluated, when parsing the vCard. To serialize the content of 
     /// <see cref="NonStandards" /> into a VCF file, the flag 
-    /// <see cref="Opts.WriteNonStandardProperties"/> has to be set. 
+    /// <see cref="VcfOpts.WriteNonStandardProperties"/> has to be set. 
     /// </para>
     /// <para>
     /// Some <see cref="NonStandardProperty" /> objects are automatically added to the 
     /// VCF file, if there is no standard equivalent for it. You can control this behavior
-    /// with <see cref="Opts" />. It is therefore not recommended to assign
+    /// with <see cref="VcfOpts" />. It is therefore not recommended to assign
     /// <see cref="NonStandardProperty" /> objects with these 
-    /// <see cref="NonStandardProperty.XName"/>s to this property.
+    /// <see cref="NonStandardProperty.Key"/>s to this property.
     /// </para>
     /// <para>
     /// These vCard properties are the following: 
@@ -511,7 +534,7 @@ public sealed class VCardBuilder
     /// <example>
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
-    public DataBuilder Photos => new(this, Prop.Photos);
+    public RawDataBuilder Photos => new(this, Prop.Photos);
 
     /// <summary> <c>PRODID</c>: The identifier for the product that created the vCard
     /// object. <c>(3,4)</c></summary>
@@ -563,19 +586,15 @@ public sealed class VCardBuilder
 
     /// <summary> <c>SOUND</c>: Specifies the pronunciation of the <see cref="VCard.DisplayNames"
     /// /> property of the <see cref="VCard" />-object. <c>(2,3,4)</c></summary>
-    public DataBuilder Sounds => new(this, Prop.Sounds);
+    public RawDataBuilder Sounds => new(this, Prop.Sounds);
 
     /// <summary> <c>SOURCE</c>: URLs that can be used to get the latest version of
     /// this vCard. <c>(3,4)</c></summary>
     /// <remarks>vCard&#160;3.0 allows only one instance of this property.</remarks>
     public TextBuilder Sources => new(this, Prop.Sources);
 
-    /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
-    /// <remarks>
-    /// With <see cref="Opts.Default"/> the flag <see cref="Opts.UpdateTimeStamp"/> is set. So 
-    /// this property is normally updated automatically when serializing VCF.
-    /// </remarks>
-    public TimeStampBuilder TimeStamp => new(this, Prop.TimeStamp);
+    /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
+    public TextBuilder SpokenLanguages => new(this, Prop.SpokenLanguages);
 
     /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
     /// <remarks>
@@ -594,11 +613,18 @@ public sealed class VCardBuilder
     /// </example>
     public TextBuilder Titles => new(this, Prop.Titles);
 
+    /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
+    /// <remarks>
+    /// With <see cref="VcfOpts.Default"/> the flag <see cref="VcfOpts.UpdateTimeStamp"/> is set. So 
+    /// this property is normally updated automatically when serializing VCF.
+    /// </remarks>
+    public TimeStampBuilder Updated => new(this, Prop.Updated);
+
     /// <summary> <c>URL</c>: URLs, pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>
     public TextBuilder Urls => new(this, Prop.Urls);
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
-    public XmlBuilder Xmls => new(this);
+    public TextBuilder Xmls => new(this, Prop.Xmls);
 }
 

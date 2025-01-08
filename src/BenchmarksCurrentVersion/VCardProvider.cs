@@ -30,7 +30,8 @@ internal static class VCardProvider
     {
         return VCardBuilder
             .Create()
-            .NameViews.Add("Mustermann", "Jürgen", displayName: (dn, name) => dn.Add("Jürgen Mustermann"))
+            .NameViews.Add(NameBuilder.Create().AddSurname( "Mustermann").AddGiven( "Jürgen").Build())
+            .DisplayNames.Add("Jürgen Mustermann")
             .EMails.Add("juergen@home.de", parameters: p => p.PropertyClass = PCl.Home)
             .EMails.Add("juergen@work.com", parameters: p => p.PropertyClass = PCl.Work)
             .EMails.SetPreferences()
@@ -39,7 +40,7 @@ internal static class VCardProvider
             .Phones.Add("09876-54321234", parameters: p => { p.PropertyClass = PCl.Home; p.PhoneType = Tel.Voice | Tel.Fax; })
             .Phones.SetPreferences()
 
-            .Addresses.Add("Blümchenweg 14a", "Göppingen", null, "73035")
+            .Addresses.Add(AddressBuilder.Create().AddStreet("Blümchenweg 14a").AddLocality("Göppingen").AddPostalCode("73035").Build())
             .BirthDayViews.Add(1985, 5, 7)
             .VCard;
     }

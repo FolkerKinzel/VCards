@@ -1,5 +1,5 @@
 ﻿using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -22,14 +22,14 @@ public class VcfTests
     [TestMethod]
     public void ParseTest_contentEmpty()
     {
-        IList<VCard> list = Vcf.Parse("");
+        IReadOnlyList<VCard> list = Vcf.Parse("");
         Assert.AreEqual(0, list.Count);
     }
 
     [TestMethod]
     public void ParseTest1()
     {
-        IList<VCard> list = Vcf.Parse("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
+        IReadOnlyList<VCard> list = Vcf.Parse("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
         Assert.AreEqual(1, list.Count);
 
         Assert.IsNotNull(list[0].DisplayNames);
@@ -54,7 +54,7 @@ public class VcfTests
     [TestMethod]
     public void DeserializeTest3()
     {
-        IList<VCard> vc = Vcf.Deserialize(() => null, new AnsiFilter());
+        IReadOnlyList<VCard> vc = Vcf.Deserialize(() => null, new AnsiFilter());
         Assert.AreEqual(0, vc.Count);
     }
 
@@ -70,7 +70,7 @@ public class VcfTests
     [TestMethod]
     public async Task DeserializeAsyncTest3()
     {
-        IList<VCard> vc = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(null!), new AnsiFilter());
+        IReadOnlyList<VCard> vc = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(null!), new AnsiFilter());
         Assert.AreEqual(0, vc.Count);
     }
 
@@ -81,14 +81,14 @@ public class VcfTests
     [TestMethod]
     public async Task DeserializeAsyncTest5()
     {
-        IList<VCard> vc = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(null!));
+        IReadOnlyList<VCard> vc = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(null!));
         Assert.AreEqual(0, vc.Count);
     }
 
     [TestMethod]
     public async Task DeserializeAsyncTest6()
     {
-        IList<VCard> vc =
+        IReadOnlyList<VCard> vc =
             await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream(File.ReadAllBytes(TestFiles.V4vcf))));
         Assert.AreEqual(2, vc.Count);
     }
@@ -101,9 +101,6 @@ public class VcfTests
     [TestMethod]
     public void DeserializeManyTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = Vcf.DeserializeMany([null, () => File.OpenRead(TestFiles.AnsiIssueVcf)], new AnsiFilter()).First();
 
         Assert.AreEqual("Lämmerweg 12", vc.Addresses!.First()!.Value.Street[0]);
@@ -113,21 +110,13 @@ public class VcfTests
     [TestMethod]
     public void DeserializeManyTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard[] vc = Vcf.DeserializeMany([null, () => File.OpenRead(TestFiles.AnsiIssueVcf), () => null, () => File.OpenRead(TestFiles.OutlookV2vcf)]).ToArray();
-
         Assert.AreNotEqual("Lämmerweg 12", vc[0].Addresses!.First()!.Value.Street[0]);
-
     }
 
     [TestMethod]
     public void DeserializeManyTest4()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard[] vc = Vcf.DeserializeMany([null,
             () => new StreamDummy(File.OpenRead(TestFiles.AnsiIssueVcf), canSeek: false),
             () => null,
@@ -139,22 +128,11 @@ public class VcfTests
     }
 
     [TestMethod]
-    public void DeserializeManyTest5()
-    {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
-        Assert.IsNull(Vcf.DeserializeMany([]).FirstOrDefault());
-    }
+    public void DeserializeManyTest5() => Assert.IsNull(Vcf.DeserializeMany([]).FirstOrDefault());
 
     [TestMethod]
     public void DeserializeManyTest6()
-    {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
-        Assert.IsNull(Vcf.DeserializeMany([() => File.OpenRead(TestFiles.EmptyVcf)]).FirstOrDefault());
-    }
+        => Assert.IsNull(Vcf.DeserializeMany([() => File.OpenRead(TestFiles.EmptyVcf)]).FirstOrDefault());
 
 
     [TestMethod]
@@ -164,9 +142,6 @@ public class VcfTests
     [TestMethod]
     public async Task DeserializeManyAsyncTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = await Vcf.DeserializeManyAsync([null, t => Task.FromResult<Stream>(File.OpenRead(TestFiles.AnsiIssueVcf))],
                                                    new AnsiFilter()).FirstAsync();
 
@@ -177,9 +152,6 @@ public class VcfTests
     [TestMethod]
     public async Task DeserializeManyAsyncTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard[] vc = await Vcf.DeserializeManyAsync(
             [ null,
             t => Task.FromResult<Stream>( File.OpenRead(TestFiles.AnsiIssueVcf)),
@@ -193,9 +165,6 @@ public class VcfTests
     [TestMethod]
     public async Task DeserializeManyAsyncTest4()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard[] vc = await Vcf.DeserializeManyAsync(
             [null,
             t => Task.FromResult<Stream>( new StreamDummy(File.OpenRead(TestFiles.AnsiIssueVcf), canSeek: false)),
@@ -209,29 +178,16 @@ public class VcfTests
     }
 
     [TestMethod]
-    public async Task DeserializeManyAsyncTest5()
-    {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
-        Assert.IsNull(await Vcf.DeserializeManyAsync([]).FirstOrDefaultAsync());
-    }
+    public async Task DeserializeManyAsyncTest5() 
+        => Assert.IsNull(await Vcf.DeserializeManyAsync([]).FirstOrDefaultAsync());
 
     [TestMethod]
     public async Task DeserializeManyAsyncTest6()
-    {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
-        Assert.IsNull(await Vcf.DeserializeManyAsync([t => Task.FromResult<Stream>(File.OpenRead(TestFiles.EmptyVcf))]).FirstOrDefaultAsync());
-    }
+        => Assert.IsNull(await Vcf.DeserializeManyAsync([t => Task.FromResult<Stream>(File.OpenRead(TestFiles.EmptyVcf))]).FirstOrDefaultAsync());
 
     [TestMethod]
     public void LoadTest1()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = Vcf.Load(TestFiles.AnsiIssueVcf, new AnsiFilter())[0];
 
         Assert.AreEqual("Lämmerweg 12", vc.Addresses!.First()!.Value.Street[0]);
@@ -252,9 +208,6 @@ public class VcfTests
     [TestMethod]
     public void LoadManyTest2()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard vc = Vcf.LoadMany([null, TestFiles.AnsiIssueVcf], new AnsiFilter()).First();
 
         Assert.AreEqual("Lämmerweg 12", vc.Addresses!.First()!.Value.Street[0]);
@@ -263,9 +216,6 @@ public class VcfTests
     [TestMethod]
     public void LoadManyTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         VCard[] vc = Vcf.LoadMany([null, TestFiles.AnsiIssueVcf, TestFiles.OutlookV2vcf]).ToArray();
 
         Assert.AreNotEqual("Lämmerweg 12", vc[0].Addresses!.First()!.Value.Street[0]);
@@ -273,22 +223,10 @@ public class VcfTests
     }
 
     [TestMethod]
-    public void LoadManyTest4()
-    {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
-        Assert.IsNull(Vcf.LoadMany([]).FirstOrDefault());
-    }
+    public void LoadManyTest4() => Assert.IsNull(Vcf.LoadMany([]).FirstOrDefault());
 
     [TestMethod]
-    public void LoadManyTest5()
-    {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
-        Assert.IsNull(Vcf.LoadMany([TestFiles.EmptyVcf]).FirstOrDefault());
-    }
+    public void LoadManyTest5() => Assert.IsNull(Vcf.LoadMany([TestFiles.EmptyVcf]).FirstOrDefault());
 
     [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
@@ -296,6 +234,4 @@ public class VcfTests
     [DataRow(VCdVersion.V4_0)]
     [ExpectedException(typeof(ArgumentNullException))]
     public void ToVcfStringTest_vcardListNull1(VCdVersion version) => _ = Vcf.ToString(null!, version);
-
-
 }

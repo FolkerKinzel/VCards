@@ -2,9 +2,9 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
@@ -104,13 +104,13 @@ public readonly struct GeoBuilder
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.GeoCoordinates"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// <see cref="VCard.GeoCoordinates"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// <see cref="VCard.GeoCoordinates"/> property and <paramref name="arg"/> as arguments. Its return value 
     /// will be the new content of the <see cref="VCard.GeoCoordinates"/> property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GeoBuilder"/>
     /// to be able to chain calls.</returns>
     /// <remarks>
@@ -119,12 +119,12 @@ public readonly struct GeoBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(Func<IEnumerable<GeoProperty>, TData, IEnumerable<GeoProperty?>?> func,
-                                    TData data)
+    public VCardBuilder Edit<TArg>(Func<IEnumerable<GeoProperty>, TArg, IEnumerable<GeoProperty?>?> func,
+                                   TArg arg)
     {
-        var props = GetProperty();
+        IEnumerable<GeoProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.GeoCoordinates = func.Invoke(props, data);
+        _builder.VCard.GeoCoordinates = func(props, arg);
         return _builder;
     }
 
@@ -144,15 +144,15 @@ public readonly struct GeoBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<GeoProperty>, IEnumerable<GeoProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<GeoProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.GeoCoordinates = func.Invoke(props);
+        _builder.VCard.GeoCoordinates = func(props);
         return _builder;
     }
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<GeoProperty> GetProperty()
-        => Builder.VCard.GeoCoordinates?.WhereNotNull() ?? [];
+        => Builder.VCard.GeoCoordinates?.OfType<GeoProperty>() ?? [];
 
     /// <summary>
     /// Adds a <see cref="GeoProperty"/> instance, which is newly initialized using the specified 
@@ -160,6 +160,8 @@ public readonly struct GeoBuilder
     /// </summary>
     /// <param name="latitude">Latitude (value between -90 and 90).</param>
     /// <param name="longitude">Longitude (value between -180 and 180).</param>
+    /// <param name="uncertainty">The amount of uncertainty in the location as a 
+    /// value in meters, or <c>null</c> to leave this unspecified.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty" /> 
@@ -167,24 +169,20 @@ public readonly struct GeoBuilder
     /// <see cref="VCardProperty" /> does not belong to any group. The function is called with the 
     /// <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// 
+    /// <remarks>If the arguments are out of range, an empty <see cref="GeoProperty"/> instance is added.</remarks>
+    /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GeoBuilder"/> to 
     /// be able to chain calls.</returns>
-    /// <exception cref="ArgumentOutOfRangeException"> <paramref name="latitude" />
-    /// or <paramref name="longitude" /> does not have a valid value.</exception>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public VCardBuilder Add(double latitude,
                             double longitude,
+                            float? uncertainty = null,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        Builder.VCard.Set(Prop.GeoCoordinates,
-                          VCardBuilder.Add(new GeoProperty(latitude, longitude, group?.Invoke(_builder.VCard)),
-                                           _builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
-                                           parameters)
-                          );
-        return _builder;
-    }
+        => Add(GeoCoordinate.TryCreate(latitude, longitude, uncertainty), parameters, group);
 
     /// <summary>
     /// Adds a <see cref="GeoProperty"/> instance, which is newly initialized using the specified
@@ -200,6 +198,10 @@ public readonly struct GeoBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="GeoBuilder"/> to be 
     /// able to chain calls.</returns>
+    /// 
+    /// <remarks>If <paramref name="value"/> is <c>null</c>, an empty <see cref="GeoProperty"/> instance is added.</remarks>
+    /// 
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(GeoCoordinate? value,
@@ -207,7 +209,7 @@ public readonly struct GeoBuilder
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.GeoCoordinates,
-                          VCardBuilder.Add(new GeoProperty(value, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new GeoProperty(value ?? GeoCoordinate.Empty, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<GeoProperty?>?>(Prop.GeoCoordinates),
                                            parameters)
                           );

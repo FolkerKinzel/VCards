@@ -1,7 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -12,7 +12,7 @@ public class V3Tests
     [TestMethod]
     public void ParseTest()
     {
-        IList<VCard>? vcard = Vcf.Load(TestFiles.V3vcf);
+        IReadOnlyList<VCard>? vcard = Vcf.Load(TestFiles.V3vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreEqual(2, vcard.Count);
@@ -22,7 +22,7 @@ public class V3Tests
     [TestMethod]
     public void ParseTest2()
     {
-        IList<VCard>? vcard = Vcf.Load(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
+        IReadOnlyList<VCard>? vcard = Vcf.Load(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -31,7 +31,7 @@ public class V3Tests
     [TestMethod]
     public void ParseTest3()
     {
-        IList<VCard>? vcard = Vcf.Load(TestFiles.PhotoV3vcf);
+        IReadOnlyList<VCard>? vcard = Vcf.Load(TestFiles.PhotoV3vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -45,7 +45,7 @@ public class V3Tests
 
         string s = vcard.ToVcfString(VCdVersion.V3_0);
 
-        IList<VCard>? cards = Vcf.Parse(s);
+        IReadOnlyList<VCard>? cards = Vcf.Parse(s);
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -84,23 +84,23 @@ public class V3Tests
                 new(UNITEXT)
         ];
 
-        vcard.Keys = DataProperty.FromText(ASCIITEXT);
+        vcard.Keys = new DataProperty(RawData.FromText(ASCIITEXT));
 
-        vcard.Photos = DataProperty.FromBytes(bytes, "image/jpeg");
+        vcard.Photos = new DataProperty(RawData.FromBytes(bytes, "image/jpeg"));
 
         string s = vcard.ToVcfString(VCdVersion.V3_0);
 
 
         Assert.IsNotNull(s);
 
-        Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
+        Assert.IsTrue(s.Split([VCard.NewLine], StringSplitOptions.None)
             .All(x => x is not null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
         _ = Vcf.Parse(s);
 
-        Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
+        Assert.AreEqual(vcard.Keys?.First()?.Value.String, ASCIITEXT);
         Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
-        Assert.IsTrue(vcard.Photos?.First()?.Value?.Bytes?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(vcard.Photos?.First()?.Value.Bytes?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()
@@ -129,7 +129,7 @@ public class V3Tests
 
         vcard.NameViews =
         [
-                new("Test", "Paul", null, null, null)
+                new(NameBuilder.Create().AddSurname("Test").AddGiven("Paul").Build())
         ];
 
         vcard.DisplayNames =
@@ -149,11 +149,11 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest1()
     {
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: Opts.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V3_0, options: VcfOpts.All);
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = Vcf.Parse(s);
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
 
@@ -169,14 +169,14 @@ public class V3Tests
     [TestMethod]
     public void SerializeVCardTest2()
     {
-        IList<VCard> vc = Vcf.Load(TestFiles.PhotoV3vcf).ToList();
+        List<VCard> vc = [.. Vcf.Load(TestFiles.PhotoV3vcf)];
         vc.Add(vc[0]);
 
         string s = vc.ToVcfString();
 
-        vc = Vcf.Parse(s);
+        IReadOnlyList<VCard> vc2 = Vcf.Parse(s);
 
-        Assert.AreEqual(2, vc.Count);
+        Assert.AreEqual(2, vc2.Count);
     }
 
     [TestMethod]
@@ -194,7 +194,7 @@ public class V3Tests
             .NonStandards.Add("X-DATA", base64, parameters: p => { p.Encoding = Enc.Base64; p.MediaType = octetStream; })
             .VCard;
 
-        string vcf = Vcf.ToString(vc, VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteNonStandardProperties));
+        string vcf = Vcf.ToString(vc, VCdVersion.V3_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardProperties));
         vc = Vcf.Parse(vcf)[0];
 
         Assert.AreEqual(Data.Uri, vc.Relations!.First()!.Parameters.DataType);
@@ -220,14 +220,7 @@ END:VCARD";
 
         DateAndOrTimeProperty? bday = vcard.BirthDayViews!.First();
 
-        if (bday is TimeOnlyProperty prop)
-        {
-            Assert.AreEqual(new TimeOnly(5, 30, 0), prop.Value);
-        }
-        else
-        {
-            Assert.Fail();
-        }
+        Assert.AreEqual(new TimeOnly(5, 30, 0), bday?.Value.TimeOnly);
     }
 
 
@@ -248,7 +241,7 @@ END:VCARD";
 
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
-        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteNonStandardParameters);
+        string vcfString = vcard.ToVcfString(options: VcfOpts.Default | VcfOpts.WriteNonStandardParameters);
         vcard = Vcf.Parse(vcfString)[0];
 
         // Find the WhatsApp number:
@@ -277,7 +270,7 @@ END:VCARD";
             Messengers = whatsAppImpp
         };
 
-        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteXExtensions);
+        string vcfString = vcard.ToVcfString(options: VcfOpts.Default | VcfOpts.WriteXExtensions);
         vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();
@@ -304,7 +297,7 @@ END:VCARD";
             Messengers = whatsAppImpp
         };
 
-        string vcfString = vcard.ToVcfString(options: Opts.Default);
+        string vcfString = vcard.ToVcfString(options: VcfOpts.Default);
         vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();
@@ -314,7 +307,7 @@ END:VCARD";
     }
 
     [TestMethod]
-    public void ImppTest3() 
+    public void ImppTest3()
     {
         const string serialized = """
             BEGIN:VCARD
@@ -341,7 +334,7 @@ END:VCARD";
             Messengers = prop
         };
 
-        string vcfString = vcard.ToVcfString(options: (Opts.Default | Opts.WriteXExtensions).Unset(Opts.WriteImppExtension));
+        string vcfString = vcard.ToVcfString(options: (VcfOpts.Default | VcfOpts.WriteXExtensions).Unset(VcfOpts.WriteImppExtension));
         vcard = Vcf.Parse(vcfString)[0];
 
         Assert.AreEqual(1, vcard.Messengers!.Count());
@@ -365,7 +358,7 @@ END:VCARD";
             Messengers = prop
         };
 
-        string vcfString = vcard.ToVcfString(options: Opts.Default | Opts.WriteXExtensions);
+        string vcfString = vcard.ToVcfString(options: VcfOpts.Default | VcfOpts.WriteXExtensions);
         vcard = Vcf.Parse(vcfString)[0];
         Assert.AreEqual(1, vcard.Messengers!.Count());
         prop = vcard.Messengers!.First();
@@ -376,9 +369,11 @@ END:VCARD";
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest1()
     {
-        var adr = new AddressProperty("1", "", "", "", "");
+        var adr = new AddressProperty(AddressBuilder.Create().AddStreet("1").Build());
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
+        adr.Parameters.Label = AddressFormatter.Default.ToLabel(adr);
+
         Assert.IsNotNull(adr.Parameters.Label);
 
         var vCard = new VCard { Addresses = adr };
@@ -389,7 +384,8 @@ END:VCARD";
 
         Assert.IsNotNull(vCard.Addresses);
         adr = vCard.Addresses.First();
-        Assert.IsNotNull(adr!.Parameters.Label);
+        Assert.IsNotNull(adr);
+        Assert.IsNotNull(adr.Parameters.Label);
         Assert.IsNotNull(adr.Parameters.GeoPosition);
         Assert.IsNotNull(adr.Parameters.TimeZone);
     }
@@ -397,9 +393,10 @@ END:VCARD";
     [TestMethod]
     public void PreserveTimeZoneAndGeoTest2()
     {
-        var adr = new AddressProperty("1", "", "", "", "");
+        var adr = new AddressProperty(AddressBuilder.Create().AddStreet("1").Build());
         adr.Parameters.TimeZone = TimeZoneID.Parse("Europe/Berlin");
         adr.Parameters.GeoPosition = new GeoCoordinate(52, 13);
+        adr.Parameters.Label = AddressFormatter.Default.ToLabel(adr);
         Assert.IsNotNull(adr.Parameters.Label);
 
         var vCard = new VCard { Addresses = adr };
@@ -419,7 +416,7 @@ END:VCARD";
     [TestMethod]
     public void DisplayNameTest1()
     {
-        var nm = new NameProperty("Kinzel", "Folker");
+        var nm = new NameProperty(NameBuilder.Create().AddSurname("Kinzel").AddGiven("Folker").Build());
 
         var vCard = new VCard { NameViews = nm };
 
@@ -451,7 +448,7 @@ END:VCARD";
     {
         var vCard = new VCard();
 
-        string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteEmptyProperties));
+        string vcf = vCard.ToVcfString(VCdVersion.V3_0, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties));
 
         vCard = Vcf.Parse(vcf)[0];
 
@@ -469,7 +466,7 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add("Name", parameters: p => p.SortAs = ["abc", "123"])
+            .NameViews.Add(NameBuilder.Create().AddSurname("Name").Build(), parameters: p => p.SortAs = ["abc", "123"])
             .VCard;
 
         string serialized = vc.ToVcfString();
@@ -487,7 +484,7 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add("Name")
+            .NameViews.Add(NameBuilder.Create().AddSurname("Name").Build())
             .Organizations.Add("Org", parameters: p => p.SortAs = ["abc", "123"])
             .VCard;
 
@@ -543,7 +540,7 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add("Name", parameters: p => p.SortAs = ["abc", "123"])
+            .NameViews.Add(NameBuilder.Create().AddSurname("Name").Build(), parameters: p => p.SortAs = ["abc", "123"])
             .Organizations.Add("Org", parameters: p => p.SortAs = ["xyz"])
             .VCard;
 
@@ -617,7 +614,7 @@ END:VCARD";
            .FreeOrBusyUrls.SetPreferences()
            .VCard;
 
-        string serialized = vc.ToVcfString(options: Opts.Default.Unset(Opts.WriteRfc2739Extensions));
+        string serialized = vc.ToVcfString(options: VcfOpts.Default.Unset(VcfOpts.WriteRfc2739Extensions));
 
         vc = Vcf.Parse(serialized)[0];
 
@@ -691,8 +688,8 @@ END:VCARD";
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add("street", null, null, null)
-            .Addresses.Add("street2", null, null, null)
+            .Addresses.Add(AddressBuilder.Create().AddStreet("street").Build())
+            .Addresses.Add(AddressBuilder.Create().AddStreet("street2").Build())
             .Addresses.SetPreferences()
             .VCard;
 
@@ -730,7 +727,7 @@ END:VCARD";
         Assert.IsNull(vc.Organizations.First()!.Parameters.SortAs);
         Assert.IsNotNull(vc.NameViews);
         Assert.IsNotNull(vc.NameViews.First()!.Parameters.SortAs);
-        Assert.AreEqual("Org", vc.NameViews.First()!.Parameters.SortAs!.First());
+        Assert.AreEqual("Org", vc.NameViews.First()!.Parameters.SortAs![0]);
     }
 
     [TestMethod]
@@ -749,7 +746,7 @@ END:VCARD";
         RelationProperty? rel = vc.Relations.First();
         Assert.IsNotNull(rel);
         Assert.IsNotNull(rel.Value);
-        Assert.AreEqual("BEGIN:VCARDThis is not a vCard.", rel.Value.String);
+        Assert.IsNotNull(rel.Value.ContactID?.Uri);
         Assert.AreEqual(Rel.Agent, rel.Parameters.RelationType);
     }
 }

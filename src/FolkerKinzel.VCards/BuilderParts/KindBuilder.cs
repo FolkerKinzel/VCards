@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
@@ -30,13 +30,13 @@ public readonly struct KindBuilder
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.Kind"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// <see cref="VCard.Kind"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// <see cref="VCard.Kind"/> property and <paramref name="arg"/> as arguments. Its return value 
     /// will be the new content of the <see cref="VCard.Kind"/> property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="KindBuilder"/>
     /// to be able to chain calls.</returns>
     /// <remarks>
@@ -45,11 +45,12 @@ public readonly struct KindBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(Func<KindProperty?, TData, KindProperty?> func, TData data)
+    public VCardBuilder Edit<TArg>(Func<KindProperty?, TArg, KindProperty?> func,
+                                   TArg arg)
     {
-        var prop = Builder.VCard.Kind;
+        KindProperty? prop = Builder.VCard.Kind;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Kind = func.Invoke(prop, data);
+        _builder.VCard.Kind = func(prop, arg);
         return _builder;
     }
 
@@ -68,9 +69,9 @@ public readonly struct KindBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<KindProperty?, KindProperty?> func)
     {
-        var prop = Builder.VCard.Kind;
+        KindProperty? prop = Builder.VCard.Kind;
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.Kind = func.Invoke(prop);
+        _builder.VCard.Kind = func(prop);
         return _builder;
     }
 
@@ -93,7 +94,7 @@ public readonly struct KindBuilder
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        var vc = Builder.VCard;
+        VCard vc = Builder.VCard;
         var property = new KindProperty(value, group?.Invoke(vc));
         parameters?.Invoke(property.Parameters);
 

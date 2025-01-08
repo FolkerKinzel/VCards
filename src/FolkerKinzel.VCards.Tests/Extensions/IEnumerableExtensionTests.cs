@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Extensions.Tests;
@@ -23,6 +23,8 @@ public class IEnumerableExtensionTests
             ]
         };
 
+        var relProp = new RelationProperty(Relation.Create(agent), "otherGroup");
+        relProp.Parameters.RelationType = Rel.Agent | Rel.CoWorker;
         return
         [
             null,
@@ -31,7 +33,7 @@ public class IEnumerableExtensionTests
                 Relations =
                 [
                     null,
-                    new RelationVCardProperty(agent, Rel.Agent | Rel.CoWorker, "otherGroup" )
+                    relProp
                 ]
             }
         ];
@@ -48,24 +50,24 @@ public class IEnumerableExtensionTests
 
         VCard? vc1 = list[0];
 
-        Assert.IsInstanceOfType(vc1, typeof(VCard));
+        Assert.IsInstanceOfType<VCard>(vc1);
         Assert.IsNotNull(vc1?.Relations);
 
-        var uuidProp = vc1?.Relations?.FirstOrDefault(x => x is RelationUuidProperty) as RelationUuidProperty;
+        var uuidProp = vc1?.Relations?.FirstOrDefault(x => x is not null) as RelationProperty;
         Assert.IsNotNull(uuidProp);
-        Guid o1 = uuidProp!.Value;
-
+        Guid? o1 = uuidProp.Value.ContactID?.Guid;
+        Assert.IsNotNull(o1);
         Assert.IsFalse(uuidProp.IsEmpty);
 
         VCard? vc2 = list[1];
 
-        Assert.IsInstanceOfType(vc2, typeof(VCard));
-        Assert.IsNotNull(vc2?.ID);
+        Assert.IsInstanceOfType<VCard>(vc2);
+        Assert.IsNotNull(vc2?.ContactID);
 
-        Guid? o2 = vc2?.ID?.Value;
+        Guid? o2 = vc2.ContactID.Value.Guid;
 
         Assert.IsTrue(o2.HasValue);
-        Assert.AreEqual((Guid)o1!, o2!.Value);
+        Assert.AreEqual(o1.Value, o2.Value);
     }
 
     [TestMethod]
@@ -76,12 +78,12 @@ public class IEnumerableExtensionTests
         list = list.Reference().ToList()!;
 
         Assert.AreEqual(2, list.Count);
-        Assert.IsNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
+        Assert.IsNull(list[0]?.Relations?.FirstOrDefault(x => x?.Value.VCard is not null));
 
-        list = list.Dereference().ToList()!;
+        list.Dereference();
 
         Assert.AreEqual(2, list.Count);
-        Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x is RelationVCardProperty));
+        Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x?.Value.VCard is not null));
     }
 
     [DataTestMethod]
@@ -150,10 +152,11 @@ public class IEnumerableExtensionTests
 
         list.SaveVcf(path, VCdVersion.V2_1);
 
-        IList<VCard> list2 = Vcf.Load(path);
+        IReadOnlyList<VCard> list2 = Vcf.Load(path);
 
         Assert.AreNotEqual(list.Count, list2.Count);
-        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+        Assert.AreNotEqual(0, list2.Count);
+        Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value.VCard);
     }
 
     [TestMethod]
@@ -165,10 +168,11 @@ public class IEnumerableExtensionTests
 
         list.SaveVcf(path, VCdVersion.V3_0);
 
-        IList<VCard> list2 = Vcf.Load(path);
+        IReadOnlyList<VCard> list2 = Vcf.Load(path);
 
         Assert.AreNotEqual(list.Count, list2.Count);
-        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+        Assert.AreNotEqual(0, list2.Count);
+        Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value.VCard);
     }
 
     [TestMethod]
@@ -180,10 +184,11 @@ public class IEnumerableExtensionTests
 
         list.SaveVcf(path, VCdVersion.V4_0);
 
-        IList<VCard> list2 = Vcf.Load(path);
+        IReadOnlyList<VCard> list2 = Vcf.Load(path);
 
         Assert.AreEqual(2, list2.Count);
-        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+        Assert.AreNotEqual(0, list2.Count);
+        Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value.VCard);
     }
 
     [DataTestMethod]
@@ -201,12 +206,12 @@ public class IEnumerableExtensionTests
 
         vcard.SaveVcf(path, version);
 
-        IList<VCard> list = Vcf.Load(path);
+        IReadOnlyList<VCard> list = Vcf.Load(path);
 
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);
 
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
+        TextProperty? dispNameProp = list[0].DisplayNames.FirstOrNull();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
         Assert.AreEqual(version, list[0].Version);
@@ -360,10 +365,10 @@ public class IEnumerableExtensionTests
 
         string s = list.ToVcfString(version);
 
-        IList<VCard> list2 = Vcf.Parse(s);
+        IReadOnlyList<VCard> list2 = Vcf.Parse(s);
 
         Assert.AreNotEqual(0, list2.Count);
-        Assert.IsNotNull(list2.FirstOrDefault()?.Relations?.FirstOrDefault()?.Value?.VCard);
+        Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value.VCard);
         Assert.AreEqual(version, list2[0].Version);
     }
 
@@ -373,8 +378,6 @@ public class IEnumerableExtensionTests
     [DataRow(VCdVersion.V4_0)]
     public void ToVcfStringTest1(VCdVersion version)
     {
-        VCard.SyncTestReset();
-
         var vcard = new VCard
         {
             DisplayNames = new TextProperty("Folker")
@@ -382,12 +385,12 @@ public class IEnumerableExtensionTests
 
         string s = vcard.ToVcfString(version);
 
-        IList<VCard> list = Vcf.Parse(s);
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);
 
-        TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
+        TextProperty? dispNameProp = list[0].DisplayNames.FirstOrNull();
         Assert.IsNotNull(dispNameProp);
         Assert.AreEqual("Folker", dispNameProp?.Value);
         Assert.AreEqual(version, list[0].Version);
@@ -649,15 +652,15 @@ public class IEnumerableExtensionTests
         var vc = new VCard();
 
         vc.Relations = vc.Relations.ConcatWith(null);
-        vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
+        vc.Relations = vc.Relations.ConcatWith(new RelationProperty(Relation.Create(ContactID.Create("Hi"))));
         vc.Relations = vc.Relations.ConcatWith(null);
-        vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
+        vc.Relations = vc.Relations.ConcatWith(new RelationProperty(Relation.Create(ContactID.Create("Hi"))));
         vc.Relations = vc.Relations.ConcatWith(null);
         CollectionAssert.AllItemsAreNotNull(vc.Relations.ToArray());
         Assert.AreEqual(2, vc.Relations.Count());
 
-        vc.Relations = RelationProperty.FromText("Hi");
-        vc.Relations = vc.Relations.ConcatWith(RelationProperty.FromText("Hi"));
+        vc.Relations = new RelationProperty(Relation.Create(ContactID.Create("Hi")));
+        vc.Relations = vc.Relations.ConcatWith(new RelationProperty(Relation.Create(ContactID.Create("Hi"))));
         Assert.AreEqual(2, vc.Relations.Count());
 
     }
@@ -794,6 +797,16 @@ public class IEnumerableExtensionTests
         IEnumerable<TextProperty?>? newProp = numerable.Remove(prop);
         Assert.IsNotNull(newProp);
         Assert.AreEqual(0, newProp.Count());
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void RemoveTest5()
+    {
+        var prop = new TextProperty("Hi");
+        IEnumerable<TextProperty> numerable = prop;
+        Func<TextProperty, bool>? func = null;
+        _ = numerable.Remove(func!);
     }
 
     [TestMethod]

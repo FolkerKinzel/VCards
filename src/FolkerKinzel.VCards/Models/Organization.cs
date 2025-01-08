@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
@@ -6,88 +7,89 @@ using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 
-// Organization is a PropertyPart, but it could be useful to reuse a single
-// Organization object for more than one VCard (e.g., the vCards of a team).
-// That's why Organization has a public constructor and why it is in the Models
-// namespace rather than in the PropertyParts namespace.
-
 namespace FolkerKinzel.VCards.Models;
 
 /// <summary>Encapsulates information about the organization (or company) of the
 /// object the <see cref="VCard"/> represents.</summary>
 public sealed class Organization
 {
+    #region Remove with version 8.0.1
+
+    [Obsolete("Use OrgName instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public string? OrganizationName => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use OrganizationalUnits instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ReadOnlyCollection<string>? OrganizationalUnits => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    #endregion
+
+    private readonly string[]? _units;
+
     /// <summary>Initializes a new <see cref="Organization" /> object.</summary>
     /// <param name="orgName">Organization name or <c>null</c>.</param>
     /// <param name="orgUnits">Organization unit(s) or <c>null</c>.</param>
     public Organization(string? orgName, IEnumerable<string?>? orgUnits = null)
     {
-        (string? orgNameParsed, ReadOnlyCollection<string>? orgUnitsParsed) = ParseProperties(orgName, orgUnits);
+        (string? orgNameParsed, string[]? orgUnitsParsed) = ParseProperties(orgName, orgUnits);
 
-        OrganizationName = orgNameParsed;
-        OrganizationalUnits = orgUnitsParsed;
+        Name = orgNameParsed;
+        _units = orgUnitsParsed;
     }
 
-    internal Organization(List<string> orgList)
-    {
-        if (orgList.Count == 0)
-        {
-            return;
-        }
-
-        string orgName = orgList[0];
-        orgList.RemoveAt(0);
-
-        (string? orgNameParsed, ReadOnlyCollection<string>? orgUnitsParsed) = ParseProperties(orgName, orgList);
-
-        OrganizationName = orgNameParsed;
-        OrganizationalUnits = orgUnitsParsed;
-    }
-
-    private static (string?, ReadOnlyCollection<string>?) ParseProperties(string? orgName,
-                                                                          IEnumerable<string?>? orgUnits)
+    private static (string?, string[]?) ParseProperties(string? orgName,
+                                                        IEnumerable<string?>? orgUnits)
     {
         orgName = string.IsNullOrWhiteSpace(orgName) ? null : orgName;
-        var orgUnitsColl = ReadOnlyCollectionConverter.ToReadOnlyCollection(orgUnits);
 
-        if (orgUnitsColl.Count == 0)
+        string[]? orgUnitsColl = null;
+
+        if (orgUnits is not null)
         {
-            orgUnitsColl = null;
+            orgUnitsColl = StringArrayConverter.ToStringArray(orgUnits);
+            orgUnitsColl = orgUnitsColl.ContainsData() ? orgUnitsColl : null;
         }
 
         return (orgName, orgUnitsColl);
     }
 
     /// <summary>Organization name.</summary>
-    public string? OrganizationName { get; }
+    public string? Name { get; }
 
     /// <summary>Organizational unit name(s).</summary>
-    public ReadOnlyCollection<string>? OrganizationalUnits { get; }
+    public IReadOnlyList<string>? Units => _units;
 
     /// <summary>Returns <c>true</c>, if the <see cref="Organization" /> object does
     /// not contain any usable data.</summary>
-    public bool IsEmpty => OrganizationName is null && OrganizationalUnits is null;
+    public bool IsEmpty => Name is null && Units is null;
 
     internal bool NeedsToBeQpEncoded()
-        => OrganizationName.NeedsToBeQpEncoded() ||
-           (OrganizationalUnits?.Any(s => s.NeedsToBeQpEncoded()) ?? false);
+        => Name.NeedsToBeQpEncoded() ||
+           (_units is not null && _units.ContainsAnyThatNeedsQpEncoding());
 
     /// <inheritdoc/>
     public override string ToString()
     {
         var sb = new StringBuilder();
 
-        string orgName = OrganizationName is null ? "" : nameof(OrganizationName);
-        string orgUnit = OrganizationalUnits is null ? "" : nameof(OrganizationalUnits);
+        string orgName = Name is null ? "" : nameof(Name);
+        string orgUnit = Units is null ? "" : nameof(Units);
 
         int padLength = Math.Max(orgName.Length, orgUnit.Length) + 2;
 
-        if (OrganizationName is not null)
+        if (Name is not null)
         {
-            _ = sb.Append($"{orgName}: ".PadRight(padLength)).Append(OrganizationName);
+            _ = sb.Append($"{orgName}: ".PadRight(padLength)).Append(Name);
         }
 
-        if (OrganizationalUnits is not null)
+        if (Units is not null)
         {
             if (sb.Length != 0)
             {
@@ -96,12 +98,12 @@ public sealed class Organization
 
             _ = sb.Append($"{orgUnit}: ".PadRight(padLength));
 
-            for (int i = 0; i < OrganizationalUnits.Count - 1; i++)
+            for (int i = 0; i < Units.Count - 1; i++)
             {
-                _ = sb.Append(OrganizationalUnits[i]).Append("; ");
+                _ = sb.Append(Units[i]).Append("; ");
             }
 
-            _ = sb.Append(OrganizationalUnits[OrganizationalUnits.Count - 1]);
+            _ = sb.Append(Units[Units.Count - 1]);
         }
 
         return sb.ToString();
@@ -112,13 +114,13 @@ public sealed class Organization
         StringBuilder builder = serializer.Builder;
         int startIdx = builder.Length;
 
-        _ = builder.AppendValueMasked(OrganizationName, serializer.Version);
+        _ = builder.AppendValueMasked(Name, serializer.Version);
 
-        if (OrganizationalUnits is not null)
+        if (Units is not null)
         {
-            for (int i = 0; i < OrganizationalUnits.Count; i++)
+            for (int i = 0; i < Units.Count; i++)
             {
-                _ = builder.Append(';').AppendValueMasked(OrganizationalUnits[i], serializer.Version);
+                _ = builder.Append(';').AppendValueMasked(Units[i], serializer.Version);
             }
         }
 

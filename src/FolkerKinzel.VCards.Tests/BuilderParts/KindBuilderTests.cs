@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class KindBuilderTests
@@ -24,7 +26,7 @@ public class KindBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Kind.Edit((p, d) => new Models.KindProperty(d), Enums.Kind.Individual)
+            .Kind.Edit((p, d) => new KindProperty(d), Enums.Kind.Individual)
             .VCard;
 
         Assert.IsNotNull(vc.Kind);

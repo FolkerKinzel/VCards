@@ -3,17 +3,17 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Syncs;
-using ParaKey = FolkerKinzel.VCards.Models.PropertyParts.ParameterSection.ParameterKey;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
+using ParaKey = FolkerKinzel.VCards.Models.Properties.Parameters.ParameterSection.ParameterKey;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer(VCdVersion.V4_0, options)
+internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSerializer(VCdVersion.V4_0, options)
 {
     private readonly List<string> _stringCollectionList = [];
     private readonly List<Action<ParameterSerializer4_0>> _actionList = new(2);
-    private readonly bool writeRfc9554 = options.HasFlag(Opts.WriteRfc9554Extensions);
+    private readonly bool _writeRfc9554 = options.HasFlag(VcfOpts.WriteRfc9554Extensions);
 
     private readonly Action<ParameterSerializer4_0> _collectPropertyClassTypes = CollectPropertyClassTypes;
     private readonly Action<ParameterSerializer4_0> _collectPhoneTypes = CollectPhoneTypes;
@@ -38,7 +38,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private static void CollectAddressTypes(ParameterSerializer4_0 serializer)
     {
-        if (!serializer.Options.HasFlag(Opts.WriteRfc9554Extensions))
+        if (!serializer.Options.HasFlag(VcfOpts.WriteRfc9554Extensions))
         {
             return;
         }
@@ -53,7 +53,6 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         => EnumValueCollector.Collect(serializer.ParaSection.RelationType,
                                       serializer._stringCollectionList);
     #endregion
-
 
     #region Build
 
@@ -787,7 +786,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendAuthorAndCreated()
     {
-        if (!writeRfc9554)
+        if (!_writeRfc9554)
         {
             return;
         }
@@ -808,7 +807,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         if (created.HasValue)
         {
             AppendParameter(ParaKey.Rfc9554.CREATED, null);
-            DateTimeConverter.AppendTimeStampTo(this.Builder, created.Value, VCdVersion.V4_0);
+            TimeStampConverter.AppendTo(this.Builder, created.Value, VCdVersion.V4_0);
         }
     }
 
@@ -822,7 +821,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendCC()
     {
-        if (!Options.HasFlag(Opts.WriteRfc8605Extensions))
+        if (!Options.HasFlag(VcfOpts.WriteRfc8605Extensions))
         {
             return;
         }
@@ -835,7 +834,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendComponentOrder()
     {
-        if (!Options.HasFlag(Opts.WriteRfc9555Extensions))
+        if (!Options.HasFlag(VcfOpts.WriteRfc9555Extensions))
         {
             return;
         }
@@ -849,7 +848,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendDerived()
     {
-        if (writeRfc9554 && ParaSection.Derived)
+        if (_writeRfc9554 && ParaSection.Derived)
         {
             AppendParameter(ParaKey.Rfc9554.DERIVED, "TRUE");
         }
@@ -868,16 +867,18 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendGeo()
     {
-        VCards.GeoCoordinate? geo = ParaSection.GeoPosition;
+        GeoCoordinate? geo = ParaSection.GeoPosition;
 
         if (geo is null)
         {
             return;
         }
 
+        Debug.Assert(!geo.IsEmpty);
+
         AppendParameter(ParameterSection.ParameterKey.GEO, "");
         Builder.Append('"');
-        GeoCoordinateConverter.AppendTo(Builder, geo, VCdVersion.V4_0);
+        GeoCoordinateSerializer.AppendTo(Builder, geo, VCdVersion.V4_0);
         Builder.Append('"');
     }
 
@@ -909,7 +910,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendJSContactPointer()
     {
-        Debug.Assert(Options.HasFlag(Opts.WriteRfc9555Extensions));
+        Debug.Assert(Options.HasFlag(VcfOpts.WriteRfc9555Extensions));
 
         if (ParaSection.JSContactPointer is string ptr)
         {
@@ -943,7 +944,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendPhoneticAndScript()
     {
-        if (!writeRfc9554)
+        if (!_writeRfc9554)
         {
             return;
         }
@@ -1003,7 +1004,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendPropId()
     {
-        if (writeRfc9554 && ParaSection.PropertyID is string propID)
+        if (_writeRfc9554 && ParaSection.PropertyID is string propID)
         {
             AppendParameter(ParaKey.Rfc9554.PROP_ID, propID, escapedAndQuoted: true);
         }
@@ -1021,7 +1022,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendServiceTypeAndUsername()
     {
-        if (writeRfc9554)
+        if (_writeRfc9554)
         {
             if (ParaSection.ServiceType is string serviceType)
             {
@@ -1036,7 +1037,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             return;
         }
 
-        if (Options.HasFlag(Opts.WriteXExtensions) && ParaSection.ServiceType is string xServiceType)
+        if (Options.HasFlag(VcfOpts.WriteXExtensions) && ParaSection.ServiceType is string xServiceType)
         {
             AppendParameter(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, xServiceType);
         }
@@ -1044,9 +1045,10 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendSortAs()
     {
-        IEnumerable<string>? sortAs = ParaSection.SortAs;
+        Debug.Assert(ParaSection.SortAs is null or string[]);
+        string[]? sortAs = (string[]?)ParaSection.SortAs;
 
-        if (sortAs is null)
+        if (!sortAs.ContainsData())
         {
             return;
         }
@@ -1056,10 +1058,8 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
         AppendParameter(ParaKey.SORT_AS, "");
 
-        foreach (string item in sortAs)
+        foreach (string item in sortAs.AsSpan())
         {
-            Debug.Assert(!string.IsNullOrWhiteSpace(item));
-
             rollBack = false;
             _ = Builder.AppendParameterValueEscapedAndQuoted(item, VCdVersion.V4_0).Append(',');
         }
@@ -1083,7 +1083,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
             _actionList[i](this);
         }
 
-        if (Options.HasFlag(Opts.WriteNonStandardParameters))
+        if (Options.HasFlag(VcfOpts.WriteNonStandardParameters))
         {
             IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
 
@@ -1125,7 +1125,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
         }
 
         AppendParameter(ParaKey.TZ, null);
-        tz.AppendTo(Builder, VCdVersion.V4_0, null, asParameter: true);
+        TimeZoneIDSerializer.AppendTo(Builder, tz, VCdVersion.V4_0, null, asParameter: true);
     }
 
     private void AppendValue(Data? dataType)
@@ -1146,7 +1146,7 @@ internal sealed class ParameterSerializer4_0(Opts options) : ParameterSerializer
 
     private void AppendNonStandardWithKey(string key)
     {
-        if (!Options.HasFlag(Opts.WriteNonStandardParameters))
+        if (!Options.HasFlag(VcfOpts.WriteNonStandardParameters))
         {
             return;
         }

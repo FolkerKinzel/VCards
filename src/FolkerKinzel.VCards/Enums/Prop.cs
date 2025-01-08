@@ -1,4 +1,4 @@
-using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Enums;
 
@@ -20,11 +20,11 @@ public enum Prop
     Created,
 
     /// <summary> <c>REV</c>: A timestamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
-    TimeStamp,
+    Updated,
 
     /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
     /// unique identifier, associated with the object. <c>(2,3,4)</c></summary>
-    ID,
+    ContactID,
 
     /// <summary> <c>CATEGORIES</c>: Lists of "tags" that can be used to describe the
     /// object represented by this vCard. <c>(3,4)</c></summary>
@@ -179,7 +179,7 @@ public enum Prop
     Hobbies,
 
     /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
-    Languages,
+    SpokenLanguages,
 
     /// <summary> <c>NOTE</c>: Specifies supplemental informations or comments, that
     /// are associated with the vCard. <c>(2,3,4)</c></summary>

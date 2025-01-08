@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Xml.Linq;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -17,7 +18,7 @@ public class IEnumerableTests
 
         var vc = new VCard
         {
-            Xmls = new XmlProperty(new XElement(f + "Test"))
+            Xmls = new TextProperty(new XElement(f + "Test").ToString())
         };
 
         IEnumerable enumerable = vc.Xmls;
@@ -56,12 +57,9 @@ public class IEnumerableTests
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnötige Zuweisung eines Werts.", Justification = "<Ausstehend>")]
     public void IEnumerableTest3()
     {
-        VCard.SyncTestReset();
-        VCard.RegisterApp(null);
-
         var vc = new VCard
         {
-            BirthDayViews = DateAndOrTimeProperty.FromDateTime(DateTime.Now)
+            BirthDayViews = new DateAndOrTimeProperty(DateTime.Now)
         };
 
         IEnumerable enumerable = vc.BirthDayViews;
@@ -74,7 +72,4 @@ public class IEnumerableTests
         IEnumerable<VCardProperty?> props = vc.BirthDayViews;
         Assert.IsNotNull(vc.BirthDayViews.FirstOrDefault());
     }
-
-
-
 }

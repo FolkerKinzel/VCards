@@ -1,13 +1,12 @@
 ﻿using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Tests;
 
 internal static class Utility
 {
-    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>")]
     internal static VCard CreateVCard()
     {
         VCard.SyncTestReset();
@@ -40,7 +39,8 @@ internal static class Utility
             .AddStreetNumber("13")
             .AddLocality("Entenhausen")
             .AddPostalCode("01234")
-            .AddCountry("Germany"));
+            .AddCountry("Germany")
+            .Build());
         adr1.Parameters.Label = "  ";
         adr1.Parameters.Label = "Elmstreet 13; bei Müller" + Environment.NewLine + "01234 Entenhausen";
         adr1.Parameters.GeoPosition = new GeoCoordinate(12.98, 7.86);
@@ -63,19 +63,20 @@ internal static class Utility
             .AddStreetNumber("13")
             .AddLocality("New York")
             .AddPostalCode("01234")
-            .AddCountry("USA"));
+            .AddCountry("USA")
+            .Build());
 
-        var logo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg");
+        var logo1 = new DataProperty(RawData.FromUri(new Uri("https://folker-kinzel.de/logo.jpg"), "image/jpeg"));
         //logo1.Parameters.MediaType = "image/jpeg";
 
-        var photo1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/photo.png"), "image/png");
+        var photo1 = new DataProperty(RawData.FromUri(new Uri("https://folker-kinzel.de/photo.png"), "image/png"));
         //photo1.Parameters.MediaType = "image/png";
 
-        var sound1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/audio.mp3"), "audio/mpeg");
+        var sound1 = new DataProperty(RawData.FromUri(new Uri("https://folker-kinzel.de/audio.mp3"), "audio/mpeg"));
         //sound1.Parameters.MediaType = "audio/mpeg";
 
-        var key1 = DataProperty.FromUri(new Uri("https://folker-kinzel.de/pgp"), "application/pgp-keys");
-        var key2 = DataProperty.FromText("ThePassword");
+        var key1 = new DataProperty(RawData.FromUri(new Uri("https://folker-kinzel.de/pgp"), "application/pgp-keys"));
+        var key2 = new DataProperty(RawData.FromText("ThePassword"));
         //key1.Parameters.MediaType = "application/pgp-keys";
 
 
@@ -83,10 +84,10 @@ internal static class Utility
         email1.Parameters.EMailType = "  ";
         email1.Parameters.EMailType = EMail.SMTP;
 
-        var name1 = new NameProperty("Künzel", "Folker");
+        var name1 = new NameProperty(NameBuilder.Create().AddSurname("Künzel").AddGiven("Folker").Build());
         name1.Parameters.SortAs = ["Kinzel", "Folker"];
 
-        var name2 = new NameProperty("Кинцэл", "Фолкер");
+        var name2 = new NameProperty(NameBuilder.Create().AddSurname("Кинцэл").AddGiven("Фолкер").Build());
         name2.Parameters.SortAs = ["Kinzel", "Folker"];
         name2.Parameters.Language = "ru-RU";
         name2.Parameters.AltID = "  ";
@@ -113,8 +114,9 @@ internal static class Utility
         var impp11 = new TextProperty("twitter:uri.com");
         var impp12 = new TextProperty("ymsgr:uri.com");
 
-        var rel1 = RelationProperty.FromText("Agent", Rel.Agent);
-        var rel2 = RelationProperty.FromText("Spouse");
+        var rel1 = new RelationProperty(Relation.Create(ContactID.Create("Agent")));
+        rel1.Parameters.RelationType = Rel.Agent;
+        var rel2 = new RelationProperty(Relation.Create(ContactID.Create("Spouse")));
         rel2.Parameters.RelationType = default(Rel);
         rel2.Parameters.RelationType = Rel.Spouse | Rel.CoResident;
 
@@ -130,14 +132,16 @@ internal static class Utility
 
         var xName = XName.Get("{TheNs}TheLocal");
         var xEl = new XElement(xName, "The content");
-        var xml1 = new XmlProperty(xEl);
+        var xml1 = new TextProperty(xEl.ToString());
 
-        var bday = DateAndOrTimeProperty.FromDate(1977, 11, 11);
+        var bday = new DateAndOrTimeProperty(new DateOnly(1977, 11, 11));
         bday.Parameters.Calendar = "  ";
 
         var source = new TextProperty("http://neu.de/");
         source.Parameters.Context = " ";
         source.Parameters.Context = "VCARD";
+
+        var org = new Organization("The ÄÖÜ Organization", ["Department", "Office"]);
 
         var vc = new VCard
         {
@@ -148,12 +152,12 @@ internal static class Utility
             Interests = hobby1,
             Expertises = expertise1,
             BirthDayViews = bday,
-            AnniversaryViews = DateAndOrTimeProperty.FromDate(2001, 9, 11),
+            AnniversaryViews = new DateAndOrTimeProperty(new DateOnly(2001, 9, 11)),
             Logos = logo1,
             Photos = photo1,
             Sounds = sound1,
             Keys = [key1, key2],
-            DeathDateViews = DateAndOrTimeProperty.FromText("Later"),
+            DeathDateViews = new DateAndOrTimeProperty("Later"),
             DeathPlaceViews = new TextProperty("Somewhere"),
             BirthPlaceViews = new TextProperty("Dessau"),
             ProductID = new TextProperty("Testcode"),
@@ -167,20 +171,20 @@ internal static class Utility
             OrgDirectories = new TextProperty("OrgDirectory"),
             Profile = new ProfileProperty(),
             Categories = new StringCollectionProperty(["Person", "Data"]),
-            TimeStamp = new TimeStampProperty(),
+            Updated = new TimeStampProperty(),
             EMails = email1,
             Roles = new TextProperty("Rechte Hand"),
             Titles = new TextProperty("Sündenbock"),
-            ID = new IDProperty(),
+            ContactID = new ContactIDProperty(ContactID.Create()),
             Urls = new TextProperty("www.folker.com"),
             DirectoryName = new TextProperty("Webseite"),
             Access = new AccessProperty(Access.Confidential),
-            GenderViews = new GenderProperty(Sex.NonOrNotApplicable),
+            GenderViews = new GenderProperty(Gender.Create(Sex.NonOrNotApplicable)),
             GeoCoordinates = new GeoProperty(new GeoCoordinate(23.456, 49.654)),
             NickNames = new StringCollectionProperty(["Genius", "The Brain"]),
             Kind = new KindProperty(Kind.Organization),
             Mailer = new TextProperty("The Mailer"),
-            Languages = new TextProperty("de"),
+            SpokenLanguages = new TextProperty("de"),
             Notes = new TextProperty("Kommentar"),
             GramGenders = [new GramProperty(Gram.Neuter), new GramProperty(Gram.Common)],
 
@@ -190,7 +194,7 @@ internal static class Utility
             ],
 
             Relations = [rel1, rel2],
-            Organizations = new OrgProperty("The ÄÖÜ Organization", ["Department", "Office"]),
+            Organizations = new OrgProperty(org),
             NonStandards = nonStandard,
             Xmls = xml1,
         };

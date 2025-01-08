@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel;
+using System.Data;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Enums;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards;
 
 /// <summary>
-/// Collects the data used to initialize a <see cref="Models.NameProperty"></see> instance.
+/// Collects the data used to initialize a <see cref="Models.Properties.NameProperty"></see> instance.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -17,6 +18,52 @@ namespace FolkerKinzel.VCards;
 /// </remarks>
 public sealed class NameBuilder
 {
+    #region Remove with 8.0.1
+
+    [Obsolete("Use AddGiven instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public NameBuilder AddGivenName(string? value) => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use AddGiven instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public NameBuilder AddGivenName(IEnumerable<string?> collection) => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use AddGiven2 instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public NameBuilder AddAdditionalName(string? value) => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use AddGiven2 instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public NameBuilder AddAdditionalName(IEnumerable<string?> collection) => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use AddSurname instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public NameBuilder AddFamilyName(string? value) => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    [Obsolete("Use AddSurname instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public NameBuilder AddFamilyName(IEnumerable<string?> collection) => throw new NotImplementedException();
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+    #endregion
+
     private readonly Dictionary<NameProp, List<string>> _dic = [];
     private List<string>? _worker;
 
@@ -29,6 +76,20 @@ public sealed class NameBuilder
         }
     }
 
+    private NameBuilder() { }
+
+    /// <summary>
+    /// Builds a new <see cref="Name"/> instance with the content of the <see cref="NameBuilder"/>
+    /// and clears all of this content when it returns.
+    /// </summary>
+    /// <returns>The newly created <see cref="Name"/> instance.</returns>
+    public Name Build()
+    {
+        var name = new Name(this);
+        Clear();
+        return name;
+    }
+
     /// <summary>
     /// Creates a new <see cref="NameBuilder"/> instance.
     /// </summary>
@@ -36,60 +97,72 @@ public sealed class NameBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static NameBuilder Create() => new();
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Name.FamilyNames"/>. (A family name, 
-    /// also known as "surname".) (2,3,4)</summary>
+    /// <summary>Adds a <see cref="string"/> to <see cref="Name.Generations"/>. (A generation
+    /// marker or qualifier, e.g., "Jr." or "III".) (4 - RFC 9554)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
-    /// 
+    /// <remarks>
+    /// <note type="tip">
+    /// For backwards compatibility use <see cref="AddSuffix(string?)"/> to add a copy to 
+    /// <see cref="Name.Suffixes"/>.
+    /// </note>
+    /// </remarks>
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
-    /// <seealso cref="Name.FamilyNames"/>
+    /// <seealso cref="Name.Generations"/>
+    /// <seealso cref="Name.Suffixes"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddFamilyName(string? value) => Add(NameProp.FamilyNames, value);
+    public NameBuilder AddGeneration(string? value) => Add(NameProp.Generations, value);
 
-    /// <summary>
-    /// Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Name.FamilyNames"/>. (Family names, also known as "surnames".) (2,3,4)</summary>
+    /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
+    /// <see cref="Name.Surnames2"/>. (Generation markers or qualifiers, e.g., "Jr." or "III".) 
+    /// (4 - RFC 9554)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
+    /// <remarks>
+    /// <note type="tip">
+    /// For backwards compatibility use <see cref="AddSuffix(IEnumerable{string?})"/> to add a copy to 
+    /// <see cref="Name.Suffixes"/>.
+    /// </note>
+    /// </remarks>
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
-    /// <seealso cref="Name.FamilyNames"/>
+    /// <seealso cref="Name.Generations"/>
+    /// <seealso cref="Name.Suffixes"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddFamilyName(IEnumerable<string?> collection)
-        => AddRange(NameProp.FamilyNames, collection);
+    public NameBuilder AddGeneration(IEnumerable<string?> collection) => AddRange(NameProp.Generations, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Name.GivenNames"/>. (A given name, also 
+    /// <summary>Adds a <see cref="string"/> to <see cref="Name.Given"/>. (A given name, also 
     /// known as "first name".) (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
-    /// <seealso cref="Name.GivenNames"/>
+    /// <seealso cref="Name.Given"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddGivenName(string? value) => Add(NameProp.GivenNames, value);
+    public NameBuilder AddGiven(string? value) => Add(NameProp.Given, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Name.GivenNames"/>. (Given names, also known as "first names".) (2,3,4)</summary>
+    /// <see cref="Name.Given"/>. (Given names, also known as "first names".) (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
-    /// <seealso cref="Name.GivenNames"/>
+    /// <seealso cref="Name.Given"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddGivenName(IEnumerable<string?> collection)
-        => AddRange(NameProp.GivenNames, collection);
+    public NameBuilder AddGiven(IEnumerable<string?> collection)
+        => AddRange(NameProp.Given, collection);
 
-    /// <summary>Adds a <see cref="string"/> to <see cref="Name.AdditionalNames"/>. (An additional name,
+    /// <summary>Adds a <see cref="string"/> to <see cref="Name.Given2"/>. (An additional name,
     /// also known as "middle name".) (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
-    /// <seealso cref="Name.AdditionalNames"/>
+    /// <seealso cref="Name.Given2"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddAdditionalName(string? value) => Add(NameProp.AdditionalNames, value);
+    public NameBuilder AddGiven2(string? value) => Add(NameProp.Given2, value);
 
     /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Name.AdditionalNames"/>. (Additional names, also known as "middle names".) (2,3,4)</summary>
+    /// <see cref="Name.Given2"/>. (Additional names, also known as "middle names".) (2,3,4)</summary>
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
-    /// <seealso cref="Name.AdditionalNames"/>
+    /// <seealso cref="Name.Given2"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddAdditionalName(IEnumerable<string?> collection) => AddRange(NameProp.AdditionalNames, collection);
+    public NameBuilder AddGiven2(IEnumerable<string?> collection) => AddRange(NameProp.Given2, collection);
 
     /// <summary>Adds a <see cref="string"/> to <see cref="Name.Prefixes"/>. (A honorific prefix.) (2,3,4)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
@@ -125,18 +198,38 @@ public sealed class NameBuilder
     public NameBuilder AddSuffix(IEnumerable<string?> collection)
         => AddRange(NameProp.Suffixes, collection);
 
+    /// <summary>Adds a <see cref="string"/> to <see cref="Name.Surnames"/>. (A family name, 
+    /// also known as "surname".) (2,3,4)</summary>
+    /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
+    /// 
+    /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Name.Surnames"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NameBuilder AddSurname(string? value) => Add(NameProp.Surnames, value);
+
+    /// <summary>
+    /// Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
+    /// <see cref="Name.Surnames"/>. (Family names, also known as "surnames".) (2,3,4)</summary>
+    /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
+    /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
+    /// <seealso cref="Name.Surnames"/>
+    /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public NameBuilder AddSurname(IEnumerable<string?> collection)
+        => AddRange(NameProp.Surnames, collection);
+
     /// <summary>Adds a <see cref="string"/> to <see cref="Name.Surnames2"/>. (A secondary surname 
     /// (used in some cultures), also known as "maternal surname".) (4 - RFC 9554)</summary>
     /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
     /// <remarks>
     /// <note type="tip">
-    /// For backwards compatibility use <see cref="AddFamilyName(string?)"/> to add a copy to 
-    /// <see cref="Models.PropertyParts.Name.FamilyNames"/>.
+    /// For backwards compatibility use <see cref="AddSurname(string?)"/> to add a copy to 
+    /// <see cref="Name.Surnames"/>.
     /// </note>
     /// </remarks>
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
     /// <seealso cref="Name.Surnames2"/>
-    /// <seealso cref="Name.FamilyNames"/>
+    /// <seealso cref="Name.Surnames"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public NameBuilder AddSurname2(string? value) => Add(NameProp.Surnames2, value);
 
@@ -146,49 +239,17 @@ public sealed class NameBuilder
     /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
     /// <remarks>
     /// <note type="tip">
-    /// For backwards compatibility use <see cref="AddFamilyName(IEnumerable{string?})"/> to add a copy to 
-    /// <see cref="Models.PropertyParts.Name.FamilyNames"/>.
+    /// For backwards compatibility use <see cref="AddSurname(IEnumerable{string?})"/> to add a copy to 
+    /// <see cref="Name.Surnames"/>.
     /// </note>
     /// </remarks>
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
     /// <seealso cref="Name.Surnames2"/>
-    /// <seealso cref="Name.FamilyNames"/>
+    /// <seealso cref="Name.Surnames"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public NameBuilder AddSurname2(IEnumerable<string?> collection)
         => AddRange(NameProp.Surnames2, collection);
-
-    /// <summary>Adds a <see cref="string"/> to <see cref="Name.Generations"/>. (A generation
-    /// marker or qualifier, e.g., "Jr." or "III".) (4 - RFC 9554)</summary>
-    /// <param name="value">The <see cref="string"/> value to add or <c>null</c>.</param>
-    /// <remarks>
-    /// <note type="tip">
-    /// For backwards compatibility use <see cref="AddSuffix(string?)"/> to add a copy to 
-    /// <see cref="Models.PropertyParts.Name.Suffixes"/>.
-    /// </note>
-    /// </remarks>
-    /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
-    /// <seealso cref="Name.Generations"/>
-    /// <seealso cref="Name.Suffixes"/>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddGeneration(string? value) => Add(NameProp.Generations, value);
-
-    /// <summary>Adds the content of a <paramref name="collection"/> of <see cref="string"/>s to 
-    /// <see cref="Name.Surnames2"/>. (Generation markers or qualifiers, e.g., "Jr." or "III".) 
-    /// (4 - RFC 9554)</summary>
-    /// <param name="collection">The collection containing the <see cref="string"/>s to add.</param>
-    /// <remarks>
-    /// <note type="tip">
-    /// For backwards compatibility use <see cref="AddSuffix(IEnumerable{string?})"/> to add a copy to 
-    /// <see cref="Models.PropertyParts.Name.Suffixes"/>.
-    /// </note>
-    /// </remarks>
-    /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
-    /// <seealso cref="Name.Generations"/>
-    /// <seealso cref="Name.Suffixes"/>
-    /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public NameBuilder AddGeneration(IEnumerable<string?> collection) => AddRange(NameProp.Generations, collection);
 
     /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
     internal IEnumerable<KeyValuePair<NameProp, List<string>>> Data => _dic;
@@ -197,15 +258,12 @@ public sealed class NameBuilder
     /// Clears each content of the <see cref="NameBuilder"/> instance but keeps the 
     /// allocated memory for reuse.
     /// </summary>
-    /// <returns>The current <see cref="NameBuilder"/> instance to be able to chain calls.</returns>
-    public NameBuilder Clear()
+    private void Clear()
     {
         foreach (KeyValuePair<NameProp, List<string>> pair in _dic)
         {
             pair.Value.Clear();
         }
-
-        return this;
     }
 
     private NameBuilder Add(NameProp prop, string? value)
@@ -259,5 +317,4 @@ public sealed class NameBuilder
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => base.ToString()!;
-
 }

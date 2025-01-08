@@ -5,78 +5,171 @@
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
 ### 8.0.1
-- Remove symbols that are marked as `Obsolete` errors.
+- [ ] Remove symbols that are marked as `Obsolete` errors.
 
 ### 8.0.0
-- [ ] Fix the issue that with `UID` only Guid values are supported
-    - [ ] Implement a `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
-    - [ ] Let the 'IDProperty' have an instance of the `ContactID` class as value.
-    - [ ] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
+- [ ] Make .NET 9.0 version of the package
 
 &nbsp;
-- [ ] Remove NameProperty.ToDisplayName()
-- [ ] `NameProperty`: Allow only ctors that take a `NamePropertyBuilder` as argument.
+- [x] Let `Vcf.DoDeserialize` return `IReadOnlyList<VCard>`
 
 &nbsp;
-- [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method
-- [ ] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
+- [x] Fix the issue that with `UID` only Guid values are supported
+    - [x] Implement a `ContactID` class that holds either a `Guid`, an absolute `Uri` or a `string`. Apply different comparison rules depending on the content.
+    - [x] Let the 'IDProperty' have an instance of the `ContactID` class as value.
+    - [x] Remove `IEquatable<IDProperty>` from 'IDProperty'
+    - [x] Remove the overridden `Equals` and `GetHashCode` methods from 'IDProperty'
+    - [x] Remove the `==` and `!=` operator overloads from 'IDProperty'
+
+    - [x] Let `ContactID.Create()` use `Guid.CreateVersion7` in .NET 9.0
+    - [x] Update the `IDBuilder.Set` methods
+    - [x] Change the `Relation` class to hold a `ContactID` instance rather than a `Guid` value.
+    - [x] Update the `RelationBuilder` struct.
 
 &nbsp;
-- [ ] Change the properties of the `Name` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
-- [ ] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
-- [ ] Remove all ctors that don't take a `NameBuilder` or `VcfRow` as argument
-- [ ] Remove Name.ToDisplayName()
+- [x] Rename `DataPropertyValue` to `RawData`
+- [x] Rename `GenderInfo` to Gender
+
+&nbsp;
+- [x] Rename `Relation.Value` to `Object`
+- [x] Rename `RawData.Value` to `Object`
+- [x] Rename `DateAndOrTime.Value` to `Object`
+
+&nbsp;
+- [x] Remove NameProperty.ToDisplayName()
+- [x] `NameProperty`: Allow only ctors that take a `NamePropertyBuilder` as argument.
+
+&nbsp;
+- [x] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.NameBuilder.Add` method
+- [x] Rename `FolkerKinzel.VCards.BuilderParts.NameBuilder` to `NameViewsBuilder`
+
+&nbsp;
+- [x] Change the properties of the `Name` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
+- [x] Let `Name` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [x] Remove all ctors that don't take a `NameBuilder` or `VcfRow` as argument
+- [x] Remove Name.ToDisplayName()
 <!--- [ ] Rename `Name.Prefixes` to `Name.Titles`
 - [ ] Rename `NameBuilder.AddPrefix(string)` to `NameBuilder.AddTitle(string)`-->
-- [ ] Rename `Name.GivenNames` to `Name.Given`
-- [ ] Rename `NameBuilder.AddGivenName(string)` to `NameBuilder.AddGiven(string)`
+- [x] Rename `Name.GivenNames` to `Name.Given`
+- [x] Rename `NameBuilder.AddGivenName(string)` to `NameBuilder.AddGiven(string)`
 
-- [ ] Rename `Name.AdditionalNames` to `Name.Given2`
-- [ ] Rename `NameBuilder.AddAdditionalName(string)` to `NameBuilder.AddGiven2(string)`
-- [ ] Rename `Name.FamilyNames` to `Name.Surnames`
-- [ ] Rename `NameBuilder.AddFamilyName(string)` to `NameBuilder.AddSurname(string)`
+- [x] Rename `Name.AdditionalNames` to `Name.Given2`
+- [x] Rename `NameBuilder.AddAdditionalName(string)` to `NameBuilder.AddGiven2(string)`
+- [x] Rename `Name.FamilyNames` to `Name.Surnames`
+- [x] Rename `NameBuilder.AddFamilyName(string)` to `NameBuilder.AddSurname(string)`
 <!--- [ ] Rename `Name.Suffixes` to `Name.Credentials`
 - [ ] Rename `NameBuilder.AddSuffix(string)` to `NameBuilder.AddCredential(string)`-->
 
 &nbsp;
-- [ ] `AddressProperty`: Allow only ctors that take an `AddressBuilder` as argument
-- [ ] Remove `AddressProperty.AttachLabel()`
-- [ ] Remove `AddressProperty.ToLabel()`
-- [ ] Refactor `DefaultAddressFormatter` to contain `AddressLabelFormatter`
+- [x] Rename `Organization.OrganizationName` to `Name`
+- [x] Rename `Organization.OrganizationalUnits` to `Units`
+- [x] Change `Organization.OrgUnits` to return `IReadOnlyList<string>`
 
 &nbsp;
-- [ ] Remove deprecated overloads of the `FolkerKinzel.VCards.BuilderParts.AddressBuilder.Add` method
-- [ ] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
+- [x] `AddressProperty`: Allow only ctors that take an `Address` as argument
+- [x] Remove `AddressProperty.AttachLabel()`
+- [x] Remove `AddressProperty.ToLabel()`
+
+&nbsp;
+- [x] Rename `FolkerKinzel.VCards.BuilderParts.AddressBuilder` to `AddressesBuilder`
+- [x] Remove deprecated overloads of the `AddressesBuilder.Add` method
 
 
 &nbsp;
-- [ ] Change the properties of the `Address` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
-- [ ] Let `Address` internally store `string[]` rather than `ReadOnlyCollection<string>`
-- [ ] Remove Address.ToLabel()
-- [ ] Rename `Address.ExtendedAddress` to `Address.Extended`
-- [ ] Rename `AddressBuilder.AddExtendedAddress` to `AddressBuilder.AddExtended`
+- [x] Change the properties of the `Address` class to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
+- [x] Let `Address` internally store `string[]` rather than `ReadOnlyCollection<string>`
+- [x] Remove Address.ToLabel()
+
+- [x] Rename `Address.ExtendedAddress` to `Address.Extended`
+- [x] Rename `AddressBuilder.AddExtendedAddress` to `AddressBuilder.AddExtended`
+- [x] Rename `Address.PostOfficeBox` to `Address.POBox`
+- [x] Rename `AddressBuilder.AddPostOfficeBox` to `AddressBuilder.AddPOBox`
 
 &nbsp;
-- [ ] Change the `StringCollection.Value` property to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
+- [x] Change the `StringCollectionProperty.Value` property to return `IReadOnlyList<string>` rather than `ReadOnlyCollection<string>`
 and let it store as string[]
 
 &nbsp;
-- [ ] Refactor `ReadOnlyCollectionConverter` to return arrays
-- [ ] Remove `ReadOnlyStringCollection`
+- [x] Refactor `ReadOnlyCollectionConverter` to return arrays
+- [x] Remove `ReadOnlyStringCollection`
 
 &nbsp;
-- [ ] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
-- [ ] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
-- [ ] Rename the `Prop.TimeStamp` value to `Prop.Updated`
-- [ ] Rename the `setTimeStamp` parameter in the `VCard` ctor to `setUpdated`
-- [ ] Rename the `setTimeStamp` parameter in `VCardBuilder.Create(bool, bool)` to `setUpdated`
+- [x] Rename the `VCard.TimeStamp` property to `VCard.Updated` (to make its use clearer since `VCard.Created` exists).
+- [x] Rename the `VCardBuilder.TimeStamp` property to `VCardBuilder.Updated`
+- [x] Rename the `Prop.TimeStamp` value to `Prop.Updated`
+<!--- [ ] Rename the `Opts.UpdateTimeStamp` value in the `VCard` ctor to `Opts.UpdateUpdated`-->
 
 &nbsp;
-- [ ] Rename the `VCard.Languages` property to `SpokenLanguages`
-- [ ] Rename the `Prop.Languages` value to `Prop.SpokenLanguages`
+- [x] Rename `VCard.ID` to `VCard.ContactID`
+- [x] Rename `VCardBuilder.ID` to `VCardBuilder.ContactID`
+- [x] Rename the `Prop.ID` value to `Prop.ContactID`
+- [x] Rename the `setID` parameter in the VCard ctor to `setContactID`
+- [x] Rename the `setID` parameter in the `VCardBuilder.Create` method to `setContactID`
+- [x] Rename `IDBuilder` to `ContactIDBuilder`
+- [x] Rename `IDProperty` to `ContactIDProperty`
 
 &nbsp;
-- [ ] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
+- [x] Rename the `VCard.Languages` property to `SpokenLanguages`
+- [x] Rename the `Prop.Languages` value to `Prop.SpokenLanguages`
+- [x] Rename the `VCardBuilder.Languages` property to `VCardBuilder.SpokenLanguages`
+
+&nbsp;
+- [x] Move `ParameterSection.DefaultCalendar` to `VCard.DefaultCalendar`
+
+&nbsp;
+- [x] Change `VCard.Xmls` property to return and accept IEnumerable<TextProperty?>?
+- [x] Remove XmlProperty
+- [x] Remove XmlBuilder
+
+&nbsp;
+- [x] Change `ProfileProperty` to not been derived from `TextProperty`
+
+&nbsp;
+- [x] Make `TextProperty` sealed.
+
+&nbsp;
+- [x] Rename `NonStandardProperty.XName` to `Key`
+
+&nbsp;
+- [x] Rename `Opts` to `VcfOpts`
+- [x] Rename `OptsExtension` to `VcfOptsExtension`
+
+&nbsp;
+- [x] Make `VCardProperty.Value` non-nullable
+- [x] Make `VCardProperty.IsEmpty` abstract
+- [x] Remove the `MemberNotNullWhenAttribute` from `VCardProperty.IsEmpty`
+- [x] Ensure that each VCardProperty ctor has a `value` parameter.
+- [x] Ensure that the corresponding VCardBuilder parameter is also named `value`
+
+&nbsp;
+- [x] Implement `GeoCoordinate? GeoCoordinate.TryCreate(double, double)` that doesn't throw any exception
+- [x] Write remarks to `GeoCoordinate.IsEmpty`
+
+&nbsp;
+- [x] Rename in all BuilderParts `TData data` to `TArg arg`
+
+&nbsp;
+- [x] Check all `Empty` singletons whether they should be public
+
+&nbsp;
+- [x] Check all `Value?` operators
+- [x] Check all `Value!` operators
+
+&nbsp;
+- [x] Refactor ItemOrNullIntl( ... )
+
+### 7.4.5
+- [x] Fix an issue that a "geo" URI was not parsed if this "geo" URI was masked.
+- [ ] Update dependencies to contain .NET 9.0 packages.
+
+### 7.4.4
+- [x] .NET 9.0 version of the package
+- [x] Change the `IDProperty(string?) ctor` to create a v7 Guid in .NET 9.0
+- [x] Dependency update
+
+### 7.4.3
+- [x] Fix an issue that with `X-GENDER` and `X-WAB-GENDER` the parameters and the group name were not parsed.
+- [x] Dependency updates
 
 ### 7.4.5
 - [x] Fix an issue that a "geo" URI was not parsed if this "geo" URI was masked.

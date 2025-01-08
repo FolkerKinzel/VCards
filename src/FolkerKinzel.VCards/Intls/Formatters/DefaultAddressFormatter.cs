@@ -1,5 +1,6 @@
-﻿using FolkerKinzel.VCards.Formatters;
-using FolkerKinzel.VCards.Models;
+﻿using System.Globalization;
+using FolkerKinzel.VCards.Formatters;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Intls.Formatters;
 

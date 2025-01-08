@@ -1,9 +1,8 @@
-﻿
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -29,7 +28,7 @@ public class VCardTests
         vcard.SerializeVcf(ms, version, leaveStreamOpen: true);
         ms.Position = 0;
 
-        IList<VCard> list = Vcf.Deserialize(ms);
+        IReadOnlyList<VCard> list = Vcf.Deserialize(ms);
 
         Assert.AreEqual(1, list.Count);
         Assert.IsNotNull(list[0].DisplayNames);
@@ -77,7 +76,7 @@ public class VCardTests
 
         vc.ToVcfString();
 
-        string s = Vcf.Parse(Vcf.ToString(vc, VCdVersion.V2_1, options: Opts.Default.Set(Opts.WriteEmptyProperties)))[0].ToString();
+        string s = Vcf.Parse(Vcf.ToString(vc, VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties)))[0].ToString();
         StringAssert.Contains(s, group);
         StringAssert.Contains(s, "2.1");
         StringAssert.Contains(s, "<EMPTY>");
@@ -147,7 +146,7 @@ public class VCardTests
     public void DeserializeTest2()
     {
         var stream = new FailStream(new ArgumentOutOfRangeException());
-        IList<VCard> vCards = Vcf.Deserialize(stream);
+        IReadOnlyList<VCard> vCards = Vcf.Deserialize(stream);
         Assert.IsNotNull(vCards);
     }
 
@@ -155,14 +154,14 @@ public class VCardTests
     public void DeserializeTest3()
     {
         var stream = new FailStream(new OutOfMemoryException());
-        IList<VCard> vCards = Vcf.Deserialize(stream);
+        IReadOnlyList<VCard> vCards = Vcf.Deserialize(stream);
         Assert.IsNotNull(vCards);
     }
 
     [TestMethod]
     public void LoadCropped_2_1Test()
     {
-        IList<VCard> vCards = Vcf.Load(TestFiles.Cropped_2_1vcf);
+        IReadOnlyList<VCard> vCards = Vcf.Load(TestFiles.Cropped_2_1vcf);
         Assert.IsNotNull(vCards);
         Assert.AreEqual(1, vCards.Count);
     }
@@ -173,13 +172,13 @@ public class VCardTests
         var vc = new VCard();
         Assert.IsTrue(vc.IsEmpty());
 
-        var adr = new AddressProperty("  ", null, null, postalCode: "", autoLabel: false);
+        var adr = new AddressProperty(Address.Empty);
         adr.Parameters.Label = "  ";
 
         vc.Addresses = [null, adr];
         Assert.IsTrue(vc.IsEmpty());
 
-        vc.BirthDayViews = DateAndOrTimeProperty.FromText(null);
+        vc.BirthDayViews = new DateAndOrTimeProperty("");
         Assert.IsTrue(vc.IsEmpty());
 
         var text = new TextProperty("  ");
@@ -202,7 +201,7 @@ public class VCardTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void DereferenceTest1() => _ = FolkerKinzel.VCards.VCard.Dereference(null!).Count;
+    public void DereferenceTest1() => FolkerKinzel.VCards.VCard.Dereference(null!);
 
     [TestMethod]
     public void DereferenceTest2()
@@ -252,15 +251,17 @@ public class VCardTests
     public void GroupsTest1()
     {
         var vc = new VCard();
+        Address adr1 = AddressBuilder.Create().AddStreet("1").Build();
+        Address adr2 = AddressBuilder.Create().AddStreet("2").Build();
 
         IEnumerable<string> groups = vc.GroupIDs;
         Assert.IsFalse(groups.Any());
 
         vc.DisplayNames = new TextProperty("Donald", " 4 1 ");
-        vc.TimeStamp = new TimeStampProperty();
+        vc.Updated = new TimeStampProperty();
         vc.Addresses = [ null,
-                         new("1", null, null, null, group: " g r 1 "),
-                         new("2", null, null, null, group: "41")
+                         new(adr1, group: " g r 1 "),
+                         new(adr2, group: "41")
                        ];
         vc.GeoCoordinates = [
                               new(new GeoCoordinate(1, 1), group: "GR1"),
@@ -274,7 +275,7 @@ public class VCardTests
     [TestMethod]
     public void GroupsTest2()
     {
-        var vc = new VCard(setID: false, setCreated: false)
+        var vc = new VCard(setContactID: false, setCreated: false)
         {
             DisplayNames = [new TextProperty("1"),
                                 new TextProperty("2"),
@@ -410,10 +411,10 @@ public class VCardTests
         VCard.RegisterApp(new Uri("http://123.com"));
         vc1.Sync.SetPropertyIDs();
 
-        vc1.Xmls = vc1.Xmls.ConcatWith((XmlProperty)vc1.Xmls!.First()!.Clone());
+        vc1.Xmls = vc1.Xmls.ConcatWith((TextProperty)vc1.Xmls!.First()!.Clone());
         Assert.AreEqual(2, vc1.Xmls?.Count());
 
-        vc1.BirthDayViews =vc1.BirthDayViews.ConcatWith((DateAndOrTimeProperty)vc1.BirthDayViews!.First()!.Clone());
+        vc1.BirthDayViews = vc1.BirthDayViews.ConcatWith((DateAndOrTimeProperty)vc1.BirthDayViews!.First()!.Clone());
         Assert.AreEqual(2, vc1.BirthDayViews?.Count());
 
         vc1.Addresses = vc1.Addresses.ConcatWith((AddressProperty)vc1.Addresses!.First()!.Clone());
@@ -430,7 +431,7 @@ public class VCardTests
 
         vc1.NonStandards = vc1.NonStandards!.First();
         Assert.AreEqual(1, vc1.NonStandards?.Count());
-        
+
         Assert.AreEqual(2, vc1.AppIDs?.Count());
 
         vc1.TimeZones = vc1.TimeZones.ConcatWith((TimeZoneProperty)vc1.TimeZones!.First()!.Clone());

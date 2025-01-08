@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel;
-using System.Xml.Linq;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
@@ -33,13 +31,13 @@ public readonly struct NonStandardBuilder
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.NonStandards"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// <see cref="VCard.NonStandards"/> property and <paramref name="data"/> as arguments. Its return 
+    /// <see cref="VCard.NonStandards"/> property and <paramref name="arg"/> as arguments. Its return 
     /// value will be the new content of the <see cref="VCard.NonStandards"/> property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this 
     /// <see cref="NonStandardBuilder"/> to be able to chain calls.</returns>
     /// <remarks>
@@ -48,13 +46,13 @@ public readonly struct NonStandardBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(
-        Func<IEnumerable<NonStandardProperty>, TData, IEnumerable<NonStandardProperty?>?> func,
-        TData data)
+    public VCardBuilder Edit<TArg>(
+        Func<IEnumerable<NonStandardProperty>, TArg, IEnumerable<NonStandardProperty?>?> func,
+        TArg arg)
     {
-        var props = GetProperty();
+        IEnumerable<NonStandardProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.NonStandards = func.Invoke(props, data);
+        _builder.VCard.NonStandards = func(props, arg);
         return _builder;
     }
 
@@ -74,21 +72,21 @@ public readonly struct NonStandardBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<NonStandardProperty>, IEnumerable<NonStandardProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<NonStandardProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.NonStandards = func.Invoke(props);
+        _builder.VCard.NonStandards = func(props);
         return _builder;
     }
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<NonStandardProperty> GetProperty() =>
-        Builder.VCard.NonStandards?.WhereNotNull() ?? [];
+        Builder.VCard.NonStandards?.OfType<NonStandardProperty>() ?? [];
 
     /// <summary>
     /// Adds a <see cref="NonStandardProperty"/> instance, which is newly initialized using the 
     /// specified arguments, to the <see cref="VCard.NonStandards"/> property.
     /// </summary>
-    /// <param name="xName">The key ("name") of the non-standard vCard property (format: <c>X-NAME</c>).</param>
+    /// <param name="key">The key ("name") of the non-standard vCard property (format: <c>X-NAME</c>).</param>
     /// <param name="value">The value of the vCard property: any data encoded as <see
     /// cref="string" /> or <c>null</c>.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
@@ -100,17 +98,34 @@ public readonly struct NonStandardBuilder
     /// 
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NonStandardBuilder"/>
     /// to be able to chain calls.</returns>
-    /// <exception cref="ArgumentNullException"> <paramref name="xName" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="xName" /> is not a valid X-NAME.</exception>
+    /// 
+    /// <remarks>
+    /// If the arguments are not valid, an empty <see cref="NonStandardProperty"/> with the key "Empty" will be 
+    /// added. In any case such a <see cref="NonStandardProperty"/> won't be written to a VCF file.
+    /// </remarks>
+    /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Add(string xName,
+    public VCardBuilder Add(string key,
                             string? value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
     {
-        Builder.VCard.Set(Prop.NonStandards,
-                          VCardBuilder.Add(new NonStandardProperty(xName, value, group?.Invoke(_builder.VCard)),
+        VCard vCard = Builder.VCard;
+        NonStandardProperty prop;
+
+        try
+        {
+            prop = new NonStandardProperty(key, value, group?.Invoke(vCard));
+        }
+        catch
+        {
+            prop = new NonStandardProperty(group?.Invoke(vCard));
+        }
+
+
+        vCard.Set(Prop.NonStandards,
+                          VCardBuilder.Add(prop,
                                            _builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards),
                                            parameters)
                           );
@@ -162,6 +177,5 @@ public readonly struct NonStandardBuilder
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => base.ToString()!;
-
 }
 

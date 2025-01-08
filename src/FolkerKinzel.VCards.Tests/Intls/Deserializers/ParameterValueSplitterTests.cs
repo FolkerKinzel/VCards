@@ -13,7 +13,7 @@ public class ParameterValueSplitterTests
     public void SplitTest2()
     {
         string[] result = ParameterValueSplitter.Split("\"a,b,c\",def,,\"\",\"g,h,i\"".AsMemory()).ToArray();
-        Assert.AreEqual(3, result.Length);
+        Assert.AreEqual(5, result.Length);
     }
 
     [TestMethod]

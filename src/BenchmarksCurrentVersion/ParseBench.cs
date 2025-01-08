@@ -28,27 +28,27 @@ public class ParseBench
 
         _vCardString21 = _vCard.ToVcfString(VCdVersion.V2_1);
         _vCardString30 = _vCard.ToVcfString();
-        _vCardString40 = _vCard.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Set(Opts.SetPropertyIDs));
+        _vCardString40 = _vCard.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
         _vCardStringPhoto21 = _vCardPhoto.ToVcfString(VCdVersion.V2_1);
         _vCardStringPhoto30 = _vCardPhoto.ToVcfString();
-        _vCardStringPhoto40 = _vCardPhoto.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Set(Opts.SetPropertyIDs));
+        _vCardStringPhoto40 = _vCardPhoto.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
     }
 
     [Benchmark]
-    public IList<VCard> Parse21() => Vcf.Parse(_vCardString21);
+    public object Parse21() => Vcf.Parse(_vCardString21);
 
     [Benchmark]
-    public IList<VCard> Parse21Photo() => Vcf.Parse(_vCardStringPhoto21);
+    public object Parse21Photo() => Vcf.Parse(_vCardStringPhoto21);
 
     [Benchmark]
-    public IList<VCard> Parse30() => Vcf.Parse(_vCardString30);
+    public object Parse30() => Vcf.Parse(_vCardString30);
 
     [Benchmark]
-    public IList<VCard> Parse30Photo() => Vcf.Parse(_vCardStringPhoto30);
+    public object Parse30Photo() => Vcf.Parse(_vCardStringPhoto30);
 
     [Benchmark]
-    public IList<VCard> Parse40() => Vcf.Parse(_vCardString40);
+    public object Parse40() => Vcf.Parse(_vCardString40);
 
     [Benchmark]
-    public IList<VCard> Parse40Photo() => Vcf.Parse(_vCardStringPhoto40);
+    public object Parse40Photo() => Vcf.Parse(_vCardStringPhoto40);
 }

@@ -140,5 +140,14 @@ namespace FolkerKinzel.VCards.Resources {
                 return ResourceManager.GetString("StreamNotWritable", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is empty or consists only of white space..
+        /// </summary>
+        internal static string Whitespace {
+            get {
+                return ResourceManager.GetString("Whitespace", resourceCulture);
+            }
+        }
     }
 }

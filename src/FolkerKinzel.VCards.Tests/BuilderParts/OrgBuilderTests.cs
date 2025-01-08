@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -97,13 +98,12 @@ public class OrgBuilderTests
         VCard vc = VCardBuilder.Create().Organizations.Add(new Organization("Contoso")).VCard;
 
         Assert.IsNotNull(vc.Organizations);
-        var org = vc.Organizations.FirstOrDefault();
+        OrgProperty? org = vc.Organizations.FirstOrDefault();
         Assert.IsNotNull(org);
         Assert.IsFalse(org.IsEmpty);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void AddTest3()
     => VCardBuilder.Create().Organizations.Add((Organization?)null!);
 
@@ -114,9 +114,9 @@ public class OrgBuilderTests
             .Create()
             .Organizations.Add(new Organization("Contoso"),
                                group: vc => vc.NewGroup(),
-                               displayName: (dn, org) => dn.Add(org.Value.OrganizationName))
+                               displayName: (dn, org) => dn.Add(org.Value.Name))
             .Organizations.Add("The Bad Ones",
-                                displayName: (dn, org) => dn.Add(org.Value.OrganizationName))
+                                displayName: (dn, org) => dn.Add(org.Value.Name))
             .VCard;
 
         Assert.IsNotNull(vc.DisplayNames);

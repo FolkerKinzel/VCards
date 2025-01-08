@@ -1,7 +1,7 @@
 ﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
-using Mod = FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace Examples;
 
@@ -13,14 +13,14 @@ internal static class WhatsAppDemo1
 
         // The IMPP-Extension (Instant Messaging [IM] and Presence Protocol [PP] applications)
         // is available in vCard 3.0 through RFC 4770:
-        var whatsAppImpp = new Mod::TextProperty(mobilePhoneNumber);
+        var whatsAppImpp = new TextProperty(mobilePhoneNumber);
         whatsAppImpp.Parameters.InstantMessengerType =
             Impp.Personal | Impp.Business | Impp.Mobile;
 
         // The vCard 4.0 standard RFC 6350 recommends to add an additional TEL entry
         // if the instant messenging device supports voice and/or video.
         // I think that's a good practice also in vCard 3.0.
-        var xiamoiMobilePhone = new Mod::TextProperty(mobilePhoneNumber.Substring(4));
+        var xiamoiMobilePhone = new TextProperty(mobilePhoneNumber.Substring(4));
         xiamoiMobilePhone.Parameters.PropertyClass = PCl.Home | PCl.Work;
         xiamoiMobilePhone.Parameters.PhoneType =
             Tel.Voice | Tel.BBS | Tel.Cell | Tel.Msg | Tel.Text | Tel.Video;
@@ -28,9 +28,12 @@ internal static class WhatsAppDemo1
         // Initialize the VCard:
         var vcard = new VCard
         {
-            NameViews = new Mod::NameProperty(familyName: null, givenName: "zzMad Perla 45"),
+            NameViews = new NameProperty(NameBuilder.Create()
+                                                          .AddSurname("")
+                                                          .AddGiven("zzMad Perla 45")
+                                                          .Build()),
 
-            DisplayNames = new Mod::TextProperty("zzMad Perla 45"),
+            DisplayNames = new TextProperty("zzMad Perla 45"),
 
             // Add the WhatsApp-Handle:
             Messengers = whatsAppImpp,

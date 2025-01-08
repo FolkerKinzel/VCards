@@ -51,14 +51,15 @@
     <ProjectSummary>.NET library for reading, writing, and converting VCF files that comply with vCard standards 2.1, 3.0 and 4.0 </ProjectSummary>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="FolkerKinzel.VCards" isDocumented="True">Classes to read, write and convert VCF files.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FolkerKinzel.VCards.Models (Group)" isGroup="True" isDocumented="True">Namespaces containing classes that represent the data model of a vCard. In most cases you will not use these namespaces directly.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FolkerKinzel.VCards.Models" isDocumented="True">Classes that represent the data model of a vCard. In most cases you will not use this namespace directly.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FolkerKinzel.VCards.Models.PropertyParts" isDocumented="True">Classes of the vCard data model that your application can't instantiate. You don't need to publish this namespace.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models (Group)" isGroup="True" isDocumented="True">Namespaces containing classes that represent the data model of a vCard.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models" isDocumented="True">Contains the model classes used in a VCard instance.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Extensions" isDocumented="True">Contains extension methods.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.BuilderParts" isDocumented="True">Contains structs instantiated by VCardBuilder. You don't need to publish this namespace.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="FolkerKinzel.VCards.Enums" isDocumented="True">Contains enums.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FolkerKinzel.VCards.Syncs" isDocumented="True">Contains classes that support the vCard 4.0 data synchronization. You don't need to publish this namespace.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="FolkerKinzel.VCards.Formatters" isDocumented="True">Contains types used to format names and postal addresses into localized strings.</NamespaceSummaryItem></NamespaceSummaries>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Formatters" isDocumented="True">Contains types used to format names and postal addresses into localized strings.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models.Properties.Parameters" isDocumented="True">Contains classes that encapsulate the information of vCard property parameters.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models.Properties (Group)" isGroup="True" isDocumented="True">Namespaces containing classes used to represent vCard properties.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="FolkerKinzel.VCards.Models.Properties" isDocumented="True">Contains the abstract VCardProperty class and derived classes.</NamespaceSummaryItem></NamespaceSummaries>
     <VisibleItems>ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, ProtectedInternalAsProtected, NonBrowsable</VisibleItems>
     <RootNamespaceTitle>FolkerKinzel.VCards Namespaces</RootNamespaceTitle>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
@@ -87,18 +88,9 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Content" />
-    <Folder Include="Content\VersionHistory" />
     <Folder Include="Help\" />
     <Folder Include="icons" />
     <Folder Include="media" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Content\Namespaces.cs" />
-    <None Include="Content\VCardProperty.cs" />
-    <None Include="Content\VersionHistory\v1.0.0.0.aml" />
-    <None Include="Content\VersionHistory\VersionHistory.aml" />
-    <None Include="Content\Welcome.aml" />
   </ItemGroup>
   <ItemGroup>
     <ContentLayout Include="ContentLayout.content" />

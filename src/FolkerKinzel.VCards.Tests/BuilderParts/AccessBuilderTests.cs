@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -22,7 +23,7 @@ public class AccessBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Access.Edit((p, d) => new Models.AccessProperty(Access.Confidential), true)
+            .Access.Edit((p, d) => new AccessProperty(Access.Confidential), true)
             .VCard;
 
         Assert.IsNotNull(vc.Access);

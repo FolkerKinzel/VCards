@@ -10,60 +10,12 @@ public class GramBuilderTests
     public void SetPreferencesTest1() => new GramBuilder().SetPreferences();
 
     [TestMethod]
-    public void SetPreferencesTest2()
-    {
-        VCardBuilder builder = VCardBuilder
-            .Create()
-            .GramGenders.Add(null)
-            .GramGenders.Add(Gram.Feminine)
-            .GramGenders.SetPreferences();
-
-        VCard vc = builder.VCard;
-
-        Assert.IsNotNull(vc.GramGenders);
-        Assert.AreEqual(2, vc.GramGenders.Count());
-        Assert.AreEqual(100, vc.GramGenders.First()!.Parameters.Preference);
-        Assert.AreEqual(1, vc.GramGenders.ElementAt(1)!.Parameters.Preference);
-
-        builder.GramGenders.SetPreferences(skipEmptyItems: false);
-        Assert.AreEqual(1, vc.GramGenders.First()!.Parameters.Preference);
-        Assert.AreEqual(2, vc.GramGenders.ElementAt(1)!.Parameters.Preference);
-
-        builder.GramGenders.UnsetPreferences();
-        Assert.IsTrue(vc.GramGenders.All(x => x!.Parameters.Preference == 100));
-    }
-
-    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void UnsetPreferencesTest1() => new GramBuilder().UnsetPreferences();
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetIndexesTest1() => new GramBuilder().SetIndexes();
-
-    [TestMethod]
-    public void SetIndexesTest2()
-    {
-        VCardBuilder builder = VCardBuilder
-            .Create()
-            .GramGenders.Add(null)
-            .GramGenders.Add(Gram.Neuter)
-            .GramGenders.SetIndexes();
-
-        VCard vc = builder.VCard;
-
-        Assert.IsNotNull(vc.GramGenders);
-        Assert.AreEqual(2, vc.GramGenders.Count());
-        Assert.AreEqual(null, vc.GramGenders.First()!.Parameters.Index);
-        Assert.AreEqual(1, vc.GramGenders.ElementAt(1)!.Parameters.Index);
-
-        builder.GramGenders.SetIndexes(skipEmptyItems: false);
-        Assert.AreEqual(1, vc.GramGenders.First()!.Parameters.Index);
-        Assert.AreEqual(2, vc.GramGenders.ElementAt(1)!.Parameters.Index);
-
-        builder.GramGenders.UnsetIndexes();
-        Assert.IsTrue(vc.GramGenders.All(x => x!.Parameters.Index == null));
-    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
@@ -87,7 +39,7 @@ public class GramBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new GramBuilder().Add(null);
+    public void AddTest1() => new GramBuilder().Add(Gram.Feminine);
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

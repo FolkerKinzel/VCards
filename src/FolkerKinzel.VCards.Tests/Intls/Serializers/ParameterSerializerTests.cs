@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Tests.Intls.Serializers;
 
@@ -21,7 +22,7 @@ public class ParameterSerializerTests
         prop.Parameters.NonStandard = dic;
         var vc = new VCard { NonStandards = prop };
 
-        string s = vc.ToVcfString(options: Opts.All);
+        string s = vc.ToVcfString(options: VcfOpts.All);
 
         vc = Vcf.Parse(s)[0];
         prop = vc.NonStandards!.First();

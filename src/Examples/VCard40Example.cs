@@ -76,7 +76,7 @@ public static class VCard40Example
         {
             string fileName = Path.Combine(
                 directoryPath,
-                $"{vCard.DisplayNames!.First()!.Value}{vcfExtension}");
+                $"{vCard.DisplayNames?.First()?.Value ?? "unknown"}{vcfExtension}");
 
             vCard.SaveVcf(fileName, VCdVersion.V4_0);
         }
@@ -87,10 +87,10 @@ public static class VCard40Example
 
         // Make the reloaded VCard objects searchable. (The Dereference method doesn't
         // change anything in vCards. Don't forget to assign the return value!):
-        IEnumerable<VCard> dereferenced = vCards.Dereference();
+        vCards.Dereference();
 
         // Find the parsed result from "Composers.vcf":
-        composersVCard = dereferenced
+        composersVCard = vCards
             .FirstOrDefault
              (
               x => x.DisplayNames.Items().Any(x => x.Value == "Composers")
@@ -124,13 +124,13 @@ public static class VCard40Example
         DateOnly date = default;
         bool found = composersVCard.Members
                 .OrderByPref()
-                .Select(x => x.Value?.VCard)
+                .Select(x => x.Value.VCard)
                 .OfType<VCard>()
                 .FirstOrDefault(x => x.DisplayNames
                                       .Items()
                                       .Any(x => x.Value == "Ludwig van Beethoven"))?
                     .BirthDayViews
-                    .FirstOrNull(x => x.Value?.TryAsDateOnly(out date) ?? false)
+                    .FirstOrNull(x => x.Value.TryAsDateOnly(out date))
                      is not null;
 
         birthDay = date;

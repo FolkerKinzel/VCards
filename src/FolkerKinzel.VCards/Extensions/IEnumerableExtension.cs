@@ -1,7 +1,9 @@
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Extensions;
 
@@ -14,16 +16,16 @@ public static class IEnumerableExtension
     /// <see cref = "VCard" /> objects passed as a collection as well as those which
     /// had been embedded in their <see cref="VCard.Relations"/> property. The previously 
     /// embedded <see cref="VCard"/> objects are now referenced by <see cref = "RelationProperty" /> 
-    /// objects that are initialized with the value of the <see cref="VCard.ID"/>
+    /// objects that are initialized with the value of the <see cref="VCard.ContactID"/>
     /// property of these previously embedded <see cref="VCard"/>s.
     /// </summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
     /// <returns> A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/> 
     /// objects previously embedded in the <see cref="VCard.Relations"/> property are appended 
-    /// separately and referenced through their <see cref="VCard.ID"/> property. 
+    /// separately and referenced through their <see cref="VCard.ContactID"/> property. 
     /// (If the appended <see cref="VCard" /> objects did not already have a 
-    /// <see cref="VCard.ID" /> property, the method automatically assigns them 
+    /// <see cref="VCard.ContactID" /> property, the method automatically assigns them 
     /// a new one.)
     /// </returns>
     /// 
@@ -67,23 +69,14 @@ public static class IEnumerableExtension
         => VCard.Reference(vCards);
 
     /// <summary>
-    /// Returns a collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
-    /// referenced by their <see cref="VCard.ID"/> property are embedded in 
-    /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/> 
-    /// contains these <see cref="VCard"/> objects.</summary>
+    /// Replaces the <see cref="RelationProperty"/> instances that refer external vCards with their <see cref="ContactID"/>
+    /// values by <see cref="RelationProperty"/> instances that contain these <see cref="VCard"/> instances directly, 
+    /// provided that <paramref name="vCards"/> 
+    /// contains these <see cref="VCard"/> instances.</summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
     /// 
-    /// <returns> A collection of <see cref="VCard" /> objects in which the <see cref="VCard"/>s 
-    /// referenced by their <see cref="VCard.ID"/> property are embedded in 
-    /// <see cref ="RelationProperty"/> objects, provided that <paramref name="vCards"/>
-    /// contains these <see cref="VCard"/> objects.</returns>
     /// <remarks>
-    /// <note type="caution">
-    /// Although the method itself is thread-safe, the <see cref="VCard" /> objects
-    /// passed to the method are not. Block read and write access to these <see cref="VCard"
-    /// /> objects, while this method is being executed!
-    /// </note>
     /// <para>
     /// The method is automatically called by the deserialization methods of the <see
     /// cref="VCard" /> class. Using it in your own code can be useful, e.g., if <see
@@ -108,7 +101,7 @@ public static class IEnumerableExtension
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IList<VCard> Dereference(this IEnumerable<VCard?> vCards)
+    public static void Dereference(this IEnumerable<VCard?> vCards)
         => VCard.Dereference(vCards);
 
     /// <summary>Saves a collection of <see cref="VCard" /> objects in a common VCF
@@ -135,7 +128,7 @@ public static class IEnumerableExtension
     /// </para>
     /// </remarks>
     /// 
-    /// <seealso cref="Vcf.Save(IEnumerable{VCard?}, string, VCdVersion, ITimeZoneIDConverter?, Opts)"/>
+    /// <seealso cref="Vcf.Save(IEnumerable{VCard?}, string, VCdVersion, ITimeZoneIDConverter?, VcfOpts)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> or <paramref
@@ -143,7 +136,7 @@ public static class IEnumerableExtension
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// <paramref name="version" /> is not a defined value of the <see cref="Opts"/> 
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
     /// enum.
     /// </exception>
     /// <exception cref="IOException">The file could not be written.</exception>
@@ -152,7 +145,7 @@ public static class IEnumerableExtension
                                string fileName,
                                VCdVersion version = VCard.DEFAULT_VERSION,
                                ITimeZoneIDConverter? tzConverter = null,
-                               Opts options = Opts.Default)
+                               VcfOpts options = VcfOpts.Default)
         => Vcf.Save(vCards, fileName, version, tzConverter, options);
 
     /// <summary>Serializes a collection of <see cref="VCard" /> objects into a <see
@@ -181,7 +174,7 @@ public static class IEnumerableExtension
     /// </para>
     /// </remarks>
     /// 
-    /// <seealso cref="Vcf.Serialize(IEnumerable{VCard?}, Stream, VCdVersion, ITimeZoneIDConverter?, Opts, bool)"/>
+    /// <seealso cref="Vcf.Serialize(IEnumerable{VCard?}, Stream, VCdVersion, ITimeZoneIDConverter?, VcfOpts, bool)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="stream" /> or <paramref
@@ -189,7 +182,7 @@ public static class IEnumerableExtension
     /// <exception cref="ArgumentException"> <paramref name="stream" /> does not support
     /// write operations.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// <paramref name="version" /> is not a defined value of the <see cref="Opts"/> 
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
     /// enum.
     /// </exception>
     /// <exception cref="IOException">I/O error.</exception>
@@ -200,7 +193,7 @@ public static class IEnumerableExtension
                                     Stream stream,
                                     VCdVersion version = VCard.DEFAULT_VERSION,
                                     ITimeZoneIDConverter? tzConverter = null,
-                                    Opts options = Opts.Default,
+                                    VcfOpts options = VcfOpts.Default,
                                     bool leaveStreamOpen = false)
         => Vcf.Serialize(vCards, stream, version, tzConverter, options, leaveStreamOpen);
 
@@ -233,12 +226,12 @@ public static class IEnumerableExtension
     /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
     /// </example>
     /// 
-    /// <seealso cref="Vcf.ToString(IEnumerable{VCard?}, VCdVersion, ITimeZoneIDConverter?, Opts)"/>
+    /// <seealso cref="Vcf.ToString(IEnumerable{VCard?}, VCdVersion, ITimeZoneIDConverter?, VcfOpts)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// <paramref name="version" /> is not a defined value of the <see cref="Opts"/> 
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
     /// enum.
     /// </exception>
     /// <exception cref="OutOfMemoryException">The system is out of memory.</exception>
@@ -246,7 +239,7 @@ public static class IEnumerableExtension
     public static string ToVcfString(this IEnumerable<VCard?> vCards,
                                      VCdVersion version = VCard.DEFAULT_VERSION,
                                      ITimeZoneIDConverter? tzConverter = null,
-                                     Opts options = Opts.Default)
+                                     VcfOpts options = VcfOpts.Default)
         => Vcf.ToString(vCards, version, tzConverter, options);
 
     /// <summary>
@@ -474,7 +467,7 @@ public static class IEnumerableExtension
         where TSource : VCardProperty
         => values is null ? []
                           : discardEmptyItems ? values.WhereNotEmpty()
-                                              : values.WhereNotNull();
+                                              : values.OfType<TSource>();
 
     /// <summary>
     /// Sorts the elements in <paramref name="values"/> ascending by the value of their 
@@ -540,7 +533,7 @@ public static class IEnumerableExtension
     /// </example>
     public static IEnumerable<IGrouping<string?, TSource>> GroupByAltID<TSource>(
         this IEnumerable<TSource?>? values) where TSource : VCardProperty, IEnumerable<TSource>
-        => values?.WhereNotNull()
+        => values?.OfType<TSource>()
                   .GroupBy(static x => x.Parameters.AltID, StringComparer.Ordinal)
            ?? [];
 
@@ -556,7 +549,7 @@ public static class IEnumerableExtension
     public static string NewAltID(this IEnumerable<VCardProperty?>? values)
     {
         IEnumerable<string> numerable = values?.Select(x => x?.Parameters.AltID)
-                                               .WhereNotNull()
+                                               .OfType<string>()
                                                .Distinct()
                                          ?? [];
         int i = -1;
@@ -592,12 +585,23 @@ public static class IEnumerableExtension
     /// <remarks>
     /// The comparison of group identifiers is case-insensitive.
     /// </remarks>
-    public static TSource? FirstOrNullIsMemberOf<TSource>(
+    public static TSource? FirstOrNullHasGroup<TSource>(
         this IEnumerable<TSource?>? values,
         string? group,
         bool ignoreEmptyItems = true) where TSource : VCardProperty
         => values?.FirstOrNullIntl(x => StringComparer.OrdinalIgnoreCase.Equals(group, x.Group),
                                         ignoreEmptyItems);
+
+    [Obsolete("Use FirstOrNullHasGroup instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public static TSource? FirstOrNullIsMemberOf<TSource>(
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        this IEnumerable<TSource?>? values,
+        string? group,
+        bool ignoreEmptyItems = true) where TSource : VCardProperty
+        => throw new NotImplementedException();
 
     /// <summary>
     /// Indicates whether <paramref name="values"/> contains an item that has the
@@ -623,7 +627,7 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? values,
         string? group,
         bool ignoreEmptyItems = true) where TSource : VCardProperty
-        => values.FirstOrNullIsMemberOf(group, ignoreEmptyItems) is not null;
+        => values.FirstOrNullHasGroup(group, ignoreEmptyItems) is not null;
 
     /// <summary>
     /// Concatenates two sequences of <see cref="VCardProperty"/> objects. 
@@ -648,7 +652,7 @@ public static class IEnumerableExtension
         this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
     {
         second ??= [];
-        return first is null ? second.WhereNotNull() : first.Concat(second).WhereNotNull();
+        return first is null ? second.OfType<TSource>() : first.Concat(second).OfType<TSource>();
     }
 
     /// <summary>
@@ -701,7 +705,7 @@ public static class IEnumerableExtension
         return DoRemove(values, predicate ?? throw new ArgumentNullException(nameof(predicate)));
 
         static IEnumerable<T> DoRemove<T>(IEnumerable<T?>? values,
-                                                      Func<T, bool> predicate) where T : VCardProperty
+                                          Func<T, bool> predicate) where T : VCardProperty
         {
             if (values is null)
             {

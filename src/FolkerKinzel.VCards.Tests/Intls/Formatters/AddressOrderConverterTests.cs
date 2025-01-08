@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
 
@@ -19,11 +20,10 @@ public class AddressOrderConverterTests
     [DataRow("Venezuela", AddressOrder.Venezuela)]
     public void ParseAddressTest1(string? input, object? expected)
     {
-        var addr = new AddressProperty(null, null, null, postalCode: null, country: input, autoLabel: false);
+        var addr = new AddressProperty(AddressBuilder.Create().AddCountry(input).Build());
         AddressOrder? order = AddressOrderConverter.ParseAddress(addr.Value);
         Assert.AreEqual((AddressOrder?)expected, order);
     }
-
 
     [DataTestMethod]
     [DataRow("en-US", AddressOrder.Usa)]
@@ -71,7 +71,7 @@ public class AddressOrderConverterTests
     {
         foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
         {
-            Assert.IsInstanceOfType(AddressOrderConverter.ParseCultureInfo(culture), typeof(AddressOrder));
+            Assert.IsInstanceOfType<AddressOrder>(AddressOrderConverter.ParseCultureInfo(culture));
         }
     }
 
@@ -149,7 +149,7 @@ public class AddressOrderConverterTests
     {
         var expected = (AddressOrder)adrOrderValue;
 
-        var prop = new AddressProperty(AddressBuilder.Create());
+        var prop = new AddressProperty(AddressBuilder.Create().Build());
         prop.Parameters.CountryCode = countryCode;
 
         Assert.AreEqual(expected, AddressOrderConverter.ParseAddressProperty(prop));

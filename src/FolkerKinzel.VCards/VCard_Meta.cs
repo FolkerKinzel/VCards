@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards;
 
@@ -37,8 +37,8 @@ public sealed partial class VCard
             return prop switch
             {
                 Prop.Created 
-                    or Prop.ID
-                    or Prop.TimeStamp
+                    or Prop.ContactID
+                    or Prop.Updated
                     or Prop.AppIDs
                     or Prop.Kind
                     or Prop.Language

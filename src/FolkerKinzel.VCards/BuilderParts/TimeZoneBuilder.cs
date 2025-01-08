@@ -2,9 +2,9 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.BuilderParts;
@@ -104,13 +104,13 @@ public readonly struct TimeZoneBuilder
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.TimeZones"/> property with a delegate and 
-    /// allows to pass <paramref name="data"/> to this delegate.
+    /// allows to pass an argument to this delegate.
     /// </summary>
-    /// <typeparam name="TData">The type of <paramref name="data"/>.</typeparam>
+    /// <typeparam name="TArg">The type of the argument.</typeparam>
     /// <param name="func">A function called with the content of the 
-    /// <see cref="VCard.TimeZones"/> property and <paramref name="data"/> as arguments. Its return value 
+    /// <see cref="VCard.TimeZones"/> property and <paramref name="arg"/> as arguments. Its return value 
     /// will be the new content of the <see cref="VCard.TimeZones"/> property.</param>
-    /// <param name="data">The data to pass to <paramref name="func"/>.</param>
+    /// <param name="arg">The argument to pass to <paramref name="func"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="TimeZoneBuilder"/>
     /// to be able to chain calls.</returns>
     /// <remarks>
@@ -119,12 +119,13 @@ public readonly struct TimeZoneBuilder
     /// <exception cref="ArgumentNullException"><paramref name="func"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder Edit<TData>(
-        Func<IEnumerable<TimeZoneProperty>, TData, IEnumerable<TimeZoneProperty?>?> func, TData data)
+    public VCardBuilder Edit<TArg>(
+        Func<IEnumerable<TimeZoneProperty>, TArg, IEnumerable<TimeZoneProperty?>?> func,
+        TArg arg)
     {
-        var props = GetProperty();
+        IEnumerable<TimeZoneProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.TimeZones = func.Invoke(props, data);
+        _builder.VCard.TimeZones = func(props, arg);
         return _builder;
     }
 
@@ -143,15 +144,15 @@ public readonly struct TimeZoneBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<TimeZoneProperty>, IEnumerable<TimeZoneProperty?>?> func)
     {
-        var props = GetProperty();
+        IEnumerable<TimeZoneProperty> props = GetProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
-        _builder.VCard.TimeZones = func.Invoke(props);
+        _builder.VCard.TimeZones = func(props);
         return _builder;
     }
 
     [MemberNotNull(nameof(_builder))]
     private IEnumerable<TimeZoneProperty> GetProperty() =>
-        Builder.VCard.TimeZones?.WhereNotNull() ?? [];
+        Builder.VCard.TimeZones?.OfType<TimeZoneProperty>() ?? [];
 
     /// <summary>
     /// Adds a <see cref="TimeZoneProperty"/> instance, which is newly 
@@ -175,7 +176,7 @@ public readonly struct TimeZoneBuilder
                             Func<VCard, string?>? group = null)
     {
         Builder.VCard.Set(Prop.TimeZones,
-                          VCardBuilder.Add(new TimeZoneProperty(value, group?.Invoke(_builder.VCard)),
+                          VCardBuilder.Add(new TimeZoneProperty(value ?? TimeZoneID.Empty, group?.Invoke(_builder.VCard)),
                                            _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones),
                                            parameters)
                           );
@@ -210,23 +211,14 @@ public readonly struct TimeZoneBuilder
     /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
     /// </example>
     /// 
-    /// <exception cref="ArgumentNullException"> <paramref name="value" /> is <c>null</c>.
-    /// </exception>
-    /// <exception cref="ArgumentException"> <paramref name="value" /> is an empty
-    /// <see cref="string" /> or consists only of white space characters.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Add(string value,
                             Action<ParameterSection>? parameters = null,
                             Func<VCard, string?>? group = null)
-    {
-        Builder.VCard.Set(Prop.TimeZones,
-                          VCardBuilder.Add(new TimeZoneProperty(value, group?.Invoke(_builder.VCard)),
-                                           _builder.VCard.Get<IEnumerable<TimeZoneProperty?>?>(Prop.TimeZones),
-                                           parameters)
-                          );
-        return _builder;
-    }
+        => TimeZoneID.TryParse(value, out TimeZoneID? tzID)
+            ? Add(tzID, parameters, group)
+            : Add((TimeZoneID?)null, parameters, group);
 
     /// <summary>
     /// Sets the <see cref="VCard.TimeZones"/> property to <c>null</c>.

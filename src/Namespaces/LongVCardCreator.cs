@@ -34,15 +34,17 @@ internal static class LongVCardCreator
                 (
                 VCardBuilder
                 .Create(false)
-                .NameViews.Add(familyName: name2.LastName,
-                               givenName: name2.FirstName,
-                               additionalName: name2.MiddleName)
+                .NameViews.Add(NameBuilder.Create()
+                                          .AddSurname(name2.LastName)
+                                          .AddGiven( name2.FirstName)
+                                          .AddGiven2(name2.MiddleName)
+                                          .Build())
                 .NameViews.ToDisplayNames(NameFormatter.Default)
                 .VCard
                 );
         }
 
-        Vcf.Save(vCards, "LargeFile.vcf", options: Opts.Default.Unset(Opts.UpdateTimeStamp));
+        Vcf.Save(vCards, "LargeFile.vcf", options: VcfOpts.Default.Unset(VcfOpts.UpdateTimeStamp));
 
     }
 }

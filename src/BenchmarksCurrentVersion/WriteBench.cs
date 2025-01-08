@@ -38,8 +38,8 @@ public class WriteBench
     public string WritePhoto30() => Vcf.ToString(_vCardPhoto);
 
     [Benchmark]
-    public string Write40() => Vcf.ToString(_vCard, VCdVersion.V4_0, options: Opts.Default.Set(Opts.SetPropertyIDs));
+    public string Write40() => Vcf.ToString(_vCard, VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
 
     [Benchmark]
-    public string WritePhoto40() => Vcf.ToString(_vCardPhoto, VCdVersion.V4_0, options: Opts.Default.Set(Opts.SetPropertyIDs));
+    public string WritePhoto40() => Vcf.ToString(_vCardPhoto, VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
 }

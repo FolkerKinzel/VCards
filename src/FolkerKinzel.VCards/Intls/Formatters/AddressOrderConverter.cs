@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Intls.Formatters;
 
@@ -112,7 +112,7 @@ internal static class AddressOrderConverter
 
     internal static AddressOrder? ParseAddress(Address address)
     {
-        ReadOnlyCollection<string> country = address.Country;
+        IReadOnlyList<string> country = address.Country;
 
         if (country.Count == 0)
         {

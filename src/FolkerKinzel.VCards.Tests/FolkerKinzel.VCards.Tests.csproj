@@ -24,6 +24,7 @@
 		<None Remove="reports\**" />
 	</ItemGroup>
 	<ItemGroup>
+		<Compile Remove="BuilderParts\XmlBuilderTests.cs" />
 		<Compile Remove="Intls\Converters\MimeTypeConverterTests_OBSOLETE.cs" />
 		<Compile Remove="Intls\Deserializers\AssignerTests.cs" />
 		<Compile Remove="Intls\Deserializers\DigitParserTests.cs" />
@@ -31,6 +32,7 @@
 		<Compile Remove="Intls\Extensions\DoubleExtensionsTests.cs" />
 		<Compile Remove="Models\DataUrlTests.cs" />
 		<Compile Remove="Models\MimeTypeTests.cs" />
+		<Compile Remove="Models\Properties\XmlPropertyTest.cs" />
 		<Compile Remove="MultiAnsiFilterTests.cs" />
 		<Compile Remove="UnitTestsInitialize.cs" />
 		<Compile Remove="VcfPaths.cs" />
@@ -40,14 +42,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="coverlet.msbuild" Version="6.0.2">
+		<PackageReference Include="coverlet.msbuild" Version="6.0.3">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.6.3" />
     <PackageReference Include="MSTest.TestFramework" Version="3.6.3" />
-		<PackageReference Include="coverlet.collector" Version="6.0.2">
+		<PackageReference Include="coverlet.collector" Version="6.0.3">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -78,11 +80,11 @@
     <Using Include="FolkerKinzel.Strings" />
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net7.0'">
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net9.0'">
 		<Exec Command="echo $(ProjectDir) &gt; &quot;$(ProjectDir)\Resources\ProjDir.txt&quot;" />
 	</Target>
 
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net7.0'">
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(TargetFramework)' == 'net9.0'">
 		<Exec Command="@echo Project Directory: $(ProjectDir)" />
 	</Target>
 

@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -12,105 +13,105 @@ public class NameBuilderTests
         var bldr2 = NameBuilder.Create();
 
         Assert.AreNotSame(bldr1, bldr2);
-        Assert.IsInstanceOfType(bldr1, typeof(NameBuilder));
-        Assert.IsInstanceOfType(bldr2, typeof(NameBuilder));
+        Assert.IsInstanceOfType<NameBuilder>(bldr1);
+        Assert.IsInstanceOfType<NameBuilder>(bldr2);
     }
 
     [TestMethod]
     public void EqualsTest1()
     {
-        Assert.IsFalse(new NameBuilder().Equals((NameBuilder?)null));
+        Assert.IsFalse(NameBuilder.Create().Equals((NameBuilder?)null));
 
-        var builder = new NameBuilder();
+        var builder = NameBuilder.Create();
         Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
     }
 
     [TestMethod]
-    public void ToStringTest1() => Assert.IsNotNull(new NameBuilder().ToString());
+    public void ToStringTest1() => Assert.IsNotNull(NameBuilder.Create().ToString());
 
     [TestMethod()]
     public void AddFamilyNameTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddFamilyName("1").AddFamilyName("2"));
+        var prop = new NameProperty(NameBuilder.Create().AddSurname("1").AddSurname("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.FamilyNames);
+        CollectionAssert.AreEqual(expected, prop.Value.Surnames.ToArray());
     }
 
     [TestMethod()]
     public void AddFamilyNameTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddFamilyName(expected));
+        var prop = new NameProperty(NameBuilder.Create().AddSurname(expected).Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.FamilyNames);
+        CollectionAssert.AreEqual(expected, prop.Value.Surnames.ToArray());
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddFamilyNameTest3() => NameBuilder.Create().AddFamilyName((string[]?)null!);
+    public void AddFamilyNameTest3() => NameBuilder.Create().AddSurname((string[]?)null!);
 
 
     [TestMethod()]
     public void AddGivenNameTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddGivenName("1").AddGivenName("2"));
+        var prop = new NameProperty(NameBuilder.Create().AddGiven("1").AddGiven("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.GivenNames);
+        CollectionAssert.AreEqual(expected, prop.Value.Given.ToArray());
     }
 
     [TestMethod()]
     public void AddGivenNameTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddGivenName(expected));
+        var prop = new NameProperty(NameBuilder.Create().AddGiven(expected).Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.GivenNames);
+        CollectionAssert.AreEqual(expected, prop.Value.Given.ToArray());
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddGivenNameTest3() => NameBuilder.Create().AddGivenName((string[]?)null!);
+    public void AddGivenNameTest3() => NameBuilder.Create().AddGiven((string[]?)null!);
 
     [TestMethod()]
     public void AddAdditionalNameTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddAdditionalName("1").AddAdditionalName("2"));
+        var prop = new NameProperty(NameBuilder.Create().AddGiven2("1").AddGiven2("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.AdditionalNames);
+        CollectionAssert.AreEqual(expected, prop.Value.Given2.ToArray());
     }
 
     [TestMethod()]
     public void AddAdditionalNameTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddAdditionalName(expected));
+        var prop = new NameProperty(NameBuilder.Create().AddGiven2(expected).Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.AdditionalNames);
+        CollectionAssert.AreEqual(expected, prop.Value.Given2.ToArray());
     }
 
     [TestMethod()]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void AddAdditionalNameTest3() => NameBuilder.Create().AddAdditionalName((string[]?)null!);
+    public void AddAdditionalNameTest3() => NameBuilder.Create().AddGiven2((string[]?)null!);
 
     [TestMethod()]
     public void AddPrefixTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddPrefix("1").AddPrefix("2"));
+        var prop = new NameProperty(NameBuilder.Create().AddPrefix("1").AddPrefix("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Prefixes);
+        CollectionAssert.AreEqual(expected, prop.Value.Prefixes.ToArray());
     }
 
     [TestMethod()]
     public void AddPrefixTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddPrefix(expected));
+        var prop = new NameProperty(NameBuilder.Create().AddPrefix(expected).Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Prefixes);
+        CollectionAssert.AreEqual(expected, prop.Value.Prefixes.ToArray());
     }
 
     [TestMethod()]
@@ -121,18 +122,18 @@ public class NameBuilderTests
     public void AddSuffixTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddSuffix("1").AddSuffix("2"));
+        var prop = new NameProperty(NameBuilder.Create().AddSuffix("1").AddSuffix("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Suffixes);
+        CollectionAssert.AreEqual(expected, prop.Value.Suffixes.ToArray());
     }
 
     [TestMethod()]
     public void AddSuffixTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddSuffix(expected));
+        var prop = new NameProperty(NameBuilder.Create().AddSuffix(expected).Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Suffixes);
+        CollectionAssert.AreEqual(expected, prop.Value.Suffixes.ToArray());
     }
 
     [TestMethod()]
@@ -143,18 +144,18 @@ public class NameBuilderTests
     public void AddSurname2Test1()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddSurname2("1").AddSurname2("2"));
+        var prop = new NameProperty(NameBuilder.Create().AddSurname2("1").AddSurname2("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Surnames2);
+        CollectionAssert.AreEqual(expected, prop.Value.Surnames2.ToArray());
     }
 
     [TestMethod()]
     public void AddSurname2Test2()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddSurname2(expected));
+        var prop = new NameProperty(NameBuilder.Create().AddSurname2(expected).Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Surnames2);
+        CollectionAssert.AreEqual(expected, prop.Value.Surnames2.ToArray());
     }
 
     [TestMethod()]
@@ -165,18 +166,18 @@ public class NameBuilderTests
     public void AddGenerationTest1()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddGeneration("1").AddGeneration("2"));
+        var prop = new NameProperty(NameBuilder.Create().AddGeneration("1").AddGeneration("2").Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Generations);
+        CollectionAssert.AreEqual(expected, prop.Value.Generations.ToArray());
     }
 
     [TestMethod()]
     public void AddGenerationTest2()
     {
         string[] expected = ["1", "2"];
-        var prop = new NameProperty(NameBuilder.Create().AddGeneration(expected));
+        var prop = new NameProperty(NameBuilder.Create().AddGeneration(expected).Build());
 
-        CollectionAssert.AreEqual(expected, prop.Value.Generations);
+        CollectionAssert.AreEqual(expected, prop.Value.Generations.ToArray());
     }
 
     [TestMethod()]
@@ -189,15 +190,16 @@ public class NameBuilderTests
         NameBuilder bldr = NameBuilder
             .Create()
             .AddGeneration("1")
-            .AddAdditionalName("2")
-            .AddFamilyName("3")
-            .AddGivenName("4")
+            .AddGiven2("2")
+            .AddSurname("3")
+            .AddGiven("4")
             .AddPrefix("5")
             .AddSuffix("6")
-            .AddSurname2("7")
-            .Clear();
+            .AddSurname2("7");
+            
+        _ = bldr.Build();
 
-        Assert.IsInstanceOfType(bldr, typeof(NameBuilder));
+        Assert.IsInstanceOfType<NameBuilder>(bldr);
         Assert.IsTrue(bldr.Data.All(x => x.Value.Count == 0));
     }
 
@@ -206,9 +208,9 @@ public class NameBuilderTests
     {
         NameBuilder bldr = NameBuilder
             .Create()
-            .AddFamilyName("")
-            .AddGivenName((string?)null)
-            .AddFamilyName("   ");
+            .AddSurname("")
+            .AddGiven((string?)null)
+            .AddSurname("   ");
 
         Assert.IsFalse(bldr.Data.Any());
     }
@@ -218,7 +220,7 @@ public class NameBuilderTests
     {
         NameBuilder bldr = NameBuilder
             .Create()
-            .AddFamilyName(["", "    "]);
+            .AddSurname(["", "    "]);
 
         Assert.IsFalse(bldr.Data.Any());
     }
@@ -228,9 +230,10 @@ public class NameBuilderTests
     {
         var prop = new NameProperty(NameBuilder
             .Create()
-            .AddFamilyName("1")
-            .AddFamilyName(["2", "3"]));
+            .AddSurname("1")
+            .AddSurname(["2", "3"])
+            .Build());
 
-        CollectionAssert.AreEqual(new string[] { "1", "2", "3" }, prop.Value.FamilyNames);
+        CollectionAssert.AreEqual(new string[] { "1", "2", "3" }, prop.Value.Surnames.ToArray());
     }
 }

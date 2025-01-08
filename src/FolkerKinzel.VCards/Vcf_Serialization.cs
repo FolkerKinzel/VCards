@@ -2,10 +2,9 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards;
@@ -36,7 +35,7 @@ public static partial class Vcf
     /// </para>
     /// <para>
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
-    /// option <see cref="Opts.AppendAgentAsSeparateVCard" /> and if in the
+    /// option <see cref="VcfOpts.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.RelationType" /> parameter the 
     /// <see cref="Rel.Agent" /> flag is set. 
@@ -53,7 +52,7 @@ public static partial class Vcf
     /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
     /// file path.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// <paramref name="version" /> is not a defined value of the <see cref="Opts"/> 
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
     /// enum.
     /// </exception>
     /// <exception cref="IOException">The file could not be written.</exception>
@@ -62,7 +61,7 @@ public static partial class Vcf
         string fileName,
         VCdVersion version = VCard.DEFAULT_VERSION,
         ITimeZoneIDConverter? tzConverter = null,
-        Opts options = Opts.Default)
+        VcfOpts options = VcfOpts.Default)
     {
         _ArgumentNullException.ThrowIfNull(vCards, nameof(vCards));
 
@@ -104,7 +103,7 @@ public static partial class Vcf
     /// </para>
     /// <para>
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
-    /// option <see cref="Opts.AppendAgentAsSeparateVCard" /> and if in the
+    /// option <see cref="VcfOpts.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.RelationType" /> parameter the 
     /// <see cref="Rel.Agent" /> flag is set. 
@@ -117,7 +116,7 @@ public static partial class Vcf
     /// <exception cref="ArgumentException"> <paramref name="stream" /> does not support
     /// write operations.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// <paramref name="version" /> is not a defined value of the <see cref="Opts"/> 
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
     /// enum.
     /// </exception>
     /// <exception cref="IOException">I/O error.</exception>
@@ -127,7 +126,7 @@ public static partial class Vcf
                                  Stream stream,
                                  VCdVersion version = VCard.DEFAULT_VERSION,
                                  ITimeZoneIDConverter? tzConverter = null,
-                                 Opts options = Opts.Default,
+                                 VcfOpts options = VcfOpts.Default,
                                  bool leaveStreamOpen = false)
     {
         DebugWriter.WriteMethodHeader(
@@ -140,11 +139,11 @@ public static partial class Vcf
                                                            options,
                                                            tzConverter);
 
-        var list = vCards.WhereNotNull().ToList();
+        var list = vCards.OfType<VCard>().ToList();
 
         if (version < VCdVersion.V4_0)
         {
-            if (options.IsSet(Opts.AppendAgentAsSeparateVCard))
+            if (options.IsSet(VcfOpts.AppendAgentAsSeparateVCard))
             {
                 AppendAgents(list);
             }
@@ -153,7 +152,7 @@ public static partial class Vcf
         {
             foreach (VCard vCard in list)
             {
-                vCard.NormalizeMembers(serializer.IgnoreEmptyItems);
+                vCard.NormalizeMembers();
             }
 
             VCard.ReferenceIntl(list);
@@ -163,9 +162,9 @@ public static partial class Vcf
         {
             vCard.Version = version;
 
-            if (options.HasFlag(Opts.UpdateTimeStamp))
+            if (options.HasFlag(VcfOpts.UpdateTimeStamp))
             {
-                vCard.TimeStamp = new TimeStampProperty();
+                vCard.Updated = new TimeStampProperty();
             }
 
             serializer.Serialize(vCard);
@@ -207,13 +206,15 @@ public static partial class Vcf
                     continue;
                 }
 
-                if (vCard.Relations.PrefOrNullIntl(x => x is RelationVCardProperty &&
+                if (vCard.Relations.PrefOrNullIntl(x => x.Value.VCard is not null &&
                                                         x.Parameters.RelationType.IsSet(Rel.Agent),
-                                                        ignoreEmptyItems: true) is RelationVCardProperty agent)
+                                                        ignoreEmptyItems: true) is RelationProperty agent)
                 {
-                    if (!list.Contains(agent.Value))
+                    Debug.Assert(agent.Value.VCard != null);
+
+                    if (!list.Contains(agent.Value.VCard))
                     {
-                        list.Add(agent.Value);
+                        list.Add(agent.Value.VCard);
                     }
                 }
 
@@ -246,7 +247,7 @@ public static partial class Vcf
     /// </para>
     /// <para>
     /// In the same way the method behaves, if a vCard&#160;2.1 or 3.0 is serialized with the 
-    /// option <see cref="Opts.AppendAgentAsSeparateVCard" /> and if in the
+    /// option <see cref="VcfOpts.AppendAgentAsSeparateVCard" /> and if in the
     /// <see cref="VCard.Relations" /> property of a VCard object an instance is located 
     /// on whose <see cref="ParameterSection.RelationType" /> parameter the 
     /// <see cref="Rel.Agent" /> flag is set. 
@@ -260,7 +261,7 @@ public static partial class Vcf
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
-    /// <paramref name="version" /> is not a defined value of the <see cref="Opts"/> 
+    /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
     /// enum.
     /// </exception>
     /// <exception cref="OutOfMemoryException">The system is out of memory.</exception>
@@ -268,7 +269,7 @@ public static partial class Vcf
         IEnumerable<VCard?> vCards,
         VCdVersion version = VCard.DEFAULT_VERSION,
         ITimeZoneIDConverter? tzConverter = null,
-        Opts options = Opts.Default)
+        VcfOpts options = VcfOpts.Default)
     {
         _ArgumentNullException.ThrowIfNull(vCards, nameof(vCards));
 

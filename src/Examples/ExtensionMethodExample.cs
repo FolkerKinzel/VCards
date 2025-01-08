@@ -1,7 +1,7 @@
 ﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 
 namespace Examples;
 
@@ -61,13 +61,13 @@ public class ExtensionMethodExample
         // Serialize the VCard as VCF. (Most of the methods of the Vcf class are also
         // available as extension methods.)
         Console.WriteLine("\nvc as vCard 3.0:\n");
-        Console.WriteLine(vc.ToVcfString(options: Opts.Default.Unset(Opts.UpdateTimeStamp)));
+        Console.WriteLine(vc.ToVcfString(options: VcfOpts.Default.Unset(VcfOpts.UpdateTimeStamp)));
     }
 
     private static VCard InitializeTestVCard()
     {
         return VCardBuilder
-            .Create(setID: false)
+            .Create(setContactID: false)
             .DisplayNames.Add("vCard zum Testen",
                                parameters:
                                p =>

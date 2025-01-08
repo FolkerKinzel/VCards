@@ -1,6 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -20,14 +20,15 @@ public class Rfc9555Tests
             .JSContactProps.Add("{\"bar\":1234}", parameters: p => p.JSContactPointer = "example.com:foo")
             .NameViews.Add(NameBuilder
                 .Create()
-                .AddFamilyName("0")
-                .AddGivenName("1a")
-                .AddGivenName("1b")
-                .AddAdditionalName("2")
+                .AddSurname("0")
+                .AddGiven("1a")
+                .AddGiven("1b")
+                .AddGiven2("2")
                 .AddPrefix("3")
                 .AddSuffix("4")
                 .AddSurname2("5")
-                .AddGeneration("6"),
+                .AddGeneration("6")
+                .Build(),
                 parameters: p => p.ComponentOrder = "s,\\,;6;5;s, ;4;s,\\;;3;s,\r\n;2;1,1;1;0"
                 )
             .NameViews.ToDisplayNames(NameFormatter.Default)
@@ -87,7 +88,7 @@ public class Rfc9555Tests
             .ABLabels.Add("uncle", group: v => v.EMails?.Last()?.Group)
             .VCard;
 
-        Opts opts = Opts.Default.Unset(Opts.WriteXExtensions);
+        VcfOpts opts = VcfOpts.Default.Unset(VcfOpts.WriteXExtensions);
         string v4 = vc.ToVcfString(VCdVersion.V4_0, options: opts).ReplaceWhiteSpaceWith("");
         string v3 = vc.ToVcfString(VCdVersion.V3_0, options: opts).ReplaceWhiteSpaceWith("");
         string v2 = vc.ToVcfString(VCdVersion.V2_1, options: opts).ReplaceWhiteSpaceWith("");
@@ -101,7 +102,7 @@ public class Rfc9555Tests
     private static void Serialize(VCard vc, out string v4, out string v4WithoutRfc9555, out string v3, out string v2)
     {
         v4 = vc.ToVcfString(VCdVersion.V4_0);
-        v4WithoutRfc9555 = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteRfc9555Extensions));
+        v4WithoutRfc9555 = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteRfc9555Extensions));
         v3 = vc.ToVcfString(VCdVersion.V3_0);
         v2 = vc.ToVcfString(VCdVersion.V2_1);
     }

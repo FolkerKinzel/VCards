@@ -2,11 +2,11 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.PropertyParts;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
-internal abstract class ParameterSerializer(VCdVersion version, Opts options)
+internal abstract class ParameterSerializer(VCdVersion version, VcfOpts options)
 {
     private readonly VCdVersion _version = version;
 
@@ -15,7 +15,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     internal ParameterSection ParaSection { get; private set; } = ParameterSection.Empty;
 
-    protected Opts Options { get; } = options;
+    protected VcfOpts Options { get; } = options;
 
     internal void AppendTo(StringBuilder builder,
                            ParameterSection vCardPropertyParameter,
@@ -220,7 +220,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             case VCard.PropKeys.NonStandard.X_WAB_WEDDING_ANNIVERSARY:
             case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
             case VcfSerializer.X_KADDRESSBOOK_X_Anniversary:
-                // no parameters
+                AppendNonStandardParameters();
                 break;
 
             case VCard.PropKeys.NonStandard.Evolution.X_EVOLUTION_SPOUSE:
@@ -456,11 +456,9 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
 
     protected void AppendV2_1Type(string value) => Builder.Append(';').Append(value);
 
-    [SuppressMessage("Style", "IDE0066:Convert switch statement to expression",
-        Justification = "Better style")]
     protected void AppendNonStandardParameters()
     {
-        if (!Options.IsSet(Opts.WriteNonStandardParameters))
+        if (!Options.IsSet(VcfOpts.WriteNonStandardParameters))
         {
             return;
         }
@@ -484,7 +482,7 @@ internal abstract class ParameterSerializer(VCdVersion version, Opts options)
             key = key.Trim();
 
             if (string.IsNullOrWhiteSpace(parameter.Value) 
-                || !key.StartsWith("X-", StringComparison.OrdinalIgnoreCase) 
+                || !XNameValidator.IsXName(key) 
                 || key.Equals(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, StringComparison.OrdinalIgnoreCase))
             {
                 continue;

@@ -1,6 +1,6 @@
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
-using OneOf;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
@@ -42,9 +42,9 @@ internal sealed class TimeConverter
         "--sszzz"
     ];
 
-    internal bool TryParse(ReadOnlySpan<char> s, out OneOf<TimeOnly, DateTimeOffset> oneOf)
+    internal bool TryParse(ReadOnlySpan<char> s, [NotNullWhen(true)] out DateAndOrTime? dateAndOrTime)
     {
-        oneOf = default;
+        dateAndOrTime = null;
         ReadOnlySpan<char> roSpan = s.Trim();
 
         if (roSpan.StartsWith('T'))
@@ -74,7 +74,7 @@ internal sealed class TimeConverter
                                               out DateTimeOffset dtOffset))
             {
                 dtOffset = new DateTimeOffset(2, 1, 1, dtOffset.Hour, dtOffset.Minute, dtOffset.Second, dtOffset.Offset);
-                oneOf = dtOffset;
+                dateAndOrTime = dtOffset;
                 return true;
             }
         }
@@ -86,7 +86,7 @@ internal sealed class TimeConverter
                                        styles,
                                        out TimeOnly timeOnly))
             {
-                oneOf = timeOnly;
+                dateAndOrTime = timeOnly;
                 return true;
             }
         }

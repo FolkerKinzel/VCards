@@ -2,16 +2,27 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using Base64Bcl = System.Buffers.Text.Base64;
 
 namespace FolkerKinzel.VCards.Intls.Serializers;
 
 internal sealed class Vcf_2_1Serializer : VcfSerializer
 {
+    private NameBuilder? _nameBuilder;
+
+    internal NameBuilder NameBuilder
+    {
+        get
+        {
+            this._nameBuilder ??= NameBuilder.Create();
+            return _nameBuilder;
+        }
+    }
+
     internal Vcf_2_1Serializer(TextWriter writer,
-                               Opts options,
+                               VcfOpts options,
                                ITimeZoneIDConverter? tzConverter)
         : base(writer, options, new ParameterSerializer2_1(options), tzConverter) { }
 
@@ -116,7 +127,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
                         c = span[j];
 
-                        if (c == ' ' || c == '\t')
+                        if (c is ' ' or '\t')
                         {
                             _writer.WriteLine(shared.Array, chunkStart, j - chunkStart);
 
@@ -130,7 +141,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
                 }
                 else if (counter > VCard.MAX_BYTES_PER_LINE) // if none SPACE or TAB char 
                 {                                            // has been found before
-                    if (c == ' ' || c == '\t')
+                    if (c is ' ' or '\t')
                     {
                         _writer.WriteLine(shared.Array, chunkStart, i - chunkStart);
                         chunkStart = i;
@@ -147,7 +158,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     {
         Debug.Assert(value is not null);
 
-        bool multiple = Options.IsSet(Opts.AllowMultipleAdrAndLabelInVCard21);
+        bool multiple = Options.IsSet(VcfOpts.AllowMultipleAdrAndLabelInVCard21);
         bool first = true;
 
         foreach (AddressProperty prop in value.OrderByPrefIntl(IgnoreEmptyItems))
@@ -158,7 +169,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
             // AddressProperty.Parameters.Label or
             // AddressProperty.Parameters.GeoPosition or
             // AddressProperty.Parameters.TimeZone is not null:
-            if (!prop!.Value.IsEmpty || !IgnoreEmptyItems)
+            if (!prop.Value.IsEmpty || !IgnoreEmptyItems)
             {
                 BuildProperty(VCard.PropKeys.ADR, prop, isPref);
             }
@@ -183,7 +194,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
         => BuildFirstProperty(VCard.PropKeys.BDAY,
                               value,
-                              static x => x is DateOnlyProperty or DateTimeOffsetProperty);
+                              static x => x.Value.DateOnly.HasValue || x.Value.DateTimeOffset.HasValue);
 
     protected override void AppendDisplayNames(IEnumerable<TextProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.FN, value);
@@ -202,7 +213,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override void AppendKeys(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.KEY, value,
-                             static x => x is EmbeddedBytesProperty or EmbeddedTextProperty);
+                             static x => x.Value.Uri is null);
 
     protected override void AppendLastRevision(TimeStampProperty value)
         => BuildProperty(VCard.PropKeys.REV, value);
@@ -210,7 +221,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendLogos(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.LOGO,
                              value,
-                             static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+                             static x => x.Value.String is null);
 
     protected override void AppendMailer(TextProperty value)
         => BuildProperty(VCard.PropKeys.MAILER, value);
@@ -221,8 +232,8 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
         NameProperty? name = value.FirstOrNullIntl(IgnoreEmptyItems)
                              ?? (IgnoreEmptyItems
-                                   ? new NameProperty("?")
-                                   : new NameProperty());
+                                   ? new NameProperty(NameBuilder.AddSurname("?").Build())
+                                   : new NameProperty(Name.Empty));
         BuildProperty(VCard.PropKeys.N, name);
     }
 
@@ -238,7 +249,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendPhotos(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.PHOTO,
                              value,
-                             static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+                             static x => x.Value.String is null);
 
     protected override void AppendRelations(IEnumerable<RelationProperty?> value)
         => base.AppendRelations(value);
@@ -248,9 +259,9 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
 
     protected override void AppendSocialMediaProfiles(IEnumerable<TextProperty?> value)
     {
-        if (Options.HasFlag(Opts.WriteXExtensions))
+        if (Options.HasFlag(VcfOpts.WriteXExtensions))
         {
-            BuildPropertyCollection(VCard.PropKeys.NonStandard.X_SOCIALPROFILE, 
+            BuildPropertyCollection(VCard.PropKeys.NonStandard.X_SOCIALPROFILE,
                                     value.Where(x => x?.Parameters.DataType != Data.Text));
         }
     }
@@ -258,7 +269,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendSounds(IEnumerable<DataProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.SOUND,
                              value,
-                             static x => x is EmbeddedBytesProperty or ReferencedDataProperty);
+                             static x => x.Value.String is null);
 
     protected override void AppendTimeZones(IEnumerable<TimeZoneProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.TZ, value);
@@ -266,7 +277,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendTitles(IEnumerable<TextProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.TITLE, value);
 
-    protected override void AppendUniqueIdentifier(IDProperty value)
+    protected override void AppendUniqueIdentifier(ContactIDProperty value)
         => BuildProperty(VCard.PropKeys.UID, value);
 
     protected override void AppendURLs(IEnumerable<TextProperty?> value)

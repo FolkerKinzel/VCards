@@ -6,17 +6,28 @@ internal sealed class VcfDeserializationInfo
 {
     internal const int INITIAL_PARAMETERLIST_CAPACITY = 8;
 
-    private DateTimeConverter? _dateAndOrTimeConverter;
+    private DateAndOrTimeConverter? _dateAndOrTimeConverter;
     private TimeConverter? _timeConverter;
+    private NameBuilder? _nameBuilder;
+    private TimeStampConverter? _timeStampConverter;
 
     internal List<KeyValuePair<string, ReadOnlyMemory<char>>> ParameterList { get; } = [];
 
-    internal DateTimeConverter DateAndOrTimeConverter
+    internal DateAndOrTimeConverter DateAndOrTimeConverter
     {
         get
         {
-            this._dateAndOrTimeConverter ??= new DateTimeConverter();
+            this._dateAndOrTimeConverter ??= new DateAndOrTimeConverter();
             return this._dateAndOrTimeConverter;
+        }
+    }
+
+    internal TimeStampConverter TimeStampConverter
+    {
+        get
+        {
+            this._timeStampConverter ??= new TimeStampConverter();
+            return this._timeStampConverter;
         }
     }
 
@@ -26,6 +37,15 @@ internal sealed class VcfDeserializationInfo
         {
             this._timeConverter ??= new TimeConverter();
             return this._timeConverter;
+        }
+    }
+
+    internal NameBuilder NameBuilder
+    {
+        get
+        {
+            this._nameBuilder ??= NameBuilder.Create();
+            return _nameBuilder;
         }
     }
 }

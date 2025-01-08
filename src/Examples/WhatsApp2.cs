@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Models.Properties;
 using Mod = FolkerKinzel.VCards.Models;
 
 namespace Examples;
@@ -8,14 +9,17 @@ internal static class WhatsAppDemo2
 {
     public static void UsingTheWhatsAppType()
     {
-        var xiamoiMobilePhone = new Mod::TextProperty("+1-234-567-89");
+        var xiamoiMobilePhone = new TextProperty("+1-234-567-89");
 
         xiamoiMobilePhone.Parameters.NonStandard = [new KeyValuePair<string, string>("TYPE", "WhatsApp")];
 
         // Initialize the VCard:
         var vcard = new VCard
         {
-            NameViews = [new(familyName: null, givenName: "zzMad Perla 45")],
+            NameViews = new NameProperty(NameBuilder.Create()
+                                                         .AddSurname("")
+                                                         .AddGiven("zzMad Perla 45")
+                                                         .Build()),
             DisplayNames = [new("zzMad Perla 45")],
             Phones = xiamoiMobilePhone
         };
@@ -23,7 +27,7 @@ internal static class WhatsAppDemo2
         // Don't forget to set VcfOptions.WriteNonStandardParameters when serializing the
         // VCard: The default ignores NonStandardParameters (and NonStandardProperties):
         string vcfString = Vcf.ToString(vcard,
-                                        options: Opts.Default | Opts.WriteNonStandardParameters);
+                                        options: VcfOpts.Default | VcfOpts.WriteNonStandardParameters);
 
         Console.WriteLine(vcfString);
 

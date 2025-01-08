@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Serializers;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
@@ -27,7 +29,7 @@ public class GeoCoordinateConverterTests
     public void AppendToTest1(VCdVersion version, string expected)
     {
         var sb = new StringBuilder();
-        GeoCoordinateConverter.AppendTo(sb, new GeoCoordinate(0.8, 0.7, 5), version);
+        GeoCoordinateSerializer.AppendTo(sb, new GeoCoordinate(0.8, 0.7, 5), version);
         Assert.AreEqual(expected, sb.ToString());
     }
 
@@ -39,7 +41,7 @@ public class GeoCoordinateConverterTests
     public void AppendToTest2(VCdVersion version)
     {
         var sb = new StringBuilder();
-        GeoCoordinateConverter.AppendTo(sb, null, version);
+        GeoCoordinateSerializer.AppendTo(sb, null, version);
         Assert.AreEqual(0, sb.Length);
     }
 
@@ -48,7 +50,7 @@ public class GeoCoordinateConverterTests
     public void AppendToTest3()
     {
         var sb = new StringBuilder();
-        GeoCoordinateConverter.AppendTo(sb, new GeoCoordinate(0.8, 0.7), VCdVersion.V3_0);
+        GeoCoordinateSerializer.AppendTo(sb, new GeoCoordinate(0.8, 0.7), VCdVersion.V3_0);
         Assert.AreEqual("0.8;0.7", sb.ToString());
     }
 }

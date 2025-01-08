@@ -1,9 +1,9 @@
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards;
 
@@ -24,6 +24,43 @@ namespace FolkerKinzel.VCards;
 /// </example>
 public sealed partial class VCard
 {
+    #region Remove with version 8.0.1
+
+    [Obsolete("Use SpokenLanguages instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public IEnumerable<TextProperty?>? Languages
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
+    [Obsolete("Use Updated instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public TimeStampProperty? TimeStamp
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
+    [Obsolete("Use ContactID instead.", true)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ContactIDProperty? ID
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
+    #endregion
+
     private readonly Dictionary<Prop, object> _propDic = [];
 
     [return: MaybeNull]
@@ -146,11 +183,11 @@ public sealed partial class VCard
     /// that edited the vCard. <c>(4)</c></summary>
     /// <remarks>
     /// The value of this property can change when calling the methods of the
-    /// <see cref="Syncs.SyncOperation"/> object provided by the <see cref="Sync"/>
+    /// <see cref="VCards.SyncOperation"/> object provided by the <see cref="Sync"/>
     /// property.
     /// </remarks>
     /// <seealso cref="Sync"/>
-    /// <seealso cref="Syncs.SyncOperation"/>
+    /// <seealso cref="VCards.SyncOperation"/>
     /// <seealso cref="AppID"/>
     public IEnumerable<AppIDProperty>? AppIDs
     {
@@ -211,6 +248,17 @@ public sealed partial class VCard
         set => Set(Prop.Categories, value);
     }
 
+    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
+    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
+    /// </summary>
+    /// <remarks>As a default setting each newly created <see cref="VCard"/> gets an <see cref="ContactID"/>
+    /// automatically.</remarks>
+    public ContactIDProperty? ContactID
+    {
+        get => Get<ContactIDProperty?>(Prop.ContactID);
+        set => Set(Prop.ContactID, value);
+    }
+
     /// <summary>
     /// <c>CONTACT-URI</c>: URIs representing an email address or a location for a web form. <c>(4 - RFC&#160;8605)</c>
     /// </summary>
@@ -235,7 +283,7 @@ public sealed partial class VCard
     /// stays unchanged for the existence of the vCard.
     /// </para>
     /// <para>
-    /// Use the <see cref="TimeStamp"/> property to specify the last revision.
+    /// Use the <see cref="Updated"/> property to specify the last revision.
     /// </para>
     /// </remarks>
     public TimeStampProperty? Created
@@ -370,17 +418,6 @@ public sealed partial class VCard
         set => Set(Prop.Hobbies, value);
     }
 
-    /// <summary> <c>UID</c>: Specifies a value that represents a persistent, globally
-    /// unique identifier corresponding to the entity associated with the vCard. <c>(2,3,4)</c>
-    /// </summary>
-    /// <value>Although the standard allows any strings for identification, the library
-    /// only supports UUIDs.</value>
-    public IDProperty? ID
-    {
-        get => Get<IDProperty?>(Prop.ID);
-        set => Set(Prop.ID, value);
-    }
-
     /// <summary> <c>INTEREST</c>: Recreational activities that the person is interested
     /// in, but does not necessarily take part in. <c>(4 - RFC&#160;6715)</c></summary>
     /// <remarks> Define the level of interest in the parameter 
@@ -438,13 +475,6 @@ public sealed partial class VCard
     {
         get => Get<TextProperty?>(Prop.Language);
         set => Set(Prop.Language, value);
-    }
-
-    /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
-    public IEnumerable<TextProperty?>? Languages
-    {
-        get => Get<IEnumerable<TextProperty?>?>(Prop.Languages);
-        set => Set(Prop.Languages, value);
     }
 
     /// <summary> <c>LOGO</c>: Images or graphics of the logo of the organization that
@@ -517,14 +547,14 @@ public sealed partial class VCard
     /// <see cref="NonStandards" /> contains all vCard properties that could not 
     /// be evaluated, when parsing the vCard. To serialize the content of 
     /// <see cref="NonStandards" /> into a VCF file, the flag 
-    /// <see cref="Opts.WriteNonStandardProperties"/> has to be set. 
+    /// <see cref="VcfOpts.WriteNonStandardProperties"/> has to be set. 
     /// </para>
     /// <para>
     /// Some <see cref="NonStandardProperty" /> objects are automatically added to the 
     /// VCF file, if there is no standard equivalent for it. You can control this behavior
-    /// with <see cref="Opts" />. It is therefore not recommended to assign
+    /// with <see cref="VcfOpts" />. It is therefore not recommended to assign
     /// <see cref="NonStandardProperty" /> objects with these 
-    /// <see cref="NonStandardProperty.XName"/>s to this property.
+    /// <see cref="NonStandardProperty.Key"/>s to this property.
     /// </para>
     /// <para>
     /// These vCard properties are the following: 
@@ -773,15 +803,11 @@ public sealed partial class VCard
         set => Set(Prop.Sources, value);
     }
 
-    /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
-    /// <remarks>
-    /// With <see cref="Opts.Default"/> the flag <see cref="Opts.UpdateTimeStamp"/> is set. So 
-    /// this property is normally updated automatically when serializing VCF.
-    /// </remarks>
-    public TimeStampProperty? TimeStamp
+    /// <summary> <c>LANG</c>: Defines languages that the person speaks. <c>(4)</c></summary>
+    public IEnumerable<TextProperty?>? SpokenLanguages
     {
-        get => Get<TimeStampProperty?>(Prop.TimeStamp);
-        set => Set(Prop.TimeStamp, value);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.SpokenLanguages);
+        set => Set(Prop.SpokenLanguages, value);
     }
 
     /// <summary> <c>TZ</c>: The time zone(s) of the vCard object. <c>(2,3,4)</c></summary>
@@ -806,6 +832,17 @@ public sealed partial class VCard
         set => Set(Prop.Titles, value);
     }
 
+    /// <summary> <c>REV</c>: A time stamp for the last time the vCard was updated. <c>(2,3,4)</c></summary>
+    /// <remarks>
+    /// With <see cref="VcfOpts.Default"/> the flag <see cref="VcfOpts.UpdateTimeStamp"/> is set. So 
+    /// this property is normally updated automatically when serializing VCF.
+    /// </remarks>
+    public TimeStampProperty? Updated
+    {
+        get => Get<TimeStampProperty?>(Prop.Updated);
+        set => Set(Prop.Updated, value);
+    }
+
     /// <summary> <c>URL</c>: URLs pointing to websites that represent the person in
     /// some way. <c>(2,3,4)</c></summary>
     public IEnumerable<TextProperty?>? Urls
@@ -815,27 +852,36 @@ public sealed partial class VCard
     }
 
     /// <summary> <c>XML</c>: Any XML data that is attached to the vCard. <c>(4)</c></summary>
-    public IEnumerable<XmlProperty?>? Xmls
+    /// <value>
+    /// The <see cref="TextProperty"/> instances may contain text that is valid XML. The root element
+    /// must be explicitly assigned to an XML namespace (xmlns attribute). This namespace
+    /// must not be the VCARD 4.0 namespace <c>urn:ietf:params:xml:ns:vcard-4.0</c>!
+    /// </value>
+    public IEnumerable<TextProperty?>? Xmls
     {
-        get => Get<IEnumerable<XmlProperty?>?>(Prop.Xmls);
+        get => Get<IEnumerable<TextProperty?>?>(Prop.Xmls);
         set => Set(Prop.Xmls, value);
     }
 
     /// <summary>
-    /// Replaces <see cref="RelationTextProperty"/> instances in <see cref="Members"/>
-    /// with <see cref="RelationUriProperty"/> instances if possible, if not, with
-    /// <see cref="RelationVCardProperty"/> instances.
+    /// Replaces <see cref="RelationProperty"/> instances in <see cref="Members"/>
+    /// that contain text with <see cref="RelationProperty"/> instances that contain <see cref="VCard"/>s.
     /// </summary>
-    /// <param name="ignoreEmptyItems">Specifies whether empty <see cref="VCardProperty"/>
-    /// instances should be ignored when serializing VCF.</param>
-    internal void NormalizeMembers(bool ignoreEmptyItems)
+    /// <remarks>
+    /// RFC 6350 allows only URIs as value for <c>MEMBER</c>. Values that can't be preserved as URI will be saved in 
+    /// <see cref="VCard"/>s and the <see cref="VCard.ContactID"/> Guids of these <see cref="VCard"/> instances will be 
+    /// the content of <c>MEMBER</c> after <see cref="VCard.ReferenceIntl(List{VCard})"/>.
+    /// </remarks>
+    internal void NormalizeMembers()
     {
         if (Members is null)
         {
             return;
         }
 
-        RelationProperty[] members = Members.WhereNotNull().ToArray();
+        // Members that contain Relation.Empty can be ignored because
+        // an empty string is an empty URI too
+        RelationProperty[] members = Members.Items().ToArray();
         Members = members;
         Span<RelationProperty> span = members.AsSpan();
 
@@ -843,18 +889,17 @@ public sealed partial class VCard
         {
             RelationProperty prop = span[i];
 
-            if (prop is RelationTextProperty textProp)
+            if (prop.Value.ContactID?.String is string text)
             {
-                if (textProp.IsEmpty && ignoreEmptyItems)
-                {
-                    continue;
-                }
+                Debug.Assert(!prop.IsEmpty);
+                Debug.Assert(!Uri.TryCreate(text, UriKind.Absolute, out _));
 
-                span[i] = Uri.TryCreate(textProp.Value?.Trim(), UriKind.Absolute, out Uri? uri)
-                    ? RelationProperty.FromUri(uri, prop.Parameters.RelationType, prop.Group)
-                    : RelationProperty.FromVCard(new VCard { DisplayNames = new TextProperty(textProp.Value) },
-                                                 prop.Parameters.RelationType,
-                                                 prop.Group);
+                var relProp = new RelationProperty(Relation.Create(new VCard(setContactID: true, setCreated: false)
+                    {
+                        DisplayNames = new TextProperty(text)
+                    }), prop.Group);
+                relProp.Parameters.RelationType = prop.Parameters.RelationType;
+                span[i] = relProp;
             }
         }
     }

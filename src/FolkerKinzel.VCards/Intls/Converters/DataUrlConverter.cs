@@ -1,38 +1,37 @@
 ﻿using FolkerKinzel.DataUrls;
-using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using OneOf;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class DataUrlConverter
 {
-    internal static DataProperty ToDataProperty(VcfRow vcfRow, ref DataUrlInfo dataUrlInfo)
+    internal static RawData ToRawData(ref DataUrlInfo dataUrlInfo)
     {
         ReadOnlyMemory<char> mime = dataUrlInfo.MimeType;
 
         bool masked = UnMaskMimeType(ref mime, out bool base64Encoded);
 
-        if (masked)
+        if (!masked)
         {
-            // If the "data" URL is masked dataUrlInfo has to be parsed again.
-
-            int length = (base64Encoded ? 13 : 6) + mime.Length + dataUrlInfo.Data.Length;
-
-            using ArrayPoolHelper.SharedArray<char> shared = ArrayPoolHelper.Rent<char>(length);
-            Memory<char> mem = shared.Array;
-            CopyDataUrl(mem.Span, mime.Span, dataUrlInfo.Data, base64Encoded);
-
-            _ = DataUrl.TryParse(mem.Slice(0, length), out dataUrlInfo);
-            return FromDataUrlInfo(vcfRow, in dataUrlInfo);
+            return RawData.FromDataUrlInfo(in dataUrlInfo);
         }
 
-        return FromDataUrlInfo(vcfRow, in dataUrlInfo);
+        // If the "data" URL is masked dataUrlInfo has to be parsed again:
+
+        const int defaultLength = 6; // data:,
+        const int base64EncodedLength = 13; // data:;base64,
+
+        int length = (base64Encoded ? base64EncodedLength : defaultLength) + mime.Length + dataUrlInfo.Data.Length;
+
+        using ArrayPoolHelper.SharedArray<char> shared = ArrayPoolHelper.Rent<char>(length);
+        Memory<char> mem = shared.Array;
+        CopyUnmaskedDataUrl(mem.Span, mime.Span, dataUrlInfo.Data, base64Encoded);
+
+        _ = DataUrl.TryParse(mem.Slice(0, length), out dataUrlInfo);
+        return RawData.FromDataUrlInfo(in dataUrlInfo);
     }
 
     private static bool UnMaskMimeType(ref ReadOnlyMemory<char> mime, out bool isBase64)
@@ -69,7 +68,7 @@ internal static class DataUrlConverter
         return true;
     }
 
-    private static void CopyDataUrl(Span<char> span, ReadOnlySpan<char> mime, ReadOnlySpan<char> data, bool base64Encoded)
+    private static void CopyUnmaskedDataUrl(Span<char> span, ReadOnlySpan<char> mime, ReadOnlySpan<char> data, bool base64Encoded)
     {
         if (base64Encoded)
         {
@@ -101,20 +100,5 @@ internal static class DataUrlConverter
             span = span.Slice(1);
             data.CopyTo(span);
         }
-    }
-
-    private static DataProperty FromDataUrlInfo(VcfRow vcfRow, in DataUrlInfo dataUrlInfo)
-    {
-        DataProperty prop = dataUrlInfo.TryGetData(out EmbeddedData data)
-                ? data.Convert<VcfRow, DataProperty>
-                   (
-                    vcfRow,
-                    static (bytes, vcfRow) => new EmbeddedBytesProperty(bytes, vcfRow.Group, vcfRow.Parameters),
-                    static (text, vcfRow) => new EmbeddedTextProperty(new TextProperty(text, vcfRow))
-                   )
-                : DataProperty.FromText(vcfRow.Value.ToString(), dataUrlInfo.MimeType.ToString(), vcfRow.Group);
-
-        prop.Parameters.MediaType = dataUrlInfo.MimeType.ToString();
-        return prop;
     }
 }

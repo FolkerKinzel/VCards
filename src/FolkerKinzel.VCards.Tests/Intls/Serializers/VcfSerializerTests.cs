@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Tests.Intls.Serializers;
 
@@ -12,7 +13,7 @@ public class VcfSerializerTests
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void GetSerializerTest1()
     {
-        using var serializer = VcfSerializer.GetSerializer(new MemoryStream(), false, (VCdVersion)(-10000), Opts.Default, null);
+        using var serializer = VcfSerializer.GetSerializer(new MemoryStream(), false, (VCdVersion)(-10000), VcfOpts.Default, null);
     }
 
     [TestMethod]
@@ -50,7 +51,7 @@ public class VcfSerializerTests
         tProp2.Parameters.Index = 2;
         tProp3.Parameters.Index = 1;
 
-        string s = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default | Opts.WriteEmptyProperties | Opts.SetPropertyIDs);
+        string s = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default | VcfOpts.WriteEmptyProperties | VcfOpts.SetPropertyIDs);
 
         uri = new Uri("http://other.com/");
         VCard.SyncTestReset();
@@ -66,7 +67,7 @@ public class VcfSerializerTests
 
         vc.DisplayNames = Enumerable.Empty<TextProperty?>().Append(null).Concat(vc.DisplayNames!);
 
-        const Opts options = Opts.Default | Opts.SetIndexes;
+        const VcfOpts options = VcfOpts.Default | VcfOpts.SetIndexes;
 
         _ = vc.ToVcfString(VCdVersion.V2_1, options: options);
 
@@ -84,7 +85,7 @@ public class VcfSerializerTests
 
         //vc.Sync.SetPropertyIDs();
 
-        _ = vc.ToVcfString(VCdVersion.V4_0, options: options | Opts.SetPropertyIDs);
+        _ = vc.ToVcfString(VCdVersion.V4_0, options: options | VcfOpts.SetPropertyIDs);
 
         Assert.AreEqual(1, tProp1.Parameters.Index);
         Assert.AreEqual(null, tProp2.Parameters.Index);
@@ -92,7 +93,7 @@ public class VcfSerializerTests
         Assert.AreEqual(null, prodID.Parameters.Index);
         Assert.AreEqual(null, vc.AppIDs!.ElementAt(1).Parameters.Index);
 
-        _ = vc.ToVcfString(VCdVersion.V4_0, options: options | Opts.WriteEmptyProperties);
+        _ = vc.ToVcfString(VCdVersion.V4_0, options: options | VcfOpts.WriteEmptyProperties);
 
         Assert.AreEqual(1, tProp1.Parameters.Index);
         Assert.AreEqual(2, tProp2.Parameters.Index);
@@ -109,7 +110,7 @@ public class VcfSerializerTests
             .Create()
             .GenderViews.Edit(props => [null])
             .GenderViews.Add(null, "something other")
-            .GenderViews.Add(null, null)
+            .GenderViews.Add(Gender.Empty)
             .GenderViews.Add(Sex.Other)
             .VCard;
 
@@ -128,7 +129,7 @@ public class VcfSerializerTests
             .GenderViews.Add(Sex.Male)
             .VCard;
 
-        string vcf = vc.ToVcfString(VCdVersion.V3_0, options: Opts.Default.Set(Opts.WriteWabExtensions));
+        string vcf = vc.ToVcfString(VCdVersion.V3_0, options: VcfOpts.Default.Set(VcfOpts.WriteWabExtensions));
 
         vc = Vcf.Parse(vcf)[0];
 

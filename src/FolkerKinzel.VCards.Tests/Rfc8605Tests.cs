@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -25,7 +26,7 @@ public class Rfc8605Tests
         Assert.IsTrue(vc.ContactUris.Any());
 
         string vcfStr1 = vc.ToVcfString(VCdVersion.V4_0);
-        string vcfStr2 = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteRfc8605Extensions));
+        string vcfStr2 = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteRfc8605Extensions));
         string vcfStr3 = vc.ToVcfString(VCdVersion.V3_0);
         string vcfStr4 = vc.ToVcfString(VCdVersion.V2_1);
 
@@ -43,19 +44,23 @@ public class Rfc8605Tests
         Assert.AreEqual(contactUri, vc.ContactUris.PrefOrNull()?.Value);
     }
 
-
     [TestMethod]
     public void CcTest1()
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add("Blümchenweg 42", "Holzhausen", "01234", "Germany",
+            .Addresses.Add(AddressBuilder.Create()
+                                         .AddStreet("Blümchenweg 42")
+                                         .AddLocality("Holzhausen")
+                                         .AddPostalCode("01234")
+                                         .AddCountry("Germany")
+                                         .Build(),
                             parameters: p => p.CountryCode = "DE"
                           )
             .VCard;
 
         string vcfStr1 = vc.ToVcfString(VCdVersion.V4_0);
-        string vcfStr2 = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Unset(Opts.WriteRfc8605Extensions));
+        string vcfStr2 = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteRfc8605Extensions));
         string vcfStr3 = vc.ToVcfString(VCdVersion.V3_0);
         string vcfStr4 = vc.ToVcfString(VCdVersion.V2_1);
 
@@ -64,13 +69,12 @@ public class Rfc8605Tests
         Assert.IsFalse(vcfStr3.Contains("CC=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(vcfStr4.Contains("CC=", StringComparison.OrdinalIgnoreCase));
 
-
         vc = Vcf.Parse(vcfStr1)[0];
 
         Assert.IsNotNull(vc);
         Assert.IsNotNull(vc.Addresses);
 
-        VCards.Models.AddressProperty? adr = vc.Addresses.First();
+        AddressProperty? adr = vc.Addresses.First();
         Assert.IsNotNull(adr);
 
         Assert.AreEqual("DE", adr.Parameters.CountryCode);

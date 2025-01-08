@@ -65,7 +65,7 @@ public class RelationTypesCollectorTests
             Rel? comp = RelConverter.Parse(list[0].AsSpan());
 
             Assert.IsTrue(comp.HasValue);
-            Assert.AreEqual(comp!.Value, item);
+            Assert.AreEqual(comp.Value, item);
 
             var comp2 = (Rel)Enum.Parse(
                 typeof(Rel), list[0].Replace("-", ""), true);

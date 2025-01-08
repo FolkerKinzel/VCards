@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -11,7 +12,7 @@ public class V4Tests
     [TestMethod]
     public void Parse()
     {
-        IList<VCard>? vcard = Vcf.Load(TestFiles.V4vcf);
+        IReadOnlyList<VCard>? vcard = Vcf.Load(TestFiles.V4vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -24,7 +25,7 @@ public class V4Tests
         var vcard = new VCard();
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
-        IList<VCard>? cards = Vcf.Parse(s);
+        IReadOnlyList<VCard>? cards = Vcf.Parse(s);
 
         Assert.AreEqual(cards.Count, 1);
 
@@ -56,9 +57,9 @@ public class V4Tests
 
         vcard.Notes = [new(UNITEXT)];
 
-        vcard.Keys = DataProperty.FromText(ASCIITEXT);
+        vcard.Keys = new DataProperty(RawData.FromText(ASCIITEXT));
 
-        vcard.Photos = DataProperty.FromBytes(bytes, "image/jpeg");
+        vcard.Photos = new DataProperty(RawData.FromBytes(bytes, "image/jpeg"));
 
         string s = vcard.ToVcfString(VCdVersion.V4_0);
 
@@ -70,9 +71,9 @@ public class V4Tests
 
         _ = Vcf.Parse(s);
 
-        Assert.AreEqual(vcard.Keys?.First()?.Value?.String, ASCIITEXT);
+        Assert.AreEqual(vcard.Keys?.First()?.Value.String, ASCIITEXT);
         Assert.AreEqual("image/jpeg", vcard.Photos?.First()?.Parameters.MediaType);
-        Assert.IsTrue(vcard.Photos?.First()?.Value?.Bytes?.SequenceEqual(bytes) ?? false);
+        Assert.IsTrue(vcard.Photos?.First()?.Value.Bytes?.SequenceEqual(bytes) ?? false);
 
 
         static byte[] CreateBytes()
@@ -96,11 +97,11 @@ public class V4Tests
     [TestMethod]
     public void SerializeVCard()
     {
-        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0, options: Opts.All);
+        string s = Utility.CreateVCard().ToVcfString(VCdVersion.V4_0, options: VcfOpts.All);
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = Vcf.Parse(s);
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -112,7 +113,7 @@ public class V4Tests
         Assert.AreEqual(VCdVersion.V4_0, vcard.Version);
 
         Assert.IsNull(vcard.DirectoryName);
-        Assert.IsNotNull(vcard.TimeStamp);
+        Assert.IsNotNull(vcard.Updated);
         Assert.IsNull(vcard.Mailer);
         Assert.IsNotNull(vcard.ProductID);
         vcard.ProductID = null;
@@ -128,7 +129,7 @@ public class V4Tests
         Assert.IsNotNull(vc.DeathPlaceViews);
         Assert.IsNotNull(vc.DeathDateViews);
 
-        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.WriteRfc6474Extensions));
+        IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOpts.WriteRfc6474Extensions));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -139,7 +140,7 @@ public class V4Tests
         Assert.IsNotNull(vc.DeathDateViews);
 
 
-        list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.None));
+        list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOpts.None));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -155,13 +156,13 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromText("http://folkers-website.de"),
+            Members = new RelationProperty(Relation.Create(ContactID.Create("http://folkers-website.de"))),
             Kind = new KindProperty(Kind.Group)
         };
 
         Assert.IsNotNull(vc.Members);
 
-        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
+        IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -175,12 +176,12 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromText("Important Member"),
+            Members = new RelationProperty(Relation.Create(ContactID.Create("Important Member"))),
         };
 
         Assert.IsNotNull(vc.Members);
 
-        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
+        IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.IsNotNull(list);
         Assert.AreEqual(2, list.Count);
@@ -196,20 +197,20 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
+            Members = new RelationProperty(Relation.Create(VCardBuilder.Create(setContactID: false)
                                                               .DisplayNames.Add("Important Member")
-                                                              .ID.Set(Guid.Empty)
-                                                              .VCard),
+                                                              .ContactID.Set(Guid.Empty)
+                                                              .VCard)),
         };
 
         Assert.IsNotNull(vc.Members);
 
-        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
+        IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.AreEqual(2, list.Count);
         vc = list[1];
 
-        Assert.AreNotEqual(Guid.Empty, vc.ID?.Value);
+        Assert.AreNotEqual(Guid.Empty, vc.ContactID?.Value.Guid);
     }
 
     [TestMethod]
@@ -217,18 +218,20 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false).DisplayNames.Add("Important Member").VCard),
+            Members = new RelationProperty(Relation.Create(VCardBuilder.Create(setContactID: false).DisplayNames.Add("Important Member").VCard)),
         };
 
         Assert.IsNotNull(vc.Members);
-        Assert.IsNull(vc.Members!.First()?.Value?.VCard?.ID);
+        VCard? firstMembersVCard = vc.Members.First()?.Value.VCard;
+        Assert.IsNotNull(firstMembersVCard);
+        Assert.IsNull(firstMembersVCard.ContactID);
 
-        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
+        IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.AreEqual(2, list.Count);
         vc = list[1];
 
-        Assert.IsNotNull(vc.ID);
+        Assert.IsNotNull(vc.ContactID);
     }
 
     [TestMethod]
@@ -237,16 +240,16 @@ public class V4Tests
         var guid = Guid.NewGuid();
         var vc = new VCard
         {
-            Members = RelationProperty.FromVCard(VCardBuilder.Create(setID: false)
+            Members = new RelationProperty(Relation.Create(VCardBuilder.Create(setContactID: false)
                                                               .DisplayNames.Add("Important Member")
-                                                              .ID.Set(guid)
-                                                              .VCard)
-                      .Concat(RelationProperty.FromGuid(guid)),
+                                                              .ContactID.Set(guid)
+                                                              .VCard))
+                      .Concat(new RelationProperty(Relation.Create(ContactID.Create(guid)))),
         };
 
         Assert.IsNotNull(vc.Members);
 
-        IList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
+        IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.AreEqual(2, list.Count);
 
@@ -259,17 +262,17 @@ public class V4Tests
     {
         var vc = new VCard
         {
-            Members = RelationProperty.FromText(null),
+            Members = new RelationProperty(Relation.Empty),
         };
 
         Assert.IsNotNull(vc.Members);
 
-        string vcf = vc.ToVcfString(version: VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteEmptyProperties));
+        string vcf = vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties));
 
-        IList<VCard> list = Vcf.Parse(vcf);
+        IReadOnlyList<VCard> list = Vcf.Parse(vcf);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(2, list.Count);
+        Assert.AreEqual(1, list.Count);
     }
 
 
@@ -300,7 +303,7 @@ public class V4Tests
 
         Assert.IsNotNull(s);
 
-        IList<VCard> list = Vcf.Parse(s);
+        IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
         Assert.AreEqual(1, list.Count);
@@ -335,7 +338,7 @@ public class V4Tests
     [TestMethod]
     public void DisplayNameTest1()
     {
-        var nm = new NameProperty("Kinzel", "Folker");
+        var nm = new NameProperty(NameBuilder.Create().AddSurname("Kinzel").AddGiven("Folker").Build());
 
         var vCard = new VCard { NameViews = nm };
 
@@ -362,7 +365,7 @@ public class V4Tests
 
         var vcard = new VCard { Messengers = [null, whatsAppImpp] };
 
-        string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: Opts.Default);
+        string vcfString = vcard.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default);
         vcard = Vcf.Parse(vcfString)[0];
 
         whatsAppImpp = vcard.Messengers?.First();
@@ -374,7 +377,7 @@ public class V4Tests
     [TestMethod]
     public void CalendarTest1()
     {
-        var prop = DateAndOrTimeProperty.FromDate(5, 5);
+        var prop = new DateAndOrTimeProperty(DateAndOrTime.Create(5, 5));
         Assert.AreEqual("gregorian", prop.Parameters.Calendar);
         prop.Parameters.Calendar = "GREGORIAN";
         Assert.AreEqual("GREGORIAN", prop.Parameters.Calendar);
@@ -413,7 +416,7 @@ public class V4Tests
             .Interests.Add("Linq", parameters: p => p.NonStandard = [new KeyValuePair<string, string>("LEVEL", "VeryInterested")])
             .VCard;
 
-        string serialized = vc.ToVcfString(VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteNonStandardParameters));
+        string serialized = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardParameters));
 
         vc = Vcf.Parse(serialized)[0];
         TextProperty expertise = vc.Expertises!.First()!;
@@ -431,7 +434,7 @@ public class V4Tests
     {
         VCard vc = VCardBuilder
             .Create()
-            .NameViews.Add(null, "Folker", parameters: p => p.SortAs = [])
+            .NameViews.Add(NameBuilder.Create().AddGiven("Folker").Build(), parameters: p => p.SortAs = [])
             .AnniversaryViews.Add("In summer", parameters: p => p.Language = "en")
             .Phones.Add("tel:123",
                         parameters: p =>
@@ -446,9 +449,9 @@ public class V4Tests
             .VCard;
 
         string serialized = vc.ToVcfString(VCdVersion.V4_0,
-            options: Opts.Default.Set(Opts.WriteNonStandardParameters)
-                                 .Set(Opts.WriteNonStandardProperties)
-                                 .Unset(Opts.SetPropertyIDs));
+            options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardParameters)
+                                 .Set(VcfOpts.WriteNonStandardProperties)
+                                 .Unset(VcfOpts.SetPropertyIDs));
 
         vc = Vcf.Parse(serialized)[0];
 
@@ -489,13 +492,12 @@ public class V4Tests
 
         VCardBuilder
             .Create(vc)
-            .Relations.Add(vc.ID!.Value)
+            .Relations.Add(vc.ContactID!.Value)
             .Relations.Add(vc);
 
-        var result = vc.Dereference();
+        vc.Dereference();
 
-        Assert.AreEqual(1, result.Count);
-        Assert.AreEqual(2, result[0].Relations!.Count());
+        Assert.AreEqual(2, vc.Relations!.Count());
     }
 
     [TestMethod]
@@ -529,7 +531,7 @@ public class V4Tests
             ])
             .VCard;
 
-        string serialized = Vcf.ToString(vc, VCdVersion.V4_0, options: Opts.Default.Set(Opts.WriteNonStandardParameters));
+        string serialized = Vcf.ToString(vc, VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardParameters));
 
         vc = Vcf.Parse(serialized)[0];
 

@@ -1,5 +1,7 @@
+using System.Globalization;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards;
 
@@ -7,6 +9,12 @@ public sealed partial class VCard
 {
     /// <summary>Newline used in VCF files ("\r\n").</summary>
     public const string NewLine = "\r\n";
+
+    /// <summary>
+    /// Defines the default value for the <see cref="ParameterSection.Calendar"/> property,
+    /// which stands for the Gregorian calendar system.
+    /// </summary>
+    public const string DefaultCalendar = "gregorian";
 
     internal const int MAX_BYTES_PER_LINE = 75;
     internal const string DEFAULT_CHARSET = "UTF-8";

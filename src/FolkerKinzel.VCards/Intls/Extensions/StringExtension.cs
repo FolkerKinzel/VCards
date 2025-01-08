@@ -4,7 +4,7 @@ using FolkerKinzel.VCards.Intls.Encodings;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
-internal static partial class StringExtension
+internal static class StringExtension
 {
     /// <summary> Indicates whether <paramref name="s" /> needs 
     /// Quoted-Printable encoding.</summary>
@@ -21,6 +21,19 @@ internal static partial class StringExtension
             int c = span[i];
 
             if (c is > 126 or < 32)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    internal static bool ContainsAnyThatNeedsQpEncoding(this string[] strings)
+    {
+        foreach (string s in strings.AsSpan())
+        {
+            if (NeedsToBeQpEncoded(s))
             {
                 return true;
             }

@@ -66,7 +66,7 @@ public class ImppTypesCollectorTests
 
 
             Assert.IsTrue(comp.HasValue);
-            Assert.AreEqual(comp!.Value, item);
+            Assert.AreEqual(comp.Value, item);
 
             var comp2 = (Impp)Enum.Parse(
                 typeof(Impp), list[0], true);

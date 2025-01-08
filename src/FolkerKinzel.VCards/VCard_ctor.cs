@@ -3,30 +3,28 @@ using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.PropertyParts;
-using FolkerKinzel.VCards.Resources;
-using FolkerKinzel.VCards.Syncs;
+using FolkerKinzel.VCards.Models.Properties;
+using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards;
 
 public sealed partial class VCard
 {
     /// <summary>Initializes a new <see cref="VCard" /> object.</summary>
-    /// <param name="setID"><c>true</c> to set the <see cref="VCard.ID"/>
-    /// property with a newly created <see cref="IDProperty"/>, otherwise
+    /// <param name="setContactID"><c>true</c> to set the <see cref="VCard.ContactID"/>
+    /// property with a newly created <see cref="ContactIDProperty"/> instance, otherwise
     /// <c>false</c>.</param>
     /// <param name="setCreated">
     /// <c>true</c> to set the <see cref="VCard.Created"/>
-    /// property with a newly created <see cref="TimeStampProperty"/>, otherwise
+    /// property with a newly created <see cref="TimeStampProperty"/> instance, otherwise
     /// <c>false</c>.
     /// </param>
-    public VCard(bool setID = true, bool setCreated = true)
+    public VCard(bool setContactID = true, bool setCreated = true)
     {
-        if (setID)
+        if (setContactID)
         {
-            ID = new IDProperty();
+            ContactID = new ContactIDProperty(Models.ContactID.Create());
         }
 
         if (setCreated)
@@ -52,7 +50,7 @@ public sealed partial class VCard
             Set(kvp.Key, kvp.Value switch
             {
                 VCardProperty prop => prop.Clone(),
-                IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(Cloned).Cast<XmlProperty?>().ToArray(),
+                //IEnumerable<XmlProperty?> xmlPropEnumerable => xmlPropEnumerable.Select(Cloned).Cast<XmlProperty?>().ToArray(),
                 IEnumerable<TextProperty?> txtPropEnumerable => txtPropEnumerable.Select(Cloned).Cast<TextProperty?>().ToArray(),
                 IEnumerable<DateAndOrTimeProperty?> dtTimePropEnumerable => dtTimePropEnumerable.Select(Cloned).Cast<DateAndOrTimeProperty?>().ToArray(),
                 IEnumerable<AddressProperty?> adrPropEnumerable => adrPropEnumerable.Select(Cloned).Cast<AddressProperty?>().ToArray(),
@@ -115,7 +113,14 @@ public sealed partial class VCard
                     this.Version = VCdVersionConverter.Parse(vcfRow.Value.Span);
                     break;
                 case PropKeys.KIND:
-                    Kind = new KindProperty(vcfRow);
+                    if (KindProperty.TryParse(vcfRow, out KindProperty? kindProp))
+                    {
+                        Kind = kindProp;
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
+                    }
                     break;
                 case PropKeys.TEL:
                     Phones = Concat(Phones, new TextProperty(vcfRow, this.Version));
@@ -130,7 +135,7 @@ public sealed partial class VCard
                     DisplayNames = Concat(DisplayNames, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.BDAY:
-                    BirthDayViews = Concat(BirthDayViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
+                    BirthDayViews = Concat(BirthDayViews, new DateAndOrTimeProperty(vcfRow, this.Version, info));
                     break;
                 case PropKeys.ADR: // PostOfficeBox, ExtendedAddress, Street, Locality, Region, PostalCode, Country
                     Addresses = Concat(Addresses, new AddressProperty(vcfRow, this.Version));
@@ -140,7 +145,7 @@ public sealed partial class VCard
                     labels.Add(new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.REV:
-                    TimeStamp = new TimeStampProperty(vcfRow, info);
+                    Updated = new TimeStampProperty(vcfRow, info);
                     break;
                 case PropKeys.Rfc2739.CAPURI:
                     CalendarAccessUris = Concat(CalendarAccessUris, new TextProperty(vcfRow, this.Version));
@@ -170,13 +175,20 @@ public sealed partial class VCard
                     ContactUris = Concat(ContactUris, new TextProperty(vcfRow, Version));
                     break;
                 case PropKeys.UID:
-                    ID = new IDProperty(vcfRow);
+                    ContactID = new ContactIDProperty(vcfRow, Version);
                     break;
                 case PropKeys.ORG:
                     Organizations = Concat(Organizations, new OrgProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.GEO:
-                    GeoCoordinates = Concat(GeoCoordinates, new GeoProperty(vcfRow));
+                    if(GeoProperty.TryParse(vcfRow, out GeoProperty? geoProp))
+                    {
+                        GeoCoordinates = Concat(GeoCoordinates, geoProp);
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
+                    }
                     break;
                 case PropKeys.NICKNAME:
                     NickNames = Concat(NickNames, new StringCollectionProperty(vcfRow, this.Version));
@@ -185,16 +197,16 @@ public sealed partial class VCard
                     Categories = Concat(Categories, new StringCollectionProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.SOUND:
-                    Sounds = Concat(Sounds, DataProperty.Parse(vcfRow, this.Version));
+                    Sounds = Concat(Sounds, new DataProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.PHOTO:
-                    Photos = Concat(Photos, DataProperty.Parse(vcfRow, this.Version));
+                    Photos = Concat(Photos, new DataProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.LOGO:
-                    Logos = Concat(Logos, DataProperty.Parse(vcfRow, this.Version));
+                    Logos = Concat(Logos, new DataProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.KEY:
-                    Keys = Concat(Keys, DataProperty.Parse(vcfRow, this.Version));
+                    Keys = Concat(Keys, new DataProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.SORT_STRING: // nur vCard 3.0
                     if (vcfRowsParsed < vcfRowsToParse)
@@ -209,17 +221,17 @@ public sealed partial class VCard
                         {
                             if (NameViews is not null)
                             {
-                                NameViews.FirstOrNullIntl(ignoreEmptyItems: false)!.Parameters.SortAs = [textProp.Value];
+                                NameViews.FirstOrNullIntl(ignoreEmptyItems: false)!.Parameters.SetSortAs([textProp.Value]);
                             }
                             // this is not legal: N property is required in VCard 3.0
                             else if (Organizations is not null)
                             {
-                                Organizations.PrefOrNullIntl(ignoreEmptyItems: false)!.Parameters.SortAs = [textProp.Value];
+                                Organizations.PrefOrNullIntl(ignoreEmptyItems: false)!.Parameters.SetSortAs([textProp.Value]);
                             }
                             else
                             {
-                                var name = new NameProperty();
-                                name.Parameters.SortAs = [textProp.Value];
+                                var name = new NameProperty(Name.Empty);
+                                name.Parameters.SetSortAs([textProp.Value]);
                                 NameViews = name;
                             }
                         }
@@ -229,7 +241,7 @@ public sealed partial class VCard
                     Sources = Concat(Sources, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.ANNIVERSARY:
-                    this.AnniversaryViews = Concat(AnniversaryViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
+                    this.AnniversaryViews = Concat(AnniversaryViews, new DateAndOrTimeProperty(vcfRow, this.Version, info));
                     break;
                 case PropKeys.NonStandard.X_ANNIVERSARY:
                 case PropKeys.NonStandard.Evolution.X_EVOLUTION_ANNIVERSARY:
@@ -241,7 +253,7 @@ public sealed partial class VCard
                     }
                     else if (AnniversaryViews is null)
                     {
-                        this.AnniversaryViews = DateAndOrTimeProperty.Parse(vcfRow, this.Version, info);
+                        this.AnniversaryViews = new DateAndOrTimeProperty(vcfRow, this.Version, info);
                     }
 
                     break;
@@ -260,8 +272,8 @@ public sealed partial class VCard
                         if (!valSpan.IsEmpty)
                         {
                             GenderProperty genderProp = char.ToUpperInvariant(valSpan[0]) == 'F'
-                                ? new GenderProperty(Sex.Female, group: vcfRow.Group)
-                                : new GenderProperty(Sex.Male, group: vcfRow.Group);
+                                ? new GenderProperty(Gender.Female, vcfRow.Group)
+                                : new GenderProperty(Gender.Male, vcfRow.Group);
                             genderProp.Parameters.Assign(vcfRow.Parameters);
 
                             GenderViews = genderProp;
@@ -273,11 +285,11 @@ public sealed partial class VCard
                     {
                         queue.Enqueue(vcfRow);
                     }
-                    else if(GenderViews is null && !vcfRow.Value.IsEmpty)
+                    else if (GenderViews is null && !vcfRow.Value.IsEmpty)
                     {
                         GenderProperty genderProp = vcfRow.Value.Span.Contains('1')
-                                            ? new GenderProperty(Enums.Sex.Female, group: vcfRow.Group)
-                                            : new GenderProperty(Enums.Sex.Male, group: vcfRow.Group);
+                                            ? new GenderProperty(Gender.Female, vcfRow.Group)
+                                            : new GenderProperty(Gender.Male, vcfRow.Group);
                         genderProp.Parameters.Assign(vcfRow.Parameters);
 
                         GenderViews = genderProp;
@@ -309,7 +321,7 @@ public sealed partial class VCard
                     {
                         var textProp = new TextProperty(vcfRow, this.Version);
 
-                        if (textProp.Value is not null &&
+                        if (!textProp.IsEmpty &&
                             (Messengers?.All(x => x!.Value != textProp.Value) ?? true))
                         {
                             Messengers = Concat(Messengers, textProp);
@@ -329,16 +341,30 @@ public sealed partial class VCard
 
                     break;
                 case PropKeys.LANG:
-                    Languages = Concat(Languages, new TextProperty(vcfRow, this.Version));
+                    SpokenLanguages = Concat(SpokenLanguages, new TextProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.MAILER:
                     Mailer = new TextProperty(vcfRow, this.Version);
                     break;
                 case PropKeys.TZ:
-                    TimeZones = Concat(TimeZones, new TimeZoneProperty(vcfRow, this.Version));
+                    if (TimeZoneProperty.TryParse(vcfRow, Version,  out TimeZoneProperty? tzProp))
+                    {
+                        TimeZones = Concat(TimeZones, tzProp);
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
+                    }
                     break;
                 case PropKeys.CLASS:
-                    Access = new AccessProperty(vcfRow);
+                    if (AccessProperty.TryParse(vcfRow, out AccessProperty? accessProperty))
+                    {
+                        Access = accessProperty;
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
+                    }
                     break;
                 case PropKeys.MEMBER:
                     Members = Concat(Members, RelationProperty.Parse(vcfRow, this.Version));
@@ -375,7 +401,7 @@ public sealed partial class VCard
                         vcfRow.Parameters.DataType ??= Data.Text;
                         vcfRow.Parameters.RelationType = Rel.Agent;
 
-                        Relations = Concat(Relations, new RelationTextProperty(new TextProperty(vcfRow, this.Version)));
+                        Relations = Concat(Relations, RelationProperty.Parse(vcfRow, this.Version));
                     }
 
                     break;
@@ -386,21 +412,21 @@ public sealed partial class VCard
 
                         if (valSpan.IsWhiteSpace())
                         {
-                            Relations = Concat(Relations, RelationProperty.FromText(null, Rel.Agent, vcfRow.Group));
+                            var relProp = new RelationProperty(Relation.Empty, vcfRow.Group);
+                            relProp.Parameters.RelationType = Rel.Agent;
+                            Relations = Concat(Relations, relProp);
                         }
                         else
                         {
                             if (valSpan.StartsWith("BEGIN:VCARD", StringComparison.OrdinalIgnoreCase))
                             {
                                 VCard? nested = ParseNestedVcard(vcfRow.Value.Span, info, this.Version);
+                                RelationProperty relProp = nested is null
+                                                            ? RelationProperty.Parse(vcfRow, Version)
+                                                            : new RelationProperty(Relation.Create(nested), vcfRow.Group);
+                                relProp.Parameters.RelationType = Rel.Agent;
 
-                                Relations =
-                                    Concat(Relations, nested is null
-                                                       ? new RelationTextProperty(new TextProperty(vcfRow, Version))
-
-                                                       // use the ctor directly because nested can't be a circular
-                                                       // reference and therefore don't neeed to be cloned:
-                                                       : new RelationVCardProperty(nested, Rel.Agent, vcfRow.Group));
+                                Relations = Concat(Relations, relProp);
                             }
                             else
                             {
@@ -411,15 +437,19 @@ public sealed partial class VCard
                         break;
                     }
                 case PropKeys.PROFILE:
-                    this.Profile = new ProfileProperty(vcfRow, this.Version);
+                    this.Profile = new ProfileProperty(vcfRow);
                     break;
                 case PropKeys.XML:
-                    Xmls = Concat(Xmls, new XmlProperty(vcfRow));
+                    Xmls = Concat(Xmls, new TextProperty(vcfRow, Version));
                     break;
                 case PropKeys.CLIENTPIDMAP:
                     if (AppIDProperty.TryParse(vcfRow, out AppIDProperty? prop))
                     {
                         AppIDs = AppIDs?.Concat(prop) ?? prop;
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
                     }
                     break;
                 case PropKeys.PRODID:
@@ -432,7 +462,7 @@ public sealed partial class VCard
                 // Extensions to the vCard standard:
                 case PropKeys.Rfc6474.DEATHDATE:
                     this.DeathDateViews =
-                        Concat(DeathDateViews, DateAndOrTimeProperty.Parse(vcfRow, this.Version, info));
+                        Concat(DeathDateViews, new DateAndOrTimeProperty(vcfRow, this.Version, info));
                     break;
                 case PropKeys.Rfc6474.BIRTHPLACE:
                     this.BirthPlaceViews =
@@ -458,7 +488,14 @@ public sealed partial class VCard
                     Created = new TimeStampProperty(vcfRow, info);
                     break;
                 case PropKeys.Rfc9554.GRAMGENDER:
-                    GramGenders = Concat(GramGenders, new GramProperty(vcfRow));
+                    if(GramProperty.TryParse(vcfRow, out GramProperty? gramProperty))
+                    {
+                        GramGenders = Concat(GramGenders, gramProperty);
+                    }
+                    else
+                    {
+                        NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
+                    }
                     break;
                 case PropKeys.Rfc9554.LANGUAGE:
                     Language = new TextProperty(vcfRow, this.Version);
@@ -477,6 +514,8 @@ public sealed partial class VCard
                     break;
                 default:
                     Debug.Assert(!vcfRow.Key.Equals(PropKeys.NonStandard.X_SOCIALPROFILE, StringComparison.OrdinalIgnoreCase));
+                    Debug.Assert(!vcfRow.Key.Equals(PropKeys.NonStandard.X_AB_LABEL, StringComparison.OrdinalIgnoreCase));
+
                     NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
                     break;
             };//switch
@@ -511,9 +550,9 @@ public sealed partial class VCard
 
             using var reader = new StringReader(s);
 
-            IList<VCard> list = Vcf.DoDeserialize(reader, versionHint);
+            IReadOnlyList<VCard> list = Vcf.DoDeserialize(reader, versionHint);
 
-            return list.FirstOrDefault();
+            return list.Count == 0 ? null : list[0];
         }
     }//ctor
 
@@ -586,7 +625,7 @@ public sealed partial class VCard
 
         static AddressProperty CreateEmptyAddressPropertyWithLabel(TextProperty label)
         {
-            var adrProp = new AddressProperty("", null, null, null, autoLabel: false);
+            var adrProp = new AddressProperty(Address.Empty);
             adrProp.Parameters.Assign(label.Parameters);
             adrProp.Parameters.Label = label.Value;
             return adrProp;
