@@ -19,7 +19,6 @@ internal static class UidIssue
             END:VCARD
             """;
 
-
         IReadOnlyList<VCard> vCards = Vcf.Parse(vcard3);
 
         if (vCards.Count >= 1)
@@ -39,13 +38,13 @@ internal static class UidIssue
 Console output:
 
 Version: V3_0
-UID:     System.String: dd72824a-cfda-457f-ae74-d70c2711e532@example.org
+UID:     String: dd72824a-cfda-457f-ae74-d70c2711e532@example.org
 String:  dd72824a-cfda-457f-ae74-d70c2711e532@example.org
 Note:    Simplified card for testing (Sogo Connector)
 
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-12-01T13:43:08Z
+REV:2025-01-08T23:06:07Z
 UID:dd72824a-cfda-457f-ae74-d70c2711e532@example.org
 FN:Some dude
 N:Dude;Some;Fred;;

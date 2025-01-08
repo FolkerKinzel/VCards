@@ -7,8 +7,11 @@
 ### 8.0.1
 - [ ] Remove symbols that are marked as `Obsolete` errors.
 
-### 8.0.0
-- [ ] Make .NET 9.0 version of the package
+### 8.0.0-beta.1
+- [ ] Write tests
+
+### 8.0.0-alpha.1
+- [x] Make .NET 9.0 version of the package
 
 &nbsp;
 - [x] Let `Vcf.DoDeserialize` return `IReadOnlyList<VCard>`
