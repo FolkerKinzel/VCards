@@ -14,8 +14,8 @@
     <NuGetAudit>false</NuGetAudit>
 	</PropertyGroup>
 
-	<!-- 👇 disable the nullable warnings when compiling for .NET Standard 2.0 -->
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net462'">
+	<!-- 👇 disable the nullable warnings when compiling for .NET Framework -->
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
 		<NoWarn>$(NoWarn);8600;8601;8602;8603;8604</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>

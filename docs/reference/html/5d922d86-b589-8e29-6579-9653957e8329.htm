@@ -1,14 +1,8 @@
 ﻿<!DOCTYPE html ><html lang="en-US"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="shortcut icon" href="../icons/favicon.ico" /><link rel="stylesheet" href="../css/bulma.css" /><link rel="stylesheet" href="../css/font-awesome.min.css" /><link rel="stylesheet" href="../css/presentationStyle.css" /><link rel="stylesheet" href="../css/vs.min.css" /><script src="../scripts/jquery-3.5.1.min.js"></script><script src="../scripts/clipboard.min.js"></script><script src="../scripts/highlight.min.js"></script><script src="../scripts/presentationStyle.js"></script><title>RawDataBuilder Structure</title><meta name="Title" content="RawDataBuilder" /><meta name="Help.Id" content="T:FolkerKinzel.VCards.BuilderParts.RawDataBuilder" /><meta name="Help.ContentType" content="Reference" /><meta name="container" content="FolkerKinzel.VCards.BuilderParts" /><meta name="guid" content="5d922d86-b589-8e29-6579-9653957e8329" /><meta name="Description" content="Provides methods for editing properties that contain instances." /><meta name="tocFile" content="../toc/IDBA.xml" /></head><body><div class="fixedLayout"><div id="Header" class="fixedHeader"><div class="pageHeader level mb-0 py-2 px-4"><div id="TitleContainer" class="level-left"><div class="level-item"><img src="../icons/Help.png" /></div><div id="DocumentationTitle" class="level-item">FolkerKinzel.VCards</div></div><div id="LangFilterSearchContainer" class="level-right"><div class="level-item"><div class="dropdown is-hoverable"><div class="dropdown-trigger"><button class="button" aria-haspopup="true" aria-controls="dropdown-menu"><span id="CurrentLanguage"></span><span class="icon is-small"><i class="fa fa-angle-down" aria-hidden="true"></i></span></button></div><div class="dropdown-menu" role="menu"><div id="LanguageSelections" class="dropdown-content"><a class="dropdown-item languageFilterItem" data-languageId="cs">C#</a><a class="dropdown-item languageFilterItem" data-languageId="vb">VB</a><a class="dropdown-item languageFilterItem" data-languageId="cpp">C++</a><a class="dropdown-item languageFilterItem" data-languageId="fs">F#</a></div></div></div></div><div class="level-item"><form id="SearchForm" action="#" onsubmit="TransferToSearchPage(); return false;"><div class="field"><div class="control has-icons-left"><input id="SearchTerms" class="input" type="text" maxlength="200" placeholder="Search" /><span class="icon is-small is-left"><i class="fa fa-search"></i></span><button id="SearchButton" type="submit" class="is-hidden"></button></div></div></form></div></div></div></div><div class="fixedContent"><nav class="breadcrumb my-1 px-2 border-bottom" role="navigation"><ul id="TopicBreadcrumbs" /></nav><div id="ContentContainer" class="columns pl-5 pr-5 fixedContent"><div id="ShowHideTOCColumn" class="column is-hidden-tablet"><a id="ShowHideTOC">Show/Hide TOC</a></div><div id="TOCColumn" class="column is-hidden-mobile"><nav class="toc"><ul id="TableOfContents" class="toc-menu" /></nav></div><div id="Resizer" class="is-hidden"></div><div id="TopicContent" class="column content is-7"><h1>Raw<wbr />Data<wbr />Builder Structure</h1><div class="summary">
             Provides methods for editing <a href="23413828-9a4a-2851-b88b-84d0afcb0031.htm">VCard</a> properties that contain 
-<<<<<<< HEAD:docs/reference/html/3cf94ef4-0fc1-d9bf-641b-95b6aaef1639.htm
-            <a href="aa898609-8843-98f4-56c5-cc0c7bf76b89.htm">DataProperty</a> instances.
-            </div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Definition</h2><div id="IDBSection"><strong>Namespace:</strong> <a href="30716183-7f69-ceb8-b5fe-4d9f23e7fd2b.htm">FolkerKinzel.VCards.BuilderParts</a><br /><strong>Assembly:</strong> FolkerKinzel.VCards (in FolkerKinzel.VCards.dll) Version: 7.4.2+341eb6222a3d0a2dbec4605087b4a9273f6b866b<div class="codeSnippet" data-codeSnippetLanguage="cs"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs"><span class="keyword">public</span> <span class="keyword">readonly</span> <span class="keyword">struct</span> <span class="identifier">DataBuilder</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="vb"><div class="codeHeader"><span class="codeHeaderTitle">VB</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-vb"><span class="keyword">Public</span> <span class="keyword">Structure</span> <span class="identifier">DataBuilder</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="cpp"><div class="codeHeader"><span class="codeHeaderTitle">C++</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cpp"><span class="keyword">public</span> <span class="keyword">value class</span> <span class="identifier">DataBuilder</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="fs"><div class="codeHeader"><span class="codeHeaderTitle">F#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-fs">[&lt;<span class="identifier">SealedAttribute</span>&gt;]
-<span class="keyword">type</span> <span class="identifier">DataBuilder</span> = 
-=======
             <a href="218acc65-ecc0-15fd-8bcd-62780416c9ee.htm">DataProperty</a> instances.
-            </div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Definition</h2><div id="IDBSection"><strong>Namespace:</strong> <a href="30716183-7f69-ceb8-b5fe-4d9f23e7fd2b.htm">FolkerKinzel.VCards.BuilderParts</a><br /><strong>Assembly:</strong> FolkerKinzel.VCards (in FolkerKinzel.VCards.dll) Version: 8.0.0-alpha.1+2b1f870f90991e6d50563e3354672508e8641ed0<div class="codeSnippet" data-codeSnippetLanguage="cs"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs"><span class="keyword">public</span> <span class="keyword">readonly</span> <span class="keyword">struct</span> <span class="identifier">RawDataBuilder</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="vb"><div class="codeHeader"><span class="codeHeaderTitle">VB</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-vb"><span class="keyword">Public</span> <span class="keyword">Structure</span> <span class="identifier">RawDataBuilder</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="cpp"><div class="codeHeader"><span class="codeHeaderTitle">C++</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cpp"><span class="keyword">public</span> <span class="keyword">value class</span> <span class="identifier">RawDataBuilder</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="fs"><div class="codeHeader"><span class="codeHeaderTitle">F#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-fs">[&lt;<span class="identifier">SealedAttribute</span>&gt;]
+            </div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Definition</h2><div id="IDBSection"><strong>Namespace:</strong> <a href="30716183-7f69-ceb8-b5fe-4d9f23e7fd2b.htm">FolkerKinzel.VCards.BuilderParts</a><br /><strong>Assembly:</strong> FolkerKinzel.VCards (in FolkerKinzel.VCards.dll) Version: 8.0.0-alpha.1+fdb9a4c0fa9eedbadc891565730b0be0e108e60f<div class="codeSnippet" data-codeSnippetLanguage="cs"><div class="codeHeader"><span class="codeHeaderTitle">C#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cs"><span class="keyword">public</span> <span class="keyword">readonly</span> <span class="keyword">struct</span> <span class="identifier">RawDataBuilder</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="vb"><div class="codeHeader"><span class="codeHeaderTitle">VB</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-vb"><span class="keyword">Public</span> <span class="keyword">Structure</span> <span class="identifier">RawDataBuilder</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="cpp"><div class="codeHeader"><span class="codeHeaderTitle">C++</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-cpp"><span class="keyword">public</span> <span class="keyword">value class</span> <span class="identifier">RawDataBuilder</span></code></pre></div></div><div class="codeSnippet is-hidden" data-codeSnippetLanguage="fs"><div class="codeHeader"><span class="codeHeaderTitle">F#</span><span class="buttons"><button class="button is-small is-light copyCode" title="Copy"><span class="icon is-small"><i class="fa fa-copy"></i></span><span>Copy</span></button></span></div><div class="codePanel hljs"><pre xml:space="preserve"><code class="language-fs">[&lt;<span class="identifier">SealedAttribute</span>&gt;]
 <span class="keyword">type</span> <span class="identifier">RawDataBuilder</span> = 
->>>>>>> v8:docs/reference/html/5d922d86-b589-8e29-6579-9653957e8329.htm
     <span class="keyword">struct</span>
         <span class="keyword">inherit</span> <span class="identifier">ValueType</span>
     <span class="keyword">end</span></code></pre></div></div><dl class="inheritanceHierarchy"><dt>Inheritance</dt><dd><a href="https://learn.microsoft.com/dotnet/api/system.object" target="_blank" rel="noopener noreferrer">Object</a>  <span class="icon is-small"><i class="fa fa-arrow-right"></i></span>  <a href="https://learn.microsoft.com/dotnet/api/system.valuetype" target="_blank" rel="noopener noreferrer">ValueType</a>  <span class="icon is-small"><i class="fa fa-arrow-right"></i></span>  <span class="selflink">RawDataBuilder</span></dd></dl></div><h2 class="quickLinkHeader"><span class="icon toggleSection" tabindex="0"><i class="fa fa-angle-down"></i></span>Remarks</h2><div id="IDBCSection"><article class="message is-warning"><div class="message-header"><p><span class="icon"><i class="fa fa-warning"></i></span>  Important</p></div><div class="message-body">
@@ -131,12 +125,7 @@ public static class VCardExample
                      // TimeZone and GeoCoordinate when writing a vCard 2.1 or vCard 3.0.
                      group: vc =&gt; vc.NewGroup()
                               )
-<<<<<<< HEAD:docs/reference/html/3cf94ef4-0fc1-d9bf-641b-95b6aaef1639.htm
-                // Specifying the country or the ParameterSection.CountryCode property helps to format automatically
-                // appended address labels correctly.
-=======
                 // Append automatically formatted address labels:
->>>>>>> v8:docs/reference/html/5d922d86-b589-8e29-6579-9653957e8329.htm
                 .Addresses.AttachLabels(AddressFormatter.Default)
                 .EMails.Add("kaethe_mueller@internet.com", parameters: p =&gt; p.PropertyClass = PCl.Work)
                 .EMails.Add("mailto:kaethe_at_home@internet.com",
@@ -212,8 +201,8 @@ VCard2.vcf:
 ----------
 BEGIN:VCARD
 VERSION:2.1
-REV:2024-12-01T15:10:23Z
-UID:019382c5-bd15-73cd-991f-bb4dab32656d
+REV:2024-12-24T13:04:47Z
+UID:0193f8c5-1bf4-70a2-ab40-fa6e125077e4
 0.FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8;LANGUAGE=de-DE:Prof. Dr. K=C3=
 =A4the Alexandra Caroline M=C3=BCller-Risinowsky II.
 0.N;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8;LANGUAGE=de-DE:M=C3=BCller-Ris=
@@ -238,8 +227,8 @@ X-SPOUSE;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Paul M=C3=BCller-Risinows=
 ky
 NOTE:Very experienced in Blazor.
 PHOTO;ENCODING=BASE64;TYPE=JPEG:
- SI1xaBnjqjNK1Opj3d/ycBQ01HAp5lwi+y4Gm6Inuj2D0YA0XomsuZ1sVixn7P+yrAfpEy4smV
- WgOXqw
+ iBMZMgWNkPwdc3tUO6jdt3lmnH8FwAkKF53iOR7OHN3z3kiLfaKRVxy+GNHAcXaqMCZ/C6rJlc
+ lDETKq
 
 END:VCARD
 
@@ -248,8 +237,8 @@ VCard3.vcf:
 ----------
 BEGIN:VCARD
 VERSION:3.0
-REV:2024-12-01T15:10:23Z
-UID:019382c5-bd15-73cd-991f-bb4dab32656d
+REV:2024-12-24T13:04:48Z
+UID:0193f8c5-1bf4-70a2-ab40-fa6e125077e4
 0.FN;LANGUAGE=de-DE:Prof. Dr. Käthe Alexandra Caroline Müller-Risinowsky
  II.
 0.N;LANGUAGE=de-DE:Müller-Risinowsky;Käthe;Alexandra Caroline;Prof. Dr.;I
@@ -273,8 +262,8 @@ X-SOCIALPROFILE;X-SERVICE-TYPE=Y:https://y.com/Semaphore
 IMPP;X-SERVICE-TYPE=WhatsDown:https://wd.me/0123456789
 X-SPOUSE:Paul Müller-Risinowsky
 NOTE:Very experienced in Blazor.
-PHOTO;ENCODING=b;TYPE=JPEG:SI1xaBnjqjNK1Opj3d/ycBQ01HAp5lwi+y4Gm6Inuj2D0YA0
- XomsuZ1sVixn7P+yrAfpEy4smVWgOXqw
+PHOTO;ENCODING=b;TYPE=JPEG:iBMZMgWNkPwdc3tUO6jdt3lmnH8FwAkKF53iOR7OHN3z3kiL
+ faKRVxy+GNHAcXaqMCZ/C6rJlclDETKq
 END:VCARD
 
 
@@ -282,9 +271,9 @@ VCard4.vcf:
 ----------
 BEGIN:VCARD
 VERSION:4.0
-CREATED;VALUE=TIMESTAMP:20241201T151017Z
-REV:20241201T151023Z
-UID:urn:uuid:019382c5-bd15-73cd-991f-bb4dab32656d
+CREATED;VALUE=TIMESTAMP:20241224T130447Z
+REV:20241224T130448Z
+UID:urn:uuid:0193f8c5-1bf4-70a2-ab40-fa6e125077e4
 0.FN;DERIVED=TRUE;LANGUAGE=de-DE;PID=1.1:Prof. Dr. Käthe Alexandra Carolin
  e Müller-Risinowsky II.
 0.N;LANGUAGE=de-DE;PID=1.1:Müller-Risinowsky;Käthe;Alexandra,Caroline;Pro
@@ -307,9 +296,9 @@ IMPP;SERVICE-TYPE=WhatsDown;PID=1.1:https://wd.me/0123456789
 RELATED;TYPE=colleague,co-resident,spouse;VALUE=TEXT;PID=1.1:Paul Müller-R
  isinowsky
 NOTE;PID=1.1;AUTHOR-NAME=Satya Nadella;AUTHOR="https://www.microsoft.com/";
- CREATED=20241201T151023Z:Very experienced in Blazor.
-PHOTO;PID=1.1:data:image/jpeg;base64,SI1xaBnjqjNK1Opj3d/ycBQ01HAp5lwi+y4Gm6
- Inuj2D0YA0XomsuZ1sVixn7P+yrAfpEy4smVWgOXqw
+ CREATED=20241224T130447Z:Very experienced in Blazor.
+PHOTO;PID=1.1:data:image/jpeg;base64,iBMZMgWNkPwdc3tUO6jdt3lmnH8FwAkKF53iOR
+ 7OHN3z3kiLfaKRVxy+GNHAcXaqMCZ/C6rJlclDETKq
 CLIENTPIDMAP:1;urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
 GRAMGENDER;LANGUAGE=de;PID=1.1:feminine
 END:VCARD
@@ -320,9 +309,9 @@ Read VCard:
 Version: 3.0
 
 [DataType: TimeStamp]
-Updated: 12/01/2024 15:10:23 +00:00
+Updated: 2024-12-24 13:04:48Z
 
-ContactID: System.Guid: 019382c5-bd15-73cd-991f-bb4dab32656d
+ContactID: Guid: 0193f8c5-1bf4-70a2-ab40-fa6e125077e4
 
 GenderViews: Female
 
@@ -333,9 +322,9 @@ Organizations:
     Units: C#; Webdesign
 
 [DataType: Date]
-BirthDayViews: System.DateOnly: 03/28/1984
+BirthDayViews: DateOnly: 03/28/1984
 
-AnniversaryViews: System.DateOnly: 07/14/2006
+AnniversaryViews: DateOnly: 07/14/2006
 
 [PropertyClass: Work]
 [PhoneType: Voice, Msg, Cell, BBS]
@@ -360,13 +349,13 @@ Messengers: https://wd.me/0123456789
 
 [RelationType: Spouse]
 [DataType: Text]
-Relations: FolkerKinzel.VCards.Models.ContactID: System.String: Paul Müller-Risinowsky
+Relations: String: Paul Müller-Risinowsky
 
 Notes: Very experienced in Blazor.
 
 [Encoding: Base64]
 [MediaType: image/jpeg]
-Photos: System.Byte[]: 60 Bytes
+Photos: Byte[]: 60 Bytes
 
 [Language: de-DE]
 [Group: 0]

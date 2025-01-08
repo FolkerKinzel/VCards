@@ -177,7 +177,7 @@ public sealed class RawData
     /// </summary>
     /// <returns>The file type extension.</returns>
     /// <remarks>
-    /// If <see cref="_object"/> is a <see cref="Uri"/>, the file type extension is for
+    /// If the <see cref="RawData"/> instance encapsulates a <see cref="Uri"/>, the file type extension is for
     /// the data the <see cref="System.Uri"/> references.
     /// </remarks>
     public string GetFileTypeExtension()
