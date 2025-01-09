@@ -9,6 +9,7 @@
 
 ### 8.0.0-beta.1
 - [ ] Write tests
+- [ ] Rename `Vcf.ToString(...)` to `Vcf.CreateString(...)`
 
 ### 8.0.0-alpha.1
 - [x] Make .NET 9.0 version of the package
