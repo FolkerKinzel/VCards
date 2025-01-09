@@ -194,7 +194,7 @@ public class V3Tests
             .NonStandards.Add("X-DATA", base64, parameters: p => { p.Encoding = Enc.Base64; p.MediaType = octetStream; })
             .VCard;
 
-        string vcf = Vcf.ToString(vc, VCdVersion.V3_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardProperties));
+        string vcf = Vcf.AsString(vc, VCdVersion.V3_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardProperties));
         vc = Vcf.Parse(vcf)[0];
 
         Assert.AreEqual(Data.Uri, vc.Relations!.First()!.Parameters.DataType);

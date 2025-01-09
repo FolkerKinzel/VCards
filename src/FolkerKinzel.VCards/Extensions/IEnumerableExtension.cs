@@ -226,7 +226,7 @@ public static class IEnumerableExtension
     /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
     /// </example>
     /// 
-    /// <seealso cref="Vcf.ToString(IEnumerable{VCard?}, VCdVersion, ITimeZoneIDConverter?, VcfOpts)"/>
+    /// <seealso cref="Vcf.AsString(IEnumerable{VCard?}, VCdVersion, ITimeZoneIDConverter?, VcfOpts)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
     /// 
     /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
@@ -240,7 +240,7 @@ public static class IEnumerableExtension
                                      VCdVersion version = VCard.DEFAULT_VERSION,
                                      ITimeZoneIDConverter? tzConverter = null,
                                      VcfOpts options = VcfOpts.Default)
-        => Vcf.ToString(vCards, version, tzConverter, options);
+        => Vcf.AsString(vCards, version, tzConverter, options);
 
     /// <summary>
     /// Gets the most preferred <see cref="VCardProperty"/> from a collection of

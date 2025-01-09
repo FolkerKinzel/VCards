@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
@@ -11,6 +12,21 @@ namespace FolkerKinzel.VCards;
 
 public static partial class Vcf
 {
+    #region Remove with 8.0.1
+
+    [Obsolete("Use AsString(...) instead.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public static string ToString(
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        IEnumerable<VCard?> vCards,
+        VCdVersion version = VCard.DEFAULT_VERSION,
+        ITimeZoneIDConverter? tzConverter = null,
+        VcfOpts options = VcfOpts.Default) => throw new NotImplementedException();
+
+    #endregion
+
     /// <summary>Saves a collection of <see cref="VCard" /> objects in a common VCF
     /// file.</summary>
     /// <param name="vCards">The <see cref="VCard" /> objects to be saved. The collection
@@ -265,7 +281,7 @@ public static partial class Vcf
     /// enum.
     /// </exception>
     /// <exception cref="OutOfMemoryException">The system is out of memory.</exception>
-    public static string ToString(
+    public static string AsString(
         IEnumerable<VCard?> vCards,
         VCdVersion version = VCard.DEFAULT_VERSION,
         ITimeZoneIDConverter? tzConverter = null,

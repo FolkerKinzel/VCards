@@ -42,7 +42,7 @@ internal static class WhatsAppDemo1
             Phones = xiamoiMobilePhone
         };
 
-        Console.WriteLine(Vcf.ToString(vcard));
+        Console.WriteLine(Vcf.AsString(vcard));
     }
 }
 /*

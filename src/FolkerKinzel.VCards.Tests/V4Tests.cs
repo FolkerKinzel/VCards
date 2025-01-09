@@ -531,7 +531,7 @@ public class V4Tests
             ])
             .VCard;
 
-        string serialized = Vcf.ToString(vc, VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardParameters));
+        string serialized = Vcf.AsString(vc, VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.WriteNonStandardParameters));
 
         vc = Vcf.Parse(serialized)[0];
 

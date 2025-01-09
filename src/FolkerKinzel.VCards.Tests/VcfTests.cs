@@ -233,5 +233,5 @@ public class VcfTests
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void ToVcfStringTest_vcardListNull1(VCdVersion version) => _ = Vcf.ToString(null!, version);
+    public void ToVcfStringTest_vcardListNull1(VCdVersion version) => _ = Vcf.AsString(null!, version);
 }

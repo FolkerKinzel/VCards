@@ -26,20 +26,20 @@ public class WriteBench
     }
 
     [Benchmark]
-    public string Write21() => Vcf.ToString(_vCard, VCdVersion.V2_1);
+    public string Write21() => Vcf.AsString(_vCard, VCdVersion.V2_1);
 
     [Benchmark]
-    public string WritePhoto21() => Vcf.ToString(_vCardPhoto, VCdVersion.V2_1);
+    public string WritePhoto21() => Vcf.AsString(_vCardPhoto, VCdVersion.V2_1);
 
     [Benchmark]
-    public string Write30() => Vcf.ToString(_vCard);
+    public string Write30() => Vcf.AsString(_vCard);
 
     [Benchmark]
-    public string WritePhoto30() => Vcf.ToString(_vCardPhoto);
+    public string WritePhoto30() => Vcf.AsString(_vCardPhoto);
 
     [Benchmark]
-    public string Write40() => Vcf.ToString(_vCard, VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
+    public string Write40() => Vcf.AsString(_vCard, VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
 
     [Benchmark]
-    public string WritePhoto40() => Vcf.ToString(_vCardPhoto, VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
+    public string WritePhoto40() => Vcf.AsString(_vCardPhoto, VCdVersion.V4_0, options: VcfOpts.Default.Set(VcfOpts.SetPropertyIDs));
 }

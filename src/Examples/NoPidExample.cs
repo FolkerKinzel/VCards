@@ -22,7 +22,7 @@ public static class NoPidExample
         // Removes all existing PIDs and CLIENTPIDMAPs
         vCard.Sync.Reset();
 
-        Console.WriteLine(Vcf.ToString(vCard, VCdVersion.V4_0));
+        Console.WriteLine(Vcf.AsString(vCard, VCdVersion.V4_0));
     }
 }
 
