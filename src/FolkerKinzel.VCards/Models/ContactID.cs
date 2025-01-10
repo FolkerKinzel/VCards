@@ -95,12 +95,19 @@ public sealed class ContactID : IEquatable<ContactID>
     /// <summary>
     /// <c>true</c> if the instance doesn't identify anything, otherwise <c>false</c>.
     /// </summary>
+    /// <remarks>
+    /// <see cref="ContactID.Empty"/> is a singleton that encapsulates an empty 
+    /// <see cref="string"/>.
+    /// </remarks>
     public bool IsEmpty => ReferenceEquals(this, Empty);
 
     /// <summary>
     /// A singleton whose <see cref="IsEmpty"/> property returns <c>true</c>.
     /// </summary>
-    internal static ContactID Empty { get; } = new ContactID("");
+    /// <remarks>
+    /// The singleton instance encapsulates an empty <see cref="string"/>.
+    /// </remarks>
+    public static ContactID Empty { get; } = new ContactID("");
 
     /// <summary>
     /// Gets the encapsulated <see cref="Guid"/>,

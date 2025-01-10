@@ -65,12 +65,19 @@ public sealed class Relation
     /// <c>true</c> if the instance if the instance does not relate to anything, otherwise 
     /// <c>false</c>.
     /// </summary>
+    /// <remarks>
+    /// <see cref="Relation.Empty"/> is a singleton that encapsulates 
+    /// <see cref="ContactID.Empty"/>.
+    /// </remarks>
     public bool IsEmpty => ContactID?.IsEmpty ?? false;
 
     /// <summary>
     /// An instance whose <see cref="IsEmpty"/> property returns <c>true</c>.
     /// </summary>
-    internal static Relation Empty => new(ContactID.Empty);
+    /// <remarks>
+    /// The singleton encapsulates <see cref="ContactID.Empty"/>
+    /// </remarks>
+    public static Relation Empty => new(ContactID.Empty);
 
     /// <summary>
     /// Gets the encapsulated <see cref="VCards.VCard"/>,
