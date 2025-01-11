@@ -200,7 +200,7 @@ public sealed class Relation : IEquatable<Relation>
     /// <remarks>Equality is given if the executing instance encapsulates the same <see cref="VCards.VCard"/> 
     /// instance, or if <paramref name="other"/> is a <see cref="Relation"/>
     /// instance, and if the executing instance encapsulates a <see cref="ContactID"/> (either directly 
-    /// or in its <see cref="VCard"/>) that is equal to that one that <paramref name="other"/> encapsulates.
+    /// or in its <see cref="VCard"/> property) that is equal to that one that <paramref name="other"/> encapsulates.
     /// 
     /// </remarks>
     public bool Equals(Relation? other)
