@@ -8,7 +8,6 @@ using BenchmarkDotNet.Jobs;
 
 namespace Benchmarks;
 
-[SimpleJob(RuntimeMoniker.Net80)]
 public class PatternMatchingBench
 {
     [Params(50, 500)]
@@ -66,6 +65,7 @@ public class PatternMatchingBench
         return result;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0078:Use pattern matching", Justification = "<Pending>")]
     private static bool HasToBeQuoted(int bt) => bt != '\t' && (bt > 126 || bt == '=' || bt < 32);
 
     private static bool HasToBeQuotedPatternMatching(int bt) => bt is not '\t' and (> 126 or '=' or < 32);

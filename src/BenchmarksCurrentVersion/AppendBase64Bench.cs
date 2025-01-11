@@ -14,7 +14,6 @@ namespace Benchmarks;
 
 [MemoryDiagnoser]
 [BaselineColumn]
-[SimpleJob(RuntimeMoniker.Net80)]
 public class AppendBase64Bench
 {
     private const string VCARD_NEWLINE = "\r\n";

@@ -6,11 +6,9 @@ using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace Benchmarks;
 
-[SimpleJob(RuntimeMoniker.Net80)]
-[SimpleJob(RuntimeMoniker.Net48)]
 public class ListConcatBench
 {
-    private readonly List<ReadOnlyMemory<char>> _shortList = new(); 
+    private readonly List<ReadOnlyMemory<char>> _shortList = []; 
 
     [Params(1,2,3,4,5)]
     public int N {  get; set; }

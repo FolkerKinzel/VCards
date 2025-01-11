@@ -46,7 +46,7 @@ public class EnumerableBench
 
     private IEnumerable<string> NotNull()
     {
-        foreach (var item in _arr)
+        foreach (string? item in _arr)
         {
             if (item is not null)
             {

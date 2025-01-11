@@ -222,7 +222,7 @@ public sealed class Relation : IEquatable<Relation>
     /// <remarks>Equality is given if <paramref name="obj"/> is a <see cref="Relation"/>
     /// instance, and if the content of <paramref name="obj"/> has the same <see cref="Type"/>
     /// and is equal.</remarks>
-    public override bool Equals(object? obj) => Equals(obj as ContactID);
+    public override bool Equals(object? obj) => Equals(obj as Relation);
 
     /// <inheritdoc/>
     public override int GetHashCode()
