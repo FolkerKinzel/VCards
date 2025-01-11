@@ -9,8 +9,12 @@
 
 ### 8.0.0-beta.1
 - [ ] Write tests
+
+### 8.0.0-alpha.2
 - [x] Rename `Vcf.ToString(...)` to `Vcf.AsString(...)`
 - [x] Dependency update
+- [x] Implement in `Relation`: `IEquatable<Relation>`
+- [x] New static method `VCardProperty.IsNullOrEmpty(VCardProperty?)`
 
 ### 8.0.0-alpha.1
 - [x] Make .NET 9.0 version of the package

@@ -58,6 +58,18 @@ public abstract class VCardProperty : ICloneable
     /// not contain any usable data, otherwise <c>false</c>.</summary>
     public abstract bool IsEmpty {  get; }
 
+    /// <summary>
+    /// Returns a value that indicates whether <paramref name="prop"/>
+    /// is <c>null</c> or does not contain any usable data.
+    /// </summary>
+    /// <param name="prop">The <see cref="VCardProperty"/> reference to examine.
+    /// The argument may be <c>null</c>.</param>
+    /// <returns><c>true</c> if <paramref name="prop"/> is <c>null</c> or if its
+    /// <see cref="IsEmpty"/> property
+    /// returns <c>true</c>, otherwise <c>false</c>.</returns>
+    public static bool IsNullOrEmpty([NotNullWhen(false)] VCardProperty? prop)
+        => prop is null || prop.IsEmpty;
+
     /// <inheritdoc />
     public abstract object Clone();
 

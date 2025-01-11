@@ -15,7 +15,7 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="RelationProperty"/>
 /// <seealso cref="VCards.VCard"/>
 /// <seealso cref="ContactID"/>
-public sealed class Relation
+public sealed class Relation : IEquatable<Relation>
 {
     private readonly object _object;
 
@@ -194,5 +194,61 @@ public sealed class Relation
     public override string ToString() => _object is VCard vc
                                             ? $"VCard: {vc.DisplayNames.FirstOrNull()?.Value}"
                                             : _object.ToString() ?? "";
+
+    /// <inheritdoc/>
+    ///
+    /// <remarks>Equality is given if the executing instance encapsulates the same <see cref="VCards.VCard"/> 
+    /// instance, or if <paramref name="other"/> is a <see cref="Relation"/>
+    /// instance, and if the executing instance encapsulates a <see cref="ContactID"/> (either directly 
+    /// or in its <see cref="VCard"/>) that is equal to that one that <paramref name="other"/> encapsulates.
+    /// 
+    /// </remarks>
+    public bool Equals(Relation? other)
+        => other is not null && Convert(
+                      other,
+                      static (vc, other) => VCardProperty.IsNullOrEmpty(vc.ContactID)
+                                ? object.ReferenceEquals(vc, other.VCard)
+                                : other.Convert(vc.ContactID.Value,
+                                                 static (vc, id) => vc.ContactID?.Value == id,
+                                                 static (id1, id2) => id1 == id2),
+                      static (id, other) => id.IsEmpty 
+                                ? other.IsEmpty 
+                                : other.Convert(id,
+                                   static (vc, id) => vc.ContactID?.Value == id,
+                                   static (id1, id2) => id1 == id2)
+                                       );
+
+    /// <inheritdoc/>
+    /// <remarks>Equality is given if <paramref name="obj"/> is a <see cref="Relation"/>
+    /// instance, and if the content of <paramref name="obj"/> has the same <see cref="Type"/>
+    /// and is equal.</remarks>
+    public override bool Equals(object? obj) => Equals(obj as ContactID);
+
+    /// <inheritdoc/>
+    public override int GetHashCode()
+        => Convert(
+            vc => VCardProperty.IsNullOrEmpty(vc.ContactID) ? vc.GetHashCode() : vc.ContactID.Value.GetHashCode(),
+            id => id.GetHashCode()
+                  );
+
+    /// <summary>
+    /// Overloads the equality operator for <see cref="Relation"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="Relation"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="Relation"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the contents of <paramref name="left"/> and 
+    /// <paramref name="right"/> are equal, otherwise <c>false</c>.</returns>
+    public static bool operator ==(Relation? left, Relation? right)
+        => ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
+
+    /// <summary>
+    /// Overloads the not-equal-to operator for <see cref="Relation"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="Relation"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="Relation"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the contents of <paramref name="left"/> and 
+    /// <paramref name="right"/> are not equal, otherwise <c>false</c>.</returns>
+    public static bool operator !=(Relation? left, Relation? right)
+        => !(left == right);
 }
 
