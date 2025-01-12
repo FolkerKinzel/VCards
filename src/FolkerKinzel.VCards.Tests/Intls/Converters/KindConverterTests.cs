@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Enums;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
@@ -20,4 +21,8 @@ public class KindConverterTests
         // Test auf nicht definiert
         Assert.AreEqual(Kind.Individual.ToVcfString(), ((Kind)4711).ToVcfString());
     }
+
+
+    [TestMethod]
+    public void TryParseTest1() => Assert.IsFalse(KindConverter.TryParse("blabla".AsSpan(), out _));
 }

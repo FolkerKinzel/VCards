@@ -798,11 +798,11 @@ internal abstract class VcfSerializer : IDisposable
 
         static TextProperty? ConvertSpouseVCardToTextProperty(VCard spousesVCard, string? group)
         {
-            string? name = spousesVCard.DisplayNames?.PrefOrNullIntl(ignoreEmptyItems: true)?.Value;
+            string? name = spousesVCard.DisplayNames?.PrefOrNullIntl(skipEmptyItems: true)?.Value;
 
             if (name is null)
             {
-                NameProperty? vcdName = spousesVCard.NameViews?.FirstOrNullIntl(ignoreEmptyItems: true);
+                NameProperty? vcdName = spousesVCard.NameViews?.FirstOrNullIntl(skipEmptyItems: true);
 
                 if (vcdName is not null)
                 {

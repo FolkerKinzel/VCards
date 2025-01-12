@@ -421,7 +421,7 @@ public class IEnumerableExtensionTests
     public void PrefOrNullTest3()
     {
         VCardProperty[]? props = [new TextProperty(null)];
-        Assert.IsNotNull(props.PrefOrNull(ignoreEmptyItems: false));
+        Assert.IsNotNull(props.PrefOrNull(skipEmptyItems: false));
     }
 
     [TestMethod]
@@ -484,7 +484,7 @@ public class IEnumerableExtensionTests
     public void FirstOrNullTest3()
     {
         VCardProperty[]? props = [new TextProperty(null)];
-        Assert.IsNotNull(props.FirstOrNull(ignoreEmptyItems: false));
+        Assert.IsNotNull(props.FirstOrNull(skipEmptyItems: false));
     }
 
     [TestMethod]
@@ -827,7 +827,7 @@ public class IEnumerableExtensionTests
     public void ItemsTest3()
     {
         TextProperty?[] props = [new TextProperty("")];
-        Assert.IsNotNull(props.Items(discardEmptyItems: false).FirstOrDefault());
+        Assert.IsNotNull(props.Items(skipEmptyItems: false).FirstOrDefault());
     }
 
     [TestMethod]

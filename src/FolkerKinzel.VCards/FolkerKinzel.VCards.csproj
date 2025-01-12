@@ -80,6 +80,7 @@
     <Compile Remove="Intls\Deserializers\VcfRow_ctor - NET40.cs" />
     <Compile Remove="Intls\Encodings\Base64.cs" />
     <Compile Remove="Intls\Extensions\DoubleExtension.cs" />
+    <Compile Remove="Intls\Extensions\IReadOnlyStringListExtension.cs" />
     <Compile Remove="Intls\Extensions\PolyfillExtension.cs" />
     <Compile Remove="Intls\Net40LeaveOpenStream.cs" />
     <Compile Remove="Intls\ReadOnlyCollectionEmptyPolyfill.cs" />

@@ -1,6 +1,7 @@
 ﻿using System.Xml.Linq;
 using FolkerKinzel.VCards.BuilderParts;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -281,6 +282,32 @@ public class VCardBuilderTests
         Assert.IsTrue(vc.BirthDayViews.All(x => x!.Parameters.Index.HasValue));
     }
 
+    [TestMethod()]
+    public void AddBirthDayViewTest4()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthDayViews.Add(-42, 42)
+            .VCard;
+
+        DateAndOrTimeProperty? bDay = vc.BirthDayViews.FirstOrNull(skipEmptyItems: false);
+        Assert.IsNotNull(bDay);
+        Assert.IsTrue(bDay.IsEmpty);
+    }
+
+    [TestMethod()]
+    public void AddBirthDayViewTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthDayViews.Add(int.MinValue, -42, 42)
+            .VCard;
+
+        DateAndOrTimeProperty? bDay = vc.BirthDayViews.FirstOrNull(skipEmptyItems: false);
+        Assert.IsNotNull(bDay);
+        Assert.IsTrue(bDay.IsEmpty);
+    }
+
     [TestMethod]
     public void EditBirthDayViewsTest1()
     {
@@ -295,74 +322,6 @@ public class VCardBuilderTests
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());
 
         builder.BirthDayViews.Edit(x => null);
-        Assert.IsNull(builder.VCard.BirthDayViews);
-    }
-
-
-    [TestMethod()]
-    public void AddGramGendersTest1()
-    {
-        VCard vc = VCardBuilder
-            .Create()
-            .GramGenders.Add(Gram.Neuter)
-            .VCard;
-
-        Assert.IsNotNull(vc.GramGenders);
-        Assert.AreEqual(1, vc.GramGenders.Count());
-    }
-
-    [TestMethod()]
-    public void AddGramGendersTest2()
-    {
-        VCard vc = VCardBuilder
-            .Create()
-            .GramGenders.Add(Gram.Neuter, p => p.Language = "de-DE")
-            .GramGenders.Add(Gram.Common, p => p.Language = "en-US")
-            .VCard;
-
-        Assert.IsNotNull(vc.GramGenders);
-        Assert.AreEqual(2, vc.GramGenders.Count());
-
-        VCardBuilder.Create(vc).GramGenders.Remove(p => p.Parameters.Language == "de-DE");
-
-        Assert.IsNotNull(vc.GramGenders);
-        Assert.AreEqual(1, vc.GramGenders.Count());
-
-        VCardBuilder.Create(vc).GramGenders.Clear();
-        Assert.IsNull(vc.GramGenders);
-    }
-
-    [TestMethod()]
-    public void AddGramGendersTest3()
-    {
-        VCard vc = VCardBuilder
-            .Create()
-            .GramGenders.Add(Gram.Neuter, p => p.Language = "de-DE", v => "g")
-            .GramGenders.Add(Gram.Common, p => p.Language = "en-US", v => "g")
-            .GramGenders.SetIndexes()
-            .VCard;
-
-        Assert.IsNotNull(vc.GramGenders);
-        Assert.AreEqual(2, vc.GramGenders.Count());
-        CollectionAssert.AllItemsAreNotNull(vc.GramGenders.ToArray());
-        Assert.IsTrue(vc.GramGenders.All(x => x!.Group == "g"));
-        Assert.IsTrue(vc.GramGenders.All(x => x!.Parameters.Index.HasValue));
-    }
-
-    [TestMethod]
-    public void EditGramGendersTest1()
-    {
-        var builder = VCardBuilder.Create();
-        IEnumerable<GramProperty?>? prop = null;
-        builder.GramGenders.Edit(p => prop = p);
-        Assert.IsNotNull(prop);
-        Assert.IsFalse(prop.Any());
-        builder.VCard.GramGenders = new GramProperty(Gram.Neuter).Append(null);
-        builder.GramGenders.Edit(p => prop = p);
-        Assert.IsTrue(prop.Any());
-        CollectionAssert.AllItemsAreNotNull(prop.ToArray());
-
-        builder.GramGenders.Edit(x => null);
         Assert.IsNull(builder.VCard.BirthDayViews);
     }
 
@@ -735,6 +694,131 @@ public class VCardBuilderTests
         Assert.AreEqual(null, vc.GeoCoordinates.First()!.Group);
     }
 
+    
+    [TestMethod()]
+    public void AddGramGendersTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GramGenders.Add(Gram.Neuter)
+            .VCard;
+
+        Assert.IsNotNull(vc.GramGenders);
+        Assert.AreEqual(1, vc.GramGenders.Count());
+    }
+
+    [TestMethod()]
+    public void AddGramGendersTest2()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GramGenders.Add(Gram.Neuter, p => p.Language = "de-DE")
+            .GramGenders.Add(Gram.Common, p => p.Language = "en-US")
+            .VCard;
+
+        Assert.IsNotNull(vc.GramGenders);
+        Assert.AreEqual(2, vc.GramGenders.Count());
+
+        VCardBuilder.Create(vc).GramGenders.Remove(p => p.Parameters.Language == "de-DE");
+
+        Assert.IsNotNull(vc.GramGenders);
+        Assert.AreEqual(1, vc.GramGenders.Count());
+
+        VCardBuilder.Create(vc).GramGenders.Clear();
+        Assert.IsNull(vc.GramGenders);
+    }
+
+    [TestMethod()]
+    public void AddGramGendersTest3()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GramGenders.Add(Gram.Neuter, p => p.Language = "de-DE", v => "g")
+            .GramGenders.Add(Gram.Common, p => p.Language = "en-US", v => "g")
+            .GramGenders.SetIndexes()
+            .VCard;
+
+        Assert.IsNotNull(vc.GramGenders);
+        Assert.AreEqual(2, vc.GramGenders.Count());
+        CollectionAssert.AllItemsAreNotNull(vc.GramGenders.ToArray());
+        Assert.IsTrue(vc.GramGenders.All(x => x!.Group == "g"));
+        Assert.IsTrue(vc.GramGenders.All(x => x!.Parameters.Index.HasValue));
+    }
+
+    [TestMethod]
+    public void AddGramGendersTest4()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GramGenders.Add(Gram.Neuter)
+            .GramGenders.Add(Gram.Common)
+            .VCard;
+
+        Assert.IsNotNull(vc.GramGenders);
+        Assert.IsTrue(vc.GramGenders.OfType<GramProperty>().All(x => x.Parameters.Preference == 100));
+
+        VCardBuilder.Create(vc).GramGenders.SetPreferences();
+
+        Assert.IsNotNull(vc.GramGenders);
+        Assert.IsTrue(vc.GramGenders.OfType<GramProperty>().All(x => x.Parameters.Preference < 100));
+
+        VCardBuilder.Create(vc).GramGenders.UnsetPreferences();
+
+        Assert.IsNotNull(vc.GramGenders);
+        Assert.IsTrue(vc.GramGenders.OfType<GramProperty>().All(x => x.Parameters.Preference == 100));
+    }
+
+    [TestMethod]
+    public void AddGramGendersTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GramGenders.Add(Gram.Neuter)
+            .GramGenders.Add(Gram.Common)
+            .VCard;
+
+        Assert.IsNotNull(vc.GramGenders);
+        Assert.IsTrue(vc.GramGenders.OfType<GramProperty>().All(x => !x.Parameters.Index.HasValue));
+
+        VCardBuilder.Create(vc).GramGenders.SetIndexes();
+
+        Assert.IsNotNull(vc.GramGenders);
+        Assert.IsTrue(vc.GramGenders.OfType<GramProperty>().All(x => x.Parameters.Index.HasValue));
+
+        VCardBuilder.Create(vc).GramGenders.UnsetIndexes();
+
+        Assert.IsNotNull(vc.GramGenders);
+        Assert.IsTrue(vc.GramGenders.OfType<GramProperty>().All(x => !x.Parameters.Index.HasValue));
+    }
+
+    [TestMethod]
+    public void EditGramGendersTest1()
+    {
+        var builder = VCardBuilder.Create();
+        IEnumerable<GramProperty?>? prop = null;
+        builder.GramGenders.Edit(p => prop = p);
+        Assert.IsNotNull(prop);
+        Assert.IsFalse(prop.Any());
+        builder.VCard.GramGenders = new GramProperty(Gram.Neuter).Append(null);
+        builder.GramGenders.Edit(p => prop = p);
+        Assert.IsTrue(prop.Any());
+        CollectionAssert.AllItemsAreNotNull(prop.ToArray());
+
+        builder.GramGenders.Edit(x => null);
+        Assert.IsNull(builder.VCard.BirthDayViews);
+    }
+
+    [TestMethod]
+    public void EditGramGendersTest2()
+    {
+        var vc = new VCard();
+        Assert.IsNull(vc.GramGenders);
+
+        VCardBuilder.Create(vc).GramGenders.Edit((props, b) => [], true);
+
+        Assert.IsNotNull(vc.GramGenders);
+    }
+
     [TestMethod()]
     public void AddHobbyTest()
     {
@@ -748,7 +832,7 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void SetIDTest1()
+    public void SetContactIDTest1()
     {
         VCard vc = VCardBuilder
             .Create()
@@ -765,7 +849,7 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void SetIDTest2()
+    public void SetContactIDTest2()
     {
         const string key = "X-Test";
         const string val = "bla";
@@ -786,7 +870,7 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void SetIDTest3()
+    public void SetContactIDTest3()
     {
         VCard vc = VCardBuilder
             .Create()
@@ -803,7 +887,7 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void SetIDTest4()
+    public void SetContactIDTest4()
     {
         const string key = "X-Test";
         const string val = "bla";
@@ -821,6 +905,30 @@ public class VCardBuilderTests
         KeyValuePair<string, string> para = vc.ContactID.Parameters.NonStandard!.First();
         Assert.AreEqual(key, para.Key);
         Assert.AreEqual(val, para.Value);
+    }
+
+    [TestMethod]
+    public void SetContactIDTest5()
+    {
+        var vc = new VCard(setContactID: false);
+        Assert.IsNull(vc.ContactID);
+
+        var builder = VCardBuilder.Create(vc);
+        builder.ContactID.Set((ContactID?)null);
+        Assert.IsNotNull(vc.ContactID);
+        Assert.IsTrue(vc.ContactID.IsEmpty);
+
+        vc.ContactID = null;
+
+        builder.ContactID.Set((Uri?)null);
+        Assert.IsNotNull(vc.ContactID);
+        Assert.IsTrue(vc.ContactID.IsEmpty);
+
+        vc.ContactID = null;
+
+        builder.ContactID.Set((string?)null);
+        Assert.IsNotNull(vc.ContactID);
+        Assert.IsTrue(vc.ContactID.IsEmpty);
     }
 
     [TestMethod]
@@ -1087,7 +1195,7 @@ public class VCardBuilderTests
     [TestMethod()]
     public void AddNameViewTest3()
     {
-        VCard vc = VCardBuilder
+        VCardBuilder builder = VCardBuilder
             .Create()
             .NameViews.Add(NameBuilder.Create().AddSurname("Miller").AddGiven("John").Build(),
                             parameters: p => p.Language = "en",
@@ -1095,8 +1203,9 @@ public class VCardBuilderTests
                             )
             .NameViews.ToDisplayNames(NameFormatter.Default)
             .NameViews.Add(NameBuilder.Create().AddSurname("Müller").AddGiven("Johann").Build(),
-                           parameters: p => p.Language = "de")
-            .VCard;
+                           parameters: p => p.Language = "de");
+
+        VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.NameViews);
         vc.NameViews = vc.NameViews.Append(null);
@@ -1112,6 +1221,14 @@ public class VCardBuilderTests
         Assert.AreEqual("gr1", prop1.Group);
 
         Assert.AreEqual("de", prop2.Parameters.Language);
+
+        Assert.AreEqual(3, vc.NameViews.Count());
+        builder.NameViews.Remove(x => x.Value.Given.FirstOrDefault() == "Miller");
+
+        Assert.AreEqual(2, vc.NameViews.Count());
+        builder.NameViews.Clear();
+
+        Assert.IsNull(vc.NameViews);
     }
 
     [TestMethod]
@@ -1164,7 +1281,7 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void AddNonStandardTest()
+    public void AddNonStandardTest1()
     {
         VCard vc = VCardBuilder
             .Create()
@@ -1187,6 +1304,19 @@ public class VCardBuilderTests
             .NonStandards.Clear();
 
         Assert.IsNull(vc.NonStandards);
+    }
+
+    [TestMethod]
+    public void AddNonStandardTest2()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .NonStandards.Add("invalid", "first")
+            .VCard;
+
+        NonStandardProperty? first = vc.NonStandards.FirstOrNull(skipEmptyItems: false);
+        Assert.IsNotNull(first);
+        Assert.IsTrue(first.IsEmpty);
     }
 
     [TestMethod]
@@ -1303,7 +1433,7 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    public void AddPhotoTest()
+    public void AddPhotoTest1()
     {
         VCard vc = VCardBuilder
             .Create()
@@ -1315,6 +1445,19 @@ public class VCardBuilderTests
         Assert.IsNotNull(vc.Photos);
         Assert.AreEqual(2, vc.Photos.Count());
         Assert.AreEqual("g", vc.Photos.First()?.Group);
+    }
+
+    [TestMethod()]
+    public void AddPhotoTest2()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Photos.AddFile(null)
+            .VCard;
+
+        DataProperty? first = vc.Photos.FirstOrNull(skipEmptyItems: false);
+        Assert.IsNotNull(first);
+        Assert.IsTrue(first.IsEmpty);
     }
 
     [TestMethod()]

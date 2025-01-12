@@ -6,6 +6,8 @@
 
 ### 8.0.1
 - [ ] Remove symbols that are marked as `Obsolete` errors.
+- [ ] Performance: Refactor `SetPreferences`, `UnsetPreferences`, 
+`SetIndexes`, `UnsetIndexes` in all `BuilderParts` to not to use `Edit` internally
 
 ### 8.0.0-beta.1
 - [ ] Write tests

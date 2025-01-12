@@ -221,12 +221,12 @@ public sealed partial class VCard
                         {
                             if (NameViews is not null)
                             {
-                                NameViews.FirstOrNullIntl(ignoreEmptyItems: false)!.Parameters.SetSortAs([textProp.Value]);
+                                NameViews.FirstOrNullIntl(skipEmptyItems: false)!.Parameters.SetSortAs([textProp.Value]);
                             }
                             // this is not legal: N property is required in VCard 3.0
                             else if (Organizations is not null)
                             {
-                                Organizations.PrefOrNullIntl(ignoreEmptyItems: false)!.Parameters.SetSortAs([textProp.Value]);
+                                Organizations.PrefOrNullIntl(skipEmptyItems: false)!.Parameters.SetSortAs([textProp.Value]);
                             }
                             else
                             {
@@ -581,10 +581,10 @@ public sealed partial class VCard
         {
             if (group.Key is not null)
             {
-                if (group.PrefOrNullIntl(static x => x is TextProperty, ignoreEmptyItems: false)
+                if (group.PrefOrNullIntl(static x => x is TextProperty, skipEmptyItems: false)
                      is TextProperty label)
                 {
-                    if (group.PrefOrNullIntl(static x => x is AddressProperty, ignoreEmptyItems: false)
+                    if (group.PrefOrNullIntl(static x => x is AddressProperty, skipEmptyItems: false)
                         is AddressProperty adrProp)
                     {
                         Assign(label, adrProp);

@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -49,6 +50,8 @@ public class ContactIDBuilderTests
         var builder = new ContactIDBuilder();
         Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
     }
+
+    
 
     [TestMethod]
     public void ToStringTest1() => Assert.IsNotNull(new ContactIDBuilder().ToString());

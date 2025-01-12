@@ -224,7 +224,7 @@ public static partial class Vcf
 
                 if (vCard.Relations.PrefOrNullIntl(x => x.Value.VCard is not null &&
                                                         x.Parameters.RelationType.IsSet(Rel.Agent),
-                                                        ignoreEmptyItems: true) is RelationProperty agent)
+                                                        skipEmptyItems: true) is RelationProperty agent)
                 {
                     Debug.Assert(agent.Value.VCard != null);
 

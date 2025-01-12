@@ -33,6 +33,7 @@ public readonly struct NameViewsBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use Add(Name?, ...) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public VCardBuilder Add(IEnumerable<string?>? familyNames = null,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -48,6 +49,7 @@ public readonly struct NameViewsBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use Add(Name?, ...) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public VCardBuilder Add(string? familyName,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -62,6 +64,7 @@ public readonly struct NameViewsBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use Add(Name?, ...) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public VCardBuilder Add(FolkerKinzel.VCards.NameBuilder builder,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

@@ -82,27 +82,27 @@ internal static class IEnumerableIntlExtension
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static TSource? PrefOrNullIntl<TSource>(
-        this IEnumerable<TSource?> values, bool ignoreEmptyItems) where TSource : VCardProperty
-        => ItemOrNullIntl(values, GetPreference, ignoreEmptyItems);
+        this IEnumerable<TSource?> values, bool skipEmptyItems) where TSource : VCardProperty
+        => ItemOrNullIntl(values, GetPreference, skipEmptyItems);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static TSource? PrefOrNullIntl<TSource>(
         this IEnumerable<TSource?> values,
         Func<TSource, bool> filter,
-        bool ignoreEmptyItems) where TSource : VCardProperty
-        => ItemOrNullIntl(values, GetPreference, filter, ignoreEmptyItems);
+        bool skipEmptyItems) where TSource : VCardProperty
+        => ItemOrNullIntl(values, GetPreference, filter, skipEmptyItems);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static TSource? FirstOrNullIntl<TSource>(
-        this IEnumerable<TSource?> values, bool ignoreEmptyItems) where TSource : VCardProperty
-        => ItemOrNullIntl(values, GetIndex, ignoreEmptyItems);
+        this IEnumerable<TSource?> values, bool skipEmptyItems) where TSource : VCardProperty
+        => ItemOrNullIntl(values, GetIndex, skipEmptyItems);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static TSource? FirstOrNullIntl<TSource>(
         this IEnumerable<TSource?> values,
         Func<TSource, bool> filter,
-        bool ignoreEmptyItems) where TSource : VCardProperty
-        => ItemOrNullIntl(values, GetIndex, filter, ignoreEmptyItems);
+        bool skipEmptyItems) where TSource : VCardProperty
+        => ItemOrNullIntl(values, GetIndex, filter, skipEmptyItems);
 
     private static IEnumerable<TSource> OrderByIntl<TSource>(
         this IEnumerable<TSource?> values, 
@@ -114,14 +114,14 @@ internal static class IEnumerableIntlExtension
     private static TSource? ItemOrNullIntl<TSource>(
         IEnumerable<TSource?> values,
         Func<TSource, int> sortingCriterion,
-        bool ignoreEmptyItems) where TSource : VCardProperty
+        bool skipEmptyItems) where TSource : VCardProperty
     {
         TSource? prop = null;
         int sort = int.MaxValue;
 
         foreach (TSource? value in values)
         {
-            if (value is null || (ignoreEmptyItems && value.IsEmpty))
+            if (value is null || (skipEmptyItems && value.IsEmpty))
             {
                 continue;
             }
@@ -142,14 +142,14 @@ internal static class IEnumerableIntlExtension
         IEnumerable<TSource?> values,
         Func<TSource, int> sortingCriterion,
         Func<TSource, bool> filter,
-        bool ignoreEmptyItems) where TSource : VCardProperty
+        bool skipEmptyItems) where TSource : VCardProperty
     {
         TSource? prop = null;
         int sort = int.MaxValue;
 
         foreach (TSource? value in values)
         {
-            if (value is null || (ignoreEmptyItems && value.IsEmpty) || !filter(value))
+            if (value is null || (skipEmptyItems && value.IsEmpty) || !filter(value))
             {
                 continue;
             }

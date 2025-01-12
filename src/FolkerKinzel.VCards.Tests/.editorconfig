@@ -13,6 +13,12 @@ dotnet_diagnostic.CA1303.severity = none
 # IDE0290: Use primary constructor
 dotnet_diagnostic.IDE0290.severity = none
 
+# CA1826: Do not use Enumerable methods on indexable collections
+dotnet_diagnostic.CA1826.severity = none
+
+# CA1861: Avoid constant arrays as arguments
+dotnet_diagnostic.CA1861.severity = none
+
 [DataUrlTests.cs]
 # SYSLIB0011: Typ oder Element ist veraltet
 dotnet_diagnostic.SYSLIB0011.severity = none
