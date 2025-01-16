@@ -190,7 +190,8 @@ internal static class StringBuilderExtension
     /// <param name="paramVal">The parameter value to append.</param>
     /// <param name="isLabel"><c>true</c> if <paramref name="paramVal"/> is the value
     /// of a <c>LABEL</c> parameter.</param>
-    /// <returns>A reference to <paramref name="builder"/>.</returns>
+    /// <returns>A value that indicates whether the appended <paramref name="paramVal"/> must be enclosed 
+    /// with double quotes.</returns>
     /// <remarks>
     /// <para>
     /// RFC 6350 6.3.1 states that newlines in LABEL parameters "are encoded

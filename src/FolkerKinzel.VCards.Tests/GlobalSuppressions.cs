@@ -5,16 +5,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Intls.Serializers.EnumValueCollectors.Tests")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Models.Tests")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Intls.Converters.Tests")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.BuilderParts.Tests")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Intls.Formatters.Tests")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Extensions.Tests")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Intls.Models.Tests")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Formatters.Tests")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Models.Properties.Tests")]
-[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:FolkerKinzel.VCards.Models.Properties.Parameters.Tests")]
 [assembly: SuppressMessage("Usage", "CA2263:Prefer generic overload when type is known", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Intls.Converters.Tests.AccessConverterTests.Roundtrip")]
 [assembly: SuppressMessage("Usage", "CA2263:Prefer generic overload when type is known", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Intls.Converters.Tests.GramConverterTests.Roundtrip")]
 [assembly: SuppressMessage("Usage", "CA2263:Prefer generic overload when type is known", Justification = "<Pending>", Scope = "member", Target = "~M:FolkerKinzel.VCards.Intls.Converters.Tests.InterestConverterTests.Roundtrip")]

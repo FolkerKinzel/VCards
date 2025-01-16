@@ -323,7 +323,7 @@ internal sealed class Vcf_3_0Serializer : VcfSerializer
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal override void AppendBase64EncodedData(byte[]? data)
+    internal override void AppendBase64EncodedData(byte[] data)
         => _ = Builder.AppendBase64(data);
 
     private void PreserveLabel(AddressProperty prop, bool isPref)

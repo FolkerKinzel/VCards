@@ -18,7 +18,6 @@ public class V4Tests
         Assert.AreNotEqual(0, vcard.Count);
     }
 
-
     [TestMethod]
     public void WriteEmptyVCard()
     {
@@ -36,7 +35,6 @@ public class V4Tests
         Assert.AreEqual(vcard.DisplayNames!.Count(), 1);
         Assert.IsNotNull(vcard.DisplayNames!.First());
     }
-
 
     [TestMethod]
     public void TestLineWrapping()
@@ -66,7 +64,7 @@ public class V4Tests
 
         Assert.IsNotNull(s);
 
-        Assert.IsTrue(s.Split(new string[] { VCard.NewLine }, StringSplitOptions.None)
+        Assert.IsTrue(s.Split([VCard.NewLine], StringSplitOptions.None)
             .All(x => x is not null && x.Length <= VCard.MAX_BYTES_PER_LINE));
 
         _ = Vcf.Parse(s);
@@ -90,9 +88,6 @@ public class V4Tests
             return arr;
         }
     }
-
-
-
 
     [TestMethod]
     public void SerializeVCard()
@@ -406,7 +401,6 @@ public class V4Tests
         Assert.AreEqual("X-JULIAN", vc.DeathDateViews!.First()!.Parameters.Calendar);
     }
 
-
     [TestMethod]
     public void LevelTest1()
     {
@@ -427,7 +421,6 @@ public class V4Tests
 
         Assert.IsTrue(interest.Parameters.NonStandard!.Any(kvp => kvp.Key == "LEVEL" && kvp.Value == "VeryInterested"));
     }
-
 
     [TestMethod]
     public void ParameterTest1()
@@ -568,6 +561,19 @@ public class V4Tests
             .VCard;
 
         string vcf = vc.ToVcfString(VCdVersion.V4_0);
+        StringAssert.Contains(vcf, "ALTID=");
+    }
+
+    [TestMethod]
+    public void SortAsTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .NameViews.Add(NameBuilder.Create().AddGiven("Folker").Build(), p => p.SortAs = [])
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V4_0);
+        Assert.IsFalse(vcf.Contains("SORT-AS="));
     }
 }
 

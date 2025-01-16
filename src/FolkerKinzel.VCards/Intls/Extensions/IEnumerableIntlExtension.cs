@@ -54,21 +54,10 @@ internal static class IEnumerableIntlExtension
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static IEnumerable<TSource> WhereNotEmpty<TSource>(
         this IEnumerable<TSource?> values) where TSource : VCardProperty
         => values.Where(static x => x is not null && !x.IsEmpty)!;
-
-    internal static IEnumerable<TSource> WhereNotEmptyAnd<TSource>(
-        this IEnumerable<TSource?> values, Func<TSource, bool> filter) where TSource : VCardProperty
-    {
-        foreach (TSource? item in values)
-        {
-            if (item is not null && !item.IsEmpty && filter(item))
-            {
-                yield return item;
-            }
-        }
-    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static IEnumerable<TSource> OrderByPrefIntl<TSource>(

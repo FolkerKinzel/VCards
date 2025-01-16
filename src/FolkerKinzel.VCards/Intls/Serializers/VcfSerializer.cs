@@ -845,7 +845,7 @@ internal abstract class VcfSerializer : IDisposable
     [ExcludeFromCodeCoverage]
     protected virtual void AppendXmlProperties(IEnumerable<TextProperty?> value) { }
 
-    internal abstract void AppendBase64EncodedData(byte[]? data);
+    internal abstract void AppendBase64EncodedData(byte[] data);
 
     #endregion
 }

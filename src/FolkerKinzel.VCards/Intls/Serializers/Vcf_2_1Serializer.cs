@@ -48,13 +48,15 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
         // Do nothing
     }
 
-    internal override void AppendBase64EncodedData(byte[]? data)
+    internal override void AppendBase64EncodedData(byte[] data)
     {
+        Debug.Assert(data != null);
+
         // Append the NewLine in any case: The parser
         // needs it to detect the end of the Base64
         _ = Builder.Append(VCard.NewLine);
 
-        if (data is null || data.Length == 0)
+        if (data.Length == 0)
         {
             return;
         }

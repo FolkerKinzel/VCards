@@ -644,4 +644,16 @@ public class V2Tests
         Assert.IsNotNull(gender);
         Assert.AreEqual(Sex.Female, gender.Value.Sex);
     }
+
+    [TestMethod]
+    public void DataPropertyTest1()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Photos.AddBytes(null)
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties));
+        StringAssert.Contains(vcf, "\r\n\r\n");
+    }
 }

@@ -192,11 +192,8 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 
     internal override void AppendValue(VcfSerializer serializer)
     {
-        if (IsEmpty)
-        {
-            return;
-        }
-
+        // Empty properties must be written because vCard 2.1 needs an empty line after
+        // base64 even if the data is empty
         Value.Switch(
             (serializer, Parameters),
             static (bytes, tuple) => tuple.serializer.AppendBase64EncodedData(bytes),

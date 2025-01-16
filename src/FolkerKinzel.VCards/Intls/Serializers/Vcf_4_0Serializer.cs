@@ -343,7 +343,7 @@ internal sealed class Vcf_4_0Serializer : VcfSerializer
     protected override void AppendXmlProperties(IEnumerable<TextProperty?> value)
         => BuildPropertyCollection(VCard.PropKeys.XML, value);
 
-    internal override void AppendBase64EncodedData(byte[]? data)
+    internal override void AppendBase64EncodedData(byte[] data)
         => Builder.Append(DataUrl.FromBytes(data, this.ParameterSerializer.ParaSection.MediaType));
     // A "data" URL contains a comma and a semicolon and should be masked.
     // But the "Verifier notes" to https://www.rfc-editor.org/errata/eid3845

@@ -150,6 +150,39 @@ public class AddressLabelFormatterTests
         Assert.IsFalse(label.HasEmptyLine());
     }
 
+    [TestMethod]
+    public void ToLabelTest5()
+    {
+        const string street1 = "AV. FRANCISCO DE MIRANDA";
+        const string street2 = "LOS PALOS GRANDES";
+        const string city = "CARACAS";
+        const string state = "DISTRITO CAPITAL";
+        const string zip = "1060";
+        const string country = "VENEZUELA";
+        const string extended = "";
+
+        var address = new AddressProperty(AddressBuilder
+            .Create()
+            .AddCountry(country)
+            .AddPostalCode(zip)
+            .AddLocality(city)
+            .AddStreet(street1)
+            .AddStreet(street2)
+            .AddRegion(state)
+            .AddExtended(extended)
+            .Build()
+            );
+
+        address.Parameters.Label = AddressFormatter.Default.ToLabel(address);
+
+        string? label = address.Parameters.Label;
+        Assert.IsNotNull(label);
+        StringAssert.Contains(label, $"{city} {zip} {state}");
+        StringAssert.Contains(label, country);
+        StringAssert.Contains(label, state);
+        Assert.IsFalse(label.HasEmptyLine());
+    }
+
     //    [TestMethod]
     //    public void ToLabelTest5()
     //    {

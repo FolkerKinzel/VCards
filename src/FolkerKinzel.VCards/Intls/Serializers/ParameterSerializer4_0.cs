@@ -1053,25 +1053,14 @@ internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSeriali
             return;
         }
 
-        int startIdx = Builder.Length;
-        bool rollBack = true;
-
         AppendParameter(ParaKey.SORT_AS, "");
 
         foreach (string item in sortAs.AsSpan())
         {
-            rollBack = false;
             _ = Builder.AppendParameterValueEscapedAndQuoted(item, VCdVersion.V4_0).Append(',');
         }
 
-        if (rollBack)
-        {
-            Builder.Length = startIdx;
-        }
-        else
-        {
-            --Builder.Length;
-        }
+        --Builder.Length;
     }
 
     private void AppendType()

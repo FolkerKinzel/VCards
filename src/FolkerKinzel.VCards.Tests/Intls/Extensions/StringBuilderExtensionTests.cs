@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Reflection.Emit;
+using System.Text;
 using FolkerKinzel.VCards.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -37,4 +38,11 @@ public class StringBuilderExtensionTests
     public void AppendParameterValueEscapedAndQuotedTest1(string input, bool isLabel, VCdVersion version, string expected)
         => Assert.AreEqual(expected, 
             new StringBuilder().AppendParameterValueEscapedAndQuoted(input, version, isLabel: isLabel).ToString());
+
+    [DataTestMethod]
+    [DataRow(VCdVersion.V4_0)]
+    [DataRow(VCdVersion.V3_0)]
+    public void AppendParameterValueEscapedAndQuotedTest2(VCdVersion version)
+    => Assert.AreEqual("\"\"",
+            new StringBuilder().AppendParameterValueEscapedAndQuoted(null, version).ToString());
 }

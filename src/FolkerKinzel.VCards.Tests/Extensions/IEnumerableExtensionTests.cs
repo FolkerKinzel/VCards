@@ -837,4 +837,13 @@ public class IEnumerableExtensionTests
         Assert.AreEqual(1, props.Items().Count());  
         Assert.IsNotNull(props.Items().First());
     }
+
+    //[TestMethod]
+    //public void WhereNotEmptyAndTest()
+    //{
+    //    TextProperty?[] props = [new(null), null, new("Hi"), new("other")];
+
+    //    TextProperty[] filtered = props.WhereNotEmptyAnd(x => x.Value.Equals("Hi")).ToArray();
+    //    Assert.AreEqual(1, filtered.Length);
+    //}
 }

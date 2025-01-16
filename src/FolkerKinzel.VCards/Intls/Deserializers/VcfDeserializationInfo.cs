@@ -8,7 +8,6 @@ internal sealed class VcfDeserializationInfo
 
     private DateAndOrTimeConverter? _dateAndOrTimeConverter;
     private TimeConverter? _timeConverter;
-    private NameBuilder? _nameBuilder;
     private TimeStampConverter? _timeStampConverter;
 
     internal List<KeyValuePair<string, ReadOnlyMemory<char>>> ParameterList { get; } = [];
@@ -37,15 +36,6 @@ internal sealed class VcfDeserializationInfo
         {
             this._timeConverter ??= new TimeConverter();
             return this._timeConverter;
-        }
-    }
-
-    internal NameBuilder NameBuilder
-    {
-        get
-        {
-            this._nameBuilder ??= NameBuilder.Create();
-            return _nameBuilder;
         }
     }
 }
