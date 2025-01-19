@@ -1,6 +1,6 @@
 ﻿using FolkerKinzel.VCards.Models;
 
-namespace FolkerKinzel.VCards.Models.Properties.Tests;
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class OrganizationTests

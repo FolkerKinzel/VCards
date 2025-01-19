@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -33,6 +34,20 @@ public class GeoCoordinateTests
     public void GeoCoordinateTest2(double latitude, double longitude, float? uncertainty)
         => _ = new GeoCoordinate(latitude, longitude, uncertainty);
 
+
+    [DataTestMethod()]
+    [DataRow(double.NaN, 15, null)]
+    [DataRow(15, double.NegativeInfinity, null)]
+    [DataRow(double.PositiveInfinity, 15, null)]
+    [DataRow(-101, 15, null)]
+    [DataRow(101, 15, null)]
+    [DataRow(15, 201, null)]
+    [DataRow(15, -201, null)]
+    [DataRow(52, 16, float.NaN)]
+    [DataRow(52, 16, float.NegativeInfinity)]
+    [DataRow(52, 16, -42.0F)]
+    public void TryCreateTest1(double latitude, double longitude, float? uncertainty)
+        => Assert.IsNull(GeoCoordinate.TryCreate(latitude, longitude, uncertainty));
 
     [TestMethod]
     public void GeoCoordinateTest3()
@@ -107,6 +122,14 @@ public class GeoCoordinateTests
     public void AreSamePositionTest3()
         => _ = GeoCoordinate.AreSamePosition(new GeoCoordinate(45, 45), null!);
 
+    [TestMethod]
+    public void AreSamePositionTest4()
+        => Assert.IsTrue(GeoCoordinate.AreSamePosition(GeoCoordinate.Empty, GeoCoordinate.Empty));
+
+    [TestMethod]
+    public void AreSamePositionTest5()
+        => Assert.IsFalse(GeoCoordinate.AreSamePosition(GeoCoordinate.Empty, new GeoCoordinate(0, 0)));
+
     [TestMethod()]
     public void EqualsTest1()
     {
@@ -150,26 +173,16 @@ public class GeoCoordinateTests
         Console.WriteLine(s);
     }
 
+    [TestMethod]
+    public void ToStringTest2() => Assert.IsNotNull(GeoCoordinate.Empty.ToString());
 
     [DataTestMethod()]
-    //[DataRow("0.8,0.7")]
-
     [DataRow("geo:0.8,0.7")]
     [DataRow("0.8;0.7")]
-    //[DataRow(".8,0.7")]
-    //[DataRow("geo:.8,0.7")]
-    //[DataRow(".8,.7")]
-    //[DataRow("geo:.8,.7")]
-    //[DataRow("0.8,.7")]
-    //[DataRow("geo:0.8,.7")]
     [DataRow(".8;0.7")]
     [DataRow(".8;.7")]
     [DataRow("0.8;.7")]
-    //[DataRow("  0.8  ,  0.7  ")]
     [DataRow("  0.8  ; 0.7  ")]
-    //[DataRow("  .8  ,  0.7  ")]
-    //[DataRow("  .8  ,  .7  ")]
-    //[DataRow("  0.8  ,  .7  ")]
     [DataRow("  .8  ;  0.7  ")]
     [DataRow("  .8  ;  .7  ")]
     [DataRow("  0.8  ;  .7  ")]

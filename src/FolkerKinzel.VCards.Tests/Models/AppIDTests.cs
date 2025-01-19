@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.Models.Tests;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class AppIDTests

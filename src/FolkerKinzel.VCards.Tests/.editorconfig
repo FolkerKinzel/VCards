@@ -22,6 +22,15 @@ dotnet_diagnostic.CA1861.severity = none
 # IDE0130: Namespace does not match folder structure
 dotnet_style_namespace_match_folder = false
 
+# IDE0008: Use explicit type
+csharp_style_var_when_type_is_apparent = true
+
+# IDE0008: Use explicit type
+csharp_style_var_elsewhere = false
+
+# IDE0008: Use explicit type
+csharp_style_var_for_built_in_types = false
+
 [DataUrlTests.cs]
 # SYSLIB0011: Typ oder Element ist veraltet
 dotnet_diagnostic.SYSLIB0011.severity = none

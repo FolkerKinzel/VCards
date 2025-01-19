@@ -22,6 +22,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use NameFormatter instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public string? ToDisplayName() => throw new NotImplementedException();
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -29,6 +30,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use NameProperty(Name, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public NameProperty(
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -39,10 +41,10 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
         IEnumerable<string?>? suffixes = null,
         string? group = null) : base(new ParameterSection(), group) => throw new NotImplementedException();
 
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use NameProperty(Name, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public NameProperty(
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -56,6 +58,7 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use NameProperty(Name, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public NameProperty(NameBuilder builder, string? group = null)
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

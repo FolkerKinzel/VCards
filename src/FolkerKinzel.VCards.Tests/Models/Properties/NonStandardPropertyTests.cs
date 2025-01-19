@@ -16,6 +16,8 @@ public class NonStandardPropertyTests
 
         Assert.AreEqual(GROUP, prop.Group);
         Assert.AreEqual(VALUE, prop.Value);
+        Assert.AreEqual(VALUE, ((VCardProperty)prop).Value);
+
         Assert.AreEqual(KEY, prop.Key);
         Assert.IsFalse(prop.IsEmpty);
     }

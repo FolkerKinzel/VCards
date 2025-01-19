@@ -196,7 +196,7 @@ internal sealed class Vcf_2_1Serializer : VcfSerializer
     protected override void AppendBirthDayViews(IEnumerable<DateAndOrTimeProperty?> value)
         => BuildFirstProperty(VCard.PropKeys.BDAY,
                               value,
-                              static x => x.Value.DateOnly.HasValue || x.Value.DateTimeOffset.HasValue);
+                              static x => x.Value.DateOnly.HasValue || x.Value.DateTimeOffset.HasValue || x.IsEmpty);
 
     protected override void AppendDisplayNames(IEnumerable<TextProperty?> value)
         => BuildPrefProperty(VCard.PropKeys.FN, value);

@@ -27,7 +27,6 @@ public class StringCollectionPropertyTests
         CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value.ToArray());
     }
 
-
     [DataTestMethod]
     [DataRow("Dumbo", GROUP, new string[] { "Dumbo" })]
     [DataRow(null, GROUP, new string[0])]
@@ -45,7 +44,6 @@ public class StringCollectionPropertyTests
         CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value.ToArray());
     }
 
-
     [DataTestMethod]
     [DataRow(GROUP + ".NICKNAME:", GROUP, new string[0])]
     [DataRow(GROUP + @".NICKNAME:Bodo\, der Blöde,Dumbo", GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
@@ -60,10 +58,11 @@ public class StringCollectionPropertyTests
 
         var nickNameProp = new StringCollectionProperty(vcfRow!, VCdVersion.V4_0);
 
+        Assert.AreSame(nickNameProp.Value, ((VCardProperty)nickNameProp).Value);
+
         Assert.AreEqual(expectedGroup, nickNameProp.Group);
         CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value.ToArray());
     }
-
 
     [TestMethod]
     public void ToStringTest1()
@@ -73,7 +72,6 @@ public class StringCollectionPropertyTests
         Assert.IsNotNull(s);
         Assert.AreNotEqual(0, s.Length);
     }
-
 
     [TestMethod]
     public void ToStringTest2()

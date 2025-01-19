@@ -45,7 +45,8 @@ public sealed class ContactIDProperty : VCardProperty
         : base(new ParameterSection(), group)
         => Value = value ?? throw new ArgumentNullException(nameof(value));
 
-    internal ContactIDProperty(VcfRow vcfRow, VCdVersion version) : base(vcfRow.Parameters, vcfRow.Group)
+    internal ContactIDProperty(VcfRow vcfRow, VCdVersion version) 
+        : base(vcfRow.Parameters, vcfRow.Group)
     {
         if (Parameters.DataType == Data.Text)
         {

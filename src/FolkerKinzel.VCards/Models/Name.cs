@@ -26,6 +26,7 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use NameFormatter instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public string? ToDisplayName() => throw new NotImplementedException();
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

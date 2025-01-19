@@ -275,6 +275,11 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <inheritdoc/>
     public override string ToString()
     {
+        if (IsEmpty)
+        {
+            return "<Empty>";
+        }
+
         string latitude = Latitude.ToString("F6");
         string longitude = Longitude.ToString("F6");
 

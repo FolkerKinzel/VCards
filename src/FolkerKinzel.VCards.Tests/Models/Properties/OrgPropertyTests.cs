@@ -26,8 +26,8 @@ public class OrgPropertyTests
         CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.Units?.ToArray());
     }
 
-
     [DataTestMethod()]
+    [DataRow(@"ORG:", null, null, null)]
     [DataRow(GROUP + @".ORG:ABC\, Inc.;North American Division;Marketing", GROUP, "ABC, Inc.", new string[] { "North American Division", "Marketing" })]
     [DataRow(@"ORG:ABC\, Inc.;North American Division;Marketing", null, "ABC, Inc.", new string[] { "North American Division", "Marketing" })]
     [DataRow(@"ORG:;North American Division;Marketing", null, null, new string[] { "North American Division", "Marketing" })]

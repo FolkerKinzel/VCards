@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls;
+﻿using System;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Resources;
 
@@ -252,11 +253,13 @@ public sealed class ContactID : IEquatable<ContactID>
                                       : stringFunc((string)_object!, arg);
 
     /// <inheritdoc/>
-    public override string ToString() 
-        => IsEmpty ? "<Empty>" 
-                   : Guid.HasValue 
-                        ? $"{typeof(Guid).Name}: {Guid.Value}" 
-                        : $"{_object!.GetType().Name}: {_object}";
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override string ToString()
+        => Convert(
+            static guid => $"{typeof(Guid).Name}: {guid}",
+            static uri => $"{typeof(Uri).Name}: {uri}",
+            static str => str.Length == 0 ? "<Empty>" : $"{typeof(string).Name}: {str}"
+            );
 
     /// <inheritdoc/>
     ///

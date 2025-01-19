@@ -82,28 +82,11 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
 
         string? val = StringDeserializer.Deserialize(vcfRow, version);
 
-        if (string.IsNullOrWhiteSpace(val))
-        {
-            prop = new RelationProperty(Relation.Empty);
-            goto done;
-        }
-
-        if (vcfRow.Parameters.DataType == Data.Text)
-        {
-            prop = new RelationProperty(Relation.Create(ContactID.Create(val)));
-            goto done;
-        }
-
-        if (Uri.TryCreate(val, UriKind.Absolute, out Uri? uri))
-        {
-            prop = new RelationProperty(Relation.Create(ContactID.Create(uri)));
-            goto done;
-        }
-        else
-        {
-            prop = new RelationProperty(Relation.Create(ContactID.Create(val)));
-            goto done;
-        }
+        prop = vcfRow.Parameters.DataType == Data.Text
+            ? new RelationProperty(Relation.Create(ContactID.Create(val)))
+            : Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
+                ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
+                : new RelationProperty(Relation.Create(ContactID.Create(val)));
 
 done:
         prop.Parameters.Assign(vcfRow.Parameters);

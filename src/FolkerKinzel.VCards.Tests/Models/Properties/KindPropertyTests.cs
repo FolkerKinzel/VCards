@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Deserializers;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
@@ -16,7 +17,6 @@ public class KindPropertyTests
         Assert.AreEqual(kind, prop.Value);
         Assert.IsFalse(prop.IsEmpty);
     }
-
 
     [TestMethod()]
     public void KindPropertyTest2()
@@ -53,4 +53,10 @@ public class KindPropertyTests
         VCardProperty prop = new KindProperty(Kind.Group);
         Assert.AreEqual(Kind.Group, prop.Value);
     }
+
+    [TestMethod]
+    public void TryParseTest1()
+        => Assert.IsFalse(KindProperty.TryParse(VcfRow.Parse("KIND:blabla".AsMemory(),
+                                                             new VcfDeserializationInfo())!,
+                          out _));
 }

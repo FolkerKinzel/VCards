@@ -23,6 +23,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use AddressFormatter instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public void AttachLabel() => throw new NotImplementedException();
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -30,6 +31,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use AddressFormatter instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public string? ToLabel() => throw new NotImplementedException();
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -37,6 +39,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use AddressProperty(Address, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public AddressProperty(IEnumerable<string?>? street,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -50,6 +53,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use AddressProperty(Address, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public AddressProperty(IEnumerable<string?>? street,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -65,6 +69,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use AddressProperty(Address, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public AddressProperty(
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -79,6 +84,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use AddressProperty(Address, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public AddressProperty(
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -95,6 +101,7 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [Obsolete("Use AddressProperty(Address, string?) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ExcludeFromCodeCoverage]
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public AddressProperty(AddressBuilder builder, string? group = null)
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

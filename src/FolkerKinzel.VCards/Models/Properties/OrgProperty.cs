@@ -64,16 +64,11 @@ public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
         var orgList = new List<string>(
             PropertyValueSplitter.Split(val, ';', version: version));
 
-        if (orgList.Count == 0)
-        {
-            Value = new Organization(orgName: null);
-        }
-        else
-        {
-            string? orgName = orgList[0];
-            orgList.RemoveAt(0);
-            Value = new Organization(orgName, orgList);
-        }
+        Debug.Assert(orgList.Count > 0);
+
+        string orgName = orgList[0];
+        orgList.RemoveAt(0);
+        Value = new Organization(orgName, orgList);
     }
 
     /// <summary> The data provided by the  <see cref="OrgProperty" />. </summary>

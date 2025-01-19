@@ -1,6 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Deserializers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
@@ -67,5 +68,9 @@ public class AccessPropertyTests
         Assert.AreEqual(prop1.Value, prop2.Value);
         Assert.AreNotSame(prop1, prop2);
     }
+
+    [TestMethod]
+    public void TryParseTest1() 
+        => Assert.IsFalse(AccessProperty.TryParse(VcfRow.Parse("CLASS:blabla".AsMemory(), new VcfDeserializationInfo())!, out _));
 
 }

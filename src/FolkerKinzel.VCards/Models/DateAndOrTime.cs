@@ -324,7 +324,9 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
             (
                 formatProvider ?? CultureInfo.CurrentCulture,
     
-                static (date, fp) => date.HasYear() ? date.ToString(fp) : date.ToString(fp).Replace(date.Year.ToString(), "", StringComparison.Ordinal),
+                static (date, fp) => date.HasYear() ? date.ToString(fp)
+                                                    : date.ToString(fp)
+                                                          .Replace(date.Year.ToString(), "", StringComparison.Ordinal),
                 static (dtOffset, fp) => DateTimeOffsetToString(dtOffset),
                 static (time, fp) => time.ToString(fp),
                 static (str, fp) => str
@@ -489,15 +491,15 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
             return "<Empty>";
         }
 
-        (string? type, string value) = Convert
+        string? type = Convert
         (
-            static date => (typeof(System.DateOnly).Name, date.ToString(CultureInfo.CurrentCulture)),
-            static dateTimeOffset => (typeof(System.DateTimeOffset).Name, dateTimeOffset.ToString(CultureInfo.CurrentCulture)),
-            static time => (typeof(System.TimeOnly).Name, time.ToString(CultureInfo.CurrentCulture)),
-            static str => (typeof(string).Name, str)
+            static date => typeof(System.DateOnly).Name,
+            static dto => typeof(System.DateTimeOffset).Name,
+            static time => typeof(System.TimeOnly).Name,
+            static str => typeof(string).Name
         );
 
-        return $"{type}: {value}";
+        return $"{type}: {AsString()}";
     }
 
     /// <inheritdoc/>

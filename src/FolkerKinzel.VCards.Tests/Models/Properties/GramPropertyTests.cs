@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
@@ -28,5 +29,9 @@ public class GramPropertyTests
 
     }
 
-    
+    [TestMethod]
+    public void TryParseTest1()
+        => Assert.IsFalse(GramProperty.TryParse(VcfRow.Parse("GRAMGENDER:blabla".AsMemory(),
+                                                             new VcfDeserializationInfo())!,
+                          out _));
 }

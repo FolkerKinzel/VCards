@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
@@ -174,7 +175,11 @@ public static partial class Vcf
             VCard.ReferenceIntl(list);
         }
 
+#if NET462 || NETSTANDARD2_0 || NETSTANDARD2_1
         foreach (VCard vCard in list)
+#else
+        foreach (VCard vCard in CollectionsMarshal.AsSpan(list))
+#endif
         {
             vCard.Version = version;
 

@@ -1,5 +1,7 @@
 ﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
@@ -70,4 +72,10 @@ public class GeoPropertyTests
         Assert.AreSame(prop1.Value, prop2.Value);
         Assert.AreNotSame(prop1, prop2);
     }
+
+    [TestMethod]
+    public void TryParseTest1() 
+        => Assert.IsFalse(GeoProperty.TryParse(VcfRow.Parse("GEO:1000;-1000".AsMemory(), 
+                                                             new VcfDeserializationInfo())!,
+                          out _));
 }

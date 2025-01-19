@@ -195,6 +195,15 @@ public class DateAndOrTimePropertyTests
     }
 
     [TestMethod]
+    public void PrepareForVcfSerializationTest2()
+    {
+        var vc = VCardBuilder.Create().BirthDayViews.Add(DateAndOrTime.Empty, p => p.DataType = Data.Text).VCard;
+        string vcf = vc.ToVcfString(options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties));
+
+        StringAssert.Contains(vcf, "BDAY:\r\n");
+    }
+
+    [TestMethod]
     public void AppendValueTest1()
     {
         using var writer = new StringWriter();

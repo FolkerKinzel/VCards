@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Parameters.Tests;
 
@@ -307,5 +308,20 @@ public class ParameterSectionTests
         };
 
         Assert.IsNull(p.JSContactPointer);
+    }
+
+
+    [TestMethod]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>")]
+    public void ContentLocationTest1()
+    {
+        ParameterSection p = new();
+        p.DataType = Data.Uri;
+        p.ContentLocation = Loc.Url;
+        Assert.AreEqual(Data.Uri, p.DataType);
+        p.ContentLocation = Loc.Cid;
+        Assert.AreEqual(Data.Uri, p.DataType);
+        p.ContentLocation = Loc.Inline;
+        Assert.AreNotEqual(Data.Uri, p.DataType);
     }
 }

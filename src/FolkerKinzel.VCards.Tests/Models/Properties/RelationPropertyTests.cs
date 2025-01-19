@@ -57,6 +57,13 @@ public class RelationPropertyTests
         Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 
+    //[TestMethod]
+    //public void RelationPropertyTest3()
+    //{
+    //    var row = VcfRow.Parse("RELATED;TYPE=FRIEND:   ".AsMemory(), new VcfDeserializationInfo());
+    //    var prop = new RelationProperty(row, )
+    //}
+
     [TestMethod]
     public void IEnumerableTest()
         => Assert.AreEqual(1, new RelationProperty(Relation.Empty).AsWeakEnumerable().Count());
@@ -131,7 +138,6 @@ public class RelationPropertyTests
         Assert.IsTrue(s.Length >= "John Doe".Length);
     }
 
-
     [DataTestMethod]
     [DataRow("   ")]
     [DataRow("../bla.txt")]
@@ -203,8 +209,6 @@ public class RelationPropertyTests
         prop.PrepareForVcfSerialization(serializer);
         Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
-
-    
 
     [TestMethod]
     public void RelationUriPropertyTest2()
@@ -292,8 +296,6 @@ public class RelationPropertyTests
         Assert.AreEqual(relation, prop.Parameters.RelationType);
         Assert.AreEqual(Data.Uri, prop.Parameters.DataType);
     }
-
-    
 
     [TestMethod]
     public void CircularReferenceTest1()
