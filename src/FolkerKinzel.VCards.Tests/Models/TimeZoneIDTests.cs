@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Serializers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 
@@ -56,7 +57,6 @@ public class TimeZoneIDTests
                         tzInfo.TryGetUtcOffset(out _, new TimeZoneIDConverterMock(success)));
     }
 
-
     //[TestMethod]
     //public void ParseTest2()
     //{
@@ -71,7 +71,6 @@ public class TimeZoneIDTests
 
     //    Assert.AreEqual(tz1, tz2);
     //}
-
 
     [DataTestMethod]
     [DataRow("-0700", true)]
@@ -94,6 +93,8 @@ public class TimeZoneIDTests
         Assert.AreEqual(expected, tz.TryGetUtcOffset(out _));
     }
 
+    [TestMethod]
+    public void TryGetUtcOffsetTest4() => Assert.IsFalse(TimeZoneID.Empty.TryGetUtcOffset(out _));
 
     [TestMethod]
     public void AppendToTest1()
@@ -122,4 +123,14 @@ public class TimeZoneIDTests
 
     [TestMethod]
     public void ToStringTest() => Assert.IsNotNull(TimeZoneID.Parse("Europe/Berlin").ToString());
+
+    [DataTestMethod]
+    [DataRow(null)]
+    [DataRow("")]
+    [DataRow(" ")]
+    public void TryCreateTest1(string? input) => Assert.IsNull(TimeZoneID.TryCreate(input));
+
+    [TestMethod]
+    public void TryCreateTest2() => Assert.IsNotNull(TimeZoneID.TryCreate("Europe/Berlin"));
+
 }

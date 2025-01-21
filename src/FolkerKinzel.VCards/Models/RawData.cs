@@ -265,14 +265,12 @@ public sealed class RawData
     public TResult Convert<TResult>(Func<byte[], TResult> bytesFunc,
                                     Func<Uri, TResult> uriFunc,
                                     Func<string, TResult> stringFunc)
-    {
-        return _object switch
+        => _object switch
         {
             byte[] bytes => bytesFunc is null ? throw new ArgumentNullException(nameof(bytesFunc)) : bytesFunc(bytes),
             Uri uri => uriFunc is null ? throw new ArgumentNullException(nameof(uriFunc)) : uriFunc(uri),
             _ => stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc((string)_object)
         };
-    }
 
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/> and allows to specify an
@@ -296,14 +294,12 @@ public sealed class RawData
                                           Func<byte[], TArg, TResult> bytesFunc,
                                           Func<Uri, TArg, TResult> uriFunc,
                                           Func<string, TArg, TResult> stringFunc)
-    {
-        return _object switch
+        => _object switch
         {
             byte[] bytes => bytesFunc is null ? throw new ArgumentNullException(nameof(bytesFunc)) : bytesFunc(bytes, arg),
             Uri uri => uriFunc is null ? throw new ArgumentNullException(nameof(uriFunc)) : uriFunc(uri, arg),
             _ => stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc((string)_object, arg)
         };
-    }
 
     /// <inheritdoc/>
     public override string ToString()

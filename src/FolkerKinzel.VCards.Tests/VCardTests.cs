@@ -3,6 +3,7 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -421,6 +422,18 @@ public class VCardTests
     }
 
     [TestMethod]
+    public void CloneTest3()
+    {
+        var vc1 = new VCard();
+        vc1.Organizations = [new OrgProperty(new Organization("Org1")), null, new OrgProperty(new Organization("Org2"))];
+
+        var vc2 = (VCard)vc1.Clone();
+        Assert.AreNotSame(vc1, vc2);
+        Assert.IsNotNull(vc2.Organizations);
+        Assert.AreEqual(3, vc2.Organizations.Count());
+    }
+
+    [TestMethod]
     public void XAssistantTest1()
     {
         const string vCardString = """
@@ -463,5 +476,33 @@ public class VCardTests
         VCard vCard = Vcf.Parse(vCardString)[0];
 
         Assert.AreEqual(1, vCard.Relations?.Count());
+    }
+
+    [TestMethod]
+    public void CtorTest1()
+    {
+        const string vCardString = """
+            BEGIN:VCARD
+            VERSION:4.0
+            KIND:blabla
+            GEO:blabla
+            TZ:     
+            CLASS:blabla
+            CLIENTPIDMAP:blabla
+            GRAMGENDER:blabla
+            END:VCARD
+            """;
+
+        VCard vCard = Vcf.Parse(vCardString)[0];
+
+        var nonStandards = vCard.NonStandards;
+
+        Assert.IsNotNull(nonStandards);
+        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("KIND", StringComparison.OrdinalIgnoreCase) ?? false));
+        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("GEO", StringComparison.OrdinalIgnoreCase) ?? false));
+        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("TZ", StringComparison.OrdinalIgnoreCase) ?? false));
+        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("CLASS", StringComparison.OrdinalIgnoreCase) ?? false));
+        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("CLIENTPIDMAP", StringComparison.OrdinalIgnoreCase) ?? false));
+        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("GRAMGENDER", StringComparison.OrdinalIgnoreCase) ?? false));
     }
 }

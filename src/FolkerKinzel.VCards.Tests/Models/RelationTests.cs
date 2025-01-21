@@ -44,10 +44,31 @@ public class RelationTests
     }
 
     [TestMethod]
+    public void SwitchTest1()
+    {
+        var rel = Relation.Create(new VCard());
+        rel.Switch(null!, null!);
+    }
+
+    [TestMethod]
     public void SwitchTest2()
     {
         var rel = Relation.Create(ContactID.Create("Hi"));
         rel.Switch(null!, null!);
+    }
+
+    [TestMethod]
+    public void SwitchTest3()
+    {
+        var rel = Relation.Create(new VCard());
+        rel.Switch("", null!, null!);
+    }
+
+    [TestMethod]
+    public void SwitchTest4()
+    {
+        var rel = Relation.Create(ContactID.Create("Hi"));
+        rel.Switch("", null!, null!);
     }
 
     [TestMethod]
