@@ -39,6 +39,38 @@ public class ContactIDBuilderTests
     public void SetTest1() => new ContactIDBuilder().Set(ContactID.Empty);
 
     [TestMethod]
+    public void SetTest2()
+    {
+        var vc = VCardBuilder.Create().ContactID.Set(new Uri("text", UriKind.Relative)).VCard;
+        Assert.IsNotNull(vc.ContactID);
+        Assert.IsNotNull(vc.ContactID.Value.String);
+    }
+
+    [TestMethod]
+    public void SetTest3()
+    {
+        var vc = VCardBuilder.Create().ContactID.Set((Uri?)null).VCard;
+        Assert.IsNotNull(vc.ContactID);
+        Assert.IsTrue(vc.ContactID.Value.IsEmpty);
+    }
+
+    [TestMethod]
+    public void SetTest4()
+    {
+        var vc = VCardBuilder.Create().ContactID.Set("   ").VCard;
+        Assert.IsNotNull(vc.ContactID);
+        Assert.IsNotNull(vc.ContactID.Value.IsEmpty);
+    }
+
+    [TestMethod]
+    public void SetTest5()
+    {
+        var vc = VCardBuilder.Create().ContactID.Set("id").VCard;
+        Assert.IsNotNull(vc.ContactID);
+        Assert.IsNotNull(vc.ContactID.Value.String);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void ClearTest1() => new ContactIDBuilder().Clear();
 

@@ -1,7 +1,10 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
-public class DataBuilderTests
+public class RawDataBuilderTests
 {
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
@@ -120,4 +123,35 @@ public class DataBuilderTests
 
     [TestMethod]
     public void ToStringTest1() => Assert.IsNotNull(new RawDataBuilder().ToString());
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void AddRawDataTest1() => new RawDataBuilder().AddRawData(RawData.FromText("text"));
+
+    [TestMethod]
+    public void AddRawDataTest2()
+    {
+        var vc = VCardBuilder.Create().Keys.AddRawData(null).VCard;
+        var key = vc.Keys?.FirstOrDefault();
+        Assert.IsNotNull(key);
+        Assert.IsTrue(key.IsEmpty);
+    }
+
+    [TestMethod]
+    public void AddUriTest2()
+    {
+        var vc = VCardBuilder.Create().Keys.AddUri(null).VCard;
+        var key = vc.Keys?.FirstOrDefault();
+        Assert.IsNotNull(key);
+        Assert.IsTrue(key.IsEmpty);
+    }
+
+    [TestMethod]
+    public void AddUriTest3()
+    {
+        var vc = VCardBuilder.Create().Keys.AddUri(new Uri("relative", UriKind.Relative)).VCard;
+        var key = vc.Keys?.FirstOrDefault();
+        Assert.IsNotNull(key);
+        Assert.IsNotNull(key.Value.String);
+    }
 }

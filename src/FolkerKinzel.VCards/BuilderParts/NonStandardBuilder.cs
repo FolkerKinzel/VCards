@@ -123,12 +123,12 @@ public readonly struct NonStandardBuilder
             prop = new NonStandardProperty(group?.Invoke(vCard));
         }
 
-
         vCard.Set(Prop.NonStandards,
-                          VCardBuilder.Add(prop,
-                                           _builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards),
-                                           parameters)
-                          );
+                  VCardBuilder.Add(prop,
+                                   _builder.VCard.Get<IEnumerable<NonStandardProperty?>?>(Prop.NonStandards),
+                                   parameters)
+                  );
+
         return _builder;
     }
 

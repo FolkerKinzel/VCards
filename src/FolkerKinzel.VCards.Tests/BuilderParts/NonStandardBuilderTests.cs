@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models.Properties;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -35,6 +36,25 @@ public class NonStandardBuilderTests
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new NonStandardBuilder().Add("X-TEST", null);
+
+    [TestMethod]
+    public void AddTest2()
+    {
+        var vc = VCardBuilder.Create().NonStandards.Add(null!, "the value").VCard;
+        var nonStandard = vc.NonStandards?.FirstOrDefault();
+        Assert.IsNotNull(nonStandard);
+        Assert.IsTrue(nonStandard.IsEmpty);
+    }
+
+    [TestMethod]
+    public void AddTest3()
+    {
+        var vc = VCardBuilder.Create().NonStandards.Add(null!, "the value", group: v => "G").VCard;
+        var nonStandard = vc.NonStandards?.FirstOrDefault();
+        Assert.IsNotNull(nonStandard);
+        Assert.IsTrue(nonStandard.IsEmpty);
+        Assert.AreEqual("G", nonStandard.Group);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
