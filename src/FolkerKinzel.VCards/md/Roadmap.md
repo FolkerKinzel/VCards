@@ -4,8 +4,13 @@
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
-### 8.0.1
+### 8.1.0
 - [ ] Remove symbols that are marked as `Obsolete` errors.
+- [ ] New extension methods: 
+```csharp
+void MakePref(this IEnumerable<VCardProperty?>? containingCollection, VCardProperty prop);
+void MakeFirst(this IEnumerable<VCardProperty?>? containingCollection, VCardProperty prop);
+```
 - [ ] Performance: Refactor `SetPreferences`, `UnsetPreferences`, 
 `SetIndexes`, `UnsetIndexes` in all `BuilderParts` to not to use `Edit` internally
 
