@@ -1,4 +1,8 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class RelationBuilderTests
@@ -100,6 +104,26 @@ public class RelationBuilderTests
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest4() => new RelationBuilder().Add((VCard?)null);
+
+    [TestMethod]
+    public void AddTest5()
+    {
+        var vc = VCardBuilder.Create().Relations.Add((Relation?)null).VCard;
+
+        var relation = vc.Relations.FirstOrNull(skipEmptyItems:false);
+        Assert.IsNotNull(relation);
+        Assert.IsTrue(relation.IsEmpty);
+    }
+
+    [TestMethod]
+    public void AddTest6()
+    {
+        var vc = VCardBuilder.Create().Relations.Add((ContactID?)null).VCard;
+
+        var relation = vc.Relations.FirstOrNull(skipEmptyItems: false);
+        Assert.IsNotNull(relation);
+        Assert.IsTrue(relation.IsEmpty);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

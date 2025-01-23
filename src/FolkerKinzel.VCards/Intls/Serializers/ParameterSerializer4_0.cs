@@ -1045,7 +1045,6 @@ internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSeriali
 
     private void AppendSortAs()
     {
-        Debug.Assert(ParaSection.SortAs is null or string[]);
         string[]? sortAs = (string[]?)ParaSection.SortAs;
 
         if (!sortAs.ContainsData())

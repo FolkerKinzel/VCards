@@ -34,7 +34,6 @@ public class DateAndOrTimeTests
         Assert.IsTrue(rel.TryAsDateTimeOffset(out _));
     }
 
-
     [TestMethod]
     public void ValueTest3()
     {
@@ -160,6 +159,36 @@ public class DateAndOrTimeTests
     [TestMethod]
     public void ConvertTest2()
     {
+        const int expected = 42;
+        DateAndOrTime rel = DateTimeOffset.Now;
+
+        int result = rel.Convert(null!, s => expected, null!, null!);
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    public void ConvertTest3()
+    {
+        const int expected = 42;
+        DateAndOrTime rel = TimeOnly.FromDateTime(DateTime.Now);
+
+        int result = rel.Convert(null!, null!, s => expected, null!);
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    public void ConvertTest4()
+    {
+        const int expected = 42;
+        DateAndOrTime rel = "Midnight";
+
+        int result = rel.Convert(null!, null!, null!, s => expected);
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    public void ConvertTest5()
+    {
         const string test = "test";
         string? result = null;
 
@@ -167,6 +196,79 @@ public class DateAndOrTimeTests
 
         Assert.AreEqual(test, result);
     }
+
+    [TestMethod]
+    public void ConvertTest6()
+    {
+        const string test = "test";
+        string? result = null;
+
+        result = DateAndOrTime.Create(DateTimeOffset.Now).Convert(test, null!, (guid, str) => str, null!, null!);
+
+        Assert.AreEqual(test, result);
+    }
+
+    [TestMethod]
+    public void ConvertTest7()
+    {
+        const string test = "test";
+        string? result = null;
+
+        result = DateAndOrTime.Create(TimeOnly.FromDateTime(DateTime.Now)).Convert(test, null!, null!, (guid, str) => str, null!);
+
+        Assert.AreEqual(test, result);
+    }
+
+    [TestMethod]
+    public void ConvertTest8()
+    {
+        const string test = "test";
+        string? result = null;
+
+        result = DateAndOrTime.Create("Midnight").Convert(test, null!, null!, null!, (guid, str) => str);
+
+        Assert.AreEqual(test, result);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest9() 
+        => _ = DateAndOrTime.Create(DateOnly.FromDateTime(DateTime.Now)).Convert<string, string>("", null!, null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest10()
+        => _ = DateAndOrTime.Create(DateTimeOffset.Now).Convert<string, string>("", null!, null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest11()
+        => _ = DateAndOrTime.Create(TimeOnly.FromDateTime(DateTime.Now)).Convert<string, string>("", null!, null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest12() 
+        => _ = DateAndOrTime.Create("Midnight").Convert<string, string>("", null!, null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest13()
+       => _ = DateAndOrTime.Create(DateOnly.FromDateTime(DateTime.Now)).Convert<string>(null!, null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest14()
+        => _ = DateAndOrTime.Create(DateTimeOffset.Now).Convert<string>(null!, null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest15()
+        => _ = DateAndOrTime.Create(TimeOnly.FromDateTime(DateTime.Now)).Convert<string>(null!, null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest16()
+        => _ = DateAndOrTime.Create("Midnight").Convert<string>(null!, null!, null!, null!);
 
     [TestMethod]
     public void TryAsDateTest1()
@@ -203,5 +305,13 @@ public class DateAndOrTimeTests
         Assert.IsFalse((DateAndOrTime?)null == daot);
         Assert.IsTrue(daot != null);
         Assert.IsFalse(daot.Equals(42));
+    }
+
+    [TestMethod]
+    public void AsStringTest1()
+    {
+        var daot = DateAndOrTime.Create(2, 4);
+        string str = daot.AsString(CultureInfo.InvariantCulture);
+        Assert.AreEqual("02/04", str);
     }
 }

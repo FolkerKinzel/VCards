@@ -18,7 +18,6 @@ public class GeoCoordinateTests
         Assert.AreEqual(longitude, geo.Longitude);
     }
 
-
     [DataTestMethod()]
     [DataRow(double.NaN, 15, null)]
     [DataRow(15, double.NegativeInfinity, null)]
@@ -63,6 +62,22 @@ public class GeoCoordinateTests
         Assert.AreEqual(180, geo.Longitude, 0.1);
     }
 
+    [TestMethod()]
+    public void EqualsTest1()
+    {
+        var geo = new GeoCoordinate(1, 1);
+        var o = new object();
+
+        Assert.IsFalse(geo.Equals(null));
+        Assert.IsFalse(geo!.Equals(o));
+    }
+
+    [TestMethod()]
+    public void EqualsTest2() => Assert.IsTrue(null == (GeoCoordinate?)null);
+
+    [TestMethod()]
+    public void EqualsTest3() => Assert.IsFalse(null == new GeoCoordinate(1, 1));
+
     [DataTestMethod()]
     [DataRow(50, 50, 0.0F, 50, 50, null, false)]
     [DataRow(90, 50, null, 90, 0, null, true)]
@@ -91,6 +106,14 @@ public class GeoCoordinateTests
         {
             Assert.AreEqual(geo1.GetHashCode(), geo2.GetHashCode());
         }
+    }
+
+    [TestMethod()]
+    public void EqualsTest5()
+    {
+        Assert.IsTrue(GeoCoordinate.Empty.Equals(GeoCoordinate.Empty));
+        Assert.IsFalse(GeoCoordinate.Empty == new GeoCoordinate(0,0));
+        Assert.IsFalse(new GeoCoordinate(0, 0) == GeoCoordinate.Empty);
     }
 
     [DataTestMethod()]
@@ -130,21 +153,7 @@ public class GeoCoordinateTests
     public void AreSamePositionTest5()
         => Assert.IsFalse(GeoCoordinate.AreSamePosition(GeoCoordinate.Empty, new GeoCoordinate(0, 0)));
 
-    [TestMethod()]
-    public void EqualsTest1()
-    {
-        var geo = new GeoCoordinate(1, 1);
-        var o = new object();
-
-        Assert.IsFalse(geo.Equals(null));
-        Assert.IsFalse(geo!.Equals(o));
-    }
-
-    [TestMethod()]
-    public void EqualsTest2() => Assert.IsTrue(null == (GeoCoordinate?)null);
-
-    [TestMethod()]
-    public void EqualsTest3() => Assert.IsFalse(null == new GeoCoordinate(1, 1));
+    
 
     //[TestMethod()]
     //public void GetHashCodeTest()

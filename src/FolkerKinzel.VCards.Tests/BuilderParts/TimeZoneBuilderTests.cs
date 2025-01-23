@@ -1,4 +1,6 @@
-﻿using FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -92,6 +94,16 @@ public class TimeZoneBuilderTests
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest2() => new TimeZoneBuilder().Add("Europe/Berlin");
+
+    [TestMethod]
+    public void AddTest3()
+    {
+        var vc = VCardBuilder.Create().TimeZones.Add((string?)null!).VCard;
+        var timeZone = vc.TimeZones.FirstOrNull(skipEmptyItems: false);
+
+        Assert.IsNotNull(timeZone);
+        Assert.IsTrue(timeZone.IsEmpty);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

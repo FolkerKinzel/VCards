@@ -42,7 +42,9 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <param name="value">The <see cref="DateOnly"/> value.</param>
     /// 
     /// <returns>The newly created <see cref="DateAndOrTime"/> instance.</returns>
-    public static DateAndOrTime Create(DateOnly value) => new(value);
+    public static DateAndOrTime Create(DateOnly value) 
+        => value.HasYear() ? new(value) 
+                           : new(new DateOnly(DateAndOrTimeConverter.FIRST_LEAP_YEAR, value.Month, value.Day));
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTime"/> instance from a <see cref="DateTimeOffset"/> 
@@ -56,9 +58,15 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// an empty instance.
     /// </remarks>
     public static DateAndOrTime Create(DateTimeOffset value)
-        => !DateAndOrTimeConverter.HasDate(value) && !DateAndOrTimeConverter.HasTime(value)
-            ? Empty
-            : new(value);
+        => !DateAndOrTimeConverter.HasDate(value)
+            ? !DateAndOrTimeConverter.HasTime(value) ? Empty : new(new DateTimeOffset(2, 1, 1, value.Hour, value.Minute, value.Second, value.Offset))
+            : DateAndOrTimeConverter.HasYear(value) ? new(value) : new(new DateTimeOffset(DateAndOrTimeConverter.FIRST_LEAP_YEAR,
+                                                                    value.Month,
+                                                                    value.Day, 
+                                                                    value.Hour, 
+                                                                    value.Minute, 
+                                                                    value.Second, 
+                                                                    value.Offset));
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTime"/> instance from a <see cref="TimeOnly"/> 
@@ -326,7 +334,8 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     
                 static (date, fp) => date.HasYear() ? date.ToString(fp)
                                                     : date.ToString(fp)
-                                                          .Replace(date.Year.ToString(), "", StringComparison.Ordinal),
+                                                          .Replace(date.Year.ToString("0000"), "", StringComparison.Ordinal)
+                                                          .Trim('/'),
                 static (dtOffset, fp) => DateTimeOffsetToString(dtOffset),
                 static (time, fp) => time.ToString(fp),
                 static (str, fp) => str
@@ -445,8 +454,8 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
             : DateTimeOffset.HasValue
                 ? dtoFunc is null ? throw new ArgumentNullException(nameof(dtoFunc)) : dtoFunc(DateTimeOffset.Value)
                 : TimeOnly.HasValue
-                            ? timeFunc is null ? throw new ArgumentNullException(nameof(timeFunc)) : timeFunc(TimeOnly.Value)
-                            : stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc(String!);
+                    ? timeFunc is null ? throw new ArgumentNullException(nameof(timeFunc)) : timeFunc(TimeOnly.Value)
+                    : stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc(String!);
 
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/> and allows to specify an
@@ -479,8 +488,8 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
             : DateTimeOffset.HasValue
                 ? dtoFunc is null ? throw new ArgumentNullException(nameof(dtoFunc)) : dtoFunc(DateTimeOffset.Value, arg)
                 : TimeOnly.HasValue
-                            ? timeFunc is null ? throw new ArgumentNullException(nameof(timeFunc)) : timeFunc(TimeOnly.Value, arg)
-                            : stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc(String!, arg);
+                    ? timeFunc is null ? throw new ArgumentNullException(nameof(timeFunc)) : timeFunc(TimeOnly.Value, arg)
+                    : stringFunc is null ? throw new ArgumentNullException(nameof(stringFunc)) : stringFunc(String!, arg);
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

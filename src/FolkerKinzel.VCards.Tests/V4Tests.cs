@@ -541,6 +541,9 @@ public class V4Tests
             .Logos.AddText("text")
             .Photos.AddText("text")
             .Sounds.AddText("text")
+            .Logos.Edit(props => props.Append(null))
+            .Photos.Edit(props => props.Append(null))
+            .Sounds.Edit(props => props.Append(null))
             .VCard;
 
         string vcf = vc.ToVcfString(VCdVersion.V4_0);
@@ -548,6 +551,24 @@ public class V4Tests
         Assert.IsFalse(vcf.Contains("LOGO", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(vcf.Contains("PHOTO", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(vcf.Contains("SOUND", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [TestMethod]
+    public void LogoPhotoSoundTest2()
+    {
+        byte[] bytes = [1,2,3];
+        VCard vc = VCardBuilder
+            .Create()
+            .Logos.AddBytes(bytes)
+            .Photos.AddBytes(bytes)
+            .Sounds.AddBytes(bytes)
+            .VCard;
+
+        string vcf = vc.ToVcfString(VCdVersion.V4_0);
+
+        Assert.IsTrue(vcf.Contains("LOGO", StringComparison.OrdinalIgnoreCase));
+        Assert.IsTrue(vcf.Contains("PHOTO", StringComparison.OrdinalIgnoreCase));
+        Assert.IsTrue(vcf.Contains("SOUND", StringComparison.OrdinalIgnoreCase));
     }
 
     [TestMethod]

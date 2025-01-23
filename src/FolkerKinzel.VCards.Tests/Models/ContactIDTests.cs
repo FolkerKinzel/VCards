@@ -14,6 +14,20 @@ public class ContactIDTests
     public void CreateTest2() => ContactID.Create(new Uri("../relative", UriKind.Relative));
 
     [TestMethod]
+    public void CreateTest3()
+    {
+        var id = ContactID.Create(new Uri("urn:uuid:A0CD4379-64AB-4BFA-9CEC-66DC76CA585E", UriKind.Absolute));
+        Assert.IsNotNull(id.Guid);
+    }
+
+    [TestMethod]
+    public void CreateTest4()
+    {
+        var id = ContactID.Create(new Uri("urn:uuid:blabla", UriKind.Absolute));
+        Assert.IsNotNull(id.Uri);
+    }
+
+    [TestMethod]
     public void ToStringTest1() => Assert.IsNotNull(ContactID.Empty.ToString());
 
     [TestMethod]
@@ -78,6 +92,52 @@ public class ContactIDTests
     }
 
     [TestMethod]
+    public void ConvertTest1b()
+    {
+        const string test = "test";
+        string? result = null;
+
+        result = ContactID.Create(new Uri("http://folker.com/")).Convert(test, null!, (guid, str) => str, null!);
+
+        Assert.AreEqual(test, result);
+    }
+
+    [TestMethod]
+    public void ConvertTest1c()
+    {
+        const string test = "test";
+        string? result = null;
+
+        result = ContactID.Create("Hi").Convert(test, null!, null!, (guid, str) => str);
+
+        Assert.AreEqual(test, result);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest2() => _ = ContactID.Create().Convert<string, string>("", null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest3() => _ = ContactID.Create(new Uri("http://folker.com/")).Convert<string, string>("", null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest4() => _ = ContactID.Create("Hi").Convert<string, string>("", null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest5() => _ = ContactID.Create().Convert<string>(null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest6() => _ = ContactID.Create(new Uri("http://folker.com/")).Convert<string>(null!, null!, null!);
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest7() => _ = ContactID.Create("Hi").Convert<string>(null!, null!, null!);
+
+    [TestMethod]
     public void EqualsTest1()
     {
         var uid1 = ContactID.Create();
@@ -90,6 +150,31 @@ public class ContactIDTests
         Assert.AreEqual(o1.GetHashCode(), o2.GetHashCode());
 
         Assert.IsFalse(o1.Equals(42));
+    }
+
+    [TestMethod]
+    public void EqualsTest2()
+    {
+        var uid1 = ContactID.Create();
+        ContactID? uid2 = null;
+        Assert.IsFalse(uid1.Equals(uid2));
+    }
+
+    [TestMethod]
+    public void EqualsTest3()
+    {
+        var uid1 = ContactID.Create("Hi");
+        ContactID? uid2 = ContactID.Create();
+        Assert.IsFalse(uid1.Equals(uid2));
+    }
+
+    [TestMethod]
+    public void EqualityTest4()
+    {
+        const string test = "http://folker.com/";
+        var uid1 = ContactID.Create(test);
+        var uid2 = ContactID.Create(new Uri(test, UriKind.Absolute));
+        Assert.IsTrue(uid1.Equals(uid2));
     }
 }
 

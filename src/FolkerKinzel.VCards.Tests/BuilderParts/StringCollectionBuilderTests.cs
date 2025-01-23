@@ -1,4 +1,6 @@
-﻿using FolkerKinzel.VCards.Models.Properties;
+﻿using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models.Properties;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -93,7 +95,16 @@ public class StringCollectionBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new StringCollectionBuilder().Add(Enumerable.Empty<string>());
+    public void AddTest2() => new StringCollectionBuilder().Add([]);
+
+    [TestMethod]
+    public void AddTest3()
+    {
+        var vc = VCardBuilder.Create().NickNames.Add((string[]?)null).VCard;
+        var nickName = vc.NickNames.FirstOrNull(skipEmptyItems:false);
+        Assert.IsNotNull(nickName);
+        Assert.IsTrue(nickName.IsEmpty);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
