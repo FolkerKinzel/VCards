@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -44,8 +45,7 @@ public class DateAndOrTimeTests
         Assert.IsNull(rel.String);
 
         Assert.IsFalse(rel.TryAsDateOnly(out _));
-        Assert.IsTrue(rel.TryAsDateTimeOffset(out DateTimeOffset dto));
-        Assert.IsFalse(dto.HasDate());
+        Assert.IsTrue(rel.TryAsDateTimeOffset(out _));
     }
 
     [TestMethod]

@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>8.0.0-alpha.2</Version>
-    <FileVersion>8.0.0.37</FileVersion>
+    <FileVersion>8.0.0.39</FileVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v8.0.0-alpha.2</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>

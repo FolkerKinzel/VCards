@@ -25,6 +25,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Remove="BuilderParts\XmlBuilderTests.cs" />
+		<Compile Remove="Extensions\DateTimeOffsetExtensionTests.cs" />
 		<Compile Remove="Intls\Converters\MimeTypeConverterTests_OBSOLETE.cs" />
 		<Compile Remove="Intls\Deserializers\AssignerTests.cs" />
 		<Compile Remove="Intls\Deserializers\DigitParserTests.cs" />

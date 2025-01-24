@@ -130,7 +130,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
                                        bool ignoreMonth = false,
                                        bool ignoreDay = false)
     {
-        ignoreYear =  ignoreYear || !value.HasYear();
+        ignoreYear =  ignoreYear || !DateAndOrTimeConverter.HasYear(value);
 
         return ignoreYear && ignoreMonth && ignoreDay 
             ? Empty 
@@ -440,7 +440,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
 
         static string DateOnlyToString(DateOnly date, IFormatProvider formatProvider, DateAndOrTime daot)
         {
-            if (date.HasYear() && daot.HasMonth && daot.HasDay)
+            if (daot.HasYear && daot.HasMonth && daot.HasDay)
             {
                 return date.ToString(formatProvider);
             }
