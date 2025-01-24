@@ -372,7 +372,7 @@ public class V4Tests
     [TestMethod]
     public void CalendarTest1()
     {
-        var prop = new DateAndOrTimeProperty(DateAndOrTime.Create(5, 5));
+        var prop = new DateAndOrTimeProperty(DateAndOrTime.Create(new DateOnly(4, 5, 5), ignoreYear: true));
         Assert.AreEqual("gregorian", prop.Parameters.Calendar);
         prop.Parameters.Calendar = "GREGORIAN";
         Assert.AreEqual("GREGORIAN", prop.Parameters.Calendar);

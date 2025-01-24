@@ -78,7 +78,7 @@ internal sealed class DateAndOrTimeConverter
 
         if (roSpan.StartsWith("--", StringComparison.Ordinal))
         {
-            // "--MM" zu "0004-MM":
+            // "--MM" to "0004-MM":
             // Note the use of YYYY-MM in the second example above. YYYYMM is
             // disallowed to prevent confusion with YYMMDD.
             if (roSpan.Length == 4)
@@ -92,7 +92,24 @@ internal sealed class DateAndOrTimeConverter
             return TryParseMonthDayWithoutYear(roSpan, ref dateAndOrTime);
         }
 
-        return TryParseInternal(roSpan, ref dateAndOrTime);
+        if(TryParseInternal(roSpan, ref dateAndOrTime))
+        {
+            // yyyy
+            if(roSpan.Length == 4)
+            {
+                dateAndOrTime.HasDay = false;
+                dateAndOrTime.HasMonth = false;
+            }
+            else if (roSpan.Length == 7)
+            {
+                // yyyy-MM
+                dateAndOrTime.HasDay = false;
+            }
+
+            return true;
+        }
+
+        return false;
 
         //////////////////////////////////////////////////////////////////////////////////////
 
@@ -107,7 +124,13 @@ internal sealed class DateAndOrTimeConverter
             Span<char> slice = span.Slice(firstLeapYearJanuary.Length);
             roSpan.CopyTo(slice);
 
-            return TryParseInternal(span, ref dateAndOrTime);
+            if(TryParseInternal(span, ref dateAndOrTime))
+            {
+                dateAndOrTime.HasMonth = false;
+                return true;
+            }
+
+            return false;
         }
 
         bool TryParseMonthWithoutYear(ReadOnlySpan<char> roSpan, ref DateAndOrTime? dateAndOrTime)
@@ -131,6 +154,7 @@ internal sealed class DateAndOrTimeConverter
                                        out DateOnly dateOnly))
             {
                 dateAndOrTime = dateOnly;
+                dateAndOrTime.HasDay = false;
                 return true;
             }
 
@@ -202,7 +226,9 @@ internal sealed class DateAndOrTimeConverter
 
     internal static void AppendDateTo(StringBuilder builder,
                                       DateOnly dt,
-                                      VCdVersion version)
+                                      VCdVersion version,
+                                      bool hasMonth,
+                                      bool hasDay)
     {
         switch (version)
         {
@@ -210,35 +236,69 @@ internal sealed class DateAndOrTimeConverter
             case VCdVersion.V3_0:
                 {
                     _ = dt.HasYear()
-                        ? builder.AppendFormat(CultureInfo.InvariantCulture,
-                                               "{0:0000}-{1:00}-{2:00}",
-                                                dt.Year, dt.Month, dt.Day)
-                        : builder.AppendFormat(CultureInfo.InvariantCulture,
-                                               "--{0:00}-{1:00}",
-                                               dt.Month, dt.Day);
+                        ? hasDay
+                                ? builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                       "{0:0000}-{1:00}-{2:00}",
+                                                        dt.Year, dt.Month, dt.Day)
+                                : hasMonth 
+                                        ? builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                               "{0:0000}-{1:00}",
+                                                                dt.Year, dt.Month)
+                                        : builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                               "{0:0000}",
+                                                                dt.Year)
+                        : hasMonth
+                                ? hasDay 
+                                      ? builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                             "--{0:00}-{1:00}",
+                                                             dt.Month, dt.Day)
+                                      : builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                             "--{0:00}",
+                                                             dt.Month)
+                                : builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                       "---{0:00}",
+                                                       dt.Day);
                     break;
                 }
             default: // vCard 4.0
                 {
                     _ = dt.HasYear()
-                        ? builder.AppendFormat(CultureInfo.InvariantCulture,
-                                               "{0:0000}{1:00}{2:00}",
-                                               dt.Year, dt.Month, dt.Day)
-                        : builder.AppendFormat(CultureInfo.InvariantCulture,
-                                               "--{0:00}{1:00}",
-                                               dt.Month, dt.Day);
+                        ? hasDay
+                                ? builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                       "{0:0000}{1:00}{2:00}",
+                                                       dt.Year, dt.Month, dt.Day)
+                                : hasMonth
+                                        ? builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                               "{0:0000}-{1:00}",
+                                                               dt.Year, dt.Month)
+                                        : builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                               "{0:0000}",
+                                                               dt.Year)
+                        : hasMonth
+                                ? hasDay 
+                                    ? builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                           "--{0:00}{1:00}",
+                                                           dt.Month, dt.Day)
+                                    : builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                           "--{0:00}",
+                                                           dt.Month)
+                                : builder.AppendFormat(CultureInfo.InvariantCulture,
+                                                       "---{0:00}",
+                                                       dt.Day);
                     break;
                 }
         }//switch
     }
 
     internal static void AppendDateTimeOffsetTo(StringBuilder builder,
-                                               DateTimeOffset dt,
-                                               VCdVersion version)
+                                                DateTimeOffset dt,
+                                                VCdVersion version,
+                                                bool hasMonth,
+                                                bool hasDay)
     {
         if (HasDate(dt))
         {
-            AppendDateTo(builder, DateOnly.FromDateTime(dt.Date), version);
+            AppendDateTo(builder, DateOnly.FromDateTime(dt.Date), version, hasMonth, hasDay);
         }
 
         if (HasTime(dt))

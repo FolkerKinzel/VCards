@@ -75,6 +75,8 @@ internal sealed class TimeConverter
             {
                 dtOffset = new DateTimeOffset(2, 1, 1, dtOffset.Hour, dtOffset.Minute, dtOffset.Second, dtOffset.Offset);
                 dateAndOrTime = dtOffset;
+                dateAndOrTime.HasDay = false;
+                dateAndOrTime.HasMonth = false;
                 return true;
             }
         }
@@ -87,6 +89,8 @@ internal sealed class TimeConverter
                                        out TimeOnly timeOnly))
             {
                 dateAndOrTime = timeOnly;
+                dateAndOrTime.HasDay = false;
+                dateAndOrTime.HasMonth = false;
                 return true;
             }
         }
@@ -132,6 +136,7 @@ internal sealed class TimeConverter
         }
         else
         {
+            // The '-' sign is added by the TimeSpan.ToString() method.
             string sign = utcOffset < TimeSpan.Zero ? "" : "+";
 
             switch (version)

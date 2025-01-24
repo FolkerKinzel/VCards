@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
@@ -209,7 +210,7 @@ public readonly struct DateAndOrTimeBuilder
 
         try
         {
-            val = DateAndOrTime.Create(month, day);
+            val = DateAndOrTime.Create(new DateOnly(DateAndOrTimeConverter.FIRST_LEAP_YEAR, month, day), ignoreYear: true);
         }
         catch
         {

@@ -316,7 +316,7 @@ public class VCardBuilderTests
         builder.BirthDayViews.Edit(p => prop = p);
         Assert.IsNotNull(prop);
         Assert.IsFalse(prop.Any());
-        builder.VCard.BirthDayViews = new DateAndOrTimeProperty(DateAndOrTime.Create(12, 24)).Append(null);
+        builder.VCard.BirthDayViews = new DateAndOrTimeProperty(DateAndOrTime.Create(new DateOnly(1984, 12, 24), ignoreYear: true)).Append(null);
         builder.BirthDayViews.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
         CollectionAssert.AllItemsAreNotNull(prop.ToArray());

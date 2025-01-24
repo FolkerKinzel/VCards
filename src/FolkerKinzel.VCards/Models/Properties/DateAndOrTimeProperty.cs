@@ -202,14 +202,18 @@ public sealed class DateAndOrTimeProperty
         if (Value.DateOnly.HasValue)
         {
             DateAndOrTimeConverter.AppendDateTo(serializer.Builder,
-                                           Value.DateOnly.Value,
-                                           serializer.Version);
+                                                Value.DateOnly.Value,
+                                                serializer.Version,
+                                                Value.HasMonth,
+                                                Value.HasDay);
         }
         else if (Value.DateTimeOffset.HasValue)
         {
             DateAndOrTimeConverter.AppendDateTimeOffsetTo(serializer.Builder,
-                                                     Value.DateTimeOffset.Value,
-                                                     serializer.Version);
+                                                          Value.DateTimeOffset.Value,
+                                                          serializer.Version,
+                                                          Value.HasMonth,
+                                                          Value.HasDay);
         }
         else if (Value.TimeOnly.HasValue)
         {

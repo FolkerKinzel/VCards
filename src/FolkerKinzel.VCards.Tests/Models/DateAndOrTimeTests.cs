@@ -310,8 +310,27 @@ public class DateAndOrTimeTests
     [TestMethod]
     public void AsStringTest1()
     {
-        var daot = DateAndOrTime.Create(2, 4);
+        var daot = DateAndOrTime.Create(new DateOnly(1984, 2, 4), ignoreYear: true);
         string str = daot.AsString(CultureInfo.InvariantCulture);
-        Assert.AreEqual("02/04", str);
+        Assert.AreEqual("--02-04", str);
+    }
+
+
+    [TestMethod]
+    public void CreateTest1()
+    {
+        var daot = DateAndOrTime.Create(new DateOnly(1984, 3, 17), ignoreMonth: true, ignoreDay: true);
+
+        Assert.AreEqual("1984", daot.AsString(CultureInfo.InvariantCulture));
+        Assert.IsTrue(daot.Equals(DateAndOrTime.Create(new DateOnly(1984, 8, 20), ignoreMonth: true, ignoreDay: true)));
+    }
+
+    [TestMethod]
+    public void CreateTest2()
+    {
+        var daot = DateAndOrTime.Create(new DateTimeOffset(1984, 3, 17, 0, 0, 0, TimeSpan.Zero), ignoreMonth: true, ignoreDay: true);
+
+        Assert.AreEqual("1984", daot.AsString(CultureInfo.InvariantCulture));
+        Assert.IsTrue(daot.Equals(DateAndOrTime.Create(new DateTimeOffset(1984, 8, 20, 0, 0, 0, TimeSpan.Zero), ignoreMonth: true, ignoreDay: true)));
     }
 }

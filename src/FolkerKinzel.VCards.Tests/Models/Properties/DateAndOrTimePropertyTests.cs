@@ -142,7 +142,7 @@ public class DateAndOrTimePropertyTests
     [TestMethod]
     public void CloneTest2()
     {
-        var prop1 = new DateAndOrTimeProperty(DateAndOrTime.Create(3, 15));
+        var prop1 = new DateAndOrTimeProperty(DateAndOrTime.Create(new DateOnly(4, 3, 15)));
 
         var prop2 = (DateAndOrTimeProperty)prop1.Clone();
 
