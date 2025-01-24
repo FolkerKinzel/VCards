@@ -242,7 +242,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// </summary>
     /// <value><c>true</c> if the instance contains information about the year, otherwise <c>false</c>.</value>
     /// <remarks>
-    /// The vCard 4.0 specification allows to omit the year in a date but the .NET data types doesn't. This property
+    /// The vCard 4.0 specification allows to omit the year in a date but the .NET data types don't. This property
     /// gets the information whether the year component of an encapsulated <see cref="DateOnly"/> or <see cref="DateTimeOffset"/>
     /// value should be treated as irrelevant or not.
     /// </remarks>
@@ -254,7 +254,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// </summary>
     /// <value><c>true</c> if the instance contains information about the month, otherwise <c>false</c>.</value>
     /// <remarks>
-    /// The vCard 4.0 specification allows to omit the month in a date but the .NET data types doesn't. This property
+    /// The vCard 4.0 specification allows to omit the month in a date but the .NET data types don't. This property
     /// gets the information whether the month component of an encapsulated <see cref="DateOnly"/> or <see cref="DateTimeOffset"/>
     /// value should be treated as irrelevant or not.
     /// </remarks>
@@ -265,7 +265,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// </summary>
     /// <value><c>true</c> if the instance contains information about the day, otherwise <c>false</c>.</value>
     /// <remarks>
-    /// The vCard 4.0 specification allows to omit the day in a date but the .NET data types doesn't. This property
+    /// The vCard 4.0 specification allows to omit the day in a date but the .NET data types don't. This property
     /// gets the information whether the day component of an encapsulated <see cref="DateOnly"/> or <see cref="DateTimeOffset"/>
     /// value should be treated as irrelevant or not.
     /// </remarks>
