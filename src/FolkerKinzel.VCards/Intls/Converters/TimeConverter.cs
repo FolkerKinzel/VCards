@@ -73,10 +73,8 @@ internal sealed class TimeConverter
                                               styles,
                                               out DateTimeOffset dtOffset))
             {
-                dtOffset = new DateTimeOffset(2, 1, 1, dtOffset.Hour, dtOffset.Minute, dtOffset.Second, dtOffset.Offset);
-                dateAndOrTime = dtOffset;
-                dateAndOrTime.HasDay = false;
-                dateAndOrTime.HasMonth = false;
+                dtOffset = new DateTimeOffset(4, 1, 1, dtOffset.Hour, dtOffset.Minute, dtOffset.Second, dtOffset.Offset);
+                dateAndOrTime = DateAndOrTime.Create(dtOffset, true, true, true);
                 return true;
             }
         }
@@ -89,8 +87,6 @@ internal sealed class TimeConverter
                                        out TimeOnly timeOnly))
             {
                 dateAndOrTime = timeOnly;
-                dateAndOrTime.HasDay = false;
-                dateAndOrTime.HasMonth = false;
                 return true;
             }
         }

@@ -36,69 +36,85 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
 
     #endregion
 
-    private DateAndOrTime(DateOnly value, bool ignoreMonth, bool ignoreDay)
+    private DateAndOrTime(DateOnly value, bool ignoreYear, bool ignoreMonth, bool ignoreDay)
     {
+        int year = value.Year;
+        int month = value.Month;
+        int day = value.Day;
+
+        if (ignoreYear)
+        {
+            year = DateAndOrTimeConverter.FIRST_LEAP_YEAR;
+        }
+        else
+        {
+            HasYear = true;
+        }
+
         if (ignoreMonth)
         {
-            HasMonth = false;
-
-            if (value.Month != 1)
-            { 
-                value = new DateOnly(value.Year, 1, value.Day); 
-            }
+            month = 1;
+        }
+        else
+        {
+            HasMonth = true;
         }
 
         if (ignoreDay)
         {
-            HasDay = false;
-
-            if (value.Day != 1) 
-            {
-                value = new DateOnly(value.Year, value.Month, 1); 
-            }
+            day = 1;
+        }
+        else
+        {
+            HasDay = true;
         }
 
-        DateOnly = value;
+        DateOnly = (year == value.Year && month == value.Month && day == value.Day)
+            ? value
+            : new DateOnly(year, month, day);
     }
 
-    private DateAndOrTime(DateTimeOffset value, bool ignoreMonth, bool ignoreDay)
+    private DateAndOrTime(DateTimeOffset value, bool ignoreYear, bool ignoreMonth, bool ignoreDay)
     {
-        if(ignoreMonth)
-        {
-            HasMonth = false;
+        int year = value.Year;
+        int month = value.Month;
+        int day = value.Day;
 
-            if (value.Month != 1)
-            {
-                value = new DateTimeOffset(value.Year, 1, value.Day, value.Hour, value.Minute, value.Second, value.Offset);
-            }
+        if (ignoreYear)
+        {
+            year = DateAndOrTimeConverter.FIRST_LEAP_YEAR;
+        }
+        else
+        {
+            HasYear = true;
+        }
+
+        if (ignoreMonth)
+        {
+            month = 1;
+        }
+        else
+        {
+            HasMonth = true;
         }
 
         if (ignoreDay)
         {
-            HasDay = false;
-
-            if (value.Day != 1)
-            {
-                value = new DateTimeOffset(value.Year, value.Month, 1, value.Hour, value.Minute, value.Second, value.Offset);
-            }
+            day = 1;
+        }
+        else
+        {
+            HasDay = true;
         }
 
-        DateTimeOffset = value;
+        DateTimeOffset = (year == value.Year && month == value.Month && day == value.Day)
+            ? value
+            : new DateTimeOffset(year, month, day, value.Hour, value.Minute, value.Second, value.Offset);
     }
 
-    private DateAndOrTime(TimeOnly value)
-    {
-        TimeOnly = value;
-        HasMonth = false;
-        HasDay = false;
-    }
+    private DateAndOrTime(TimeOnly value) => TimeOnly = value;
 
-    private DateAndOrTime(string value)
-    {
-        String = value;
-        HasMonth = false;
-        HasDay = false;
-    }
+    private DateAndOrTime(string value) => String = value;
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTime"/> instance from a <see cref="DateOnly"/> 
@@ -109,15 +125,16 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <param name="ignoreMonth">Pass <c>true</c> to ignore the <see cref="DateOnly.Month"/> part, otherwise <c>false</c>.</param>
     /// <param name="ignoreDay">Pass <c>true</c> to ignore the <see cref="DateOnly.Day"/> part, otherwise <c>false</c>.</param>
     /// <returns>The newly created <see cref="DateAndOrTime"/> instance.</returns>
-    public static DateAndOrTime Create(DateOnly value, bool ignoreYear = false, bool ignoreMonth = false, bool ignoreDay = false)
+    public static DateAndOrTime Create(DateOnly value,
+                                       bool ignoreYear = false,
+                                       bool ignoreMonth = false,
+                                       bool ignoreDay = false)
     {
-        return !ignoreYear && value.HasYear()
-                    ? new(value, ignoreMonth, ignoreDay)
-                    : ignoreMonth && ignoreDay
-                         ? Empty
-                         : value.Year == DateAndOrTimeConverter.FIRST_LEAP_YEAR
-                              ? new(value, ignoreMonth, ignoreDay)
-                              : new(new DateOnly(DateAndOrTimeConverter.FIRST_LEAP_YEAR, value.Month, value.Day), ignoreMonth, ignoreDay);
+        ignoreYear =  ignoreYear || !value.HasYear();
+
+        return ignoreYear && ignoreMonth && ignoreDay 
+            ? Empty 
+            : new(value, ignoreYear, ignoreMonth, ignoreDay);
     }
 
     /// <summary>
@@ -135,33 +152,22 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// an empty instance.
     /// </para>
     /// <para>
-    /// If <paramref name="ignoreDay"/> is <c>true</c> and <paramref name="ignoreMonth"/> or <paramref name="ignoreYear"/> is <c>true</c>,
-    /// the time component is ignored and the newly created instance will encapsulate a <see cref="DateOnly"/> value.
+    /// If <paramref name="ignoreDay"/> is <c>true</c> and <paramref name="ignoreMonth"/> or <paramref name="ignoreYear"/> 
+    /// is <c>false</c>, the time component is ignored and the newly created instance will encapsulate a <see cref="DateOnly"/> value.
     /// </para>
     /// </remarks>
     public static DateAndOrTime Create(DateTimeOffset value,
                                        bool ignoreYear = false,
                                        bool ignoreMonth = false,
                                        bool ignoreDay = false)
-        => (ignoreYear && ignoreMonth && ignoreDay) || !DateAndOrTimeConverter.HasDate(value)
-            ? DateAndOrTimeConverter.HasTime(value)
-                ? new(new DateTimeOffset(2, 1, 1, value.Hour, value.Minute, value.Second, value.Offset), true, true)
-                : Empty
-            : ignoreDay && (ignoreYear || ignoreMonth) 
-                   ? Create(new DateOnly(value.Year, value.Month, value.Day), ignoreYear, ignoreMonth, ignoreDay) 
-                   : ignoreYear || !DateAndOrTimeConverter.HasYear(value)
-                        ? (ignoreMonth && ignoreDay)
-                               ? Empty
-                               : value.Year == DateAndOrTimeConverter.FIRST_LEAP_YEAR
-                                   ? new(value, ignoreMonth, ignoreDay)
-                                   : new(new DateTimeOffset(DateAndOrTimeConverter.FIRST_LEAP_YEAR,
-                                                            value.Month,
-                                                            value.Day,
-                                                            value.Hour,
-                                                            value.Minute,
-                                                            value.Second,
-                                                            value.Offset), ignoreMonth, ignoreDay)
-                        : new(value, ignoreMonth, ignoreDay);
+    {
+        ignoreYear = ignoreYear || !DateAndOrTimeConverter.HasYear(value);
+        return (ignoreYear && ignoreMonth && ignoreDay && !DateAndOrTimeConverter.HasTime(value))
+            ? Empty
+            : ignoreDay && !(ignoreYear || ignoreMonth)
+                       ? Create(new DateOnly(value.Year, value.Month, value.Day), ignoreYear, ignoreMonth, ignoreDay)
+                       : new(value, ignoreYear, ignoreMonth, ignoreDay);
+    }
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTime"/> instance from a <see cref="TimeOnly"/> 
@@ -184,7 +190,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// var result = DateAndOrTime.Create("after midnight");
     /// </code>
     /// </example>
-    public static DateAndOrTime Create(string? value) 
+    public static DateAndOrTime Create(string? value)
         => string.IsNullOrWhiteSpace(value) ? Empty : new(value);
 
     /// <summary>
@@ -246,8 +252,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// gets the information whether the year component of an encapsulated <see cref="DateOnly"/> or <see cref="DateTimeOffset"/>
     /// value should be treated as irrelevant or not.
     /// </remarks>
-    public bool HasYear => (DateOnly.HasValue && DateOnly.Value.HasYear()) ||
-                           (DateTimeOffset.HasValue && DateAndOrTimeConverter.HasYear(DateTimeOffset.Value));
+    public bool HasYear { get; }
 
     /// <summary>
     /// Gets a value indicating whether the encapsulated data contains information about the month.
@@ -258,7 +263,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// gets the information whether the month component of an encapsulated <see cref="DateOnly"/> or <see cref="DateTimeOffset"/>
     /// value should be treated as irrelevant or not.
     /// </remarks>
-    public bool HasMonth { get; internal set; } = true;
+    public bool HasMonth { get; }
 
     /// <summary>
     /// Gets a value indicating whether the encapsulated data contains information about the day.
@@ -269,7 +274,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// gets the information whether the day component of an encapsulated <see cref="DateOnly"/> or <see cref="DateTimeOffset"/>
     /// value should be treated as irrelevant or not.
     /// </remarks>
-    public bool HasDay { get; internal set; } = true;
+    public bool HasDay { get; }
 
     /// <summary>
     /// Gets the encapsulated <see cref="System.DateOnly"/> value,
@@ -287,16 +292,9 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// or <c>null</c>, if the encapsulated value has a different <see cref="Type"/>.
     /// </summary>
     /// <remarks>
-    /// <para>A <see cref="System.DateTimeOffset"/> value may contain either a 
+    /// A <see cref="System.DateTimeOffset"/> value may contain either a 
     /// <see cref="Data.DateTime"/> or a <see cref="Data.Time"/> with a 
     /// <see cref="Data.UtcOffset"/>.
-    /// </para>
-    /// <para>
-    /// Parts of the contained data may be irrelevant. Use the extension methods
-    /// <see cref="DateTimeOffsetExtension.HasYear(System.DateTimeOffset)"/> and
-    /// <see cref="DateTimeOffsetExtension.HasDate(System.DateTimeOffset)"/> to
-    /// check this.
-    /// </para>
     /// </remarks>
     public DateTimeOffset? DateTimeOffset { get; }
 
@@ -334,19 +332,20 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// 
     public bool TryAsDateOnly(out DateOnly value)
     {
-        (DateOnly parsed, bool result) = Convert<(DateOnly Value, bool Result)>
+        (DateOnly parsed, bool result) = Convert<DateAndOrTime, (DateOnly Value, bool Result)>
          (
-          static dateOnly => (dateOnly, true),
-          static dtOffset => dtOffset.HasDate()
+          this,
+          static (dateOnly, _) => (dateOnly, true),
+          static (dtOffset, daot) => daot.HasMonth  || daot.HasDay || daot.HasYear
                         ? (new DateOnly(dtOffset.Year, dtOffset.Month, dtOffset.Day), true)
                         : (default, false),
-          static timeOnly => (default, false),
-          static str => System.DateOnly.TryParse(str,
-                                                 CultureInfo.CurrentCulture,
-                                                 DateTimeStyles.AllowWhiteSpaces,
-                                                 out DateOnly dOnly)
-                                                    ? (dOnly, true)
-                                                    : (default, false)
+          static (timeOnly, _) => (default, false),
+          static (str, _) => System.DateOnly.TryParse(str,
+                                                      CultureInfo.CurrentCulture,
+                                                      DateTimeStyles.AllowWhiteSpaces,
+                                                      out DateOnly dOnly)
+                                                         ? (dOnly, true)
+                                                         : (default, false)
          );
 
         value = parsed;
@@ -363,15 +362,9 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <returns><c>true</c> if the conversion was successful, otherwise <c>false</c>.
     /// </returns>
     /// <remarks>
-    /// <para>
     /// If the encapsulated value is a <see cref="System.DateOnly"/>, 12 hours
     /// are added to the resulting <see cref="System.DateTimeOffset"/> in order
     /// to avoid wrapping the date.
-    /// </para>
-    /// <para>Parts of the information stored in <paramref name="value"/> may be
-    /// irrelevant. Check this with the extension methods 
-    /// <see cref="DateTimeOffsetExtension.HasYear(System.DateTimeOffset)"/> and
-    /// <see cref="DateTimeOffsetExtension.HasDate(System.DateTimeOffset)"/>.</para>
     /// </remarks>
     public bool TryAsDateTimeOffset(out DateTimeOffset value)
     {
@@ -453,7 +446,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
             }
 
             var sb = new StringBuilder();
-            DateAndOrTimeConverter.AppendDateTo(sb, date, VCdVersion.V3_0, daot.HasMonth, daot.HasDay);
+            DateAndOrTimeConverter.AppendDateTo(sb, date, VCdVersion.V4_0, daot.HasYear, daot.HasMonth, daot.HasDay);
             return sb.ToString();
         }
 
@@ -461,7 +454,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
         {
             var sb = new StringBuilder();
 
-            DateAndOrTimeConverter.AppendDateTimeOffsetTo(sb, dtOffset, VCdVersion.V3_0, daot.HasMonth, daot.HasDay);
+            DateAndOrTimeConverter.AppendDateTimeOffsetTo(sb, dtOffset, VCdVersion.V4_0, daot.HasYear, daot.HasMonth, daot.HasDay);
             return sb.ToString();
         }
     }

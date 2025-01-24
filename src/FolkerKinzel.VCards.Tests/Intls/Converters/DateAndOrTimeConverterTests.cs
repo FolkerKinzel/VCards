@@ -59,16 +59,12 @@ public class DateAndOrTimeConverterTests
     [TestMethod]
     public void RoundtripsTest()
     {
-        Roundtrip("1984", true, VCdVersion.V3_0);
         Roundtrip("1984", true, VCdVersion.V4_0);
 
-        Roundtrip("1984-02", true, VCdVersion.V3_0);
         Roundtrip("1984-02", true, VCdVersion.V4_0);
 
-        Roundtrip("---17", true, VCdVersion.V3_0);
         Roundtrip("---17", true, VCdVersion.V4_0);
 
-        Roundtrip("--12", true, VCdVersion.V3_0);
         Roundtrip("--12", true, VCdVersion.V4_0);
 
         Roundtrip("1972-01-31", true, VCdVersion.V3_0);
@@ -116,8 +112,8 @@ public class DateAndOrTimeConverterTests
         {
             var builder = new StringBuilder();
             dt.Switch(
-                dateOnly => DateAndOrTimeConverter.AppendDateTo(builder, dateOnly, version, dt.HasMonth, dt.HasDay),
-                dto => DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, dto, version, dt.HasMonth, dt.HasDay)
+                dateOnly => DateAndOrTimeConverter.AppendDateTo(builder, dateOnly, version, dt.HasYear, dt.HasMonth, dt.HasDay),
+                dto => DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, dto, version, dt.HasYear, dt.HasMonth, dt.HasDay)
             );
             return builder.ToString();
         }
@@ -153,7 +149,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest1()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, default, VCdVersion.V3_0, true, true);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, default, VCdVersion.V3_0, true, true, true);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -161,7 +157,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest2a()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0, true, true);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0, true, true, true);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -169,7 +165,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest2b()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 2, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0, true, true);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 2, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0, true, true, true);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -177,7 +173,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest2c()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V3_0, true, true);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V3_0, true, true, true);
         Assert.AreEqual(0, builder.Length);
     }
 
@@ -185,7 +181,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest3()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0, true, true);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0, true, true, true);
         string s = builder.ToString();
         Assert.IsTrue(s.StartsWith("--"));
     }
@@ -194,7 +190,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateToTest1()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTo(builder, new DateOnly(4, 5, 1), VCdVersion.V3_0, true, true);
+        DateAndOrTimeConverter.AppendDateTo(builder, new DateOnly(4, 5, 1), VCdVersion.V4_0, true, true, true);
         string s = builder.ToString();
         Assert.IsTrue(s.StartsWith("--"));
     }

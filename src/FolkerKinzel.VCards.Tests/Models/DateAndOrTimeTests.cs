@@ -312,7 +312,7 @@ public class DateAndOrTimeTests
     {
         var daot = DateAndOrTime.Create(new DateOnly(1984, 2, 4), ignoreYear: true);
         string str = daot.AsString(CultureInfo.InvariantCulture);
-        Assert.AreEqual("--02-04", str);
+        Assert.AreEqual("--0204", str);
     }
 
 

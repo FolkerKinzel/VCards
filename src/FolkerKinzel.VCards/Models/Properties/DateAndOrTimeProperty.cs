@@ -204,6 +204,7 @@ public sealed class DateAndOrTimeProperty
             DateAndOrTimeConverter.AppendDateTo(serializer.Builder,
                                                 Value.DateOnly.Value,
                                                 serializer.Version,
+                                                Value.HasYear,
                                                 Value.HasMonth,
                                                 Value.HasDay);
         }
@@ -212,6 +213,7 @@ public sealed class DateAndOrTimeProperty
             DateAndOrTimeConverter.AppendDateTimeOffsetTo(serializer.Builder,
                                                           Value.DateTimeOffset.Value,
                                                           serializer.Version,
+                                                          Value.HasYear,
                                                           Value.HasMonth,
                                                           Value.HasDay);
         }

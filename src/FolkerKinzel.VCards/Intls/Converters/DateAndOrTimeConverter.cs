@@ -14,7 +14,6 @@ internal sealed class DateAndOrTimeConverter
     private static readonly DateTimeOffset _minYear = new DateTime(5, 1, 1, 14, 0, 0);
     private static readonly DateTimeOffset _minDate = new DateTime(3, 12, 31, 10, 0, 0);
 
-
     private readonly string[] _dateOnlyFormats =
     [
         "yyyyMMdd",
@@ -93,25 +92,12 @@ internal sealed class DateAndOrTimeConverter
             return TryParseMonthDayWithoutYear(roSpan, ref dateAndOrTime);
         }
 
-        if(TryParseInternal(roSpan, ref dateAndOrTime))
-        {
-            // yyyy (vCard 4.0 only)
-            if (roSpan.Length == 4)
-            {
-                dateAndOrTime.HasDay = false;
-                dateAndOrTime.HasMonth = false;
-            }
-            else if (roSpan.Length == 7)
-            {
-                // yyyy-MM (vCard 4.0 only)
-                dateAndOrTime.HasDay = false;
-            }
-
-            return true;
-        }
-
-        return false;
-
+        return TryParseInternal(roSpan,
+                                ignoreYear: false,
+                                ignoreMonth: roSpan.Length == 4, // yyyy (vCard 4.0 only)
+                                ignoreDay: roSpan.Length is 4 or 7, // yyyy or yyyy-MM (vCard 4.0 only)
+                                ref dateAndOrTime);
+        
         //////////////////////////////////////////////////////////////////////////////////////
 
         bool TryParseDateNoReduc(ReadOnlySpan<char> roSpan, ref DateAndOrTime? dateAndOrTime)
@@ -125,13 +111,11 @@ internal sealed class DateAndOrTimeConverter
             Span<char> slice = span.Slice(firstLeapYearJanuary.Length);
             roSpan.CopyTo(slice);
 
-            if(TryParseInternal(span, ref dateAndOrTime))
-            {
-                dateAndOrTime.HasMonth = false;
-                return true;
-            }
-
-            return false;
+            return TryParseInternal(span,
+                                    ignoreYear: true,
+                                    ignoreMonth: true,
+                                    ignoreDay: false,
+                                    ref dateAndOrTime);
         }
 
         bool TryParseMonthWithoutYear(ReadOnlySpan<char> roSpan, ref DateAndOrTime? dateAndOrTime)
@@ -154,8 +138,10 @@ internal sealed class DateAndOrTimeConverter
                                        DateTimeStyles.AllowWhiteSpaces,
                                        out DateOnly dateOnly))
             {
-                dateAndOrTime = dateOnly;
-                dateAndOrTime.HasDay = false;
+                dateAndOrTime = DateAndOrTime.Create(dateOnly,
+                                                     ignoreYear: true,
+                                                     ignoreMonth: false,
+                                                     ignoreDay: true);
                 return true;
             }
 
@@ -175,11 +161,19 @@ internal sealed class DateAndOrTimeConverter
             Span<char> slice = span.Slice(leapYear.Length);
             roSpan.CopyTo(slice);
 
-            return TryParseInternal(span, ref dateAndOrTime);
+            return TryParseInternal(span,
+                                    ignoreYear: true,
+                                    ignoreMonth: false,
+                                    ignoreDay: false,
+                                    ref dateAndOrTime);
         }
     }
 
-    private bool TryParseInternal(ReadOnlySpan<char> span, [NotNullWhen(true)] ref DateAndOrTime? oneOf)
+    private bool TryParseInternal(ReadOnlySpan<char> span,
+                                  bool ignoreYear,
+                                  bool ignoreMonth,
+                                  bool ignoreDay,
+                                  [NotNullWhen(true)] ref DateAndOrTime? daot)
     {
         DateTimeStyles styles = DateTimeStyles.AllowWhiteSpaces;
 
@@ -191,7 +185,7 @@ internal sealed class DateAndOrTimeConverter
                                        styles,
                                        out DateOnly dateOnly))
             {
-                oneOf = dateOnly;
+                daot = DateAndOrTime.Create(dateOnly, ignoreYear, ignoreMonth, ignoreDay);
                 return true;
             }
         }
@@ -213,7 +207,7 @@ internal sealed class DateAndOrTimeConverter
                                               styles,
                                               out DateTimeOffset offset))
             {
-                oneOf = offset;
+                daot = DateAndOrTime.Create(offset, ignoreYear, ignoreMonth, ignoreDay);
                 return true;
             }
         }
@@ -228,6 +222,7 @@ internal sealed class DateAndOrTimeConverter
     internal static void AppendDateTo(StringBuilder builder,
                                       DateOnly dt,
                                       VCdVersion version,
+                                      bool hasYear,
                                       bool hasMonth,
                                       bool hasDay)
     {
@@ -243,7 +238,7 @@ internal sealed class DateAndOrTimeConverter
                 }
             default: // vCard 4.0
                 {
-                    _ = dt.HasYear()
+                    _ = hasYear
                         ? hasDay
                                 ? builder.AppendFormat(CultureInfo.InvariantCulture,
                                                        "{0:0000}{1:00}{2:00}",
@@ -274,12 +269,13 @@ internal sealed class DateAndOrTimeConverter
     internal static void AppendDateTimeOffsetTo(StringBuilder builder,
                                                 DateTimeOffset dt,
                                                 VCdVersion version,
+                                                bool hasYear,
                                                 bool hasMonth,
                                                 bool hasDay)
     {
-        if (HasDate(dt))
+        if (hasMonth || hasDay || hasYear)
         {
-            AppendDateTo(builder, DateOnly.FromDateTime(dt.Date), version, hasMonth, hasDay);
+            AppendDateTo(builder, DateOnly.FromDateTime(dt.Date), version, hasYear, hasMonth, hasDay);
         }
 
         if (HasTime(dt))
@@ -298,5 +294,4 @@ internal sealed class DateAndOrTimeConverter
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static bool HasTime(DateTimeOffset dt)
         => dt.TimeOfDay != TimeSpan.Zero || dt.Offset != TimeSpan.Zero;
-
 }
