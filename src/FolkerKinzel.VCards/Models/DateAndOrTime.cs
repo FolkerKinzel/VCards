@@ -130,8 +130,14 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <param name="ignoreDay">Pass <c>true</c> to ignore the <see cref="DateTimeOffset.Day"/> part, otherwise <c>false</c>.</param>
     /// <returns>The newly created <see cref="DateAndOrTime"/> instance.</returns>
     /// <remarks>
+    /// <para>
     /// If <paramref name="value"/> has neither a date nor a time, the method returns
     /// an empty instance.
+    /// </para>
+    /// <para>
+    /// If <paramref name="ignoreDay"/> is <c>true</c> and <paramref name="ignoreMonth"/> or <paramref name="ignoreYear"/> is <c>true</c>,
+    /// the time component is ignored and the newly created instance will encapsulate a <see cref="DateOnly"/> value.
+    /// </para>
     /// </remarks>
     public static DateAndOrTime Create(DateTimeOffset value,
                                        bool ignoreYear = false,
@@ -141,19 +147,21 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
             ? DateAndOrTimeConverter.HasTime(value)
                 ? new(new DateTimeOffset(2, 1, 1, value.Hour, value.Minute, value.Second, value.Offset), true, true)
                 : Empty
-            : ignoreYear || !DateAndOrTimeConverter.HasYear(value)
-                     ? (ignoreMonth && ignoreDay)
-                            ? Empty
-                            : value.Year == DateAndOrTimeConverter.FIRST_LEAP_YEAR
-                                ? new(value, ignoreMonth, ignoreDay)
-                                : new(new DateTimeOffset(DateAndOrTimeConverter.FIRST_LEAP_YEAR,
-                                                   value.Month,
-                                                   value.Day,
-                                                   value.Hour,
-                                                   value.Minute,
-                                                   value.Second,
-                                                   value.Offset), ignoreMonth, ignoreDay)
-                     : new(value, ignoreMonth, ignoreDay);
+            : ignoreDay && (ignoreYear || ignoreMonth) 
+                   ? Create(new DateOnly(value.Year, value.Month, value.Day), ignoreYear, ignoreMonth, ignoreDay) 
+                   : ignoreYear || !DateAndOrTimeConverter.HasYear(value)
+                        ? (ignoreMonth && ignoreDay)
+                               ? Empty
+                               : value.Year == DateAndOrTimeConverter.FIRST_LEAP_YEAR
+                                   ? new(value, ignoreMonth, ignoreDay)
+                                   : new(new DateTimeOffset(DateAndOrTimeConverter.FIRST_LEAP_YEAR,
+                                                            value.Month,
+                                                            value.Day,
+                                                            value.Hour,
+                                                            value.Minute,
+                                                            value.Second,
+                                                            value.Offset), ignoreMonth, ignoreDay)
+                        : new(value, ignoreMonth, ignoreDay);
 
     /// <summary>
     /// Creates a new <see cref="DateAndOrTime"/> instance from a <see cref="TimeOnly"/> 
@@ -234,7 +242,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// </summary>
     /// <value><c>true</c> if the instance contains information about the year, otherwise <c>false</c>.</value>
     /// <remarks>
-    /// The vCard specification allows to omit the year in a date but the .NET data types doesn't. This property
+    /// The vCard 4.0 specification allows to omit the year in a date but the .NET data types doesn't. This property
     /// gets the information whether the year component of an encapsulated <see cref="DateOnly"/> or <see cref="DateTimeOffset"/>
     /// value should be treated as irrelevant or not.
     /// </remarks>
@@ -246,7 +254,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// </summary>
     /// <value><c>true</c> if the instance contains information about the month, otherwise <c>false</c>.</value>
     /// <remarks>
-    /// The vCard specification allows to omit the month in a date but the .NET data types doesn't. This property
+    /// The vCard 4.0 specification allows to omit the month in a date but the .NET data types doesn't. This property
     /// gets the information whether the month component of an encapsulated <see cref="DateOnly"/> or <see cref="DateTimeOffset"/>
     /// value should be treated as irrelevant or not.
     /// </remarks>
@@ -257,7 +265,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     /// </summary>
     /// <value><c>true</c> if the instance contains information about the day, otherwise <c>false</c>.</value>
     /// <remarks>
-    /// The vCard specification allows to omit the day in a date but the .NET data types doesn't. This property
+    /// The vCard 4.0 specification allows to omit the day in a date but the .NET data types doesn't. This property
     /// gets the information whether the day component of an encapsulated <see cref="DateOnly"/> or <see cref="DateTimeOffset"/>
     /// value should be treated as irrelevant or not.
     /// </remarks>

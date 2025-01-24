@@ -70,12 +70,13 @@ internal sealed class DateAndOrTimeConverter
             return false;
         }
 
-        // date-noreduc zu date-complete
+        // allowed only with vCard 4.0
         if (roSpan.StartsWith("---", StringComparison.Ordinal))
         {
             return TryParseDateNoReduc(roSpan, ref dateAndOrTime);
         }
 
+        // allowed only with vCard 4.0
         if (roSpan.StartsWith("--", StringComparison.Ordinal))
         {
             // "--MM" to "0004-MM":
@@ -86,23 +87,23 @@ internal sealed class DateAndOrTimeConverter
                 return TryParseMonthWithoutYear(roSpan, ref dateAndOrTime);
             }
 
-            // "--MMdd" zu "0004MMdd" ("0004" + s.Substring(2))
-            // Note also that YYYY-MM-DD is disallowed since we are using the basic format instead
-            // of the extended format.
+            // "--MMdd" to "0004MMdd" ("0004" + s.Substring(2))
+            // Note also that --MM-DD is disallowed since vCard 4.0 uses the ISO 8601
+            // basic format instead of the extended format.
             return TryParseMonthDayWithoutYear(roSpan, ref dateAndOrTime);
         }
 
         if(TryParseInternal(roSpan, ref dateAndOrTime))
         {
-            // yyyy
-            if(roSpan.Length == 4)
+            // yyyy (vCard 4.0 only)
+            if (roSpan.Length == 4)
             {
                 dateAndOrTime.HasDay = false;
                 dateAndOrTime.HasMonth = false;
             }
             else if (roSpan.Length == 7)
             {
-                // yyyy-MM
+                // yyyy-MM (vCard 4.0 only)
                 dateAndOrTime.HasDay = false;
             }
 
@@ -235,29 +236,9 @@ internal sealed class DateAndOrTimeConverter
             case VCdVersion.V2_1:
             case VCdVersion.V3_0:
                 {
-                    _ = dt.HasYear()
-                        ? hasDay
-                                ? builder.AppendFormat(CultureInfo.InvariantCulture,
+                    builder.AppendFormat(CultureInfo.InvariantCulture,
                                                        "{0:0000}-{1:00}-{2:00}",
-                                                        dt.Year, dt.Month, dt.Day)
-                                : hasMonth 
-                                        ? builder.AppendFormat(CultureInfo.InvariantCulture,
-                                                               "{0:0000}-{1:00}",
-                                                                dt.Year, dt.Month)
-                                        : builder.AppendFormat(CultureInfo.InvariantCulture,
-                                                               "{0:0000}",
-                                                                dt.Year)
-                        : hasMonth
-                                ? hasDay 
-                                      ? builder.AppendFormat(CultureInfo.InvariantCulture,
-                                                             "--{0:00}-{1:00}",
-                                                             dt.Month, dt.Day)
-                                      : builder.AppendFormat(CultureInfo.InvariantCulture,
-                                                             "--{0:00}",
-                                                             dt.Month)
-                                : builder.AppendFormat(CultureInfo.InvariantCulture,
-                                                       "---{0:00}",
-                                                       dt.Day);
+                                                        dt.Year, dt.Month, dt.Day);
                     break;
                 }
             default: // vCard 4.0
