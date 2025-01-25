@@ -134,7 +134,7 @@ They all have `Switch` methods that behave like switch statements and `Convert` 
 that behave like switch expressions. The difference is that the `Switch` and `Convert` methods 
 are limited to the .NET data types that the class can encapsulate.
 
-The classes `ContactID`, `Relation` and `DateAndOrTime` support comparison for equality.
+`ContactID`, `Relation` and `DateAndOrTime` support comparison for equality.
 
 ### Naming conventions
 Most properties of the `VCard` class are collections. It has to do with that many properties are allowed to have more than one instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.

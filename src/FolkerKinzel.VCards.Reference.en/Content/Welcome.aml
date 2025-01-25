@@ -100,6 +100,25 @@
           </content>
         </section>
 
+        <section address="Unions">
+          <title>Unions</title>
+          <content>
+            <para>
+              The vCard standard allows some properties of a vCard to encapsulate different data types.
+              The model classes <codeInline>ContactID</codeInline>, <codeInline>Relation</codeInline>, <codeInline>DateAndOrTime</codeInline> and 
+              <codeInline>RawData</codeInline> therefore represent unions that can encapsulate different .NET data types.
+            </para>
+            <para>
+              They all have <codeInline>Switch</codeInline> methods that behave like switch statements and <codeInline>Convert</codeInline> methods
+              that behave like switch expressions. The difference is that the <codeInline>Switch</codeInline> and <codeInline>Convert</codeInline> methods
+              are limited to the .NET data types that the class can encapsulate.
+            </para>
+            <para>
+              <codeInline>ContactID</codeInline>, <codeInline>Relation</codeInline> and <codeInline>DateAndOrTime</codeInline> support comparison for equality.
+            </para>
+          </content>
+        </section>
+
         <section address="NamingConventions">
           <title>Naming Conventions</title>
           <content>
@@ -166,19 +185,6 @@
         <list class="bullet">
           <listItem>
             <para>
-            Most of the enums are Flags enums and most of the .NET properties with enum Types use the <codeInline>
-              Nullable&lt;T&gt;</codeInline> variant of these
-          enums. Extension methods help to savely evaluate and manipulate these nullable enum values.
-        </para>
-        </listItem>
-          <listItem>
-            <para>
-              The .NET data types for date and time (such like DateOnly or DateTimeOffset) are not fully compliant with the date-time
-              information defined by the vCard standard. Extension methods for these data types help to overcome these issues.
-            </para>
-          </listItem>
-          <listItem>
-            <para>
               Most of the properties of the VCard class are of a specialized Type of <codeInline>IEnumerable&lt;VCardProperty?&gt;?</codeInline>.
               Extension methods encapsulate most of the necessary null checking and Linq operations that are needed to retrieve the 
               relevant data from these properties, or to store something there.
@@ -188,6 +194,14 @@
             <para>
               Some operations work with collections of <codeInline>VCard</codeInline> objects (e.g., saving several VCard objects together in a common VCF file).
               Extension methods allow these operations to be performed directly on these collections.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              Most of the enums are Flags enums and most of the .NET properties with enum Types use the <codeInline>
+                Nullable&lt;T&gt;
+              </codeInline> variant of these
+              enums. Extension methods help to savely evaluate and manipulate these nullable enum values.
             </para>
           </listItem>
         </list>
