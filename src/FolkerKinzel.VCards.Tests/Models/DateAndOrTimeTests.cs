@@ -308,6 +308,18 @@ public class DateAndOrTimeTests
     }
 
     [TestMethod]
+    public void EqualsTest2()
+    {
+        var d1 =DateAndOrTime.Create("Hi");
+        DateAndOrTime? d2 = null;
+        var d3 = DateAndOrTime.Create("hI");
+
+        Assert.IsFalse(d1.Equals(d2));
+        Assert.IsTrue(d1.Equals(d3));
+        Assert.AreEqual(d1.GetHashCode(), d3.GetHashCode());
+    }
+
+    [TestMethod]
     public void AsStringTest1()
     {
         var daot = DateAndOrTime.Create(new DateOnly(1984, 2, 4), ignoreYear: true);

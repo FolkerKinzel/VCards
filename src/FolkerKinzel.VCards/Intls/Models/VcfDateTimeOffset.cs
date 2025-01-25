@@ -129,11 +129,11 @@ internal sealed class VcfDateTimeOffset : DateAndOrTime
                                       Action<string, TArg>? stringAction = null) => dtoAction?.Invoke(DateTimeOffset.Value, arg);
 
     public override bool Equals([NotNullWhen(true)] DateAndOrTime? other)
-        => other is not null
+        => other is VcfDateTimeOffset vcfDateTimeOffset
         && HasYear == other.HasYear 
         && HasMonth == other.HasMonth 
-        && HasDay == other.HasDay 
-        && DateTimeOffset == other.DateTimeOffset;
+        && HasDay == other.HasDay
+        && DateTimeOffset.Value.Equals(vcfDateTimeOffset.DateTimeOffset.Value);
 
     public override int GetHashCode() => HashCode.Combine(HasYear, HasMonth, HasDay, DateTimeOffset.Value);
 

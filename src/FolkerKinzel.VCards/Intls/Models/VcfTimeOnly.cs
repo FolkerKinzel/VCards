@@ -73,7 +73,7 @@ internal sealed class VcfTimeOnly : DateAndOrTime
                                       Action<string, TArg>? stringAction = null) => timeAction?.Invoke(TimeOnly.Value, arg);
 
     public override bool Equals([NotNullWhen(true)] DateAndOrTime? other)
-        => TimeOnly == other?.TimeOnly;
+        => other is VcfTimeOnly vcfTimeOnly && TimeOnly.Value.Equals(vcfTimeOnly.TimeOnly.Value);
 
     public override int GetHashCode() => TimeOnly.Value.GetHashCode();
 

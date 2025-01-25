@@ -122,11 +122,11 @@ internal sealed class VcfDateOnly : DateAndOrTime
                                       Action<string, TArg>? stringAction = null) => dateAction?.Invoke(DateOnly.Value, arg);
 
     public override bool Equals([NotNullWhen(true)] DateAndOrTime? other)
-        => other is not null 
+        => other is VcfDateOnly vcfDateOnly
            && HasYear == other.HasYear
            && HasMonth == other.HasMonth 
            && HasDay == other.HasDay 
-           && DateOnly == other.DateOnly;
+           && DateOnly.Value.Equals(vcfDateOnly.DateOnly.Value);
 
     public override int GetHashCode() => HashCode.Combine(HasYear, HasMonth, HasDay, DateOnly.Value);
 
