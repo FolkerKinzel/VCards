@@ -4,6 +4,7 @@ Read here:
 - [The data model](#the-data-model)
   - [The VCard class](#the-vcard-class)
   - [The VCardProperty class](#the-vcardproperty-class)
+  - [Unions](#unions)
   - [Naming conventions](#naming-conventions)
 - [Efficient building and editing of VCard instances using Fluent APIs](#efficient-building-and-editing-of-vcard-instances-using-fluent-apis)
 - [Parsing and serializing VCF files using the Vcf class](#parsing-and-serializing-vcf-files-using-the-vcf-class)
@@ -124,6 +125,17 @@ In this example corresponds
 (Classes derived from `VCardProperty` hide the generic implementation of `VCardProperty.Value` in order 
 to return derived classes instead of `System.Object`.)
 
+### Unions
+The vCard standard allows some properties of a vCard to encapsulate different data types.
+The model classes `ContactID`, `Relation`, `DateAndOrTime` and `RawData` therefore 
+represent unions that can encapsulate different .NET data types.
+
+They all have `Switch` methods that behave like switch statements and `Convert` methods 
+that behave like switch expressions. The difference is that the `Switch` and `Convert` methods 
+are limited to the .NET data types that the class can encapsulate.
+
+The classes `ContactID`, `Relation` and `DateAndOrTime` support comparison for equality.
+
 ### Naming conventions
 Most properties of the `VCard` class are collections. It has to do with that many properties are allowed to have more than one instance per vCard (e.g. phone numbers, e-mail addresses). Such properties are named in Plural.
             
@@ -147,18 +159,16 @@ The `Vcf` class is a static class that contains a lot of methods for serializing
 ## Extension methods
 The namespace `FolkerKinzel.VCards.Extensions` contains several extension methods that makes working with VCard objects 
 more efficient and less error prone. It's recommended to publish this namespace when working with this
-library. 
+library.
 
 The methods are helpful in the following cases:
-- Most of the enums are Flags enums and most of the .NET properties with enum Types use the `Nullable<T>` variant of these 
-enums. Extension methods help to savely evaluate and manipulate these nullable enum values.
-- The .NET data types for date and time (such like DateOnly or DateTimeOffset) are not fully compliant with the date-time
-information defined by the vCard standard. Extension methods for these data types help to overcome these issues.
 - Most of the properties of the VCard class are of a specialized Type of `IEnumerable<VCardProperty?>?`. Extension methods
 encapsulate most of the necessary null checking and Linq operations that are needed to retrieve the relevant data from these 
 properties, or to store something there.
 - Some operations work with collections of VCard objects (e.g., saving several VCard objects together in a common VCF file). 
 Extension methods allow these operations to be performed directly on these collections.
+- Most of the enums are Flags enums and most of the .NET properties with enum Types use the `Nullable<T>` variant of these 
+enums. Extension methods help to savely evaluate and manipulate these nullable enum values.
 
 ## The vCard 4.0 data synchronization
 With the vCard 4.0 standard a data synchronization mechanism using PID parameters and CLIENTPIDMAP

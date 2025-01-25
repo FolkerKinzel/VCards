@@ -632,7 +632,7 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
                        ? DateTimeOffset == other.DateTimeOffset
                        : TimeOnly.HasValue
                            ? TimeOnly == other.TimeOnly
-                           : String!.Equals(other.String, StringComparison.Ordinal))
+                           : String!.Equals(other.String, StringComparison.CurrentCultureIgnoreCase))
                 )
             );
 
@@ -643,7 +643,18 @@ public sealed class DateAndOrTime : IEquatable<DateAndOrTime>
     public override bool Equals(object? obj) => obj is DateAndOrTime dto && Equals(dto);
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(DateOnly, DateTimeOffset, TimeOnly, String);
+    public override int GetHashCode()
+    {
+        var hashCode = new HashCode();
+        hashCode.Add(HasYear);
+        hashCode.Add(HasMonth);
+        hashCode.Add(HasDay);
+        hashCode.Add(DateOnly);
+        hashCode.Add(DateTimeOffset);
+        hashCode.Add(TimeOnly);
+        hashCode.Add(String, StringComparer.CurrentCultureIgnoreCase);
+        return hashCode.ToHashCode();
+    }
 
     /// <summary>
     /// Overloads the equality operator for <see cref="DateAndOrTime"/> instances.
