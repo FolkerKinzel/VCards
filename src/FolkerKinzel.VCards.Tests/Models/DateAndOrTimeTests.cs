@@ -272,7 +272,7 @@ public class DateAndOrTimeTests
 
     [TestMethod]
     public void TryAsDateTest1()
-        => Assert.IsFalse(DateAndOrTime.Create(new DateTimeOffset(2, 1, 1, 17, 24, 32, TimeSpan.FromHours(1))).TryAsDateOnly(out _));
+        => Assert.IsTrue(DateAndOrTime.Create(new DateTimeOffset(2, 1, 1, 17, 24, 32, TimeSpan.FromHours(1))).TryAsDateOnly(out _));
 
     [TestMethod]
     public void TryAsDateTest2()

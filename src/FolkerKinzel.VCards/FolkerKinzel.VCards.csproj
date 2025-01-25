@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>8.0.0-alpha.2</Version>
-    <FileVersion>8.0.0.39</FileVersion>
+    <FileVersion>8.0.0.50</FileVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v8.0.0-alpha.2</PackageReleaseNotes>
     <PackageTags>.net vcard vcf c#</PackageTags>
@@ -40,13 +40,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Intls\Attributes\**" />
-    <Compile Remove="Intls\Models\**" />
     <Compile Remove="Translations\**" />
     <EmbeddedResource Remove="Intls\Attributes\**" />
-    <EmbeddedResource Remove="Intls\Models\**" />
     <EmbeddedResource Remove="Translations\**" />
     <None Remove="Intls\Attributes\**" />
-    <None Remove="Intls\Models\**" />
     <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>

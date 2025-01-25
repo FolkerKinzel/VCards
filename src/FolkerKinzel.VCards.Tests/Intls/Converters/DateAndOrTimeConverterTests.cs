@@ -149,39 +149,23 @@ public class DateAndOrTimeConverterTests
     public void AppendDateTimeStringToTest1()
     {
         var builder = new StringBuilder();
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, default, VCdVersion.V3_0, false, false, false);
+        Assert.AreEqual(0, builder.Length);
+    }
+
+    [TestMethod]
+    public void AppendDateTimeStringToTest1a()
+    {
+        var builder = new StringBuilder();
         DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, default, VCdVersion.V3_0, true, true, true);
-        Assert.AreEqual(0, builder.Length);
-    }
-
-    [TestMethod]
-    public void AppendDateTimeStringToTest2a()
-    {
-        var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0, true, true, true);
-        Assert.AreEqual(0, builder.Length);
-    }
-
-    [TestMethod]
-    public void AppendDateTimeStringToTest2b()
-    {
-        var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 2, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V4_0, true, true, true);
-        Assert.AreEqual(0, builder.Length);
-    }
-
-    [TestMethod]
-    public void AppendDateTimeStringToTest2c()
-    {
-        var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(2, 1, 1, 0, 0, 0, DateTimeKind.Utc), VCdVersion.V3_0, true, true, true);
-        Assert.AreEqual(0, builder.Length);
+        Assert.AreNotEqual(0, builder.Length);
     }
 
     [TestMethod]
     public void AppendDateTimeStringToTest3()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0, true, true, true);
+        DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0, false, true, true);
         string s = builder.ToString();
         Assert.IsTrue(s.StartsWith("--"));
     }
@@ -190,7 +174,7 @@ public class DateAndOrTimeConverterTests
     public void AppendDateToTest1()
     {
         var builder = new StringBuilder();
-        DateAndOrTimeConverter.AppendDateTo(builder, new DateOnly(4, 5, 1), VCdVersion.V4_0, true, true, true);
+        DateAndOrTimeConverter.AppendDateTo(builder, new DateOnly(4, 5, 1), VCdVersion.V4_0, false, true, true);
         string s = builder.ToString();
         Assert.IsTrue(s.StartsWith("--"));
     }

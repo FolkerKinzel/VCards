@@ -281,7 +281,7 @@ public class DateAndOrTimePropertyTests
     public void DateTimeOffsetPropertyTest3()
     {
         var prop = new DateAndOrTimeProperty(DateTimeOffset.MinValue, GROUP);
-        Assert.IsTrue(prop.IsEmpty);
+        Assert.IsFalse(prop.IsEmpty);
         Assert.IsNotNull(prop.Value);
     }
 
