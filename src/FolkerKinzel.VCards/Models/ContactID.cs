@@ -16,7 +16,7 @@ public sealed class ContactID : IEquatable<ContactID>
 
     private ContactID(Guid guid) => Guid = guid;
 
-    private ContactID(object value) => _object = value; //_boxed = true;
+    private ContactID(object value) => _object = value;
 
     /// <summary>
     /// Creates a new <see cref="ContactID"/> instance from a newly

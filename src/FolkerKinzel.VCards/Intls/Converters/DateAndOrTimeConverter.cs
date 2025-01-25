@@ -12,7 +12,6 @@ internal sealed class DateAndOrTimeConverter
     private const int MAX_DATE_TIME_STRING_LENGTH = 64;
 
     private static readonly DateTimeOffset _minYear = new DateTime(5, 1, 1, 14, 0, 0);
-    //private static readonly DateTimeOffset _minDate = new DateTime(3, 12, 31, 10, 0, 0);
 
     private readonly string[] _dateOnlyFormats =
     [
