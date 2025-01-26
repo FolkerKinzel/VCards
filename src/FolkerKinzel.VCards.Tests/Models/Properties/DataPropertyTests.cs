@@ -14,6 +14,22 @@ namespace FolkerKinzel.VCards.Models.Properties.Tests;
 public class DataPropertyTests
 {
     [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void DataPropertyTest1() => _ = new DataProperty(null!);
+
+    [TestMethod]
+    public void DataPropertyTest2()
+    {
+        var row = VcfRow.Parse("PHOTO;ENCODING=B:äöüß".AsMemory(), new VcfDeserializationInfo());
+        Assert.IsNotNull(row);
+        var prop = new DataProperty(row, VCdVersion.V3_0);
+
+        Assert.IsNotNull(prop.Value);
+        Assert.IsTrue(prop.IsEmpty);
+        Assert.IsNotNull(prop.Value.Bytes);
+    }
+
+        [TestMethod]
     public void DataPropertyTest3()
     {
         var row = VcfRow.Parse("PHOTO:".AsMemory(), new VcfDeserializationInfo());

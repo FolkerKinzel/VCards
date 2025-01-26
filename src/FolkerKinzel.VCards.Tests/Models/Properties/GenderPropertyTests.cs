@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
@@ -59,7 +60,6 @@ public class GenderPropertyTests
         Assert.AreEqual(expectedGenderIdentity, genderProp.Value.Identity);
     }
 
-
     [TestMethod]
     public void GenderPropertyTest3()
     {
@@ -90,6 +90,9 @@ public class GenderPropertyTests
         Assert.IsFalse(prop.IsEmpty);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void GenderPropertyTest4() => _ = new GenderProperty((Gender?)null!);
 
     [TestMethod]
     public void IEnumerableTest1()

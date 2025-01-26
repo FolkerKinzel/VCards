@@ -105,21 +105,27 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
             return;
         }
 
-        if (Parameters.Encoding == Enc.Base64)
+        Enc? encoding = vcfRow.Parameters.Encoding;
+
+        if (encoding == Enc.Base64)
         {
             Value = RawData.FromBytes(Base64Helper.GetBytesOrNull(vcfRow.Value.Span) ?? []);
             return;
         }
 
-        if (Parameters.DataType is Data.Uri or Data.Text)
+        Data? dataType = vcfRow.Parameters.DataType;
+
+        if (dataType == Data.Uri)
         {
             Value = TryAsUri(vcfRow, version);
-            return;
         }
-
+        else if (dataType == Data.Text)
+        {
+            Value = RawData.FromText(StringDeserializer.Deserialize(vcfRow, version), 
+                                     vcfRow.Parameters.MediaType);
+        }
         // Quoted-Printable encoded binary data:
-        if (Parameters.Encoding == Enc.QuotedPrintable &&
-            Parameters.MediaType is not null)
+        else if (encoding == Enc.QuotedPrintable && Parameters.MediaType is not null)
         {
             ReadOnlySpan<char> valueSpan = vcfRow.Value.Span;
 
@@ -127,21 +133,21 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
                 ? RawData.FromBytes([])
                 : RawData.FromBytes(QuotedPrintable.DecodeData(valueSpan),
                                     Parameters.MediaType);
-            return;
         }
-
-        // Missing data type:
-        Value = TryAsUri(vcfRow, version);
+        else // missing data type
+        {
+            Value = TryAsUri(vcfRow, version);
+        }
 
         ///////////////////////////////////////////////////////////////
 
         static RawData TryAsUri(VcfRow vcfRow, VCdVersion version)
         {
-            string? val = StringDeserializer.Deserialize(vcfRow, version);
+            string val = StringDeserializer.Deserialize(vcfRow, version);
 
             return UriConverter.TryConvertToAbsoluteUri(val, out Uri? uri)
                        ? RawData.FromUri(uri, vcfRow.Parameters.MediaType)
-                       : RawData.FromText(val ?? "", vcfRow.Parameters.MediaType);
+                       : RawData.FromText(val, vcfRow.Parameters.MediaType);
         }
     }
 

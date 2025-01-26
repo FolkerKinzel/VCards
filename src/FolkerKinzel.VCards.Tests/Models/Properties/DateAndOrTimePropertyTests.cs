@@ -4,6 +4,7 @@ using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
@@ -342,4 +343,8 @@ public class DateAndOrTimePropertyTests
         Assert.IsFalse(prop2.IsEmpty);
         Assert.AreEqual(Data.Text, prop2.Parameters.DataType);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void DateAndOrTimePropertyTest1() => _ = new DateAndOrTimeProperty(null!);
 }

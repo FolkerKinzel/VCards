@@ -52,7 +52,9 @@ public sealed class ContactIDProperty : VCardProperty
         {
             string? val = StringDeserializer.Deserialize(vcfRow, version);
 
-            Value = string.IsNullOrWhiteSpace(val) ? ContactID.Empty : ContactID.Create(val);
+            Value = string.IsNullOrWhiteSpace(val) 
+                        ? ContactID.Empty 
+                        : ContactID.Create(val);
             return;
         }
 
@@ -61,14 +63,16 @@ public sealed class ContactIDProperty : VCardProperty
             Value = ContactID.Create(uuid);
         }
 
-        string uriString = vcfRow.Value.Span.UnMaskValue(version);
+        string uriString = vcfRow.Value.Span.Trim().UnMaskValue(version);
 
         if (Uri.TryCreate(uriString, UriKind.Absolute, out Uri? uri))
         {
             Value = ContactID.Create(uri);
         }
 
-        Value = string.IsNullOrWhiteSpace(uriString) ? ContactID.Empty : ContactID.Create(uriString);
+        Value = string.IsNullOrWhiteSpace(uriString) 
+                    ? ContactID.Empty 
+                    : ContactID.Create(uriString);
     }
 
     /// <summary> The <see cref="ContactID"/> provided by the <see cref="ContactIDProperty" />.

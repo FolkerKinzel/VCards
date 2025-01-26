@@ -224,7 +224,9 @@ public readonly struct DateAndOrTimeBuilder
     /// Adds a <see cref="DateAndOrTimeProperty"/> instance, which is newly initialized with a specified
     /// <see cref="DateAndOrTime"/> instance, to the specified property of the <see cref="VCardBuilder.VCard"/>.
     /// </summary>
-    /// <param name="value">A <see cref="DateAndOrTime"/> instance, or <c>null</c>.</param>
+    /// <param name="value">A <see cref="DateAndOrTime"/> instance, or <c>null</c>. <see cref="DateOnly"/>, 
+    /// <see cref="DateTime"/>, <see cref="DateTimeOffset"/> and <see cref="TimeOnly"/> values can be passed
+    /// directly because <see cref="DateAndOrTime"/> overloads the <c>implicit</c> operators.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
     /// <param name="group">A function that returns the identifier of the group of <see cref="VCardProperty"
@@ -233,18 +235,6 @@ public readonly struct DateAndOrTimeBuilder
     /// with the <see cref="VCardBuilder.VCard"/> instance as argument.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="DateAndOrTimeBuilder"/>
     /// to be able to chain calls.</returns>
-    /// 
-    /// <remarks>
-    /// <para><see cref="DateAndOrTime"/> supports implicit conversion.</para>
-    /// <para>The following data types can be passed directly:</para>
-    /// <list type="bullet">
-    /// <item><see cref="DateOnly"/></item>
-    /// <item><see cref="System.DateTime"/></item>
-    /// <item><see cref="DateTimeOffset"/></item>
-    /// <item><see cref="TimeOnly"/></item>
-    /// <item><see cref="string"/></item>
-    /// </list>
-    /// </remarks>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>

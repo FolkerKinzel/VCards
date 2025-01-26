@@ -79,6 +79,10 @@ public class DateAndOrTimeBuilderTests
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
+    public void AddTest7() => new DateAndOrTimeBuilder().Add(DateTime.Now);
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
     public void ClearTest1() => new DateAndOrTimeBuilder().Clear();
 
     [TestMethod]
