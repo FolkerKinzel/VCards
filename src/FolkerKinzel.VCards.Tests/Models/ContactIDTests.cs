@@ -138,6 +138,40 @@ public class ContactIDTests
     public void ConvertTest7() => _ = ContactID.Create("Hi").Convert<string>(null!, null!, null!);
 
     [TestMethod]
+    public void ConvertTest8()
+    {
+        const string test = "test";
+        string? result = null;
+
+        result = ContactID.Create().Convert(guid => test, null!, null!);
+
+        Assert.AreEqual(test, result);
+    }
+
+    [TestMethod]
+    public void ConvertTest8b()
+    {
+        const string test = "test";
+        string? result = null;
+
+        result = ContactID.Create(new Uri("http://folker.com/")).Convert( null!, (guid) => test, null!);
+
+        Assert.AreEqual(test, result);
+    }
+
+    [TestMethod]
+    public void ConvertTest8c()
+    {
+        const string test = "test";
+
+        string? result = null;
+
+        result = ContactID.Create("Hi").Convert(null!, null!, (guid) => test);
+
+        Assert.AreEqual(test, result);
+    }
+
+    [TestMethod]
     public void EqualsTest1()
     {
         var uid1 = ContactID.Create();
@@ -156,8 +190,15 @@ public class ContactIDTests
     public void EqualsTest2()
     {
         var uid1 = ContactID.Create();
+        Assert.IsTrue(uid1.Guid.HasValue);
+        Assert.IsNull(uid1.Uri);
+        Assert.IsNull(uid1.String);
         ContactID? uid2 = null;
         Assert.IsFalse(uid1.Equals(uid2));
+        var uid3 = ContactID.Create(uid1.Guid.Value);
+
+        Assert.IsTrue(uid1.Equals(uid3));
+        Assert.AreEqual(uid1.GetHashCode(), uid3.GetHashCode());
     }
 
     [TestMethod]
@@ -165,7 +206,11 @@ public class ContactIDTests
     {
         var uid1 = ContactID.Create("Hi");
         ContactID? uid2 = ContactID.Create();
+        var uid3 = ContactID.Create("Hi");
         Assert.IsFalse(uid1.Equals(uid2));
+        Assert.IsFalse(uid1.Equals(null));
+        Assert.IsTrue(uid1.Equals(uid3));
+        Assert.AreEqual(uid1.GetHashCode(), uid3.GetHashCode());
     }
 
     [TestMethod]
@@ -175,6 +220,9 @@ public class ContactIDTests
         var uid1 = ContactID.Create(test);
         var uid2 = ContactID.Create(new Uri(test, UriKind.Absolute));
         Assert.IsTrue(uid1.Equals(uid2));
+        Assert.AreEqual(uid1.GetHashCode(), uid2.GetHashCode());
+
+        Assert.IsFalse(uid1.Equals(null));
     }
 }
 

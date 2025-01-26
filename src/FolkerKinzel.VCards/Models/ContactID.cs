@@ -214,7 +214,8 @@ public abstract class ContactID : IEquatable<ContactID>
 
     /// <inheritdoc/>
     [ExcludeFromCodeCoverage]
-    public override int GetHashCode() => throw new NotImplementedException();
+    public override int GetHashCode() // Must be overridden in derived classes.
+        => throw new NotImplementedException(); 
 
     /// <summary>
     /// Overloads the equality operator for <see cref="ContactID"/> instances.

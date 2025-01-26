@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls;
+﻿using System.Globalization;
+using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Models;
@@ -30,7 +31,8 @@ internal sealed class VcfTimeOnly : DateAndOrTime
 
     public override bool TryAsDateTimeOffset(out DateTimeOffset value)
     {
-        value = new DateTimeOffset().AddTicks(TimeOnly.Value.Ticks);
+        TimeOnly to = TimeOnly.Value;
+        value = new DateTimeOffset(4,1,1, to.Hour, to.Minute, to.Second, System.DateTimeOffset.Now.Offset);
         return true;
     }
 
@@ -40,7 +42,9 @@ internal sealed class VcfTimeOnly : DateAndOrTime
         return true;
     }
 
-    public override string AsString(IFormatProvider? formatProvider = null) => TimeOnly.Value.ToString(formatProvider);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override string AsString(IFormatProvider? formatProvider = null) 
+        => TimeOnly.Value.ToString("T", formatProvider);
 
     public override TResult Convert<TResult>(Func<DateOnly, TResult> dateFunc,
                                              Func<DateTimeOffset, TResult> dtoFunc,
@@ -75,7 +79,9 @@ internal sealed class VcfTimeOnly : DateAndOrTime
     public override bool Equals([NotNullWhen(true)] DateAndOrTime? other)
         => other is VcfTimeOnly vcfTimeOnly && TimeOnly.Value.Equals(vcfTimeOnly.TimeOnly.Value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => TimeOnly.Value.GetHashCode();
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => $"TimeOnly: {AsString()}";
 }

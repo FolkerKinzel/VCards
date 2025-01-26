@@ -31,10 +31,12 @@ internal sealed class ContactIDUri : ContactID
         return uriFunc(Uri, arg);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch(Action<Guid>? guidAction = null,
                                 Action<Uri>? uriAction = null,
                                 Action<string>? stringAction = null) => uriAction?.Invoke(Uri);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch<TArg>(TArg arg,
                                       Action<Guid, TArg>? guidAction = null,
                                       Action<Uri, TArg>? uriAction = null,
@@ -42,7 +44,9 @@ internal sealed class ContactIDUri : ContactID
 
     public override bool Equals(ContactID? other) => Uri.Equals(other?.Uri);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => Uri.GetHashCode();
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => $"Uri: {Uri}";
 }

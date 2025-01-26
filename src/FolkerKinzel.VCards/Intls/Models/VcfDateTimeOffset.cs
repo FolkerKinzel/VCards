@@ -117,11 +117,13 @@ internal sealed class VcfDateTimeOffset : DateAndOrTime
         return dtoFunc(DateTimeOffset.Value, arg);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch(Action<DateOnly>? dateAction = null,
                                 Action<DateTimeOffset>? dtoAction = null,
                                 Action<TimeOnly>? timeAction = null,
                                 Action<string>? stringAction = null) => dtoAction?.Invoke(DateTimeOffset.Value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch<TArg>(TArg arg,
                                       Action<DateOnly, TArg>? dateAction = null,
                                       Action<DateTimeOffset, TArg>? dtoAction = null,
@@ -135,7 +137,9 @@ internal sealed class VcfDateTimeOffset : DateAndOrTime
         && HasDay == other.HasDay
         && DateTimeOffset.Value.Equals(vcfDateTimeOffset.DateTimeOffset.Value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => HashCode.Combine(HasYear, HasMonth, HasDay, DateTimeOffset.Value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => $"DateTimeOffset: {AsString()}";
 }

@@ -31,10 +31,12 @@ internal sealed class ContactIDGuid : ContactID
         return guidFunc(Guid.Value, arg);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch(Action<Guid>? guidAction = null,
                                 Action<Uri>? uriAction = null,
                                 Action<string>? stringAction = null) => guidAction?.Invoke(Guid.Value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch<TArg>(TArg arg,
                                       Action<Guid, TArg>? guidAction = null,
                                       Action<Uri, TArg>? uriAction = null,
@@ -42,7 +44,9 @@ internal sealed class ContactIDGuid : ContactID
 
     public override bool Equals(ContactID? other) => other is ContactIDGuid ctGuid && Guid.Value.Equals(ctGuid.Guid.Value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => Guid.Value.GetHashCode();
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => $"Guid: {Guid.Value}";
 }

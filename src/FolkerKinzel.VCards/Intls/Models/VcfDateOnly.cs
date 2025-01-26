@@ -110,11 +110,13 @@ internal sealed class VcfDateOnly : DateAndOrTime
         return dateFunc(DateOnly.Value, arg);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch(Action<DateOnly>? dateAction = null,
                                 Action<DateTimeOffset>? dtoAction = null,
                                 Action<TimeOnly>? timeAction = null,
                                 Action<string>? stringAction = null) => dateAction?.Invoke(DateOnly.Value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch<TArg>(TArg arg,
                                       Action<DateOnly, TArg>? dateAction = null,
                                       Action<DateTimeOffset, TArg>? dtoAction = null,
@@ -128,7 +130,9 @@ internal sealed class VcfDateOnly : DateAndOrTime
            && HasDay == other.HasDay 
            && DateOnly.Value.Equals(vcfDateOnly.DateOnly.Value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => HashCode.Combine(HasYear, HasMonth, HasDay, DateOnly.Value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => $"DateOnly: {AsString()}";
 }

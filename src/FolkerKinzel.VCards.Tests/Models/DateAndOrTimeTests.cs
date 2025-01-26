@@ -17,7 +17,9 @@ public class DateAndOrTimeTests
         Assert.IsNull(rel.DateTimeOffset);
         Assert.IsNull(rel.TimeOnly);
         Assert.IsNull(rel.String);
-
+        Assert.IsTrue(rel.HasYear);
+        Assert.IsTrue(rel.HasMonth);
+        Assert.IsTrue(rel.HasDay);
         Assert.IsTrue(rel.TryAsDateOnly(out _));
         Assert.IsTrue(rel.TryAsDateTimeOffset(out _));
     }
@@ -30,7 +32,9 @@ public class DateAndOrTimeTests
         Assert.IsNotNull(rel.DateTimeOffset);
         Assert.IsNull(rel.TimeOnly);
         Assert.IsNull(rel.String);
-
+        Assert.IsTrue(rel.HasYear);
+        Assert.IsTrue(rel.HasMonth);
+        Assert.IsTrue(rel.HasDay);
         Assert.IsTrue(rel.TryAsDateOnly(out _));
         Assert.IsTrue(rel.TryAsDateTimeOffset(out _));
     }
@@ -43,7 +47,9 @@ public class DateAndOrTimeTests
         Assert.IsNull(rel.DateTimeOffset);
         Assert.IsNotNull(rel.TimeOnly);
         Assert.IsNull(rel.String);
-
+        Assert.IsFalse(rel.HasYear);
+        Assert.IsFalse(rel.HasMonth);
+        Assert.IsFalse(rel.HasDay);
         Assert.IsFalse(rel.TryAsDateOnly(out _));
         Assert.IsTrue(rel.TryAsDateTimeOffset(out _));
     }
@@ -56,9 +62,12 @@ public class DateAndOrTimeTests
         Assert.IsNull(rel.DateTimeOffset);
         Assert.IsNull(rel.TimeOnly);
         Assert.IsNotNull(rel.String);
-
+        Assert.IsFalse(rel.HasYear);
+        Assert.IsFalse(rel.HasMonth);
+        Assert.IsFalse(rel.HasDay);
         Assert.IsFalse(rel.TryAsDateOnly(out _));
         Assert.IsFalse(rel.TryAsDateTimeOffset(out _));
+        Assert.AreSame(rel.String, rel.AsString());
     }
 
     [TestMethod]
@@ -115,7 +124,7 @@ public class DateAndOrTimeTests
     {
         TimeOnly? result = null;
         DateAndOrTime? rel = TimeOnly.FromTimeSpan(TimeSpan.FromHours(12));
-        rel.Switch(null, null,  timeOnly => result = timeOnly, null);
+        rel.Switch(null, null, timeOnly => result = timeOnly, null);
         Assert.IsNotNull(result);
     }
 
@@ -232,7 +241,7 @@ public class DateAndOrTimeTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest9() 
+    public void ConvertTest9()
         => _ = DateAndOrTime.Create(DateOnly.FromDateTime(DateTime.Now)).Convert<string, string>("", null!, null!, null!, null!);
 
     [TestMethod]
@@ -247,7 +256,7 @@ public class DateAndOrTimeTests
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest12() 
+    public void ConvertTest12()
         => _ = DateAndOrTime.Create("Midnight").Convert<string, string>("", null!, null!, null!, null!);
 
     [TestMethod]
@@ -276,7 +285,23 @@ public class DateAndOrTimeTests
 
     [TestMethod]
     public void TryAsDateTest2()
+        => Assert.IsTrue(DateAndOrTime.Create(new DateOnly(2023, 11, 11)).TryAsDateOnly(out _));
+
+    [TestMethod]
+    public void TryAsDateTest3()
         => Assert.IsTrue(DateAndOrTime.Create(new DateOnly(2023, 11, 11).ToString(CultureInfo.CurrentCulture)).TryAsDateOnly(out _));
+
+    [TestMethod]
+    public void TryAsDateTest4()
+        => Assert.IsFalse(DateAndOrTime.Create("Midnight").TryAsDateOnly(out _));
+
+    [TestMethod]
+    public void TryAsDateTest5()
+        => Assert.IsFalse(DateAndOrTime.Create(new TimeOnly(14, 25, 11)).TryAsDateOnly(out _));
+
+    [TestMethod]
+    public void TryAsDateTest6()
+        => Assert.IsFalse(DateAndOrTime.Create(new DateTimeOffset(2025, 1, 26, 20, 57, 3, TimeSpan.FromHours(-7)), true, true, true).TryAsDateOnly(out _));
 
     [TestMethod]
     public void ToStringTest1() => Assert.IsNotNull(DateAndOrTime.Empty.ToString());
@@ -285,8 +310,20 @@ public class DateAndOrTimeTests
     public void TryAsTimeOnlyTest1() => Assert.IsTrue(DateAndOrTime.Create("17:30").TryAsTimeOnly(out _));
 
     [TestMethod]
-    public void TryAsTimeOnlyTest2() 
+    public void TryAsTimeOnlyTest2()
         => Assert.IsTrue(DateAndOrTime.Create(TimeOnly.FromDateTime(DateTime.Now)).TryAsTimeOnly(out _));
+
+    [TestMethod]
+    public void TryAsTimeOnlyTest3()
+        => Assert.IsTrue(DateAndOrTime.Create(DateTimeOffset.UtcNow).TryAsTimeOnly(out _));
+
+    [TestMethod]
+    public void TryAsTimeOnlyTest4()
+        => Assert.IsFalse(DateAndOrTime.Create(new DateOnly(1789, 7, 14)).TryAsTimeOnly(out _));
+
+    [TestMethod]
+    public void TryAsDateTimeOffsetTest1()
+        => Assert.IsTrue(DateAndOrTime.Create(new TimeOnly(14, 25, 11)).TryAsDateTimeOffset(out _));
 
     [TestMethod]
     public void EqualsTest1()
@@ -299,7 +336,7 @@ public class DateAndOrTimeTests
         Assert.IsTrue(daot == daot);
         Assert.IsFalse(daot != daot);
 #pragma warning restore CS1718 // Comparison made to same variable
-        Assert.AreEqual(daot.GetHashCode(), daot.GetHashCode());    
+        Assert.AreEqual(daot.GetHashCode(), daot.GetHashCode());
         Assert.IsFalse(daot.Equals(null));
         Assert.IsFalse(daot == null);
         Assert.IsFalse((DateAndOrTime?)null == daot);
@@ -310,13 +347,41 @@ public class DateAndOrTimeTests
     [TestMethod]
     public void EqualsTest2()
     {
-        var d1 =DateAndOrTime.Create("Hi");
+        var d1 = DateAndOrTime.Create("Hi");
         DateAndOrTime? d2 = null;
         var d3 = DateAndOrTime.Create("hI");
 
         Assert.IsFalse(d1.Equals(d2));
         Assert.IsTrue(d1.Equals(d3));
         Assert.AreEqual(d1.GetHashCode(), d3.GetHashCode());
+    }
+
+    [TestMethod]
+    public void EqualsTest3()
+    {
+        DateAndOrTime d1 = new TimeOnly(23, 10, 14);
+        DateAndOrTime d2 = new TimeOnly(23, 10, 14);
+        DateAndOrTime d3 = new TimeOnly(23, 10, 15);
+        DateAndOrTime? d4 = null;
+
+        Assert.IsTrue(d1.Equals(d2));
+        Assert.AreEqual(d1.GetHashCode(), d2.GetHashCode());
+        Assert.IsFalse(d1.Equals(d3));
+        Assert.IsFalse(d1.Equals(d4));
+    }
+
+    [TestMethod]
+    public void EqualsTest4()
+    {
+        DateAndOrTime d1 = new DateOnly(2023, 10, 14);
+        DateAndOrTime d2 = new DateOnly(2023, 10, 14);
+        DateAndOrTime d3 = new DateOnly(2023, 10, 15);
+        DateAndOrTime? d4 = null;
+
+        Assert.IsTrue(d1.Equals(d2));
+        Assert.AreEqual(d1.GetHashCode(), d2.GetHashCode());
+        Assert.IsFalse(d1.Equals(d3));
+        Assert.IsFalse(d1.Equals(d4));
     }
 
     [TestMethod]
@@ -335,6 +400,8 @@ public class DateAndOrTimeTests
 
         Assert.AreEqual("1984", daot.AsString(CultureInfo.InvariantCulture));
         Assert.IsTrue(daot.Equals(DateAndOrTime.Create(new DateOnly(1984, 8, 20), ignoreMonth: true, ignoreDay: true)));
+        Assert.IsFalse(daot.Equals(DateAndOrTime.Create(new DateOnly(1984, 3, 17))));
+
     }
 
     [TestMethod]
@@ -344,5 +411,36 @@ public class DateAndOrTimeTests
 
         Assert.AreEqual("1984", daot.AsString(CultureInfo.InvariantCulture));
         Assert.IsTrue(daot.Equals(DateAndOrTime.Create(new DateTimeOffset(1984, 8, 20, 0, 0, 0, TimeSpan.Zero), ignoreMonth: true, ignoreDay: true)));
+        Assert.IsFalse(daot.Equals(DateAndOrTime.Create(new DateTimeOffset(1984, 3, 17, 0, 0, 0, TimeSpan.Zero))));
+    }
+
+    [TestMethod]
+    public void CreateTest3()
+    {
+        var daot = DateAndOrTime.Create(new DateOnly(1984, 3, 17), ignoreYear: true, ignoreMonth: true, ignoreDay: true);
+        Assert.IsTrue(daot.IsEmpty);
+    }
+
+    [TestMethod]
+    public void CreateTest4()
+    {
+        var daot = DateAndOrTime.Create(new DateTimeOffset(1984, 3, 17, 0, 0, 0, TimeSpan.Zero), ignoreYear:true, ignoreMonth: true, ignoreDay: true);
+        Assert.IsTrue(daot.IsEmpty);
+    }
+
+    [TestMethod]
+    public void CreateTest5()
+    {
+        var daot = DateAndOrTime.Create(new DateTimeOffset(1984, 3, 17, 14, 5, 28, TimeSpan.Zero), ignoreYear: true, ignoreMonth: true, ignoreDay: true);
+        Assert.IsFalse(daot.IsEmpty);
+    }
+
+    [TestMethod]
+    public void CreateTest6()
+    {
+        var daot = DateAndOrTime.Create(new DateTimeOffset(1984, 3, 17, 14, 5, 28, TimeSpan.Zero), ignoreDay: true);
+        Assert.IsFalse(daot.IsEmpty);
+        Assert.IsNotNull(daot.DateOnly);
+        Assert.IsNull(daot.DateTimeOffset);
     }
 }

@@ -24,6 +24,7 @@ internal sealed class VcfDateString : DateAndOrTime
     public override string? String { get; }
 
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override bool TryAsDateOnly(out DateOnly value)
         => System.DateOnly.TryParse(String,
                                     CultureInfo.CurrentCulture,
@@ -31,17 +32,20 @@ internal sealed class VcfDateString : DateAndOrTime
                                     out value);
 
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override bool TryAsDateTimeOffset(out DateTimeOffset value)
         => System.DateTimeOffset.TryParse(String,
                                           CultureInfo.CurrentCulture,
                                           DateTimeStyles.AllowWhiteSpaces,
                                           out value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override bool TryAsTimeOnly(out TimeOnly value) => System.TimeOnly.TryParse(String,
                                                               CultureInfo.CurrentCulture,
                                                               DateTimeStyles.AllowWhiteSpaces,
                                                               out value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string AsString(IFormatProvider? formatProvider = null) => String;
 
     public override TResult Convert<TResult>(Func<DateOnly, TResult> dateFunc,
@@ -63,20 +67,24 @@ internal sealed class VcfDateString : DateAndOrTime
         return stringFunc(String, arg);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch(Action<DateOnly>? dateAction = null,
                                 Action<DateTimeOffset>? dtoAction = null,
                                 Action<TimeOnly>? timeAction = null,
                                 Action<string>? stringAction = null) => stringAction?.Invoke(String);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch<TArg>(TArg arg,
                                       Action<DateOnly, TArg>? dateAction = null,
                                       Action<DateTimeOffset, TArg>? dtoAction = null,
                                       Action<TimeOnly, TArg>? timeAction = null,
                                       Action<string, TArg>? stringAction = null) => stringAction?.Invoke(String, arg);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override bool Equals([NotNullWhen(true)] DateAndOrTime? other)
         => StringComparer.CurrentCultureIgnoreCase.Equals(String, other?.String);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => StringComparer.CurrentCultureIgnoreCase.GetHashCode(String);
 
     public override string ToString() => IsEmpty ? "<Empty>" : $"String: {String}";

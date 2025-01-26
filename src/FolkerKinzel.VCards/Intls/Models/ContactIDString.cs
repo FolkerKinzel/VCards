@@ -31,10 +31,12 @@ internal sealed class ContactIDString : ContactID
         return stringFunc(String, arg);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch(Action<Guid>? guidAction = null,
                                 Action<Uri>? uriAction = null,
                                 Action<string>? stringAction = null) => stringAction?.Invoke(String);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch<TArg>(TArg arg,
                                       Action<Guid, TArg>? guidAction = null,
                                       Action<Uri, TArg>? uriAction = null,
@@ -42,6 +44,7 @@ internal sealed class ContactIDString : ContactID
 
     public override bool Equals(ContactID? other) => StringComparer.Ordinal.Equals(String, other?.String);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(String);
 
     public override string ToString() => String.Length == 0 ? "<Empty>" : $"String: {String}";
