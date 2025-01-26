@@ -6,23 +6,18 @@ namespace FolkerKinzel.VCards.Models.Properties.Tests;
 public class TimeStampPropertyTests
 {
     [TestMethod]
-    public void TimeStampPropertyTest1a()
+    public void TimeStampPropertyTest1()
     {
         var prop = new TimeStampProperty();
 
         Assert.IsNull(prop.Group);
         Assert.AreNotEqual(default, prop.Value);
+        Assert.IsFalse(prop.IsEmpty);
+        Assert.IsNotNull(prop.ToString());  
     }
 
     [TestMethod]
-    public void TimeStampPropertyTest1b()
-    {
-        var prop = new TimeStampProperty();
-        Assert.AreNotEqual(default, prop.Value);
-    }
-
-    [TestMethod]
-    public void TimeStampPropertyTest2a()
+    public void TimeStampPropertyTest2()
     {
         DateTimeOffset now = DateTimeOffset.UtcNow;
 
@@ -33,12 +28,14 @@ public class TimeStampPropertyTests
     }
 
     [TestMethod]
-    public void TimeStampPropertyTest2b()
+    public void TimeStampPropertyTest3()
     {
-        DateTimeOffset now = DateTimeOffset.UtcNow;
+        var prop = new TimeStampProperty(new DateTime(1848, 3, 18), "G");
 
-        var prop = new TimeStampProperty(now);
-        Assert.AreEqual(now, prop.Value);
+        Assert.AreEqual("G", prop.Group);
+        Assert.AreNotEqual(default, prop.Value);
+        Assert.IsTrue(prop.IsEmpty);
+        Assert.IsNotNull(prop.ToString());
     }
 
     [TestMethod]

@@ -57,12 +57,9 @@ public class RelationPropertyTests
         Assert.AreEqual(Data.Text, prop.Parameters.DataType);
     }
 
-    //[TestMethod]
-    //public void RelationPropertyTest3()
-    //{
-    //    var row = VcfRow.Parse("RELATED;TYPE=FRIEND:   ".AsMemory(), new VcfDeserializationInfo());
-    //    var prop = new RelationProperty(row, )
-    //}
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void RelationPropertyTest3() => _ = new RelationProperty(null!);
 
     [TestMethod]
     public void IEnumerableTest()

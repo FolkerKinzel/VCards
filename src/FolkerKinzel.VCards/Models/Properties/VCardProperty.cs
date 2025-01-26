@@ -75,7 +75,7 @@ public abstract class VCardProperty : ICloneable
 
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => IsEmpty ? "<Empty>" : Value.ToString() ?? "";
+    public override string ToString() => IsEmpty ? "<Empty>" : Value.ToString()!;
 
     /// <summary>
     /// Fills <see cref="VcfSerializer.Builder"/> with the serialized <see cref="VCardProperty"/>.

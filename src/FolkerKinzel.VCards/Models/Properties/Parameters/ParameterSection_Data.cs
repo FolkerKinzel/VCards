@@ -592,8 +592,8 @@ public sealed partial class ParameterSection
     public IReadOnlyList<string>? SortAs
     {
         get => Get<string[]?>(VCdParam.SortAs);
-        set => Set(VCdParam.SortAs, value is null ? null 
-                                                  : StringArrayConverter.ToStringArray(value));
+        set => Set(VCdParam.SortAs, 
+                   value is null ? null : StringArrayConverter.ToStringArray(value));
     }
 
     internal void SetSortAs(string[] value) => Set(VCdParam.SortAs, value);

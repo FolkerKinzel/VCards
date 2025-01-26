@@ -16,7 +16,7 @@ public class OrgPropertyTests
     [DataRow(null, null, new string[] { "North American Division", "Marketing" })]
     [DataRow(null, "ABC, Inc.", new string[] { "Marketing" })]
     [DataRow(null, "ABC, Inc.", null)]
-    public void OrganizationPropertyTest1(string? expectedGroup, string? expectedOrganizationName, string[] expectedOrganizationalUnits)
+    public void OrgPropertyTest1(string? expectedGroup, string? expectedOrganizationName, string[] expectedOrganizationalUnits)
     {
         var orgProp = new OrgProperty(new Organization(expectedOrganizationName, expectedOrganizationalUnits), expectedGroup);
 
@@ -36,7 +36,7 @@ public class OrgPropertyTests
     [DataRow(@"ORG:ABC\, Inc.", null, "ABC, Inc.", null)]
     [DataRow(@"ORG:ABC\, Inc.;", null, "ABC, Inc.", null)]
     [DataRow(@"ORG:ABC\, Inc.;  ;", null, "ABC, Inc.", null)]
-    public void OrganizationPropertyTest2(
+    public void OrgPropertyTest2(
         string s, string? expectedGroup, string? expectedOrganizationName, string[] expectedOrganizationalUnits)
     {
         var vcfRow = VcfRow.Parse(s.AsMemory(), new VcfDeserializationInfo());
@@ -50,9 +50,8 @@ public class OrgPropertyTests
         CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.Units?.ToArray());
     }
 
-
     [TestMethod]
-    public void OrganizationPropertyTest3()
+    public void OrgPropertyTest3()
     {
         VcfRow row = VcfRow.Parse("ORG:".AsMemory(), new VcfDeserializationInfo())!;
 
@@ -60,6 +59,10 @@ public class OrgPropertyTests
 
         Assert.IsNotNull(prop.Value);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void OrgPropertyTest4() => _ = new OrgProperty((Organization?)null!);
 
     [TestMethod]
     public void IEnumerableTest1()

@@ -93,12 +93,16 @@ public class ParameterSectionTests
         Assert.AreEqual(5, result.Count());
 
         list.Add(null);
+        result = prop.Parameters.SortAs;
         Assert.IsTrue(!result.Any(x => x is null));
-        Assert.AreEqual(5, result.Count());
+        Assert.AreEqual(5, result.Count);
 
         list.Add(" Web ");
         Assert.IsTrue(!result.Any(x => x is null));
-        Assert.AreEqual(5, result.Count());
+        Assert.AreEqual(5, result.Count);
+
+        prop.Parameters.SortAs = null;
+        Assert.IsNull(prop.Parameters.SortAs);
     }
 
     [TestMethod]

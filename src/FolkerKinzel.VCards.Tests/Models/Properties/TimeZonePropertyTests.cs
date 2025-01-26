@@ -75,6 +75,10 @@ public class TimeZonePropertyTests
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void TimeZonePropertyTest5() => _ = new TimeZoneProperty((TimeZoneID?)null!);
+
+    [TestMethod]
     public void IEnumerableTest1()
     {
         var prop = new TimeZoneProperty(TimeZoneID.Parse("+01"));

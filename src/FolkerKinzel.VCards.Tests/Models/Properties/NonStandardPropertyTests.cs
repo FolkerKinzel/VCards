@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Tests;
+﻿using System.Text.RegularExpressions;
+using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
@@ -70,6 +71,12 @@ public class NonStandardPropertyTests
         Assert.AreEqual("xYz", xTest.Value);
     }
 
+    [TestMethod]
+    public void NonStandardPropertyTest6()
+    {
+        var prop = new NonStandardProperty("X-TEST", null);
+        Assert.IsNotNull(prop.Value);
+    }
 
     [TestMethod()]
     public void ToStringTest()

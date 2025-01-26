@@ -2,6 +2,7 @@
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
@@ -64,6 +65,10 @@ public class StringCollectionPropertyTests
         CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value.ToArray());
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void StringCollectionPropertyTest4() => _ = new StringCollectionProperty((IEnumerable<string?>?)null!);
+    
     [TestMethod]
     public void ToStringTest1()
     {
