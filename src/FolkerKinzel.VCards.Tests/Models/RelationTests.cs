@@ -16,7 +16,6 @@ public class RelationTests
         Assert.IsNull(rel.VCard);
     }
 
-
     [TestMethod]
     public void ValueTest2()
     {
@@ -24,7 +23,6 @@ public class RelationTests
         Assert.IsNotNull(rel.ContactID);
         Assert.IsNull(rel.VCard);
     }
-
 
     [TestMethod]
     public void ValueTest3()
@@ -47,28 +45,60 @@ public class RelationTests
     public void SwitchTest1()
     {
         var rel = Relation.Create(new VCard());
-        rel.Switch(null!, null!);
+        rel.Switch();
     }
 
     [TestMethod]
     public void SwitchTest2()
     {
         var rel = Relation.Create(ContactID.Create("Hi"));
-        rel.Switch(null!, null!);
+        rel.Switch();
     }
 
     [TestMethod]
     public void SwitchTest3()
     {
         var rel = Relation.Create(new VCard());
-        rel.Switch("", null!, null!);
+        rel.Switch("");
     }
 
     [TestMethod]
     public void SwitchTest4()
     {
         var rel = Relation.Create(ContactID.Create("Hi"));
-        rel.Switch("", null!, null!);
+        rel.Switch("");
+    }
+
+    [TestMethod]
+    public void SwitchTest5()
+    {
+        VCard? guid = null;
+        Relation.Create(new VCard()).Switch("", (uuid, str) => guid = uuid);
+        Assert.IsNotNull(guid);
+    }
+
+    [TestMethod]
+    public void SwitchTest6()
+    {
+        ContactID? guid = null;
+        Relation.Create(ContactID.Empty).Switch("", null, (uuid, str) => guid = uuid);
+        Assert.IsNotNull(guid);
+    }
+
+    [TestMethod]
+    public void SwitchTest7()
+    {
+        VCard? guid = null;
+        Relation.Create(new VCard()).Switch((uuid) => guid = uuid);
+        Assert.IsNotNull(guid);
+    }
+
+    [TestMethod]
+    public void SwitchTest8()
+    {
+        ContactID? guid = null;
+        Relation.Create(ContactID.Empty).Switch( null, (uuid) => guid = uuid);
+        Assert.IsNotNull(guid);
     }
 
     [TestMethod]
@@ -77,6 +107,30 @@ public class RelationTests
     {
         var rel = Relation.Create(ContactID.Create("Hi"));
         _ = rel.Convert<int>(null!, null!);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest3()
+    {
+        var rel = Relation.Create(ContactID.Create("Hi"));
+        _ = rel.Convert<string, int>("", null!, null!);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest4()
+    {
+        var rel = Relation.Create(new VCard());
+        _ = rel.Convert<int>(null!, null!);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void ConvertTest5()
+    {
+        var rel = Relation.Create(new VCard());
+        _ = rel.Convert<string, int>("", null!, null!);
     }
 
     [TestMethod]
@@ -147,7 +201,7 @@ public class RelationTests
 
         Assert.AreEqual(rel1.GetHashCode(), rel3.GetHashCode());
 
-        Assert.IsFalse (rel1.Equals(rel4));
+        Assert.IsFalse(rel1.Equals(rel4));
         Assert.IsFalse(rel4.Equals(rel1));
 
         Assert.IsFalse(rel1.Equals(rel5));
@@ -168,63 +222,9 @@ public class RelationTests
         Assert.IsTrue(Relation.Empty.Equals(Relation.Empty));
     }
 
-        //[TestMethod]
-        //public void TryAsStringTest1() => Assert.IsFalse(new RelationProperty(ContactID.Create()).Value.TryAsString(out _));
+    [TestMethod]
+    public void ToStringTest1() => Assert.IsNotNull(Relation.Empty.ToString());
 
-        //[TestMethod]
-        //public void TryAsStringTest2()
-        //    => Assert.IsFalse(new RelationProperty(new VCard()).Value.TryAsString(out _));
-
-        //[TestMethod]
-        //public void TryAsStringTest3() => Assert.IsTrue(new RelationProperty(ContactID.Create("Hi")).Value.TryAsString(out _));
-
-        //[TestMethod]
-        //public void TryAsStringTest4() => Assert.IsTrue(new RelationProperty(ContactID.Create(new Uri("http://folker.de/"))).Value.TryAsString(out _));
-
-        //[TestMethod]
-        //public void TryAsStringTest5()
-        //    => Assert.IsTrue(new RelationProperty(new VCard() { Organizations = new OrgProperty("Org") }).Value.TryAsString(out _));
-
-        //[TestMethod]
-        //public void TryAsStringTest6()
-        //{
-        //    VCard.SyncTestReset();
-        //    VCard.RegisterApp(null);
-
-        //    Assert.IsTrue(new RelationProperty(new VCard() { NameViews = new NameProperty("Folker") }).Value.TryAsString(out _));
-        //}
-
-        //[TestMethod]
-        //public void TryAsStringTest7()
-        //{
-        //    Assert.IsTrue(new RelationProperty(
-        //            new VCard()
-        //            {
-        //                DisplayNames = new TextProperty("Folker")
-        //            }).Value.TryAsString(out _));
-        //}
-
-        //[TestMethod]
-        //public void TryAsStringTest8()
-        //{
-        //    Assert.IsTrue(new RelationProperty(
-        //        new VCard()
-        //        {
-        //            Organizations = new OrgProperty("Org"),
-        //            DisplayNames = [],
-        //            NameViews = []
-        //        }).Value.TryAsString(out _));
-        //}
-
-        //[TestMethod]
-        //public void TryAsStringTest9()
-        //{
-        //    Assert.IsFalse(new RelationProperty(
-        //        new VCard()
-        //        {
-        //            Organizations = [],
-        //            DisplayNames = [],
-        //            NameViews = []
-        //        }).Value.TryAsString(out _));
-        //}
-    }
+    [TestMethod]
+    public void ToStringTest2() => Assert.IsNotNull(Relation.Create(new VCard()).ToString());
+}

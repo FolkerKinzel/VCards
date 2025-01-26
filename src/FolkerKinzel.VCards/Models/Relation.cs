@@ -193,7 +193,7 @@ public sealed class Relation : IEquatable<Relation>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => _object is VCard vc
                                             ? $"VCard: {vc.DisplayNames.FirstOrNull()?.Value}"
-                                            : _object.ToString() ?? "";
+                                            : _object.ToString()!;
 
     /// <inheritdoc/>
     ///
