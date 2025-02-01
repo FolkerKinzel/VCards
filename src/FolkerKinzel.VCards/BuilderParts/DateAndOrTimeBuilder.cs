@@ -225,7 +225,7 @@ public readonly struct DateAndOrTimeBuilder
     /// <see cref="DateAndOrTime"/> instance, to the specified property of the <see cref="VCardBuilder.VCard"/>.
     /// </summary>
     /// <param name="value">A <see cref="DateAndOrTime"/> instance, or <c>null</c>. <see cref="DateOnly"/>, 
-    /// <see cref="DateTime"/>, <see cref="DateTimeOffset"/> and <see cref="TimeOnly"/> values can be passed
+    /// <see cref="System.DateTime"/>, <see cref="DateTimeOffset"/> and <see cref="TimeOnly"/> values can be passed
     /// directly because <see cref="DateAndOrTime"/> overloads the <c>implicit</c> operators.</param>
     /// <param name="parameters">An <see cref="Action{T}"/> delegate that's invoked with the 
     /// <see cref="ParameterSection"/> of the newly created <see cref="VCardProperty"/> as argument.</param>
