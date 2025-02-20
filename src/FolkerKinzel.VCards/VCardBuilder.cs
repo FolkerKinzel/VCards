@@ -22,31 +22,6 @@ namespace FolkerKinzel.VCards;
 /// </example>
 public sealed class VCardBuilder
 {
-    #region Remove with version 8.0.1
-
-    [Obsolete("Use SpokenLanguages instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public TextBuilder Languages => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use Updated instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public TimeStampBuilder TimeStamp => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use ContactID instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public ContactIDBuilder ID => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    #endregion
-
     private VCardBuilder(VCard vCard) => VCard = vCard;
 
     /// <summary>

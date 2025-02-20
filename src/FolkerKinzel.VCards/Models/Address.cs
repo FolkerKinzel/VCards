@@ -20,31 +20,6 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="VCard.Addresses"/>
 public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 {
-    #region Remove this code with version 8.0.0
-
-    [Obsolete("Use AddressProperty.ToLabel() instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public string? ToLabel() => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use Extended instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public ReadOnlyCollection<string> ExtendedAddress => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use POBox instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public ReadOnlyCollection<string> PostOfficeBox => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    #endregion
-
     private const int STANDARD_COUNT = (int)AdrProp.Country + 1;
     private const int MAX_COUNT = (int)AdrProp.Direction + 1;
     private readonly Dictionary<AdrProp, string[]> _dic = [];

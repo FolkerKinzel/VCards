@@ -15,20 +15,6 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="Organization"/>
 public sealed class OrgProperty : VCardProperty, IEnumerable<OrgProperty>
 {
-    #region Remove with version 8.0.1
-
-    [Obsolete("Use OrgProperty(Organization, string?) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public OrgProperty(string? orgName,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                       IEnumerable<string?>? orgUnits = null,
-                       string? group = null)
-        : base(new ParameterSection(), group) => throw new NotImplementedException();
-
-    #endregion
-
     /// <summary>
     /// <summary>Copy ctor.</summary>
     /// </summary>

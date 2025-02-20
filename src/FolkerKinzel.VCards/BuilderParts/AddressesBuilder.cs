@@ -27,50 +27,6 @@ namespace FolkerKinzel.VCards.BuilderParts;
 #endif
 public readonly struct AddressesBuilder
 {
-    #region Remove this code with version 8.0.0
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use Add(Address?, ...) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public VCardBuilder Add(string? street,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                            string? locality,
-                            string? region,
-                            string? postalCode,
-                            string? country = null,
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null,
-                            bool autoLabel = true) => throw new NotImplementedException();
-
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use Add(Address?, ...) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public VCardBuilder Add(IEnumerable<string?>? street,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                            IEnumerable<string?>? locality,
-                            IEnumerable<string?>? region,
-                            IEnumerable<string?>? postalCode,
-                            IEnumerable<string?>? country = null,
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null,
-                            bool autoLabel = true) => throw new NotImplementedException();
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use Add(Address?, ...) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public VCardBuilder Add(AddressBuilder builder,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                            Action<ParameterSection>? parameters = null,
-                            Func<VCard, string?>? group = null) => throw new NotImplementedException();
-    #endregion
-
     private readonly VCardBuilder? _builder;
 
     [MemberNotNull(nameof(_builder))]

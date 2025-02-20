@@ -16,18 +16,6 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="RelationProperty"/>
 public sealed class ContactIDProperty : VCardProperty
 {
-    #region Remove with 8.0.1
-
-    [Obsolete("Use the constructor that takes a ContactID.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public ContactIDProperty(string? group = null)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-        : base(new ParameterSection(), group) => throw new NotImplementedException();
-
-    #endregion
-
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="ContactIDProperty"/> instance
     /// to clone.</param>

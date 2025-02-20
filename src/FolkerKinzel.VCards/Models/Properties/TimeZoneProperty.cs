@@ -14,18 +14,6 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="TimeZoneID"/>
 public sealed class TimeZoneProperty : VCardProperty, IEnumerable<TimeZoneProperty>
 {
-    #region Remove with 8.0.1
-
-    [Obsolete("Use TimeZoneIDProperty(TimeZoneID, string?) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public TimeZoneProperty(string value, string? group = null)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-        : base(new ParameterSection(), group) => throw new NotImplementedException();
-
-    #endregion
-
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="TimeZoneProperty"/> instance to clone.</param>
     private TimeZoneProperty(TimeZoneProperty prop) : base(prop)

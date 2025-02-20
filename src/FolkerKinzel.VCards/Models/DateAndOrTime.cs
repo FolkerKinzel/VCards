@@ -20,25 +20,6 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="DateAndOrTimeProperty"/>
 public abstract class DateAndOrTime : IEquatable<DateAndOrTime>
 {
-    #region Remove with 8.0.1
-
-    [Obsolete("Use the TryAsXXX methods instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public object Value => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use Create(DateOnly, bool, bool, bool) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DateAndOrTime Create(int month, int day)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-        => throw new NotImplementedException();
-
-    #endregion
-
     /// <summary>
     /// Creates a new <see cref="DateAndOrTime"/> instance from a <see cref="DateOnly"/> 
     /// value.

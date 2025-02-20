@@ -17,38 +17,6 @@ namespace FolkerKinzel.VCards;
 /// </remarks>
 public sealed class AddressBuilder
 {
-    #region Remove with version 8.0.1
-
-    [Obsolete("Use AddExtended instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public AddressBuilder AddExtendedAddress(string? value) => Add(AdrProp.Extended, value);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use AddExtended instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public AddressBuilder AddExtendedAddress(IEnumerable<string?> collection) => AddRange(AdrProp.Extended, collection);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use AddPOBox instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public AddressBuilder AddPostOfficeBox(string? value) => Add(AdrProp.POBox, value);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use AddPOBox instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public AddressBuilder AddPostOfficeBox(IEnumerable<string?> collection) => AddRange(AdrProp.POBox, collection);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    #endregion
-
     private readonly Dictionary<AdrProp, List<string>> _dic = [];
 
     private AddressBuilder() { }

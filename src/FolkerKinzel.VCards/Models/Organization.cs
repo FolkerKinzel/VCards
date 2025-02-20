@@ -13,24 +13,6 @@ namespace FolkerKinzel.VCards.Models;
 /// object the <see cref="VCard"/> represents.</summary>
 public sealed class Organization
 {
-    #region Remove with version 8.0.1
-
-    [Obsolete("Use OrgName instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public string? OrganizationName => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use OrganizationalUnits instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public ReadOnlyCollection<string>? OrganizationalUnits => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    #endregion
-
     private readonly string[]? _units;
 
     /// <summary>Initializes a new <see cref="Organization" /> object.</summary>

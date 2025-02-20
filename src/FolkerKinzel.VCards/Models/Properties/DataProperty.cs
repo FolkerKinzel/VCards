@@ -21,60 +21,6 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="VCard.Keys"/>
 public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
 {
-    #region Remove with 8.0.1
-
-    [Obsolete("Use RawData.GetFileTypeExtension instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public string GetFileTypeExtension() => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use RawData.FromFile instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DataProperty FromFile(string filePath,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                                        string? mimeType = null,
-                                        string? group = null)
-               => throw new NotImplementedException();
-
-
-    [Obsolete("Use RawData.FromBytes instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DataProperty FromBytes(byte[]? bytes,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                                         string? mimeType = MimeString.OctetStream,
-                                         string? group = null)
-                => throw new NotImplementedException();
-
-
-    [Obsolete("Use RawData.FromText instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DataProperty FromText(string? passWord,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                                        string? mimeType = null,
-                                        string? group = null)
-            => throw new NotImplementedException();
-
-
-    [Obsolete("Use RawData.FromUri instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DataProperty FromUri(Uri? uri,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                                       string? mimeType = null,
-                                       string? group = null)
-        => throw new NotImplementedException();
-
-    #endregion
-
     /// <summary>Copy constructor.</summary>
     /// <param name="prop">The<see cref="DataProperty" /> object to clone.</param>
     private DataProperty(DataProperty prop) : base(prop) => Value = prop.Value;

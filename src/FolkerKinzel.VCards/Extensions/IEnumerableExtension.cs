@@ -11,21 +11,6 @@ namespace FolkerKinzel.VCards.Extensions;
 /// objects.</summary>
 public static class IEnumerableExtension
 {
-    #region Remove with 8.0.1
-
-    [Obsolete("Use FirstOrNullHasGroup instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static TSource? FirstOrNullIsMemberOf<TSource>(
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-    this IEnumerable<TSource?>? values,
-    string? group,
-    bool ignoreEmptyItems = true) where TSource : VCardProperty
-    => throw new NotImplementedException();
-
-    #endregion
-
     /// <summary> 
     /// Returns a collection of <see cref="VCard" /> objects containing both the
     /// <see cref = "VCard" /> objects passed as a collection as well as those which

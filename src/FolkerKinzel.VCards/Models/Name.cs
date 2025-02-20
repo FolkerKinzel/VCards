@@ -21,39 +21,6 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="VCard.NameViews"/>
 public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
 {
-    #region Remove this code with version 8.0.1
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use NameFormatter instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public string? ToDisplayName() => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use Given instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public ReadOnlyCollection<string> GivenNames => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use Given instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public ReadOnlyCollection<string> AdditionalNames => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [Obsolete("Use Surnames instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public IReadOnlyCollection<string> FamilyNames => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    #endregion
-
     private const int STANDARD_COUNT = 5;
     private const int MAX_COUNT = 7;
     private readonly Dictionary<NameProp, string[]> _dic = [];

@@ -39,28 +39,6 @@ public class NamePropertyTests
         Assert.IsFalse(adr.IsEmpty);
     }
 
-    //[TestMethod()]
-    //public void NamePropertyTest2()
-    //{
-    //    var adr = new NameProperty(
-    //        [LAST_NAME],
-    //        [FIRST_NAME],
-    //        [MIDDLE_NAME],
-    //        [PREFIX],
-    //        [SUFFIX],
-
-    //        group: GROUP);
-
-    //    Assert.IsNotNull(adr);
-    //    Assert.AreEqual(LAST_NAME, adr.Value.FamilyNames[0]);
-    //    Assert.AreEqual(FIRST_NAME, adr.Value.GivenNames[0]);
-    //    Assert.AreEqual(MIDDLE_NAME, adr.Value.AdditionalNames[0]);
-    //    Assert.AreEqual(PREFIX, adr.Value.Prefixes[0]);
-    //    Assert.AreEqual(SUFFIX, adr.Value.Suffixes[0]);
-    //    Assert.AreEqual(GROUP, adr.Group);
-    //    Assert.IsFalse(adr.IsEmpty);
-    //}
-
     [TestMethod]
     public void NamePropertyTest3()
     {
@@ -80,48 +58,6 @@ public class NamePropertyTests
         Assert.IsNotNull(s);
         Assert.AreNotEqual(0, s.Length);
     }
-
-    //[TestMethod]
-    //[Obsolete]
-    //public void ToDisplayNameTest1()
-    //{
-    //    var name = new NameProperty(LAST_NAME, FIRST_NAME, MIDDLE_NAME, PREFIX, SUFFIX);
-    //    string? s = name.ToDisplayName();
-    //    Assert.IsNotNull(s);
-    //    Assert.AreNotEqual(0, s.Length);
-    //    Assert.AreEqual(1, s.GetLinesCount());
-    //}
-
-    //[TestMethod]
-    //[Obsolete]
-    //public void ToDisplayNameTest2()
-    //{
-    //    var name = new NameProperty(LAST_NAME, FIRST_NAME);
-    //    string? s = name.ToDisplayName();
-    //    Assert.IsNotNull(s);
-    //    Assert.AreNotEqual(0, s.Length);
-    //    Assert.AreEqual(1, s.GetLinesCount());
-    //}
-
-    //[TestMethod]
-    //[Obsolete]
-    //public void ToDisplayNameTest3()
-    //{
-    //    var name = new NameProperty((string?) null, FIRST_NAME);
-    //    string? s = name.ToDisplayName();
-    //    Assert.IsNotNull(s);
-    //    Assert.AreNotEqual(0, s.Length);
-    //    Assert.AreEqual(1, s.GetLinesCount());
-    //}
-
-    //[TestMethod]
-    //[Obsolete]
-    //public void ToDisplayNameTest4()
-    //{
-    //    var name = new NameProperty();
-    //    string? s = name.ToDisplayName();
-    //    Assert.IsNull(s);
-    //}
 
     [TestMethod]
     public void IEnumerableTest1()

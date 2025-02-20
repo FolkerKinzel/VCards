@@ -26,17 +26,6 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="VCard.NonStandards"/>
 public sealed class NonStandardProperty : VCardProperty, IEnumerable<NonStandardProperty>
 {
-    #region Remove with 8.0.1
-
-    [Obsolete("Use Key instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public string XName => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    #endregion
-
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="NonStandardProperty"/> instance to clone.</param>
     private NonStandardProperty(NonStandardProperty prop) : base(prop)

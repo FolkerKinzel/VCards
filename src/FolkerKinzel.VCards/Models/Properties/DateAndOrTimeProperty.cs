@@ -13,74 +13,8 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="VCard.BirthDayViews"/>
 /// <seealso cref="VCard.AnniversaryViews"/>
 /// <seealso cref="VCard.DeathDateViews"/>
-public sealed class DateAndOrTimeProperty
-    : VCardProperty, IEnumerable<DateAndOrTimeProperty>
+public sealed class DateAndOrTimeProperty : VCardProperty, IEnumerable<DateAndOrTimeProperty>
 {
-    #region Remove with 8.0.1
-
-    [Obsolete("Use the ctor instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DateAndOrTimeProperty FromDate(DateOnly date,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                                                 string? group = null)
-        => throw new NotImplementedException();
-
-    [Obsolete("Use the ctor instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DateAndOrTimeProperty FromDateTime(DateTimeOffset dateTime,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                                                     string? group = null)
-        => throw new NotImplementedException();
-
-    [Obsolete("Use the ctor instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DateAndOrTimeProperty FromTime(TimeOnly time,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                                                 string? group = null)
-        => throw new NotImplementedException();
-
-    [Obsolete("Use the ctor instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DateAndOrTimeProperty FromText(string? text,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                                                 string? group = null)
-        => throw new NotImplementedException();
-
-    [Obsolete("Use the ctor and DateAndOrTime.Create(int, int) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DateAndOrTimeProperty FromDate(int month, int day, string? group = null)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-       => throw new NotImplementedException();
-
-    [Obsolete("Use the ctor instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DateAndOrTimeProperty FromDate(int year, int month, int day, string? group = null)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-       => throw new NotImplementedException();
-
-    [Obsolete("Use the ctor instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static DateAndOrTimeProperty FromTime(int hour, int minute,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-                                                 string? group = null)
-        => throw new NotImplementedException();
-
-    #endregion
-
     /// <summary>Copy ctor.</summary>
     /// <param name="prop">The <see cref="DateAndOrTimeProperty"/> instance 
     /// to clone.</param>

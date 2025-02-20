@@ -17,55 +17,6 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// <seealso cref="Name"/>
 public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICompoundProperty
 {
-    #region Remove this code with version 8.0.1
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use NameFormatter instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public string? ToDisplayName() => throw new NotImplementedException();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use NameProperty(Name, string?) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public NameProperty(
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-        IEnumerable<string?>? familyNames = null,
-        IEnumerable<string?>? givenNames = null,
-        IEnumerable<string?>? additionalNames = null,
-        IEnumerable<string?>? prefixes = null,
-        IEnumerable<string?>? suffixes = null,
-        string? group = null) : base(new ParameterSection(), group) => throw new NotImplementedException();
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use NameProperty(Name, string?) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public NameProperty(
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-        string? familyName,
-        string? givenName = null,
-        string? additionalName = null,
-        string? prefix = null,
-        string? suffix = null,
-        string? group = null) : base(new ParameterSection(), group) => throw new NotImplementedException();
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [Obsolete("Use NameProperty(Name, string?) instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public NameProperty(NameBuilder builder, string? group = null)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-        : base(new ParameterSection(), group) => throw new NotImplementedException();
-
-    #endregion
-
     /// <summary>
     /// Initializes a new <see cref="NameProperty"/> instance with a 
     /// specified <see cref="Name"/>.

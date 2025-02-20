@@ -24,43 +24,6 @@ namespace FolkerKinzel.VCards;
 /// </example>
 public sealed partial class VCard
 {
-    #region Remove with version 8.0.1
-
-    [Obsolete("Use SpokenLanguages instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public IEnumerable<TextProperty?>? Languages
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-    {
-        get => throw new NotImplementedException();
-        set => throw new NotImplementedException();
-    }
-
-    [Obsolete("Use Updated instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public TimeStampProperty? TimeStamp
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-    {
-        get => throw new NotImplementedException();
-        set => throw new NotImplementedException();
-    }
-
-    [Obsolete("Use ContactID instead.", true)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [ExcludeFromCodeCoverage]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public ContactIDProperty? ID
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
-    {
-        get => throw new NotImplementedException();
-        set => throw new NotImplementedException();
-    }
-
-    #endregion
-
     private readonly Dictionary<Prop, object> _propDic = [];
 
     [return: MaybeNull]
@@ -68,7 +31,6 @@ public sealed partial class VCard
         => this._propDic.TryGetValue(prop, out object? value)
                     ? (T)value
                     : default;
-
 
     internal void Set(Prop prop, object? value)
     {
@@ -81,8 +43,6 @@ public sealed partial class VCard
             _propDic[prop] = value;
         }
     }
-
-
 
     /// <summary>
     /// Gets this instance as <see cref="IEnumerable{T}"/> that allows to iterate over the stored
