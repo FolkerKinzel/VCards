@@ -1,6 +1,6 @@
 ﻿# FolkerKinzel.VCards
 ## Roadmap
-### 8.1.0
+### 8.2.0
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 
@@ -11,11 +11,13 @@
 void MakePref(this IEnumerable<VCardProperty?>? containingCollection, VCardProperty prop);
 void MakeFirst(this IEnumerable<VCardProperty?>? containingCollection, VCardProperty prop);
 ```
-- [ ] Performance: Refactor `SetPreferences`, `UnsetPreferences`, 
-`SetIndexes`, `UnsetIndexes` in all `BuilderParts` to not to use `Edit` internally
+- [ ] Performance: Refactor `SetPreferences` in all `BuilderParts` to not to use `Edit` internally
+- [ ] Performance: Refactor `UnsetPreferences` in all `BuilderParts` to not to use `Edit` internally
+- [ ] Performance: Refactor `SetIndexes` in all `BuilderParts` to not to use `Edit` internally
+- [ ] Performance: Refactor `UnsetIndexes` in all `BuilderParts` to not to use `Edit` internally
 
 ### 8.0.0-beta.1
-- [ ] Write tests
+- [x] Write tests
 
 ### 8.0.0-alpha.2
 - [x] Rename `Vcf.ToString(...)` to `Vcf.AsString(...)`
