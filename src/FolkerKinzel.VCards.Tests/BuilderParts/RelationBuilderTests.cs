@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
@@ -88,6 +89,17 @@ public class RelationBuilderTests
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void EditTest4() => VCardBuilder.Create().Relations.Edit(null!, true);
+
+    [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Relations.Edit((props, bl) => new RelationProperty(Relation.Create(ContactID.Create("Susi"))), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.Relations);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

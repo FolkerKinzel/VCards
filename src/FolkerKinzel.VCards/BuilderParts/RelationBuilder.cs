@@ -54,12 +54,11 @@ public readonly struct RelationBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
-        Edit(static (props, skip) =>
-        {
-            props.SetPreferences(skip);
-            return props;
-        }, skipEmptyItems);
+    public VCardBuilder SetPreferences(bool skipEmptyItems = true)
+    {
+        GetProperty().SetPreferences(skipEmptyItems);
+        return _builder;
+    }
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Preference"/> properties of 
@@ -69,12 +68,11 @@ public readonly struct RelationBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder UnsetPreferences() =>
-        Edit(static props =>
-        {
-            props.UnsetPreferences();
-            return props;
-        });
+    public VCardBuilder UnsetPreferences()
+    {
+        GetProperty().UnsetPreferences();
+        return _builder;
+    }
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Index"/> properties of 
@@ -90,12 +88,11 @@ public readonly struct RelationBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
-        Edit(static (props, skip) =>
-        {
-            props.SetIndexes(skip);
-            return props;
-        }, skipEmptyItems);
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true)
+    {
+        GetProperty().SetIndexes(skipEmptyItems);
+        return _builder;
+    }
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
@@ -105,12 +102,11 @@ public readonly struct RelationBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder UnsetIndexes() =>
-        Edit(static props =>
-        {
-            props.UnsetIndexes();
-            return props;
-        });
+    public VCardBuilder UnsetIndexes()
+    {
+        GetProperty().UnsetIndexes();
+        return _builder;
+    }
 
     /// <summary>
     /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
@@ -133,7 +129,7 @@ public readonly struct RelationBuilder
         Func<IEnumerable<RelationProperty>, TArg, IEnumerable<RelationProperty?>?> func,
         TArg arg)
     {
-        IEnumerable<RelationProperty> props = GetProperty();
+        IEnumerable<RelationProperty> props = GetNonNullableProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props, arg));
         return _builder;
@@ -154,15 +150,21 @@ public readonly struct RelationBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<RelationProperty>, IEnumerable<RelationProperty?>?> func)
     {
-        IEnumerable<RelationProperty> props = GetProperty();
+        IEnumerable<RelationProperty> props = GetNonNullableProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props));
         return _builder;
     }
 
     [MemberNotNull(nameof(_builder))]
-    private IEnumerable<RelationProperty> GetProperty() =>
-        Builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop)?.OfType<RelationProperty>() ?? [];
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private IEnumerable<RelationProperty?>? GetProperty() =>
+        Builder.VCard.Get<IEnumerable<RelationProperty?>?>(_prop);
+
+    [MemberNotNull(nameof(_builder))]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private IEnumerable<RelationProperty> GetNonNullableProperty()
+        => GetProperty()?.OfType<RelationProperty>() ?? [];
 
     private void SetProperty(IEnumerable<RelationProperty?>? value)
     {

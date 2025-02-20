@@ -40,12 +40,11 @@ public readonly struct GramBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetPreferences() =>
-        Edit(static (props) =>
-        {
-            props.SetPreferences(false);
-            return props;
-        });
+    public VCardBuilder SetPreferences()
+    {
+        Builder.VCard.GramGenders.SetPreferences(false);
+        return _builder;
+    }
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Preference"/> properties of 
@@ -55,12 +54,11 @@ public readonly struct GramBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder UnsetPreferences() =>
-        Edit(static props =>
-        {
-            props.UnsetPreferences();
-            return props;
-        });
+    public VCardBuilder UnsetPreferences()
+    {
+        Builder.VCard.GramGenders.UnsetPreferences();
+        return _builder;
+    }   
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Index"/> properties of 
@@ -73,12 +71,11 @@ public readonly struct GramBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetIndexes() =>
-        Edit(static (props) =>
-        {
-            props.SetIndexes(false);
-            return props;
-        });
+    public VCardBuilder SetIndexes()
+    {
+        Builder.VCard.GramGenders.SetIndexes(false);
+        return _builder;
+    }
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
@@ -88,12 +85,11 @@ public readonly struct GramBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder UnsetIndexes() =>
-        Edit(static props =>
-        {
-            props.UnsetIndexes();
-            return props;
-        });
+    public VCardBuilder UnsetIndexes()
+    {
+        Builder.VCard.GramGenders.UnsetIndexes();
+        return _builder;
+    }
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.GramGenders"/> property with a delegate and 

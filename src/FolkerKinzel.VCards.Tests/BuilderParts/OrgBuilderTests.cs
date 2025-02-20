@@ -89,6 +89,17 @@ public class OrgBuilderTests
     public void EditTest4() => VCardBuilder.Create().Organizations.Edit(null!, true);
 
     [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Organizations.Edit((props, bl) => new OrgProperty(new Organization("Org")), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.Organizations);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new OrgBuilder().Add("Contoso");
 

@@ -55,12 +55,11 @@ public readonly struct RawDataBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
-        Edit(static (props, skip) =>
-        {
-            props.SetPreferences(skip);
-            return props;
-        }, skipEmptyItems);
+    public VCardBuilder SetPreferences(bool skipEmptyItems = true)
+    {
+        GetProperty().SetPreferences(skipEmptyItems);
+        return _builder;
+    }
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Preference"/> properties of 
@@ -70,12 +69,11 @@ public readonly struct RawDataBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder UnsetPreferences() =>
-        Edit(static props =>
-        {
-            props.UnsetPreferences();
-            return props;
-        });
+    public VCardBuilder UnsetPreferences()
+    {
+        GetProperty().UnsetPreferences();
+        return _builder;
+    }
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Index"/> properties of 
@@ -91,12 +89,11 @@ public readonly struct RawDataBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
-        Edit(static (props, skip) =>
-        {
-            props.SetIndexes(skip);
-            return props;
-        }, skipEmptyItems);
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true)
+    {
+        GetProperty().SetIndexes(skipEmptyItems);
+        return _builder;
+    }
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
@@ -106,12 +103,11 @@ public readonly struct RawDataBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder UnsetIndexes() =>
-        Edit(static props =>
-        {
-            props.UnsetIndexes();
-            return props;
-        });
+    public VCardBuilder UnsetIndexes()
+    {
+        GetProperty().UnsetIndexes();
+        return _builder;
+    }
 
     /// <summary>
     /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
@@ -133,7 +129,7 @@ public readonly struct RawDataBuilder
     public VCardBuilder Edit<TArg>(Func<IEnumerable<DataProperty>, TArg, IEnumerable<DataProperty?>?> func,
                                     TArg arg)
     {
-        IEnumerable<DataProperty> props = GetProperty();
+        IEnumerable<DataProperty> props = GetNonNullableProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props, arg));
         return _builder;
@@ -153,15 +149,19 @@ public readonly struct RawDataBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<DataProperty>, IEnumerable<DataProperty?>?> func)
     {
-        IEnumerable<DataProperty> props = GetProperty();
+        IEnumerable<DataProperty> props = GetNonNullableProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props));
         return _builder;
     }
 
     [MemberNotNull(nameof(_builder))]
-    private IEnumerable<DataProperty> GetProperty() =>
-        Builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop)?.OfType<DataProperty>() ?? [];
+    private IEnumerable<DataProperty?>? GetProperty()
+        => Builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop);
+
+    [MemberNotNull(nameof(_builder))]
+    private IEnumerable<DataProperty> GetNonNullableProperty() 
+        => GetProperty()?.OfType<DataProperty>() ?? [];
 
     private void SetProperty(IEnumerable<DataProperty?>? value)
     {

@@ -1,4 +1,5 @@
 ﻿using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
@@ -87,6 +88,17 @@ public class RawDataBuilderTests
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void EditTest4() => VCardBuilder.Create().Photos.Edit(null!, true);
+
+    [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Keys.Edit((props, bl) => new DataProperty(RawData.FromText("Passw")), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.Keys);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

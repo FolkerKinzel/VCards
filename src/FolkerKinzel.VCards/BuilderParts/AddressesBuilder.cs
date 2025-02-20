@@ -92,13 +92,12 @@ public readonly struct AddressesBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetPreferences(bool skipEmptyItems = true) =>
-        Edit(static (props, skip) =>
-        {
-            props.SetPreferences(skip);
-            return props;
-        }, skipEmptyItems);
-
+    public VCardBuilder SetPreferences(bool skipEmptyItems = true)
+    {
+        Builder.VCard.Addresses.SetPreferences(skipEmptyItems);
+        return _builder;
+    }
+       
     /// <summary>
     /// Resets the <see cref="ParameterSection.Preference"/> properties of 
     /// the items in in the <see cref="VCard.Addresses"/> property to the lowest value (100).
@@ -107,12 +106,11 @@ public readonly struct AddressesBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder UnsetPreferences() =>
-        Edit(static props =>
-        {
-            props.UnsetPreferences();
-            return props;
-        });
+    public VCardBuilder UnsetPreferences()
+    {
+        Builder.VCard.Addresses.UnsetPreferences();
+        return _builder;
+    }
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Index"/> properties of 
@@ -128,13 +126,11 @@ public readonly struct AddressesBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
-        Edit(static (props, skip) =>
-        {
-            props.SetIndexes(skip);
-            return props;
-        }, skipEmptyItems);
-
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true)
+    {
+        Builder.VCard.Addresses.SetIndexes(skipEmptyItems);
+        return _builder;
+    }
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
@@ -144,12 +140,11 @@ public readonly struct AddressesBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder UnsetIndexes() =>
-        Edit(static props =>
-        {
-            props.UnsetIndexes();
-            return props;
-        });
+    public VCardBuilder UnsetIndexes()
+    {
+        Builder.VCard.Addresses.UnsetIndexes();
+        return _builder;
+    }
 
     /// <summary>
     /// Edits the content of the <see cref="VCard.Addresses"/> property with a delegate and 

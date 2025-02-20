@@ -1,10 +1,10 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class TextViewBuilderTests
 {
-
-
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void SetIndexesTest1() => new TextViewBuilder().SetIndexes();
@@ -52,6 +52,17 @@ public class TextViewBuilderTests
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void EditTest4() => VCardBuilder.Create().BirthPlaceViews.Edit(null!, true);
+
+    [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthPlaceViews.Edit((props, bl) => new TextProperty("Entenhausen"), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.BirthPlaceViews);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

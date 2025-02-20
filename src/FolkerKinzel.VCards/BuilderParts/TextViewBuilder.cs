@@ -49,13 +49,12 @@ public readonly struct TextViewBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
-        Edit(static (props, skip) =>
-        {
-            props.SetIndexes(skip);
-            return props;
-        }, skipEmptyItems);
-
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true)
+    {
+        GetProperty().SetIndexes(skipEmptyItems);
+        return _builder;
+    }
+        
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
     /// the items in in the specified property to <c>null</c>.
@@ -64,12 +63,11 @@ public readonly struct TextViewBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder UnsetIndexes() =>
-        Edit(static props =>
-        {
-            props.UnsetIndexes();
-            return props;
-        });
+    public VCardBuilder UnsetIndexes()
+    {
+        GetProperty().UnsetIndexes();
+        return _builder;
+    }
 
     /// <summary>
     /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
@@ -92,7 +90,7 @@ public readonly struct TextViewBuilder
         Func<IEnumerable<TextProperty>, TArg, IEnumerable<TextProperty?>?> func,
         TArg arg)
     {
-        IEnumerable<TextProperty> props = GetProperty();
+        IEnumerable<TextProperty> props = GetNonNullableProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props, arg));
         return _builder;
@@ -113,16 +111,21 @@ public readonly struct TextViewBuilder
     /// been initialized using the default constructor.</exception>
     public VCardBuilder Edit(Func<IEnumerable<TextProperty>, IEnumerable<TextProperty?>?> func)
     {
-        IEnumerable<TextProperty> props = GetProperty();
+        IEnumerable<TextProperty> props = GetNonNullableProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props));
         return _builder;
     }
 
     [MemberNotNull(nameof(_builder))]
-    private IEnumerable<TextProperty> GetProperty() =>
-        Builder.VCard.Get<IEnumerable<TextProperty?>?>(_prop)?
-                                 .OfType<TextProperty>() ?? [];
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private IEnumerable<TextProperty?>? GetProperty()
+        => Builder.VCard.Get<IEnumerable<TextProperty?>?>(_prop);
+
+    [MemberNotNull(nameof(_builder))]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private IEnumerable<TextProperty> GetNonNullableProperty()
+        => GetProperty()?.OfType<TextProperty>() ?? [];
 
     private void SetProperty(IEnumerable<TextProperty?>? value)
     {

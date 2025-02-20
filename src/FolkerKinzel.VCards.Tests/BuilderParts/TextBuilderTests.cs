@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class TextBuilderTests
@@ -82,6 +84,17 @@ public class TextBuilderTests
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void EditTest4() => VCardBuilder.Create().Notes.Edit(null!, true);
+
+    [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .DisplayNames.Edit((props, bl) => new TextProperty("Duffy"), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.DisplayNames);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

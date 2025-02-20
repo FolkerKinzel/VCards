@@ -58,6 +58,17 @@ public class GenderBuilderTests
     public void EditTest4() => VCardBuilder.Create().GenderViews.Edit(null!, true);
 
     [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GenderViews.Edit((props, bl) => new GenderProperty(Gender.Male), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.GenderViews);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new GenderBuilder().Add(Gender.Male);
 

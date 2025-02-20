@@ -89,6 +89,17 @@ public class AddressesBuilderTests
     public void EditTest4() => VCardBuilder.Create().Addresses.Edit(null!, true);
 
     [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .Addresses.Edit((props, bl) => new AddressProperty(AddressBuilder.Create().Build()), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.Addresses);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new AddressesBuilder().Add((Address?)null);
 

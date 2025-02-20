@@ -54,12 +54,11 @@ public readonly struct DateAndOrTimeBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder SetIndexes(bool skipEmptyItems = true) =>
-        Edit(static (props, skip) =>
-        {
-            props.SetIndexes(skip);
-            return props;
-        }, skipEmptyItems);
+    public VCardBuilder SetIndexes(bool skipEmptyItems = true)
+    {
+        GetProperty().SetIndexes(skipEmptyItems);
+        return _builder;
+    }
 
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
@@ -69,12 +68,11 @@ public readonly struct DateAndOrTimeBuilder
     /// to be able to chain calls.</returns>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder UnsetIndexes() =>
-        Edit(static props =>
-        {
-            props.UnsetIndexes();
-            return props;
-        });
+    public VCardBuilder UnsetIndexes()
+    {
+        GetProperty().UnsetIndexes();
+        return _builder;
+    }
 
     /// <summary>
     /// Edits the content of the specified <see cref="VCard"/> property with a delegate and 
@@ -97,7 +95,7 @@ public readonly struct DateAndOrTimeBuilder
         Func<IEnumerable<DateAndOrTimeProperty>, TArg, IEnumerable<DateAndOrTimeProperty?>?> func,
         TArg arg)
     {
-        IEnumerable<DateAndOrTimeProperty> props = GetProperty();
+        IEnumerable<DateAndOrTimeProperty> props = GetNonNullableProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props, arg));
         return _builder;
@@ -119,15 +117,21 @@ public readonly struct DateAndOrTimeBuilder
     public VCardBuilder Edit(
         Func<IEnumerable<DateAndOrTimeProperty>, IEnumerable<DateAndOrTimeProperty?>?> func)
     {
-        IEnumerable<DateAndOrTimeProperty> props = GetProperty();
+        IEnumerable<DateAndOrTimeProperty> props = GetNonNullableProperty();
         _ArgumentNullException.ThrowIfNull(func, nameof(func));
         SetProperty(func(props));
         return _builder;
     }
 
     [MemberNotNull(nameof(_builder))]
-    private IEnumerable<DateAndOrTimeProperty> GetProperty() =>
-        Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop)?.OfType<DateAndOrTimeProperty>() ?? [];
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private IEnumerable<DateAndOrTimeProperty?>? GetProperty() 
+        => Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop);
+
+    [MemberNotNull(nameof(_builder))]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private IEnumerable<DateAndOrTimeProperty> GetNonNullableProperty()
+        => GetProperty()?.OfType<DateAndOrTimeProperty>() ?? [];
 
     private void SetProperty(IEnumerable<DateAndOrTimeProperty?>? value)
     {

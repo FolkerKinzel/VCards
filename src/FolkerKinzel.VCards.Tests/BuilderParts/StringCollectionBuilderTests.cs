@@ -90,6 +90,17 @@ public class StringCollectionBuilderTests
     public void EditTest4() => VCardBuilder.Create().NickNames.Edit(null!, true);
 
     [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .NickNames.Edit((props, bl) => new StringCollectionProperty("Goofy"), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.NickNames);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
     public void AddTest1() => new StringCollectionBuilder().Add((string?)null);
 

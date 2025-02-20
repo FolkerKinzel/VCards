@@ -57,13 +57,16 @@ public class NameViewsBuilderTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void EditTest4() => VCardBuilder.Create().NameViews.Edit(null!, true);
 
-    //[TestMethod]
-    //[ExpectedException(typeof(InvalidOperationException))]
-    //public void AddTest1() => new NameViewsBuilder().Add((string?)null);
+    [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .NameViews.Edit((props, bl) => new NameProperty(NameBuilder.Create().Build()), true)
+            .VCard;
 
-    //[TestMethod]
-    //[ExpectedException(typeof(InvalidOperationException))]
-    //public void AddTest2() => new NameViewsBuilder().Add([]);
+        Assert.IsNotNull(vc.NameViews);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

@@ -1,4 +1,7 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class GeoBuilderTests
@@ -84,6 +87,17 @@ public class GeoBuilderTests
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void EditTest4() => VCardBuilder.Create().GeoCoordinates.Edit(null!, true);
+
+    [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .GeoCoordinates.Edit((props, bl) => new GeoProperty(new GeoCoordinate(42, 42)), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.GeoCoordinates);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

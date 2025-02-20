@@ -8,10 +8,10 @@
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
-    <Version>8.0.0</Version>
-    <FileVersion>8.0.0.58</FileVersion>
+    <Version>8.0.1-beta.1</Version>
+    <FileVersion>8.0.1.2</FileVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
-    <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v8.0.0</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v8.0.1-beta.1</PackageReleaseNotes>
     <PackageTags>vCard VCF</PackageTags>
     <Description>.NET library for reading, writing, and converting VCF files (vCards)</Description>
     <Authors>Folker Kinzel</Authors>

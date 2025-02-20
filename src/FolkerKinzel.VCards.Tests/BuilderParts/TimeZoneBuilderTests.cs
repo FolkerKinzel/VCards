@@ -1,5 +1,6 @@
 ﻿using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
@@ -86,6 +87,17 @@ public class TimeZoneBuilderTests
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void EditTest4() => VCardBuilder.Create().TimeZones.Edit(null!, true);
+
+    [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .TimeZones.Edit((props, bl) => new TimeZoneProperty(TimeZoneID.Empty), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.TimeZones);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]

@@ -1,4 +1,6 @@
-﻿namespace FolkerKinzel.VCards.BuilderParts.Tests;
+﻿using FolkerKinzel.VCards.Models.Properties;
+
+namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
 [TestClass]
 public class DateAndOrTimeBuilderTests
@@ -52,6 +54,17 @@ public class DateAndOrTimeBuilderTests
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void EditTest4() => VCardBuilder.Create().BirthDayViews.Edit(null!, true);
+
+    [TestMethod]
+    public void EditTest5()
+    {
+        VCard vc = VCardBuilder
+            .Create()
+            .BirthDayViews.Edit((props, bl) => new DateAndOrTimeProperty(DateTime.Now), true)
+            .VCard;
+
+        Assert.IsNotNull(vc.BirthDayViews);
+    }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidOperationException))]
