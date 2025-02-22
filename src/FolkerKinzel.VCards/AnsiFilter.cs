@@ -94,18 +94,18 @@ public sealed class AnsiFilter
 
     /// <summary>  Loads a VCF file and automatically selects the appropriate 
     /// <see cref="Encoding" />. </summary>
-    /// <param name="fileName">Absolute or relative path to a VCF file.</param>
+    /// <param name="filePath">Absolute or relative path to a VCF file.</param>
     /// 
     /// <returns>A collection of parsed <see cref="VCard" /> objects.</returns>
-    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
+    /// <exception cref="ArgumentNullException"> <paramref name="filePath" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="filePath" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    internal IReadOnlyList<VCard> Load(string fileName)
+    internal IReadOnlyList<VCard> Load(string filePath)
     {
         Reset();
 
-        IReadOnlyList<VCard> vCards = Vcf.Load(fileName, _utf8);
+        IReadOnlyList<VCard> vCards = Vcf.Load(filePath, _utf8);
 
         if (!HasError)
         {
@@ -118,7 +118,7 @@ public sealed class AnsiFilter
         enc = IsUtf8(enc) ? FallbackEncoding : enc;
         UsedEncoding = enc;
 
-        return Vcf.Load(fileName, enc);
+        return Vcf.Load(filePath, enc);
     }
 
     [SuppressMessage("Style", "IDE0301:Simplify collection initialization",

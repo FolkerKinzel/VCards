@@ -12,7 +12,7 @@ public class V2Tests
     [TestMethod]
     public void Parse()
     {
-        IReadOnlyList<VCard> vcard = Vcf.Load(fileName: TestFiles.V2vcf);
+        IReadOnlyList<VCard> vcard = Vcf.Load(filePath: TestFiles.V2vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);
@@ -21,7 +21,7 @@ public class V2Tests
     [TestMethod]
     public void ParseOutlook()
     {
-        IReadOnlyList<VCard> vcard = Vcf.Load(fileName: TestFiles.OutlookV2vcf);
+        IReadOnlyList<VCard> vcard = Vcf.Load(filePath: TestFiles.OutlookV2vcf);
 
         Assert.IsNotNull(vcard);
         Assert.AreNotEqual(0, vcard.Count);

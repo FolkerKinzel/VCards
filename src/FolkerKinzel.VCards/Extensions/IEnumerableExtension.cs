@@ -107,9 +107,9 @@ public static class IEnumerableExtension
     /// <summary>Saves a collection of <see cref="VCard" /> objects in a common VCF
     /// file.</summary>
     /// <param name="vCards">The <see cref="VCard" /> objects to be saved. The collection
-    /// may be empty or may contain <c>null</c> values. If the collection does not contain
-    /// any <see cref="VCard" /> object, no file will be written.</param>
-    /// <param name="fileName">The file path. If the file exists, it will be overwritten.</param>
+    /// may be empty or may contain <c>null</c> values.</param>
+    /// <param name="filePath">The file path. If the file exists, it will be truncated and
+    /// overwritten.</param>
     /// <param name="version">The vCard version of the VCF file to be written.</param>
     /// <param name="tzConverter">An object that implements <see cref="ITimeZoneIDConverter"
     /// /> to convert IANA time zone names to UTC offsets, or <c>null</c>.</param>
@@ -131,9 +131,9 @@ public static class IEnumerableExtension
     /// <seealso cref="Vcf.Save(IEnumerable{VCard?}, string, VCdVersion, ITimeZoneIDConverter?, VcfOpts)"/>
     /// <seealso cref="ITimeZoneIDConverter" />
     /// 
-    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> or <paramref
+    /// <exception cref="ArgumentNullException"> <paramref name="filePath" /> or <paramref
     /// name="vCards" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
+    /// <exception cref="ArgumentException"> <paramref name="filePath" /> is not a valid
     /// file path.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
     /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
@@ -142,11 +142,11 @@ public static class IEnumerableExtension
     /// <exception cref="IOException">The file could not be written.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SaveVcf(this IEnumerable<VCard?> vCards,
-                               string fileName,
+                               string filePath,
                                VCdVersion version = VCard.DEFAULT_VERSION,
                                ITimeZoneIDConverter? tzConverter = null,
                                VcfOpts options = VcfOpts.Default)
-        => Vcf.Save(vCards, fileName, version, tzConverter, options);
+        => Vcf.Save(vCards, filePath, version, tzConverter, options);
 
     /// <summary>Serializes a collection of <see cref="VCard" /> objects into a <see
     /// cref="Stream" /> using the VCF format.</summary>

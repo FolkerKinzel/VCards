@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards;
 public static partial class Vcf
 {
     /// <summary>Loads a VCF file and allows to specify the <see cref="Encoding"/>.</summary>
-    /// <param name="fileName">Absolute or relative path to a VCF file.</param>
+    /// <param name="filePath">Absolute or relative path to a VCF file.</param>
     /// <param name="enc">The text encoding to use to read the file or <c>null</c>,
     /// to read the file with the standard-compliant text encoding <see cref="Encoding.UTF8"
     /// />.</param>
@@ -23,19 +23,19 @@ public static partial class Vcf
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
     /// 
-    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> is <c>null</c>.
+    /// <exception cref="ArgumentNullException"> <paramref name="filePath" /> is <c>null</c>.
     /// </exception>
-    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
+    /// <exception cref="ArgumentException"> <paramref name="filePath" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    public static IReadOnlyList<VCard> Load(string fileName, Encoding? enc = null)
+    public static IReadOnlyList<VCard> Load(string filePath, Encoding? enc = null)
     {
-        using StreamReader reader = InitializeStreamReader(fileName, enc);
+        using StreamReader reader = InitializeStreamReader(filePath, enc);
         return DoDeserialize(reader);
     }
 
     /// <summary>Loads a VCF file and selects the right <see cref="Encoding"/> automatically.</summary>
-    /// <param name="fileName">Absolute or relative path to a VCF file.</param>
+    /// <param name="filePath">Absolute or relative path to a VCF file.</param>
     /// <param name="filter">An <see cref="AnsiFilter"/> instance.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
     /// the content of the VCF file.</returns>
@@ -47,19 +47,19 @@ public static partial class Vcf
     /// <code language="cs" source="..\Examples\AnsiFilterExample.cs"/>
     /// </example>
     /// 
-    /// <exception cref="ArgumentNullException"><paramref name="fileName"/> or
+    /// <exception cref="ArgumentNullException"><paramref name="filePath"/> or
     /// <paramref name="filter"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
+    /// <exception cref="ArgumentException"> <paramref name="filePath" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    public static IReadOnlyList<VCard> Load(string fileName, AnsiFilter filter)
-        => filter?.Load(fileName) ?? throw new ArgumentNullException(nameof(filter));
+    public static IReadOnlyList<VCard> Load(string filePath, AnsiFilter filter)
+        => filter?.Load(filePath) ?? throw new ArgumentNullException(nameof(filter));
 
     /// <summary>
     /// Loads a collection of VCF files and allows to specify an "AnsiFilter" instance for
     /// selecting the right <see cref="Encoding"/> automatically.
     /// </summary>
-    /// <param name="fileNames">A collection of absolute or relative paths to VCF files.</param>
+    /// <param name="filePaths">A collection of absolute or relative paths to VCF files.</param>
     /// <param name="filter">An <see cref="AnsiFilter"/> instance.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects.</returns>
     /// 
@@ -67,24 +67,24 @@ public static partial class Vcf
     /// <code language="cs" source="..\Examples\VCard40Example.cs"/>
     /// </example>
     /// 
-    /// <exception cref="ArgumentNullException"><paramref name="fileNames"/> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="fileNames" /> contains an
+    /// <exception cref="ArgumentNullException"><paramref name="filePaths"/> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentException"> <paramref name="filePaths" /> contains an
     /// item that is neither <c>null</c> nor a valid file path.</exception>
     /// <exception cref="IOException">A file could not be loaded.</exception>
-    public static IEnumerable<VCard> LoadMany(IEnumerable<string?> fileNames,
+    public static IEnumerable<VCard> LoadMany(IEnumerable<string?> filePaths,
                                               AnsiFilter? filter = null)
     {
-        _ArgumentNullException.ThrowIfNull(fileNames, nameof(fileNames));
+        _ArgumentNullException.ThrowIfNull(filePaths, nameof(filePaths));
 
-        foreach (string? fileName in fileNames)
+        foreach (string? filePath in filePaths)
         {
-            if (fileName is null)
+            if (filePath is null)
             {
                 continue;
             }
 
-            IReadOnlyList<VCard> vCards = filter is null ? Load(fileName)
-                                                         : filter.Load(fileName);
+            IReadOnlyList<VCard> vCards = filter is null ? Load(filePath)
+                                                         : filter.Load(filePath);
 
             for (int i = 0; i < vCards.Count; i++)
             {
@@ -386,26 +386,26 @@ public static partial class Vcf
         Debug.Assert(reader is not null);
         DebugWriter.WriteMethodHeader(nameof(VCard) + nameof(DoDeserialize) + "(TextReader)");
 
-        VCard[] vCards = VcfReader.EnumerateVCards(reader, versionHint).ToArray();
+        VCard[] vCards = [.. VcfReader.EnumerateVCards(reader, versionHint)];
         VCard.DereferenceIntl(vCards);
 
         return vCards;
     }
 
     [ExcludeFromCodeCoverage]
-    private static StreamReader InitializeStreamReader(string fileName, Encoding? textEncoding)
+    private static StreamReader InitializeStreamReader(string filePath, Encoding? textEncoding)
     {
         try
         {
-            return new StreamReader(fileName, textEncoding ?? Encoding.UTF8, true);
+            return new StreamReader(filePath, textEncoding ?? Encoding.UTF8, true);
         }
         catch (ArgumentNullException)
         {
-            throw new ArgumentNullException(nameof(fileName));
+            throw new ArgumentNullException(nameof(filePath));
         }
         catch (ArgumentException e)
         {
-            throw new ArgumentException(e.Message, nameof(fileName), e);
+            throw new ArgumentException(e.Message, nameof(filePath), e);
         }
         catch (UnauthorizedAccessException e)
         {
@@ -413,7 +413,7 @@ public static partial class Vcf
         }
         catch (NotSupportedException e)
         {
-            throw new ArgumentException(e.Message, nameof(fileName), e);
+            throw new ArgumentException(e.Message, nameof(filePath), e);
         }
         catch (System.Security.SecurityException e)
         {
@@ -421,7 +421,7 @@ public static partial class Vcf
         }
         catch (PathTooLongException e)
         {
-            throw new ArgumentException(e.Message, nameof(fileName), e);
+            throw new ArgumentException(e.Message, nameof(filePath), e);
         }
         catch (Exception e)
         {

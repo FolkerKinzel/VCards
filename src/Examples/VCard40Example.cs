@@ -74,11 +74,11 @@ public static class VCard40Example
         // irrevocably lost.
         foreach (VCard vCard in referenced)
         {
-            string fileName = Path.Combine(
+            string filePath = Path.Combine(
                 directoryPath,
                 $"{vCard.DisplayNames?.First()?.Value ?? "unknown"}{vcfExtension}");
 
-            vCard.SaveVcf(fileName, VCdVersion.V4_0);
+            vCard.SaveVcf(filePath, VCdVersion.V4_0);
         }
 
         // Reload the .VCF files:

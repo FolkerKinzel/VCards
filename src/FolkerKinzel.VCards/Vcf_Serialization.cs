@@ -16,9 +16,9 @@ public static partial class Vcf
     /// <summary>Saves a collection of <see cref="VCard" /> objects in a common VCF
     /// file.</summary>
     /// <param name="vCards">The <see cref="VCard" /> objects to be saved. The collection
-    /// may be empty or may contain <c>null</c> values. If the collection does not contain
-    /// any <see cref="VCard" /> object, no file will be written.</param>
-    /// <param name="fileName">The file path. If the file exists, it will be overwritten.</param>
+    /// may be empty or may contain <c>null</c> values.</param>
+    /// <param name="filePath">The file path. If the file exists, it will be truncated and
+    /// overwritten.</param>
     /// <param name="version">The vCard version of the VCF file to be written.</param>
     /// <param name="options">Options for writing the VCF file. The flags can be combined.</param>
     /// <param name="tzConverter">An object that implements <see cref="ITimeZoneIDConverter"
@@ -49,9 +49,9 @@ public static partial class Vcf
     /// <code language="cs" source="..\Examples\VCardExample.cs"/>
     /// </example>
     /// 
-    /// <exception cref="ArgumentNullException"> <paramref name="fileName" /> or <paramref
+    /// <exception cref="ArgumentNullException"> <paramref name="filePath" /> or <paramref
     /// name="vCards" /> is <c>null</c>.</exception>
-    /// <exception cref="ArgumentException"> <paramref name="fileName" /> is not a valid
+    /// <exception cref="ArgumentException"> <paramref name="filePath" /> is not a valid
     /// file path.</exception>
     /// <exception cref="ArgumentOutOfRangeException">
     /// <paramref name="version" /> is not a defined value of the <see cref="VcfOpts"/> 
@@ -60,20 +60,14 @@ public static partial class Vcf
     /// <exception cref="IOException">The file could not be written.</exception>
     public static void Save(
         IEnumerable<VCard?> vCards,
-        string fileName,
+        string filePath,
         VCdVersion version = VCard.DEFAULT_VERSION,
         ITimeZoneIDConverter? tzConverter = null,
         VcfOpts options = VcfOpts.Default)
     {
         _ArgumentNullException.ThrowIfNull(vCards, nameof(vCards));
 
-        // prevents an empty file from being written:
-        if (!vCards.Any(x => x is not null))
-        {
-            return;
-        }
-
-        using FileStream stream = InitializeFileStream(fileName);
+        using FileStream stream = InitializeFileStream(filePath);
         Serialize(vCards, stream, version, tzConverter, options, false);
     }
 
@@ -289,19 +283,19 @@ public static partial class Vcf
     }
 
     [ExcludeFromCodeCoverage]
-    private static FileStream InitializeFileStream(string fileName)
+    private static FileStream InitializeFileStream(string filePath)
     {
         try
         {
-            return new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            return new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
         }
         catch (ArgumentNullException)
         {
-            throw new ArgumentNullException(nameof(fileName));
+            throw new ArgumentNullException(nameof(filePath));
         }
         catch (ArgumentException e)
         {
-            throw new ArgumentException(e.Message, nameof(fileName), e);
+            throw new ArgumentException(e.Message, nameof(filePath), e);
         }
         catch (UnauthorizedAccessException e)
         {
@@ -309,7 +303,7 @@ public static partial class Vcf
         }
         catch (NotSupportedException e)
         {
-            throw new ArgumentException(e.Message, nameof(fileName), e);
+            throw new ArgumentException(e.Message, nameof(filePath), e);
         }
         catch (System.Security.SecurityException e)
         {
@@ -317,7 +311,7 @@ public static partial class Vcf
         }
         catch (PathTooLongException e)
         {
-            throw new ArgumentException(e.Message, nameof(fileName), e);
+            throw new ArgumentException(e.Message, nameof(filePath), e);
         }
         catch (Exception e)
         {
