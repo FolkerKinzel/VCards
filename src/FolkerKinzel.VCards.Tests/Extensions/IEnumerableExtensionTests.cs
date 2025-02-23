@@ -114,7 +114,7 @@ public class IEnumerableExtensionTests
 
         list.SaveVcf(path, version);
 
-        Assert.IsFalse(File.Exists(path));
+        Assert.IsTrue(File.Exists(path));
     }
 
     [DataTestMethod]
