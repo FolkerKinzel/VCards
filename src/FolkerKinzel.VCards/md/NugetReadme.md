@@ -15,6 +15,6 @@ It allows:
 - and interconverting VCF files corresponding to vCard versions 2.1, 3.0, and 4.0.
 
 
-[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v8.0.1-beta.1)
+[Project Reference and Release Notes](https://github.com/FolkerKinzel/VCards/releases/tag/v8.0.1)
 
 [See code examples on GitHub](https://github.com/FolkerKinzel/VCards)
