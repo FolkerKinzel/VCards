@@ -10,7 +10,7 @@ void MakeFirst(this IEnumerable<VCardProperty?>? containingCollection, VCardProp
 ```
 
 ### 8.0.1
-- [ ] Remove symbols that are marked as `Obsolete` errors.
+- [x] Remove symbols that are marked as `Obsolete` errors.
 - [x] Performance: Refactor `SetPreferences` in all `BuilderParts` to not to use `Edit` internally
 - [x] Performance: Refactor `UnsetPreferences` in all `BuilderParts` to not to use `Edit` internally
 - [x] Performance: Refactor `SetIndexes` in all `BuilderParts` to not to use `Edit` internally
