@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using FolkerKinzel.Helpers;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls;
@@ -282,40 +283,7 @@ public static partial class Vcf
         return reader.ReadToEnd();
     }
 
-    [ExcludeFromCodeCoverage]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static FileStream InitializeFileStream(string filePath)
-    {
-        try
-        {
-            return new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
-        }
-        catch (ArgumentNullException)
-        {
-            throw new ArgumentNullException(nameof(filePath));
-        }
-        catch (ArgumentException e)
-        {
-            throw new ArgumentException(e.Message, nameof(filePath), e);
-        }
-        catch (UnauthorizedAccessException e)
-        {
-            throw new IOException(e.Message, e);
-        }
-        catch (NotSupportedException e)
-        {
-            throw new ArgumentException(e.Message, nameof(filePath), e);
-        }
-        catch (System.Security.SecurityException e)
-        {
-            throw new IOException(e.Message, e);
-        }
-        catch (PathTooLongException e)
-        {
-            throw new ArgumentException(e.Message, nameof(filePath), e);
-        }
-        catch (Exception e)
-        {
-            throw new IOException(e.Message, e);
-        }
-    }
+        => BinaryFile.Open(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
 }

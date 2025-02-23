@@ -1,3 +1,4 @@
+using FolkerKinzel.Helpers;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls;
 
@@ -10,7 +11,7 @@ public static partial class Vcf
 {
     /// <summary>Loads a VCF file and allows to specify the <see cref="Encoding"/>.</summary>
     /// <param name="filePath">Absolute or relative path to a VCF file.</param>
-    /// <param name="enc">The text encoding to use to read the file or <c>null</c>,
+    /// <param name="textEncoding">The text encoding to use to read the file or <c>null</c>,
     /// to read the file with the standard-compliant text encoding <see cref="Encoding.UTF8"
     /// />.</param>
     /// <returns>A collection of parsed <see cref="VCard" /> objects, which represents
@@ -28,9 +29,9 @@ public static partial class Vcf
     /// <exception cref="ArgumentException"> <paramref name="filePath" /> is not a valid
     /// file path.</exception>
     /// <exception cref="IOException">The file could not be loaded.</exception>
-    public static IReadOnlyList<VCard> Load(string filePath, Encoding? enc = null)
+    public static IReadOnlyList<VCard> Load(string filePath, Encoding? textEncoding = null)
     {
-        using StreamReader reader = InitializeStreamReader(filePath, enc);
+        using StreamReader reader = TextFile.OpenRead(filePath, textEncoding);
         return DoDeserialize(reader);
     }
 
@@ -119,7 +120,7 @@ public static partial class Vcf
 
     /// <summary>Deserializes a <see cref="Stream"/> of VCF data.</summary>
     /// <param name="stream">The <see cref="Stream"/> to deserialize.</param>
-    /// <param name="enc">The text encoding to use for deserialization or <c>null</c>,
+    /// <param name="textEncoding">The text encoding to use for deserialization or <c>null</c>,
     /// to deserialize the <see cref="Stream"/> with the standard-compliant text encoding <see cref="Encoding.UTF8"
     /// />.</param>
     /// <param name="leaveStreamOpen"><c>true</c> means that <paramref name="stream"/> will
@@ -140,10 +141,10 @@ public static partial class Vcf
     /// <exception cref="IOException"> Could not read from <paramref name="stream"/>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IReadOnlyList<VCard> Deserialize(Stream stream,
-                                           Encoding? enc = null,
-                                           bool leaveStreamOpen = false)
+                                                   Encoding? textEncoding = null,
+                                                   bool leaveStreamOpen = false)
     {
-        using var reader = new StreamReader(stream, enc ?? Encoding.UTF8, true, 1024, leaveStreamOpen);
+        using var reader = new StreamReader(stream, textEncoding ?? Encoding.UTF8, true, 1024, leaveStreamOpen);
         return DoDeserialize(reader);
     }
 
@@ -188,7 +189,7 @@ public static partial class Vcf
     /// <param name="factory">A function that takes a <see cref="CancellationToken"/> as
     /// argument and returns a <see cref="Stream"/> of VCF data as an 
     /// asynchronous operation.</param>
-    /// <param name="enc">The text encoding to use for deserialization or <c>null</c>,
+    /// <param name="textEncoding">The text encoding to use for deserialization or <c>null</c>,
     /// to deserialize the <see cref="Stream"/> with the standard-compliant text encoding <see cref="Encoding.UTF8"
     /// />.</param>
     /// <param name="token">A cancellation token that can be used by other objects or threads to 
@@ -208,7 +209,7 @@ public static partial class Vcf
     /// <exception cref="IOException"> The method could not read from the <see cref="Stream"/>.
     /// </exception>
     public static async Task<IReadOnlyList<VCard>> DeserializeAsync(Func<CancellationToken, Task<Stream>> factory,
-                                                                    Encoding? enc = null,
+                                                                    Encoding? textEncoding = null,
                                                                     CancellationToken token = default)
     {
         _ArgumentNullException.ThrowIfNull(factory, nameof(factory));
@@ -216,7 +217,7 @@ public static partial class Vcf
         using Stream? stream = await factory(token).ConfigureAwait(false);
 
         return stream is null ? []
-                              : Deserialize(stream, enc);
+                              : Deserialize(stream, textEncoding);
     }
 
     /// <summary>
@@ -259,7 +260,6 @@ public static partial class Vcf
                                                               AnsiFilter filter,
                                                               CancellationToken token = default)
         => filter?.DeserializeAsync(factory, token) ?? throw new ArgumentNullException(nameof(filter));
-
 
     /// <summary>
     /// Deserializes a collection of <see cref="Stream"/>s of VCF data and allows to specify an 
@@ -390,42 +390,5 @@ public static partial class Vcf
         VCard.DereferenceIntl(vCards);
 
         return vCards;
-    }
-
-    [ExcludeFromCodeCoverage]
-    private static StreamReader InitializeStreamReader(string filePath, Encoding? textEncoding)
-    {
-        try
-        {
-            return new StreamReader(filePath, textEncoding ?? Encoding.UTF8, true);
-        }
-        catch (ArgumentNullException)
-        {
-            throw new ArgumentNullException(nameof(filePath));
-        }
-        catch (ArgumentException e)
-        {
-            throw new ArgumentException(e.Message, nameof(filePath), e);
-        }
-        catch (UnauthorizedAccessException e)
-        {
-            throw new IOException(e.Message, e);
-        }
-        catch (NotSupportedException e)
-        {
-            throw new ArgumentException(e.Message, nameof(filePath), e);
-        }
-        catch (System.Security.SecurityException e)
-        {
-            throw new IOException(e.Message, e);
-        }
-        catch (PathTooLongException e)
-        {
-            throw new ArgumentException(e.Message, nameof(filePath), e);
-        }
-        catch (Exception e)
-        {
-            throw new IOException(e.Message, e);
-        }
     }
 }

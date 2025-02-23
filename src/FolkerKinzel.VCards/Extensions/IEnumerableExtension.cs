@@ -63,16 +63,17 @@ public static class IEnumerableExtension
     /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
     /// 
-    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IEnumerable<VCard> Reference(this IEnumerable<VCard?> vCards)
         => VCard.Reference(vCards);
 
     /// <summary>
-    /// Replaces the <see cref="RelationProperty"/> instances that refer external vCards with their <see cref="ContactID"/>
-    /// values by <see cref="RelationProperty"/> instances that contain these <see cref="VCard"/> instances directly, 
-    /// provided that <paramref name="vCards"/> 
-    /// contains these <see cref="VCard"/> instances.</summary>
+    /// Replaces the <see cref="RelationProperty"/> instances that refer external vCards 
+    /// with their <see cref="ContactID"/> values by <see cref="RelationProperty"/> instances
+    /// that contain these <see cref="VCard"/> instances directly, provided that 
+    /// <paramref name="vCards"/> contains these <see cref="VCard"/> instances.</summary>
     /// <param name="vCards">A collection of <see cref="VCard" /> objects. The collection
     /// may be empty or may contain <c>null</c> values.</param>
     /// 
@@ -99,7 +100,8 @@ public static class IEnumerableExtension
     /// <code language="cs" source="..\Examples\VCard40Example.cs" />
     /// </example>
     /// 
-    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.</exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="vCards" /> is <c>null</c>.
+    /// </exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Dereference(this IEnumerable<VCard?> vCards)
         => VCard.Dereference(vCards);
@@ -316,7 +318,8 @@ public static class IEnumerableExtension
     /// <remarks>
     /// The method is especially useful to search <see cref="VCard"/> properties with plural 
     /// names, but not those whose names end with <c>*views</c>. These properties should be 
-    /// searched with <see cref="FirstOrNull{TSource}(IEnumerable{TSource}?, Func{TSource, bool}, bool)"/>
+    /// searched with
+    /// <see cref="FirstOrNull{TSource}(IEnumerable{TSource}?, Func{TSource, bool}, bool)"/>
     /// because the <see cref="ParameterSection.Preference"/> has no meaning in such properties.
     /// </remarks>
     public static TSource? PrefOrNull<TSource>(this IEnumerable<TSource?>? values,
@@ -351,16 +354,17 @@ public static class IEnumerableExtension
     /// is assumed.
     /// </para>
     /// <para>
-    /// If no <see cref="ParameterSection.Index"/> is specified, the first <see cref="VCardProperty"/> found 
-    /// in the collection is returned.
+    /// If no <see cref="ParameterSection.Index"/> is specified, the first <see cref="VCardProperty"/> 
+    /// found in the collection is returned.
     /// </para>
     /// </returns>
     /// <example>
     /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
     /// </example>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static TSource? FirstOrNull<TSource>(
-        this IEnumerable<TSource?>? values, bool skipEmptyItems = true) where TSource : VCardProperty
+    public static TSource? FirstOrNull<TSource>(this IEnumerable<TSource?>? values,
+                                                bool skipEmptyItems = true) 
+        where TSource : VCardProperty
         => values?.FirstOrNullIntl(skipEmptyItems);
 
     /// <summary>
@@ -397,8 +401,8 @@ public static class IEnumerableExtension
     /// is assumed.
     /// </para>
     /// <para>
-    /// If no <see cref="ParameterSection.Index"/> is specified, the first <see cref="VCardProperty"/> that
-    /// passes the <paramref name="filter"/> is returned.
+    /// If no <see cref="ParameterSection.Index"/> is specified, the first <see cref="VCardProperty"/> 
+    /// that passes the <paramref name="filter"/> is returned.
     /// </para>
     /// </returns>
     public static TSource? FirstOrNull<TSource>(
@@ -421,8 +425,8 @@ public static class IEnumerableExtension
     /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// references are removed in any case.</param>
     /// <returns>A collection that contains the items of <paramref name="values"/> ordered ascending
-    /// by the value of their <see cref="ParameterSection.Preference"/> property. The returned collection 
-    /// won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c>,
+    /// by the value of their <see cref="ParameterSection.Preference"/> property. The returned 
+    /// collection won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c>,
     /// an empty collection will be returned.</returns>
     /// <remarks>
     /// The method is useful to examine <see cref="VCard"/> properties with plural names but not
@@ -453,9 +457,9 @@ public static class IEnumerableExtension
     /// <param name="skipEmptyItems">Pass <c>false</c> to include empty items in the return value. 
     /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// references are removed in any case.</param>
-    /// <returns>A collection that contains the items of <paramref name="values"/> in their current order.
-    /// The returned collection won't contain <c>null</c> references. If <paramref name="values"/> is <c>null</c>,
-    /// an empty collection will be returned.</returns>
+    /// <returns>A collection that contains the items of <paramref name="values"/> in their current 
+    /// order. The returned collection won't contain <c>null</c> references. If <paramref name="values"/>
+    /// is <c>null</c>, an empty collection will be returned.</returns>
     /// <remarks>
     /// The method is useful to examine <see cref="VCard"/> properties with plural names.
     /// </remarks>
@@ -581,7 +585,8 @@ public static class IEnumerableExtension
     /// ("Empty" means that <see cref="VCardProperty.IsEmpty"/> returns <c>true</c>.) <c>null</c>
     /// values will always be ignored.</param>
     /// <returns>The first item in <paramref name="values"/> whose <see cref="VCardProperty.Group"/> 
-    /// identifier matches <paramref name="group"/>, or <c>null</c> if no such item could be found.</returns>
+    /// identifier matches <paramref name="group"/>, or <c>null</c> if no such item could be found.
+    /// </returns>
     /// <remarks>
     /// The comparison of group identifiers is case-insensitive.
     /// </remarks>
@@ -620,25 +625,31 @@ public static class IEnumerableExtension
 
     /// <summary>
     /// Concatenates two sequences of <see cref="VCardProperty"/> objects. 
-    /// (Most <see cref="VCardProperty"/> ojects implement <see cref="IEnumerable{T}">IEnumerable&lt;VCardPoperty&gt;</see>
-    /// and are themselves such a sequence.)
+    /// (Most <see cref="VCardProperty"/> ojects implement 
+    /// <see cref="IEnumerable{T}">IEnumerable&lt;VCardPoperty&gt;</see> and are themselves such
+    /// a sequence.)
     /// </summary>
     /// <typeparam name="TSource">Generic type parameter that's constrained to be a class that's 
     /// derived from <see cref="VCardProperty"/>.</typeparam>
-    /// <param name="first">The first sequence (or <see cref="VCardProperty"/> object) to concatenate or <c>null</c>.</param>
-    /// <param name="second">The second sequence (or <see cref="VCardProperty"/> object) to concatenate or <c>null</c>.</param>
-    /// <returns>An <see cref="IEnumerable{T}"/> that contains the concatenated elements of the two input sequences that
-    /// are not null, or an empty collection if no such elements could be found.</returns>
+    /// <param name="first">The first sequence (or <see cref="VCardProperty"/> object) to concatenate,
+    /// or <c>null</c>.</param>
+    /// <param name="second">The second sequence (or <see cref="VCardProperty"/> object) to concatenate,
+    /// or <c>null</c>.</param>
+    /// <returns>An <see cref="IEnumerable{T}"/> that contains the concatenated elements of the two input 
+    /// sequences that are not <c>null</c>, or an empty collection if no such elements could be found.
+    /// </returns>
     /// <remarks>
-    /// The method works similar to <see cref="Enumerable.Concat{TSource}(IEnumerable{TSource}, IEnumerable{TSource})"/>
-    /// but differs in that it can be called on <c>null</c> references and in that it accepts <c>null</c> references as
-    /// argument.
+    /// The method works similar to
+    /// <see cref="Enumerable.Concat{TSource}(IEnumerable{TSource}, IEnumerable{TSource})"/>
+    /// but differs in that it can be called on <c>null</c> references and in that it accepts <c>null</c> 
+    /// references as argument.
     /// </remarks>
     /// <example>
     /// <code language="cs" source="..\Examples\ExtensionMethodExample.cs"/>
     /// </example>
-    public static IEnumerable<TSource> ConcatWith<TSource>(
-        this IEnumerable<TSource?>? first, IEnumerable<TSource?>? second) where TSource : VCardProperty
+    public static IEnumerable<TSource> ConcatWith<TSource>(this IEnumerable<TSource?>? first,
+                                                           IEnumerable<TSource?>? second)
+        where TSource : VCardProperty
     {
         second ??= [];
         return first is null ? second.OfType<TSource>() : first.Concat(second).OfType<TSource>();
@@ -656,8 +667,9 @@ public static class IEnumerableExtension
     /// <returns><paramref name="values"/> without occurrences of <paramref name="value"/> and
     /// without <c>null</c> references.
     /// If <paramref name="values"/> is <c>null</c>, an empty collection is returned.</returns>
-    public static IEnumerable<TSource> Remove<TSource>(
-        this IEnumerable<TSource?>? values, TSource? value) where TSource : VCardProperty
+    public static IEnumerable<TSource> Remove<TSource>(this IEnumerable<TSource?>? values,
+                                                       TSource? value)
+        where TSource : VCardProperty
     {
         if (values is null)
         {
@@ -685,11 +697,14 @@ public static class IEnumerableExtension
     /// references.</param>
     /// <param name="predicate">A <see cref="Func{T, TResult}"/> that returns <c>true</c> for
     /// items that are to remove.</param>
-    /// <returns><paramref name="values"/> without the items that matches the <paramref name="predicate"/>.
-    /// If <paramref name="values"/> is <c>null</c>, an empty collection is returned.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="predicate"/> is <c>null</c>.</exception>
-    public static IEnumerable<TSource> Remove<TSource>(
-        this IEnumerable<TSource?>? values, Func<TSource, bool> predicate) where TSource : VCardProperty
+    /// <returns><paramref name="values"/> without the items that matches the 
+    /// <paramref name="predicate"/>. If <paramref name="values"/> is <c>null</c>, an empty 
+    /// collection is returned.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="predicate"/> is <c>null</c>.
+    /// </exception>
+    public static IEnumerable<TSource> Remove<TSource>(this IEnumerable<TSource?>? values,
+                                                       Func<TSource, bool> predicate) 
+        where TSource : VCardProperty
     {
         return DoRemove(values, predicate ?? throw new ArgumentNullException(nameof(predicate)));
 
@@ -834,7 +849,8 @@ public static class IEnumerableExtension
     /// references.</param>
     /// <param name="altID">The value to assign.</param>
     public static void SetAltID<TSource>(this IEnumerable<TSource?>? values,
-                                         string? altID) where TSource : VCardProperty, IEnumerable<TSource>
+                                         string? altID)
+        where TSource : VCardProperty, IEnumerable<TSource>
     {
         if (values is null)
         {
