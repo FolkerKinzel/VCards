@@ -67,6 +67,7 @@
     <Using Include="System.Runtime.CompilerServices" />
     <Using Include="FolkerKinzel.Strings" />
     <Using Include="System.Text" />
+    <Using Include="FolkerKinzel.Helpers.Polyfills" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="AnsiFilter_old.cs" />
@@ -82,6 +83,7 @@
     <Compile Remove="Intls\Formatters\DisplayNameFormatter.cs" />
     <Compile Remove="Intls\Net40LeaveOpenStream.cs" />
     <Compile Remove="Intls\ReadOnlyCollectionEmptyPolyfill.cs" />
+    <Compile Remove="Intls\_ArgumentNullException.cs" />
     <Compile Remove="Models\ContentSizeRestriction.cs" />
     <Compile Remove="Models\DataProperty_OBSOLETE.cs" />
     <Compile Remove="Models\DataUrl.cs" />

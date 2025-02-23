@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using FolkerKinzel.Helpers.Polyfills;
 using FolkerKinzel.VCards.Intls;
 
 namespace FolkerKinzel.VCards.Tests;
@@ -16,7 +17,6 @@ public static class HelperExtensions
             yield return o;
         }
     }
-
 
     public static int GetLinesCount(this string? source)
     {
