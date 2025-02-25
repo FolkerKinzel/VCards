@@ -1,5 +1,4 @@
 using System.Globalization;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties;
@@ -202,7 +201,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
     /// <returns>The distance in <c>m</c> between this and <paramref name="other"/>.</returns>
     private double ComputeDistanceToCompareEquality(GeoCoordinate other)
     {
-        if(IsEmpty)
+        if (IsEmpty)
         {
             return other.IsEmpty ? 0 : double.PositiveInfinity;
         }
@@ -358,7 +357,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
         int splitIndex = value.IndexOf(',');
 
         if (splitIndex == -1)
-        { 
+        {
             return false;
         }
 
@@ -416,7 +415,7 @@ public sealed class GeoCoordinate : IEquatable<GeoCoordinate?>
                 {
                     value = value.Slice(0, uParameterEnd);
 
-                    if(value.EndsWith('\\'))
+                    if (value.EndsWith('\\'))
                     {
                         value = value.Slice(0, value.Length - 1);
                     }

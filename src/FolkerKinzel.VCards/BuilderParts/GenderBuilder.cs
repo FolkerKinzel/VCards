@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
@@ -52,7 +51,7 @@ public readonly struct GenderBuilder
         Builder.VCard.GenderViews.SetIndexes(skipEmptyItems);
         return _builder;
     }
-        
+
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
     /// the items in in the <see cref="VCard.GenderViews"/> property to <c>null</c>.

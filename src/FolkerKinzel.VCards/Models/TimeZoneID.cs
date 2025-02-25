@@ -1,5 +1,4 @@
 using System.Globalization;
-using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Properties;
@@ -128,7 +127,7 @@ public sealed class TimeZoneID
     /// <seealso cref="ITimeZoneIDConverter" />
     public bool TryGetUtcOffset(out TimeSpan utcOffset, ITimeZoneIDConverter? converter = null)
     {
-        if(IsEmpty)
+        if (IsEmpty)
         {
             utcOffset = default;
             return false;

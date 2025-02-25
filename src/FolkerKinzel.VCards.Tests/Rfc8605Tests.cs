@@ -1,7 +1,6 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models.Properties;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -22,7 +21,7 @@ public class Rfc8605Tests
             .VCard;
 
         Assert.IsNotNull(vc);
-        Assert.IsNotNull (vc.ContactUris);
+        Assert.IsNotNull(vc.ContactUris);
         Assert.IsTrue(vc.ContactUris.Any());
 
         string vcfStr1 = vc.ToVcfString(VCdVersion.V4_0);

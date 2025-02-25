@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
@@ -58,7 +57,7 @@ public readonly struct GramBuilder
     {
         Builder.VCard.GramGenders.UnsetPreferences();
         return _builder;
-    }   
+    }
 
     /// <summary>
     /// Sets the <see cref="ParameterSection.Index"/> properties of 

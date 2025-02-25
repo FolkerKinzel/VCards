@@ -2,7 +2,6 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -556,7 +555,7 @@ public class V4Tests
     [TestMethod]
     public void LogoPhotoSoundTest2()
     {
-        byte[] bytes = [1,2,3];
+        byte[] bytes = [1, 2, 3];
         VCard vc = VCardBuilder
             .Create()
             .Logos.AddBytes(bytes)

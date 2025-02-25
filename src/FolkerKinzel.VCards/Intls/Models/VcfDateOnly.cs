@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 
@@ -126,8 +125,8 @@ internal sealed class VcfDateOnly : DateAndOrTime
     public override bool Equals([NotNullWhen(true)] DateAndOrTime? other)
         => other is VcfDateOnly vcfDateOnly
            && HasYear == other.HasYear
-           && HasMonth == other.HasMonth 
-           && HasDay == other.HasDay 
+           && HasMonth == other.HasMonth
+           && HasDay == other.HasDay
            && DateOnly.Value.Equals(vcfDateOnly.DateOnly.Value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

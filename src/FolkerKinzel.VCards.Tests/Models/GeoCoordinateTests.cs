@@ -1,7 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace FolkerKinzel.VCards.Models.Tests;
+﻿namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class GeoCoordinateTests
@@ -112,7 +109,7 @@ public class GeoCoordinateTests
     public void EqualsTest5()
     {
         Assert.IsTrue(GeoCoordinate.Empty.Equals(GeoCoordinate.Empty));
-        Assert.IsFalse(GeoCoordinate.Empty == new GeoCoordinate(0,0));
+        Assert.IsFalse(GeoCoordinate.Empty == new GeoCoordinate(0, 0));
         Assert.IsFalse(new GeoCoordinate(0, 0) == GeoCoordinate.Empty);
     }
 
@@ -153,7 +150,7 @@ public class GeoCoordinateTests
     public void AreSamePositionTest5()
         => Assert.IsFalse(GeoCoordinate.AreSamePosition(GeoCoordinate.Empty, new GeoCoordinate(0, 0)));
 
-    
+
 
     //[TestMethod()]
     //public void GetHashCodeTest()

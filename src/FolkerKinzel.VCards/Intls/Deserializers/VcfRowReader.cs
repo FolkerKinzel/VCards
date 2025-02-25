@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Runtime.InteropServices;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
@@ -172,7 +171,7 @@ internal class VcfRowReader : IEnumerable<VcfRow>
                     // Hack: RFC 2425 shows a vCard 2.1 example that uses Base64 like vCard 3.0 without
                     // an empty line after the Base64.
                     // If s contains ':' it's probably the next vCard row.
-                    if(s.Contains(':'))
+                    if (s.Contains(':'))
                     {
                         _list.Add(s.AsMemory());
                         yield return tmpRow;

@@ -1,12 +1,9 @@
 using System.Collections;
-using System.ComponentModel;
 using FolkerKinzel.DataUrls;
-using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Encodings;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
@@ -67,7 +64,7 @@ public sealed class DataProperty : VCardProperty, IEnumerable<DataProperty>
         }
         else if (dataType == Data.Text)
         {
-            Value = RawData.FromText(StringDeserializer.Deserialize(vcfRow, version), 
+            Value = RawData.FromText(StringDeserializer.Deserialize(vcfRow, version),
                                      vcfRow.Parameters.MediaType);
         }
         // Quoted-Printable encoded binary data:

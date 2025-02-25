@@ -1,6 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Properties;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -149,7 +147,7 @@ public class AddressBuilderTests
                           .Build());
 
         Assert.AreEqual(0, prop.Value.Extended.Count);
-        Assert.AreEqual("a", prop.Value.Apartment.Single());     
+        Assert.AreEqual("a", prop.Value.Apartment.Single());
     }
 
     [TestMethod()]

@@ -1,6 +1,5 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
@@ -481,8 +480,8 @@ internal abstract class ParameterSerializer(VCdVersion version, VcfOpts options)
 
             key = key.Trim();
 
-            if (string.IsNullOrWhiteSpace(parameter.Value) 
-                || !XNameValidator.IsXName(key) 
+            if (string.IsNullOrWhiteSpace(parameter.Value)
+                || !XNameValidator.IsXName(key)
                 || key.Equals(ParameterSection.ParameterKey.NonStandard.X_SERVICE_TYPE, StringComparison.OrdinalIgnoreCase))
             {
                 continue;

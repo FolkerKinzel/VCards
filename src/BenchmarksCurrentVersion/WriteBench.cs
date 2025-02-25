@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
+﻿using BenchmarkDotNet.Attributes;
 using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
@@ -13,7 +10,7 @@ public class WriteBench
 {
     private readonly VCard _vCard;
     private readonly VCard _vCardPhoto;
-    
+
 
     public WriteBench()
     {

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.ComponentModel;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
@@ -26,7 +25,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
     /// to indicate that the <see cref="VCardProperty" /> does not belong to any group.</param>
     /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
     public GeoProperty(GeoCoordinate value, string? group = null)
-        : base(new ParameterSection(), group) 
+        : base(new ParameterSection(), group)
         => Value = value ?? throw new ArgumentNullException(nameof(value));
 
     private GeoProperty(GeoCoordinate value, VcfRow vcfRow)
@@ -47,7 +46,7 @@ public sealed class GeoProperty : VCardProperty, IEnumerable<GeoProperty>
 
     /// <summary> The data provided by the <see cref="GeoProperty" />.
     /// </summary>
-    public new GeoCoordinate Value  { get; }
+    public new GeoCoordinate Value { get; }
 
     /// <inheritdoc />
     public override bool IsEmpty => Value.IsEmpty;

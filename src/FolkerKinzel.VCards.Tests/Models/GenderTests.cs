@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Models.Tests;
 

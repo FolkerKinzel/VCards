@@ -28,7 +28,8 @@ public class ExtensionMethodExample
         foreach (KeyValuePair<Prop, VCardProperty> kvp in g1Group)
         {
             Console.WriteLine("  {0}: {1}", kvp.Key, kvp.Value);
-        };
+        }
+        ;
 
         Console.WriteLine("\nDisplayNames ordered by Preference:");
         foreach (TextProperty dn in vc.DisplayNames.OrderByPref())

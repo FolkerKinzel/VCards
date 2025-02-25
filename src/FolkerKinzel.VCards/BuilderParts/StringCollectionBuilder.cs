@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
@@ -155,7 +154,7 @@ public readonly struct StringCollectionBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private IEnumerable<StringCollectionProperty?>? GetProperty() =>
         Builder.VCard.Get<IEnumerable<StringCollectionProperty?>?>(_prop);
-                                 
+
 
     [MemberNotNull(nameof(_builder))]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

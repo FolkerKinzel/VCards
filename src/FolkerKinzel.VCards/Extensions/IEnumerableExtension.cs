@@ -1,8 +1,7 @@
-using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
-using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
 namespace FolkerKinzel.VCards.Extensions;
@@ -363,7 +362,7 @@ public static class IEnumerableExtension
     /// </example>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TSource? FirstOrNull<TSource>(this IEnumerable<TSource?>? values,
-                                                bool skipEmptyItems = true) 
+                                                bool skipEmptyItems = true)
         where TSource : VCardProperty
         => values?.FirstOrNullIntl(skipEmptyItems);
 
@@ -703,7 +702,7 @@ public static class IEnumerableExtension
     /// <exception cref="ArgumentNullException"><paramref name="predicate"/> is <c>null</c>.
     /// </exception>
     public static IEnumerable<TSource> Remove<TSource>(this IEnumerable<TSource?>? values,
-                                                       Func<TSource, bool> predicate) 
+                                                       Func<TSource, bool> predicate)
         where TSource : VCardProperty
     {
         return DoRemove(values, predicate ?? throw new ArgumentNullException(nameof(predicate)));

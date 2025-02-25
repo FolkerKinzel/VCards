@@ -1,7 +1,5 @@
-using System;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
-using FolkerKinzel.VCards.Intls.Extensions;
 
 namespace FolkerKinzel.VCards.Models.Properties.Parameters;
 
@@ -25,7 +23,7 @@ public sealed partial class ParameterSection
         const string VALUE_PROPERTY = ParameterSection.ParameterKey.VALUE;
 
         if (value.Equals(TypeValue.PREF, comp)
-         || value.Equals(TypeValue.HOME, comp) 
+         || value.Equals(TypeValue.HOME, comp)
          || value.Equals(TypeValue.WORK, comp)
          || value.Equals(EMail.SMTP, comp)
          || value.Equals(TelConverter.PhoneTypesValue.CELL, comp)
@@ -54,10 +52,10 @@ public sealed partial class ParameterSection
         }
 
         // Don't change the order: "UTF-8" contains '-' as well as "en-US" as well as "CONTENT-ID"
-        return value.Contains('-') 
-            ? LANGUAGE_PROPERTY 
-            : value.Equals("8BIT", comp) 
-                ? ENCODING_PROPERTY 
+        return value.Contains('-')
+            ? LANGUAGE_PROPERTY
+            : value.Equals("8BIT", comp)
+                ? ENCODING_PROPERTY
                 : TYPE_PROPERTY;
     }
 }

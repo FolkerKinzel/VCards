@@ -32,7 +32,7 @@ public sealed class GramProperty : VCardProperty, IEnumerable<GramProperty>
 
     internal static bool TryParse(VcfRow vcfRow, [NotNullWhen(true)] out GramProperty? prop)
     {
-        if(GramConverter.TryParse(vcfRow.Value.Span, out Gram gram))
+        if (GramConverter.TryParse(vcfRow.Value.Span, out Gram gram))
         {
             prop = new GramProperty(gram, vcfRow);
             return true;

@@ -16,7 +16,7 @@ public class GenderBuilderTests
     {
         VCardBuilder builder = VCardBuilder
             .Create()
-            .GenderViews.Add((Gender?) null)
+            .GenderViews.Add((Gender?)null)
             .GenderViews.Add(Sex.Female)
             .GenderViews.SetIndexes();
 

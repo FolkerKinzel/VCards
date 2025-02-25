@@ -67,7 +67,7 @@ internal static class _Int
     public static bool TryParse(ReadOnlySpan<char> value, out int result)
 #if NET462 || NETSTANDARD2_0
     {
-        if(value.Length != 1)
+        if (value.Length != 1)
         {
             return int.TryParse(value.ToString(), NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
         }
@@ -76,9 +76,10 @@ internal static class _Int
 
         result = (int)value[0] - '0';
 
-        if((uint)result > 9) { 
-            result = 0;  
-            return false; 
+        if ((uint)result > 9)
+        {
+            result = 0;
+            return false;
         }
 
         return true;

@@ -1,7 +1,3 @@
-using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls.Encodings;
-using FolkerKinzel.VCards.Intls.Extensions;
-
 namespace FolkerKinzel.VCards.Intls.Deserializers;
 
 internal sealed partial class VcfRow

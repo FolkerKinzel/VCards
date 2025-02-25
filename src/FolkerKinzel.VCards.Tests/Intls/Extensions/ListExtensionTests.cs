@@ -1,8 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace FolkerKinzel.VCards.Intls.Extensions.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Extensions.Tests;
 
 [TestClass]
 public class ListExtensionTests
@@ -12,7 +8,7 @@ public class ListExtensionTests
     [DataRow("1")]
     [DataRow("12")]
     [DataRow("123")]
-    [DataRow("1234")]  
+    [DataRow("1234")]
     [DataRow("12345")]
     public void ConcatTest1(string input)
     {
@@ -50,6 +46,6 @@ public class ListExtensionTests
             list.Add(s.AsMemory());
         }
 
-        Assert.AreEqual(string.Concat([s,s,s,s,s,]), list.Concat().ToString());
+        Assert.AreEqual(string.Concat([s, s, s, s, s,]), list.Concat().ToString());
     }
 }

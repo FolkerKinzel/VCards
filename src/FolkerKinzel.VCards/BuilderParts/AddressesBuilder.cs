@@ -2,7 +2,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Formatters;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
@@ -53,7 +52,7 @@ public readonly struct AddressesBuilder
         Builder.VCard.Addresses.SetPreferences(skipEmptyItems);
         return _builder;
     }
-       
+
     /// <summary>
     /// Resets the <see cref="ParameterSection.Preference"/> properties of 
     /// the items in in the <see cref="VCard.Addresses"/> property to the lowest value (100).

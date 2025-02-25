@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
@@ -855,9 +854,9 @@ public sealed partial class VCard
                 Debug.Assert(!Uri.TryCreate(text, UriKind.Absolute, out _));
 
                 var relProp = new RelationProperty(Relation.Create(new VCard(setContactID: true, setCreated: false)
-                    {
-                        DisplayNames = new TextProperty(text)
-                    }), prop.Group);
+                {
+                    DisplayNames = new TextProperty(text)
+                }), prop.Group);
                 relProp.Parameters.RelationType = prop.Parameters.RelationType;
                 span[i] = relProp;
             }

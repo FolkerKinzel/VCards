@@ -160,7 +160,7 @@ public class AddressesBuilderTests
         IEnumerable<AddressProperty?>? adr = vc.Addresses;
         Assert.IsNotNull(adr);
         Assert.AreEqual(3, adr.Count());
-        Assert.IsTrue(adr.Any(x => StringComparer.Ordinal.Equals("London", x?.Value.Locality.First()) && 
+        Assert.IsTrue(adr.Any(x => StringComparer.Ordinal.Equals("London", x?.Value.Locality.First()) &&
                                    (x.Parameters.Label?.Contains("London", StringComparison.Ordinal) ?? false)));
         Assert.IsTrue(adr.Any(x => StringComparer.Ordinal.Equals("New York", x?.Value.Locality.First()) &&
                                    (x.Parameters.Label?.Contains("Borna", StringComparison.Ordinal) ?? false)));

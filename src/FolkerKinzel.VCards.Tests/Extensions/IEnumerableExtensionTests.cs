@@ -2,7 +2,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Extensions.Tests;
 
@@ -834,7 +833,7 @@ public class IEnumerableExtensionTests
     public void ItemsTest4()
     {
         TextProperty?[] props = [null, new TextProperty(""), null, new TextProperty("1")];
-        Assert.AreEqual(1, props.Items().Count());  
+        Assert.AreEqual(1, props.Items().Count());
         Assert.IsNotNull(props.Items().First());
     }
 

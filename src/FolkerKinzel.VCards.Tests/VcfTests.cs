@@ -178,7 +178,7 @@ public class VcfTests
     }
 
     [TestMethod]
-    public async Task DeserializeManyAsyncTest5() 
+    public async Task DeserializeManyAsyncTest5()
         => Assert.IsNull(await Vcf.DeserializeManyAsync([]).FirstOrDefaultAsync());
 
     [TestMethod]

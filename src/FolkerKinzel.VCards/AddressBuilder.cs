@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Models;
 
@@ -210,7 +209,7 @@ public sealed class AddressBuilder
     /// <seealso cref="Address.Extended"/>
     /// <exception cref="ArgumentNullException"><paramref name="collection"/> is <c>null</c>.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public AddressBuilder AddApartment(IEnumerable<string?> collection) 
+    public AddressBuilder AddApartment(IEnumerable<string?> collection)
         => AddRange(AdrProp.Apartment, collection);
 
     /// <summary>Adds a <see cref="string"/> to <see cref="Address.Floor"/>. (The floor or level the address 

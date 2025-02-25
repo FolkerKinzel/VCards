@@ -4,9 +4,7 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
@@ -29,7 +27,7 @@ public class DataPropertyTests
         Assert.IsNotNull(prop.Value.Bytes);
     }
 
-        [TestMethod]
+    [TestMethod]
     public void DataPropertyTest3()
     {
         var row = VcfRow.Parse("PHOTO:".AsMemory(), new VcfDeserializationInfo());
@@ -115,7 +113,7 @@ public class DataPropertyTests
     [TestMethod]
     public void FromBytesTest1()
     {
-        var prop = new DataProperty(RawData.FromBytes([1,2], "blabla"));
+        var prop = new DataProperty(RawData.FromBytes([1, 2], "blabla"));
         Assert.AreEqual("application/octet-stream", prop.Parameters.MediaType);
     }
 

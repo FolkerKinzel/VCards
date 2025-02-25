@@ -1,9 +1,7 @@
 ﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -26,7 +24,7 @@ public class Rfc9554Tests
         Assert.IsNotNull(vc.Created);
         Assert.IsFalse(vc.Created.IsEmpty);
     }
-    
+
 
     [TestMethod]
     public void CreatedTest2()

@@ -1,6 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-
-namespace FolkerKinzel.VCards.Models.Tests;
+﻿namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class OrganizationTests

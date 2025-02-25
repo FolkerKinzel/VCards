@@ -47,7 +47,7 @@ internal static class UuidConverter
 
         // e.g., urn:uuid:53e374d9-337e-4727-8803-a1e9c14e0556
         uuid = uuid.Slice(uuid.LastIndexOf(':') + 1);
-        
+
         return _Guid.TryParse(uuid, out guid);
     }
 

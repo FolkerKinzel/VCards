@@ -1,5 +1,4 @@
 using System.Globalization;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 
@@ -14,7 +13,7 @@ internal static class AddressLabelFormatter
     static AddressLabelFormatter() => _defaultAddressOrder = AddressOrderConverter.ParseCultureInfo(CultureInfo.CurrentCulture);
 
     internal static string ToLabel(AddressProperty prop)
-    { 
+    {
         AddressOrder addressOrder = AddressOrderConverter.ParseAddressProperty(prop) ?? _defaultAddressOrder;
         Address address = prop.Value;
         Debug.Assert(!address.IsEmpty);

@@ -1,12 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
 
 [TestClass]
 public class ParameterValueSplitterTests
 {
     [TestMethod]
-    public void SplitTest1() 
+    public void SplitTest1()
         => Assert.AreEqual(0, ParameterValueSplitter.Split(ReadOnlyMemory<char>.Empty).Count());
 
     [TestMethod]

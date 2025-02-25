@@ -1,7 +1,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Serializers;
-using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models.Properties.Parameters;
@@ -397,7 +396,7 @@ public sealed partial class ParameterSection
     public string? MediaType
     {
         get => Get<string?>(VCdParam.MediaType);
-        set => Set<string?>(VCdParam.MediaType, 
+        set => Set<string?>(VCdParam.MediaType,
                             string.IsNullOrWhiteSpace(value) ? null
                                                              : value.Trim());
     }
@@ -592,7 +591,7 @@ public sealed partial class ParameterSection
     public IReadOnlyList<string>? SortAs
     {
         get => Get<string[]?>(VCdParam.SortAs);
-        set => Set(VCdParam.SortAs, 
+        set => Set(VCdParam.SortAs,
                    value is null ? null : StringArrayConverter.ToStringArray(value));
     }
 

@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
@@ -304,7 +302,7 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
     /// <summary>Returns <c>true</c>, if the <see cref="Address" /> object does not
     /// contain any usable data.</summary>
-    public bool IsEmpty {  get; }
+    public bool IsEmpty { get; }
 
     internal static Address Empty => new(); // Not a singleton
 

@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.DataUrls;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Models;
 

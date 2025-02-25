@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 using FolkerKinzel.VCards.Resources;
@@ -54,7 +53,7 @@ public readonly struct TextViewBuilder
         GetProperty().SetIndexes(skipEmptyItems);
         return _builder;
     }
-        
+
     /// <summary>
     /// Resets the <see cref="ParameterSection.Index"/> properties of 
     /// the items in in the specified property to <c>null</c>.

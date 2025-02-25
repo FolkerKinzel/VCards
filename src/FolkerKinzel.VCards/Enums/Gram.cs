@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FolkerKinzel.VCards.Intls.Converters;
-
-namespace FolkerKinzel.VCards.Enums;
+﻿namespace FolkerKinzel.VCards.Enums;
 
 /// <summary>
 /// Named constants to define which grammatical gender to use in salutations and other grammatical constructs. (4 - RFC 9554)

@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
@@ -125,7 +124,7 @@ public readonly struct DateAndOrTimeBuilder
 
     [MemberNotNull(nameof(_builder))]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private IEnumerable<DateAndOrTimeProperty?>? GetProperty() 
+    private IEnumerable<DateAndOrTimeProperty?>? GetProperty()
         => Builder.VCard.Get<IEnumerable<DateAndOrTimeProperty?>?>(_prop);
 
     [MemberNotNull(nameof(_builder))]

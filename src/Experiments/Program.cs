@@ -1,9 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.Collections.Frozen;
 using BenchmarkDotNet.Running;
 using Experiments;
-using FolkerKinzel.VCards.Models;
 
 //var bench = new FrozenDictionaryBench();
 

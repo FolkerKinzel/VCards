@@ -13,7 +13,7 @@ public class TimeStampPropertyTests
         Assert.IsNull(prop.Group);
         Assert.AreNotEqual(default, prop.Value);
         Assert.IsFalse(prop.IsEmpty);
-        Assert.IsNotNull(prop.ToString());  
+        Assert.IsNotNull(prop.ToString());
     }
 
     [TestMethod]

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
 using FolkerKinzel.Strings;
 using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Serializers;
 using Base64Bcl = System.Buffers.Text.Base64;
 
 namespace Benchmarks;

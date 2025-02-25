@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using FolkerKinzel.VCards.Tests;
+﻿using FolkerKinzel.VCards.Tests;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 

@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace FolkerKinzel.VCards.Models.Tests;
+﻿namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class ContactIDTests
@@ -154,7 +152,7 @@ public class ContactIDTests
         const string test = "test";
         string? result = null;
 
-        result = ContactID.Create(new Uri("http://folker.com/")).Convert( null!, (guid) => test, null!);
+        result = ContactID.Create(new Uri("http://folker.com/")).Convert(null!, (guid) => test, null!);
 
         Assert.AreEqual(test, result);
     }

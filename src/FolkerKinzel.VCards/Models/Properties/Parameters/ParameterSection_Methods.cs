@@ -1,5 +1,4 @@
 using System.Collections;
-using FolkerKinzel.VCards.Intls;
 
 namespace FolkerKinzel.VCards.Models.Properties.Parameters;
 

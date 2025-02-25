@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
@@ -32,7 +30,7 @@ internal sealed class VcfTimeOnly : DateAndOrTime
     public override bool TryAsDateTimeOffset(out DateTimeOffset value)
     {
         TimeOnly to = TimeOnly.Value;
-        value = new DateTimeOffset(4,1,1, to.Hour, to.Minute, to.Second, System.DateTimeOffset.Now.Offset);
+        value = new DateTimeOffset(4, 1, 1, to.Hour, to.Minute, to.Second, System.DateTimeOffset.Now.Offset);
         return true;
     }
 
@@ -43,7 +41,7 @@ internal sealed class VcfTimeOnly : DateAndOrTime
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string AsString(IFormatProvider? formatProvider = null) 
+    public override string AsString(IFormatProvider? formatProvider = null)
         => TimeOnly.Value.ToString("T", formatProvider);
 
     public override TResult Convert<TResult>(Func<DateOnly, TResult> dateFunc,

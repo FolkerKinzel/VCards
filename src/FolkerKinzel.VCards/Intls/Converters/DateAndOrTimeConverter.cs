@@ -1,6 +1,5 @@
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
@@ -96,7 +95,7 @@ internal sealed class DateAndOrTimeConverter
                                 ignoreMonth: roSpan.Length == 4, // yyyy (vCard 4.0 only)
                                 ignoreDay: roSpan.Length is 4 or 7, // yyyy or yyyy-MM (vCard 4.0 only)
                                 ref dateAndOrTime);
-        
+
         //////////////////////////////////////////////////////////////////////////////////////
 
         bool TryParseDateNoReduc(ReadOnlySpan<char> roSpan, ref DateAndOrTime? dateAndOrTime)
@@ -250,7 +249,7 @@ internal sealed class DateAndOrTimeConverter
                                                                "{0:0000}",
                                                                dt.Year)
                         : hasMonth
-                                ? hasDay 
+                                ? hasDay
                                     ? builder.AppendFormat(CultureInfo.InvariantCulture,
                                                            "--{0:00}{1:00}",
                                                            dt.Month, dt.Day)

@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-
 namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class StringArrayConverter
@@ -11,7 +9,7 @@ internal static class StringArrayConverter
 
         for (int i = 0; i < span.Length; i++)
         {
-            if(span[i] is null)
+            if (span[i] is null)
             {
                 span[i] = "";
             }
@@ -21,5 +19,5 @@ internal static class StringArrayConverter
     }
 
     internal static string[] ToStringArray(string? s)
-         => string.IsNullOrEmpty(s) ? [] : [ s ];
+         => string.IsNullOrEmpty(s) ? [] : [s];
 }

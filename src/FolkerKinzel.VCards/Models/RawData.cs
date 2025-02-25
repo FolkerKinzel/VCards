@@ -1,6 +1,5 @@
 using FolkerKinzel.DataUrls;
 using FolkerKinzel.MimeTypes;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Resources;
@@ -135,7 +134,7 @@ public sealed class RawData
         Debug.Assert(mediaType.Length > 0);
 
         return dataUrlInfo.TryGetData(out EmbeddedData data)
-            ? data.Convert<string, RawData>( 
+            ? data.Convert<string, RawData>(
                 mediaType,
                 static (bytes, mediaType) => new(bytes, mediaType, bytes.Length == 0),
                 static (str, mediaType) => new(str, mediaType, str.Length == 0)

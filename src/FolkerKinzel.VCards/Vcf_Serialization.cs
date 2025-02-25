@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Runtime.InteropServices;
 using FolkerKinzel.Helpers;
 using FolkerKinzel.VCards.Enums;

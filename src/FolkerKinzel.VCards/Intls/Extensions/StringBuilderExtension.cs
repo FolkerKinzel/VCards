@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using FolkerKinzel.VCards.Enums;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
@@ -68,9 +67,9 @@ internal static class StringBuilderExtension
                 case ',':
                     sb.Append("\\,");
                     break;
-                    // RFC 2426 2.4.2 says that the COLON (ASCII decimal 58)
-                    // MUST be escaped with a BACKSLASH, but the associated
-                    // example doesn't
+                // RFC 2426 2.4.2 says that the COLON (ASCII decimal 58)
+                // MUST be escaped with a BACKSLASH, but the associated
+                // example doesn't
                 //case ':':
                 //    sb.Append("\\:");
                 //    break;
@@ -155,7 +154,7 @@ internal static class StringBuilderExtension
     {
         ReadOnlySpan<char> span = s.AsSpan();
 
-        if(span.IsEmpty)
+        if (span.IsEmpty)
         {
             return true;
         }
@@ -171,7 +170,7 @@ internal static class StringBuilderExtension
                 continue;
             }
 
-            if(c is ';' or ',' or ':')
+            if (c is ';' or ',' or ':')
             {
                 mustBeQuoted = true;
             }

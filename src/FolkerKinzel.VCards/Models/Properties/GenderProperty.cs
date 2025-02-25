@@ -1,6 +1,4 @@
 using System.Collections;
-using System.ComponentModel;
-using System.Security.Principal;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;

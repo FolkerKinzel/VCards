@@ -1,5 +1,4 @@
-﻿using System;
-using FolkerKinzel.VCards.Enums;
+﻿using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Encodings;
 
 namespace FolkerKinzel.VCards.Intls.Extensions;
@@ -236,8 +235,8 @@ internal static class ReadOnlySpanExtension
 
             if (idxOfBackSlash != -1)
             {
-                idxOfEscapeChar = idxOfEscapeChar == -1 
-                                    ? idxOfBackSlash 
+                idxOfEscapeChar = idxOfEscapeChar == -1
+                                    ? idxOfBackSlash
                                     : Math.Min(idxOfBackSlash, idxOfEscapeChar);
             }
         }

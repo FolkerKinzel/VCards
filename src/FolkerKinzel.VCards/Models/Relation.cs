@@ -1,6 +1,5 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
@@ -211,8 +210,8 @@ public sealed class Relation : IEquatable<Relation>
                                 : other.Convert(vc.ContactID.Value,
                                                  static (vc, id) => vc.ContactID?.Value == id,
                                                  static (id1, id2) => id1 == id2),
-                      static (id, other) => id.IsEmpty 
-                                ? other.IsEmpty 
+                      static (id, other) => id.IsEmpty
+                                ? other.IsEmpty
                                 : other.Convert(id,
                                    static (vc, id) => vc.ContactID?.Value == id,
                                    static (id1, id2) => id1 == id2)

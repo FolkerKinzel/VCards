@@ -1,7 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace FolkerKinzel.VCards.Models.Tests;
+﻿namespace FolkerKinzel.VCards.Models.Tests;
 
 [TestClass]
 public class RelationTests
@@ -97,7 +94,7 @@ public class RelationTests
     public void SwitchTest8()
     {
         ContactID? guid = null;
-        Relation.Create(ContactID.Empty).Switch( null, (uuid) => guid = uuid);
+        Relation.Create(ContactID.Empty).Switch(null, (uuid) => guid = uuid);
         Assert.IsNotNull(guid);
     }
 

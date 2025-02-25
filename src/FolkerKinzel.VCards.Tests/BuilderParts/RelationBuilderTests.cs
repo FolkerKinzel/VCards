@@ -1,7 +1,6 @@
 ﻿using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.BuilderParts.Tests;
 
@@ -122,7 +121,7 @@ public class RelationBuilderTests
     {
         var vc = VCardBuilder.Create().Relations.Add((Relation?)null).VCard;
 
-        var relation = vc.Relations.FirstOrNull(skipEmptyItems:false);
+        var relation = vc.Relations.FirstOrNull(skipEmptyItems: false);
         Assert.IsNotNull(relation);
         Assert.IsTrue(relation.IsEmpty);
     }

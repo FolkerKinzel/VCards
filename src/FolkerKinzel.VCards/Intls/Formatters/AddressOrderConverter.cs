@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.Globalization;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
@@ -27,7 +26,7 @@ internal static class AddressOrderConverter
                                    : ParseAddress(prop.Value);
     }
 
-    [SuppressMessage("Style", "IDE0066:Convert switch statement to expression", 
+    [SuppressMessage("Style", "IDE0066:Convert switch statement to expression",
         Justification = "Readability")]
     private static AddressOrder? ParseCountryCode(string countryCode)
     {

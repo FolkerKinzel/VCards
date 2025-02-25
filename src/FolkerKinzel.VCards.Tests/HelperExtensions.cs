@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using FolkerKinzel.Helpers.Polyfills;
-using FolkerKinzel.VCards.Intls;
 
 namespace FolkerKinzel.VCards.Tests;
 

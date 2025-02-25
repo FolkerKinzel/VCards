@@ -2,7 +2,6 @@
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Models.Properties.Tests;
 
@@ -13,11 +12,11 @@ public class StringCollectionPropertyTests
 
     [DataTestMethod]
     [DataRow(new string?[] { "Bodo, der Blöde", "Dumbo" }, GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
-    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, GROUP, new string[] { "", "", "Bodo, der Blöde", "  ",  "Dumbo" })]
+    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, GROUP, new string[] { "", "", "Bodo, der Blöde", "  ", "Dumbo" })]
     [DataRow(new string?[] { "", null, "  " }, GROUP, new string[] { "", "", "  " })]
     [DataRow(new string[] { }, GROUP, new string[] { })]
     [DataRow(new string?[] { "Bodo, der Blöde", "Dumbo" }, null, new string[] { "Bodo, der Blöde", "Dumbo" })]
-    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, null, new string[] { "", "", "Bodo, der Blöde",  "  ", "Dumbo" })]
+    [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, null, new string[] { "", "", "Bodo, der Blöde", "  ", "Dumbo" })]
     [DataRow(new string?[] { "", null, "  " }, null, new string[] { "", "", "  " })]
     [DataRow(new string[] { }, null, new string[] { })]
     public void StringCollectionPropertyTest1(string?[] inputNickNames, string? expectedGroup, string[]? expectedNickNames)
@@ -50,7 +49,7 @@ public class StringCollectionPropertyTests
     [DataRow(GROUP + @".NICKNAME:Bodo\, der Blöde,Dumbo", GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
     [DataRow(@"NICKNAME:Bodo\, der Blöde,Dumbo", null, new string[] { "Bodo, der Blöde", "Dumbo" })]
     [DataRow(@"NICKNAME:,Bodo\, der Blöde,  ,Dumbo, ", null, new string[] { "", "Bodo, der Blöde", "  ", "Dumbo", " " })]
-    [DataRow(@"NICKNAME: , ,,", null, new string[] { " ", " ", "", ""})]
+    [DataRow(@"NICKNAME: , ,,", null, new string[] { " ", " ", "", "" })]
     [DataRow(@"NICKNAME:Dumbo, ", null, new string[] { "Dumbo", " " })]
     public void StringCollectionPropertyTest3(string s, string? expectedGroup, string[]? expectedNickNames)
     {
@@ -68,7 +67,7 @@ public class StringCollectionPropertyTests
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void StringCollectionPropertyTest4() => _ = new StringCollectionProperty((IEnumerable<string?>?)null!);
-    
+
     [TestMethod]
     public void ToStringTest1()
     {

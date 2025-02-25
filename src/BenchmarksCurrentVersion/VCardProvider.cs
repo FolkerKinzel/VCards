@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.MimeTypes.Properties;
-using FolkerKinzel.VCards;
+﻿using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
 
 namespace Benchmarks;
@@ -9,15 +8,15 @@ internal static class VCardProvider
 
     internal static VCard CreatePhotoVCard()
     {
-//        const string photoFilePath =
-//#if DEBUG
-//        @"..\..\..\TestFiles\Folker.png";
-//#else
-//        @"..\..\..\..\..\..\..\TestFiles\Folker.png";
-//#endif
-//        //using System.IO.UnmanagedMemoryStream? stream = Res.ResourceManager.GetStream("Folker");
-        
-//        var picBytes = (byte[]?)Res.ResourceManager.GetObject("Folker");
+        //        const string photoFilePath =
+        //#if DEBUG
+        //        @"..\..\..\TestFiles\Folker.png";
+        //#else
+        //        @"..\..\..\..\..\..\..\TestFiles\Folker.png";
+        //#endif
+        //        //using System.IO.UnmanagedMemoryStream? stream = Res.ResourceManager.GetStream("Folker");
+
+        //        var picBytes = (byte[]?)Res.ResourceManager.GetObject("Folker");
 
         return VCardBuilder
             .Create(CreateVCard())
@@ -30,7 +29,7 @@ internal static class VCardProvider
     {
         return VCardBuilder
             .Create()
-            .NameViews.Add(NameBuilder.Create().AddSurname( "Mustermann").AddGiven( "Jürgen").Build())
+            .NameViews.Add(NameBuilder.Create().AddSurname("Mustermann").AddGiven("Jürgen").Build())
             .DisplayNames.Add("Jürgen Mustermann")
             .EMails.Add("juergen@home.de", parameters: p => p.PropertyClass = PCl.Home)
             .EMails.Add("juergen@work.com", parameters: p => p.PropertyClass = PCl.Work)

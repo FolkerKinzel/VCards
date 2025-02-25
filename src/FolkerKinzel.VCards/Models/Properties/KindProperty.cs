@@ -26,12 +26,12 @@ public sealed class KindProperty : VCardProperty
         : base(new ParameterSection(), group) => Value = value;
 
     private KindProperty(Kind value, VcfRow vcfRow)
-        : base(vcfRow.Parameters, vcfRow.Group) 
+        : base(vcfRow.Parameters, vcfRow.Group)
         => Value = value;
 
     internal static bool TryParse(VcfRow vcfRow, [NotNullWhen(true)] out KindProperty? prop)
     {
-        if(KindConverter.TryParse(vcfRow.Value.Span, out Kind value))
+        if (KindConverter.TryParse(vcfRow.Value.Span, out Kind value))
         {
             prop = new KindProperty(value, vcfRow);
             return true;

@@ -1,5 +1,4 @@
 ﻿using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Models;
 
@@ -132,8 +131,8 @@ internal sealed class VcfDateTimeOffset : DateAndOrTime
 
     public override bool Equals([NotNullWhen(true)] DateAndOrTime? other)
         => other is VcfDateTimeOffset vcfDateTimeOffset
-        && HasYear == other.HasYear 
-        && HasMonth == other.HasMonth 
+        && HasYear == other.HasYear
+        && HasMonth == other.HasMonth
         && HasDay == other.HasDay
         && DateTimeOffset.Value.Equals(vcfDateTimeOffset.DateTimeOffset.Value);
 

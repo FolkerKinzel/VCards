@@ -1,5 +1,4 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Properties;
+﻿using FolkerKinzel.VCards.Models.Properties;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -196,7 +195,7 @@ public class NameBuilderTests
             .AddPrefix("5")
             .AddSuffix("6")
             .AddSurname2("7");
-            
+
         _ = bldr.Build();
 
         Assert.IsInstanceOfType<NameBuilder>(bldr);

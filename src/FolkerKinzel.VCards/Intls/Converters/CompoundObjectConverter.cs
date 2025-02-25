@@ -1,8 +1,6 @@
 ﻿using FolkerKinzel.VCards.Intls.Encodings;
-using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
-using System.Collections.ObjectModel;
 
 namespace FolkerKinzel.VCards.Intls.Converters;
 

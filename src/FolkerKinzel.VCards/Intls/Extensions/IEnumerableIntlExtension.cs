@@ -94,7 +94,7 @@ internal static class IEnumerableIntlExtension
         => ItemOrNullIntl(values, GetIndex, filter, skipEmptyItems);
 
     private static IEnumerable<TSource> OrderByIntl<TSource>(
-        this IEnumerable<TSource?> values, 
+        this IEnumerable<TSource?> values,
         Func<TSource, int> sortingCriterion,
         bool discardEmptyItems) where TSource : VCardProperty
         => discardEmptyItems ? values.WhereNotEmpty().OrderBy(sortingCriterion)

@@ -1,10 +1,5 @@
-using System;
-using System.ComponentModel;
-using System.Data;
 using System.Globalization;
 using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models.Properties;

@@ -34,7 +34,7 @@ internal static class AdrConverter
              : typeValue.Equals(AddressTypesValue.PARCEL, comp) ? Adr.Parcel
              : typeValue.Equals(AddressTypesValue.BILLING, comp) ? Adr.Billing
              : typeValue.Equals(AddressTypesValue.DELIVERY, comp) ? Adr.Delivery
-             : null;  
+             : null;
     }
 
     internal static string ToVcfString(this Adr value)

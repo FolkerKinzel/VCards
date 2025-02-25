@@ -1,6 +1,5 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
@@ -56,7 +55,7 @@ public abstract class VCardProperty : ICloneable
 
     /// <summary>Returns <c>true</c>, if the <see cref="VCardProperty" /> object does
     /// not contain any usable data, otherwise <c>false</c>.</summary>
-    public abstract bool IsEmpty {  get; }
+    public abstract bool IsEmpty { get; }
 
     /// <summary>
     /// Returns a value that indicates whether <paramref name="prop"/>

@@ -3,7 +3,6 @@ using System.Xml.Linq;
 using FolkerKinzel.MimeTypes;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
-using FolkerKinzel.VCards.Intls;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
@@ -160,7 +159,7 @@ public readonly struct RawDataBuilder
         => Builder.VCard.Get<IEnumerable<DataProperty?>?>(_prop);
 
     [MemberNotNull(nameof(_builder))]
-    private IEnumerable<DataProperty> GetNonNullableProperty() 
+    private IEnumerable<DataProperty> GetNonNullableProperty()
         => GetProperty()?.OfType<DataProperty>() ?? [];
 
     private void SetProperty(IEnumerable<DataProperty?>? value)

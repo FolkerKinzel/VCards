@@ -185,7 +185,7 @@ public class AnsiFilterTests
         var cnt = new Counter();
 
         VCard vc = (await filter.DeserializeAsync(
-            t => Task.FromResult<Stream>(cnt.Count == 0 ? new StreamDummy(File.OpenRead(TestFiles.AnsiIssueInvalidEncodingVcf), canSeek: false) 
+            t => Task.FromResult<Stream>(cnt.Count == 0 ? new StreamDummy(File.OpenRead(TestFiles.AnsiIssueInvalidEncodingVcf), canSeek: false)
                                                         : null!), default))[0];
 
         Assert.AreNotEqual("Lämmerweg 12", vc.Addresses!.First()!.Value.Street[0]);

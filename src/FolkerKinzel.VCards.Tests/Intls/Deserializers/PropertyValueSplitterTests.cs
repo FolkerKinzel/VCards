@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using FolkerKinzel.VCards.Enums;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
 
@@ -39,7 +38,7 @@ public class PropertyValueSplitterTests
     [DataTestMethod]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ',', new string[] { @"Bun,go", @"Bon;go;Banga" })]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ';', new string[] { @"Bun,go,Bon;go", "Banga" })]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments",
         Justification = "Better for testing")]
     public void SplitTest2(string? valueString, char splitChar, string[] expected)
     {
@@ -53,7 +52,7 @@ public class PropertyValueSplitterTests
     [DataTestMethod]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ',', new string[] { @"Bun,go", @"Bon;go;Banga" })]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ';', new string[] { @"Bun,go,Bon;go", "Banga" })]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments",
         Justification = "Better for testing")]
     public void SplitTest3(string? valueString, char splitChar, string[] expected)
     {

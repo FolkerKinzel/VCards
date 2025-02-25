@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FolkerKinzel.VCards.Intls.Enums;
+﻿namespace FolkerKinzel.VCards.Intls.Enums;
 
 internal enum NameProp
 {

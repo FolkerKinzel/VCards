@@ -34,7 +34,7 @@ public sealed class TextProperty : VCardProperty, IEnumerable<TextProperty>
     }
 
     /// <summary>The data provided by the <see cref="TextProperty" />.</summary>
-    public new string Value { get;}
+    public new string Value { get; }
 
     /// <inheritdoc />
     public override bool IsEmpty { get; }

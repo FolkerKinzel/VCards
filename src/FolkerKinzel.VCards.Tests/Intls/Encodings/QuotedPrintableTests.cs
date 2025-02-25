@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FolkerKinzel.VCards.Intls.Encodings.Tests;
 
 [TestClass]
@@ -82,7 +81,7 @@ public class QuotedPrintableTests
     public void TruncatedTextTest1() => Assert.AreEqual("abcC", QuotedPrintable.Decode("abc=C".AsSpan(), null));
 
     [DataTestMethod]
-    [DataRow("abc==\r\nC3=A4","abcä")]
+    [DataRow("abc==\r\nC3=A4", "abcä")]
     [DataRow("abc=C=\r\n3=A4", "abcä")]
     [DataRow("abc=C3=\r\n=A4", "abcä")]
     [DataRow("abc==\r\nc3=a4", "abcä")]

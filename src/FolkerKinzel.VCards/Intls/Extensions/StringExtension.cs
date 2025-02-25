@@ -1,7 +1,3 @@
-using System.Text.RegularExpressions;
-using FolkerKinzel.VCards.Enums;
-using FolkerKinzel.VCards.Intls.Encodings;
-
 namespace FolkerKinzel.VCards.Intls.Extensions;
 
 internal static class StringExtension

@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
 
 [TestClass]
 public class NameOrderConverterTests

@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace FolkerKinzel.VCards.Intls.Converters.Tests;
+﻿namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 
 [TestClass]
 public class StringArrayConverterTests

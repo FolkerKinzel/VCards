@@ -2,7 +2,6 @@
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -199,10 +198,13 @@ public class V2Tests
     public void SpouseTest1()
     {
         var relProp = new RelationProperty(
-            Relation.Create(new VCard { NameViews = new NameProperty(NameBuilder.Create()
+            Relation.Create(new VCard
+            {
+                NameViews = new NameProperty(NameBuilder.Create()
                                                                                 .AddSurname("wife")
                                                                                 .AddGiven("best")
-                                                                                .Build()) }));
+                                                                                .Build())
+            }));
         relProp.Parameters.RelationType = Rel.Spouse;
 
         var vc = new VCard
@@ -508,8 +510,8 @@ public class V2Tests
     {
         VCard vc = VCardBuilder
             .Create()
-            .GenderViews.Add(Sex.Female, 
-                             parameters: p => p.NonStandard = new Dictionary<string, string> { { "X-TEST", "test"} },
+            .GenderViews.Add(Sex.Female,
+                             parameters: p => p.NonStandard = new Dictionary<string, string> { { "X-TEST", "test" } },
                              group: vc => "GROUP")
             .VCard;
 

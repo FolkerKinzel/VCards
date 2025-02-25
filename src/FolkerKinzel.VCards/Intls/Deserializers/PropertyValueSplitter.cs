@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Runtime.InteropServices;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
 

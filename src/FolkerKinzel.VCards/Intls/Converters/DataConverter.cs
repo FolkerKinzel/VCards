@@ -46,7 +46,7 @@ internal static class DataConverter
             : span.Equals(PropValue.FLOAT, comp) ? Data.Float
             : span.Equals(PropValue.BOOLEAN, comp) ? Data.Boolean
             : null;
-            
+
     }
 
     internal static string? ToVcfString(this Data? s)

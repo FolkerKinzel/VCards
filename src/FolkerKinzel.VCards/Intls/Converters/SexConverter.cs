@@ -16,14 +16,14 @@ internal static class SexConverter
     internal static Sex? Parse(char value)
     {
         return value.ToUpperInvariant() switch
-            {
-                'M' => Sex.Male,
-                'F' => Sex.Female,
-                'O' => Sex.Other,
-                'N' => Sex.NonOrNotApplicable,
-                'U' => Sex.Unknown,
-                _ => (Sex?)null
-            };
+        {
+            'M' => Sex.Male,
+            'F' => Sex.Female,
+            'O' => Sex.Other,
+            'N' => Sex.NonOrNotApplicable,
+            'U' => Sex.Unknown,
+            _ => (Sex?)null
+        };
     }
 
     internal static string? ToVcfString(this Sex? sex)

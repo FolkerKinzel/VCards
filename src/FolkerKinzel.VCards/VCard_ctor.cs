@@ -181,7 +181,7 @@ public sealed partial class VCard
                     Organizations = Concat(Organizations, new OrgProperty(vcfRow, this.Version));
                     break;
                 case PropKeys.GEO:
-                    if(GeoProperty.TryParse(vcfRow, out GeoProperty? geoProp))
+                    if (GeoProperty.TryParse(vcfRow, out GeoProperty? geoProp))
                     {
                         GeoCoordinates = Concat(GeoCoordinates, geoProp);
                     }
@@ -347,7 +347,7 @@ public sealed partial class VCard
                     Mailer = new TextProperty(vcfRow, this.Version);
                     break;
                 case PropKeys.TZ:
-                    if (TimeZoneProperty.TryParse(vcfRow, Version,  out TimeZoneProperty? tzProp))
+                    if (TimeZoneProperty.TryParse(vcfRow, Version, out TimeZoneProperty? tzProp))
                     {
                         TimeZones = Concat(TimeZones, tzProp);
                     }
@@ -488,7 +488,7 @@ public sealed partial class VCard
                     Created = new TimeStampProperty(vcfRow, info);
                     break;
                 case PropKeys.Rfc9554.GRAMGENDER:
-                    if(GramProperty.TryParse(vcfRow, out GramProperty? gramProperty))
+                    if (GramProperty.TryParse(vcfRow, out GramProperty? gramProperty))
                     {
                         GramGenders = Concat(GramGenders, gramProperty);
                     }
@@ -518,7 +518,8 @@ public sealed partial class VCard
 
                     NonStandards = Concat(NonStandards, new NonStandardProperty(vcfRow));
                     break;
-            };//switch
+            }
+            ;//switch
 
             vcfRowsParsed++;
         }//foreach

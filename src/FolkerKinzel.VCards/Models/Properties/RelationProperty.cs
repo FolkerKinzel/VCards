@@ -109,7 +109,7 @@ done:
                                    VCardPropertyPreparer.PrepareForText);
         }
         else
-        { 
+        {
             Debug.Assert(Value.VCard is not null);
             Parameters.DataType = Data.VCard;
         }

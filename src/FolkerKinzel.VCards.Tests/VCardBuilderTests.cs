@@ -4,7 +4,6 @@ using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -94,7 +93,7 @@ public class VCardBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add(AddressBuilder.Create().AddStreet( "Schlossallee").Build(),
+            .Addresses.Add(AddressBuilder.Create().AddStreet("Schlossallee").Build(),
                          parameters: p => p.AddressType = Adr.Dom)
             .Addresses.AttachLabels(AddressFormatter.Default)
             .Addresses.Add(AddressBuilder.Create().AddStreet("Elm Street").Build(),
@@ -451,9 +450,9 @@ public class VCardBuilderTests
     public void SetCreatedTest()
     {
         VCard vc = VCardBuilder.Create(setCreated: false).VCard;
-        Assert.IsNull (vc.Created);
+        Assert.IsNull(vc.Created);
 
-        VCardBuilder.Create (vc).Created.Set();
+        VCardBuilder.Create(vc).Created.Set();
         Assert.IsNotNull(vc.Created);
     }
 
@@ -694,7 +693,7 @@ public class VCardBuilderTests
         Assert.AreEqual(null, vc.GeoCoordinates.First()!.Group);
     }
 
-    
+
     [TestMethod()]
     public void AddGramGendersTest1()
     {
@@ -1127,69 +1126,69 @@ public class VCardBuilderTests
     public void AddMemberTest()
         => Assert.IsInstanceOfType<RelationBuilder>(VCardBuilder.Create().Members);
 
-//    [TestMethod()]
-//    public void AddNameViewTest1()
-//    {
-//        VCard vc = VCardBuilder
-//            .Create()
-//            .NameViews.Add(["Miller"], ["John"], null, null,
-//                            parameters: p => p.Language = "en",
-//                            group: vc => "gr1",
-//                            displayName: (b, p) => b.Add("John Miller")
-//)
-//            .NameViews.Add(["Müller"], ["Johann"], null, null,
-//                         parameters: p => p.Language = "de")
-//            .VCard;
+    //    [TestMethod()]
+    //    public void AddNameViewTest1()
+    //    {
+    //        VCard vc = VCardBuilder
+    //            .Create()
+    //            .NameViews.Add(["Miller"], ["John"], null, null,
+    //                            parameters: p => p.Language = "en",
+    //                            group: vc => "gr1",
+    //                            displayName: (b, p) => b.Add("John Miller")
+    //)
+    //            .NameViews.Add(["Müller"], ["Johann"], null, null,
+    //                         parameters: p => p.Language = "de")
+    //            .VCard;
 
-//        Assert.IsNotNull(vc.NameViews);
-//        vc.NameViews = vc.NameViews.Append(null);
+    //        Assert.IsNotNull(vc.NameViews);
+    //        vc.NameViews = vc.NameViews.Append(null);
 
-//        NameProperty prop1 = vc.NameViews!.First()!;
-//        NameProperty prop2 = vc.NameViews!.ElementAt(1)!;
+    //        NameProperty prop1 = vc.NameViews!.First()!;
+    //        NameProperty prop2 = vc.NameViews!.ElementAt(1)!;
 
-//        Assert.IsNotNull(vc.NameViews?.FirstOrDefault());
+    //        Assert.IsNotNull(vc.NameViews?.FirstOrDefault());
 
-//        Assert.AreEqual("Miller", prop1.Value.FamilyNames[0]);
-//        Assert.AreEqual("en", prop1.Parameters.Language);
-//        Assert.AreEqual("gr1", prop1.Group);
+    //        Assert.AreEqual("Miller", prop1.Value.FamilyNames[0]);
+    //        Assert.AreEqual("en", prop1.Parameters.Language);
+    //        Assert.AreEqual("gr1", prop1.Group);
 
-//        Assert.AreEqual("de", prop2.Parameters.Language);
+    //        Assert.AreEqual("de", prop2.Parameters.Language);
 
-//        vc = VCardBuilder.Create(vc).NameViews.Remove(x => x.Parameters.Language == "de").VCard;
-//        Assert.IsFalse(vc.NameViews!.Any(x => x?.Parameters.Language == "de"));
-//        vc = VCardBuilder.Create(vc)
-//                         .NameViews.Clear()
-//                         .VCard;
-//        Assert.IsNull(vc.NameViews);
-//    }
+    //        vc = VCardBuilder.Create(vc).NameViews.Remove(x => x.Parameters.Language == "de").VCard;
+    //        Assert.IsFalse(vc.NameViews!.Any(x => x?.Parameters.Language == "de"));
+    //        vc = VCardBuilder.Create(vc)
+    //                         .NameViews.Clear()
+    //                         .VCard;
+    //        Assert.IsNull(vc.NameViews);
+    //    }
 
-//    [TestMethod()]
-//    public void AddNameViewTest2()
-//    {
-//        VCard vc = VCardBuilder
-//            .Create()
-//            .NameViews.Add("Miller", "John", null, null,
-//                            parameters: p => p.Language = "en",
-//                            group: vc => "gr1",
-//                            displayName: (b, p) => b.Add("John Miller")
-//                            )
-//            .NameViews.Add("Müller", "Johann", null, null,
-//                         parameters: p => p.Language = "de")
-//            .VCard;
+    //    [TestMethod()]
+    //    public void AddNameViewTest2()
+    //    {
+    //        VCard vc = VCardBuilder
+    //            .Create()
+    //            .NameViews.Add("Miller", "John", null, null,
+    //                            parameters: p => p.Language = "en",
+    //                            group: vc => "gr1",
+    //                            displayName: (b, p) => b.Add("John Miller")
+    //                            )
+    //            .NameViews.Add("Müller", "Johann", null, null,
+    //                         parameters: p => p.Language = "de")
+    //            .VCard;
 
-//        Assert.IsNotNull(vc.NameViews);
-//        vc.NameViews = vc.NameViews.Append(null);
+    //        Assert.IsNotNull(vc.NameViews);
+    //        vc.NameViews = vc.NameViews.Append(null);
 
-//        NameProperty prop1 = vc.NameViews!.First()!;
-//        NameProperty prop2 = vc.NameViews!.ElementAt(1)!;
+    //        NameProperty prop1 = vc.NameViews!.First()!;
+    //        NameProperty prop2 = vc.NameViews!.ElementAt(1)!;
 
-//        Assert.IsNotNull(vc.NameViews?.FirstOrDefault());
+    //        Assert.IsNotNull(vc.NameViews?.FirstOrDefault());
 
-//        Assert.AreEqual("Miller", prop1.Value.FamilyNames[0]);
-//        Assert.AreEqual("en", prop1.Parameters.Language);
-//        Assert.AreEqual("gr1", prop1.Group);
+    //        Assert.AreEqual("Miller", prop1.Value.FamilyNames[0]);
+    //        Assert.AreEqual("en", prop1.Parameters.Language);
+    //        Assert.AreEqual("gr1", prop1.Group);
 
-//        Assert.AreEqual("de", prop2.Parameters.Language);
+    //        Assert.AreEqual("de", prop2.Parameters.Language);
     //}
 
     [TestMethod()]
@@ -1599,7 +1598,7 @@ public class VCardBuilderTests
         Assert.IsFalse(prop.Any());
         var relProp = new RelationProperty(Relation.Create(ContactID.Create("Susi")));
         relProp.Parameters.RelationType = Rel.Friend;
-        
+
         builder.VCard.Relations = relProp.Append(null);
         builder.Relations.Edit(p => prop = p);
         Assert.IsTrue(prop.Any());
@@ -1874,7 +1873,7 @@ public class VCardBuilderTests
         VCard vc = VCardBuilder
             .Create()
             .Xmls.Add(new XElement(ns + "Key2", "Second").ToString(), group: vc => "g")
-            .Xmls.Add(new XElement(ns + "Key1", "First") .ToString())
+            .Xmls.Add(new XElement(ns + "Key1", "First").ToString())
             .Xmls.SetPreferences()
             .VCard;
 

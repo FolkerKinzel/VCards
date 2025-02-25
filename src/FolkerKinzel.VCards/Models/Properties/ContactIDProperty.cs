@@ -1,8 +1,6 @@
-using System.ComponentModel;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Encodings;
 using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
@@ -33,15 +31,15 @@ public sealed class ContactIDProperty : VCardProperty
         : base(new ParameterSection(), group)
         => Value = value ?? throw new ArgumentNullException(nameof(value));
 
-    internal ContactIDProperty(VcfRow vcfRow, VCdVersion version) 
+    internal ContactIDProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
         if (Parameters.DataType == Data.Text)
         {
             string? val = StringDeserializer.Deserialize(vcfRow, version);
 
-            Value = string.IsNullOrWhiteSpace(val) 
-                        ? ContactID.Empty 
+            Value = string.IsNullOrWhiteSpace(val)
+                        ? ContactID.Empty
                         : ContactID.Create(val);
             return;
         }
@@ -58,8 +56,8 @@ public sealed class ContactIDProperty : VCardProperty
             Value = ContactID.Create(uri);
         }
 
-        Value = string.IsNullOrWhiteSpace(uriString) 
-                    ? ContactID.Empty 
+        Value = string.IsNullOrWhiteSpace(uriString)
+                    ? ContactID.Empty
                     : ContactID.Create(uriString);
     }
 

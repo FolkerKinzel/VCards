@@ -1,6 +1,4 @@
-﻿using System.Text;
-using FolkerKinzel.VCards.Enums;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FolkerKinzel.VCards.Enums;
 namespace FolkerKinzel.VCards.Intls.Extensions.Tests;
 
 [TestClass]

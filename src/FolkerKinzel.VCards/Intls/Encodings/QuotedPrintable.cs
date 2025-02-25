@@ -1,4 +1,3 @@
-using System;
 using System.Globalization;
 
 namespace FolkerKinzel.VCards.Intls.Encodings;
@@ -351,7 +350,7 @@ Repeat:
             }
 #else
             return byte.TryParse(charr, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out byte result)
-                ? result 
+                ? result
                 : (byte)'?';
 #endif
         }

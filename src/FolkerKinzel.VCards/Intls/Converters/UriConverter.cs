@@ -32,10 +32,10 @@ internal static class UriConverter
     internal static string GetFileTypeExtensionFromUri(Uri? uri)
         => uri is null
             ? MimeCache.DefaultFileTypeExtension
-            : uri.IsAbsoluteUri 
+            : uri.IsAbsoluteUri
                 ? ParseFileTypeExtFromAbsoluteUri(uri)
                 : ParseFileTypeExtFromRelativeUri(uri);
-    
+
 
     private static string ParseFileTypeExtFromAbsoluteUri(Uri uri)
     {
@@ -74,7 +74,7 @@ internal static class UriConverter
         // Path.GetExtension can throw an ArgumentException in NETSTANDARD2_0 and NET462
         // if segments would contain one of the characters defined in Path.GetInvalidPathChars().
 #if NETSTANDARD2_0 || NET462
-            originalString = Uri.EscapeDataString(originalString);
+        originalString = Uri.EscapeDataString(originalString);
 #endif
         string extRel = Path.GetExtension(originalString);
         return extRel.StartsWith('.') ? extRel : MimeCache.DefaultFileTypeExtension;

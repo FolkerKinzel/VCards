@@ -1,7 +1,5 @@
-﻿using FolkerKinzel.VCards.Models;
-using FolkerKinzel.VCards.Models.Properties;
+﻿using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
 

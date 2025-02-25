@@ -95,7 +95,7 @@ internal sealed class ParameterSerializer3_0(VcfOpts options) : ParameterSeriali
     }
 
     #endregion
-    
+
     #region Build
 
     protected override void BuildAdrPara(bool isPref)
@@ -127,9 +127,9 @@ internal sealed class ParameterSerializer3_0(VcfOpts options) : ParameterSeriali
 
     protected override void BuildCapuriPara(bool isPref)
     {
-        if(isPref) 
-        { 
-            AppendRfc2739Pref(); 
+        if (isPref)
+        {
+            AppendRfc2739Pref();
         }
     }
 
@@ -149,7 +149,7 @@ internal sealed class ParameterSerializer3_0(VcfOpts options) : ParameterSeriali
         }
     }
 
-    protected override void BuildFburlPara(bool isPref) 
+    protected override void BuildFburlPara(bool isPref)
     {
         if (isPref)
         {

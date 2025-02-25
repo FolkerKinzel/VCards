@@ -1,6 +1,4 @@
-﻿using System;
-using FolkerKinzel.VCards.Intls;
-using FolkerKinzel.VCards.Intls.Converters;
+﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Resources;
 
@@ -156,7 +154,7 @@ public abstract class ContactID : IEquatable<ContactID>
                              Action<Guid, TArg>? guidAction = null,
                              Action<Uri, TArg>? uriAction = null,
                              Action<string, TArg>? stringAction = null);
-    
+
     /// <summary>
     /// Converts the encapsulated value to <typeparamref name="TResult"/>.
     /// </summary>
@@ -215,7 +213,7 @@ public abstract class ContactID : IEquatable<ContactID>
     /// <inheritdoc/>
     [ExcludeFromCodeCoverage]
     public override int GetHashCode() // Must be overridden in derived classes.
-        => throw new NotImplementedException(); 
+        => throw new NotImplementedException();
 
     /// <summary>
     /// Overloads the equality operator for <see cref="ContactID"/> instances.
