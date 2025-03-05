@@ -84,12 +84,11 @@ public sealed class AddressProperty : VCardProperty, IEnumerable<AddressProperty
         => ((IEnumerable<AddressProperty>)this).GetEnumerator();
 
     /// <inheritdoc/>
-    int ICompoundProperty.Count
-        => ((IReadOnlyList<IReadOnlyList<string>>)Value).Count;
+    int ICompoundProperty.Count => Address.MAX_COUNT;
 
     /// <inheritdoc/>
     IReadOnlyList<string> ICompoundProperty.this[int index]
-        => ((IReadOnlyList<IReadOnlyList<string>>)Value)[index];
+        => Value[index];
 
     /// <inheritdoc />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

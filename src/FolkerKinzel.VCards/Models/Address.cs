@@ -16,10 +16,10 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="AddressBuilder"/>
 /// <seealso cref="AddressProperty"/>
 /// <seealso cref="VCard.Addresses"/>
-public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
+public sealed class Address
 {
     private const int STANDARD_COUNT = (int)AdrProp.Country + 1;
-    private const int MAX_COUNT = (int)AdrProp.Direction + 1;
+    internal const int MAX_COUNT = (int)AdrProp.Direction + 1;
     private readonly Dictionary<AdrProp, string[]> _dic = [];
 
     private string[] Get(AdrProp prop)
@@ -306,14 +306,14 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
 
     internal static Address Empty => new(); // Not a singleton
 
-    /// <inheritdoc/>
-    int IReadOnlyCollection<IReadOnlyList<string>>.Count => MAX_COUNT;
+    ///// <inheritdoc/>
+    //internal int Count => MAX_COUNT;
 
     /// <inheritdoc/>
     /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is 
     /// less than zero, or equal or greater than
     /// <see cref="IReadOnlyCollection{T}.Count"/>.</exception>
-    IReadOnlyList<string> IReadOnlyList<IReadOnlyList<string>>.this[int index]
+    internal IReadOnlyList<string> this[int index]
     {
         get
         {
@@ -333,17 +333,17 @@ public sealed class Address : IReadOnlyList<IReadOnlyList<string>>
         }
     }
 
-    /// <inheritdoc/>
-    IEnumerator<IReadOnlyList<string>> IEnumerable<IReadOnlyList<string>>.GetEnumerator()
-    {
-        for (int i = 0; i < MAX_COUNT; i++)
-        {
-            yield return ((IReadOnlyList<IReadOnlyList<string>>)this)[i];
-        }
-    }
+    ///// <inheritdoc/>
+    //IEnumerator<IReadOnlyList<string>> IEnumerable<IReadOnlyList<string>>.GetEnumerator()
+    //{
+    //    for (int i = 0; i < MAX_COUNT; i++)
+    //    {
+    //        yield return ((IReadOnlyList<IReadOnlyList<string>>)this)[i];
+    //    }
+    //}
 
-    /// <inheritdoc/>
-    IEnumerator IEnumerable.GetEnumerator() => ((IReadOnlyList<IReadOnlyList<string>>)this).GetEnumerator();
+    ///// <inheritdoc/>
+    //IEnumerator IEnumerable.GetEnumerator() => ((IReadOnlyList<IReadOnlyList<string>>)this).GetEnumerator();
 
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
