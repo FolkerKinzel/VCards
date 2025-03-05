@@ -41,7 +41,7 @@ internal sealed class ContactIDString : ContactID
                                       Action<Uri, TArg>? uriAction = null,
                                       Action<string, TArg>? stringAction = null) => stringAction?.Invoke(String, arg);
 
-    public override bool Equals(ContactID? other) => StringComparer.Ordinal.Equals(String, other?.String);
+    public override bool Equals([NotNullWhen(true)] ContactID? other) => StringComparer.Ordinal.Equals(String, other?.String);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(String);

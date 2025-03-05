@@ -6,7 +6,8 @@ namespace FolkerKinzel.VCards.Intls.Converters;
 
 internal static class CompoundObjectConverter
 {
-    public static string ToString<TKey>(IReadOnlyDictionary<TKey, string[]> sourceDic) where TKey : struct, Enum
+    public static string ToString<TKey>(IReadOnlyDictionary<TKey, string[]> sourceDic) 
+        where TKey : struct, Enum
     {
         if (sourceDic.Count == 0)
         {

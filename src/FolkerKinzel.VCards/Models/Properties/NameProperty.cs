@@ -60,11 +60,10 @@ public sealed class NameProperty : VCardProperty, IEnumerable<NameProperty>, ICo
     public override bool IsEmpty => Value.IsEmpty;
 
     /// <inheritdoc/>
-    int ICompoundProperty.Count => ((IReadOnlyList<IReadOnlyList<string>>)Value).Count;
+    int ICompoundModel.Count => Name.MAX_COUNT;
 
     /// <inheritdoc/>
-    IReadOnlyList<string> ICompoundProperty.this[int index]
-        => ((IReadOnlyList<IReadOnlyList<string>>)Value)[index];
+    IReadOnlyList<string> ICompoundModel.this[int index] => ((ICompoundModel)Value)[index];
 
     /// <inheritdoc />
     public override object Clone() => new NameProperty(this);

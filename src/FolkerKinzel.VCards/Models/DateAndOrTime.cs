@@ -369,7 +369,7 @@ public abstract class DateAndOrTime : IEquatable<DateAndOrTime>
     /// <remarks>Equality is given if <paramref name="obj"/> is a <see cref="DateAndOrTime"/>
     /// instance, and if the content of <paramref name="obj"/> has the same <see cref="Type"/>
     /// and is equal.</remarks>
-    public override bool Equals(object? obj) => obj is DateAndOrTime dto && Equals(dto);
+    public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as DateAndOrTime);
 
     /// <inheritdoc/>
     [ExcludeFromCodeCoverage]

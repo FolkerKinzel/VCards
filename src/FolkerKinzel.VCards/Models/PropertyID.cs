@@ -91,10 +91,11 @@ public sealed class PropertyID : IEquatable<PropertyID>, IEnumerable<PropertyID>
     #region IEquatable
 
     /// <inheritdoc />
-    public override bool Equals(object? obj) => obj is PropertyID other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as PropertyID);
 
     /// <inheritdoc />
-    public bool Equals(PropertyID? other) => other is not null && ID == other.ID && App == other.App;
+    public bool Equals([NotNullWhen(true)] PropertyID? other)
+        => other is not null && ID == other.ID && App == other.App;
 
     /// <inheritdoc />
     public override int GetHashCode() => HashCode.Combine(ID, App);

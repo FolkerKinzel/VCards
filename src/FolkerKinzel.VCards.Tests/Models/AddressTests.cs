@@ -55,23 +55,54 @@ public class AddressTests
         StringAssert.Contains(s, "7a");
     }
 
+    //[TestMethod]
+    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
+    //    "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
+    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
+    //    "CA1829:Use Length/Count property instead of Count() when available", Justification = "Test")]
+    //public void IEnumerableTest1()
+    //{
+    //    IReadOnlyList<IReadOnlyList<string>> adr = new Address(AddressBuilder.Create());
+    //    Assert.AreEqual(adr.Count, adr.Count());
+    //}
+
+    //[TestMethod]
+    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
+    //    "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
+    //public void IEnumerableTest2()
+    //{
+    //    IReadOnlyList<IReadOnlyList<string>> adr = new Address(AddressBuilder.Create());
+    //    Assert.AreEqual(adr.Count, adr.AsWeakEnumerable().Count());
+    //}
+
     [TestMethod]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
-        "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
-        "CA1829:Use Length/Count property instead of Count() when available", Justification = "Test")]
-    public void IEnumerableTest1()
+    public void EqualsTest1()
     {
-        IReadOnlyList<IReadOnlyList<string>> adr = new Address(AddressBuilder.Create());
-        Assert.AreEqual(adr.Count, adr.Count());
+        var address1 = Address.Empty;
+        var address2 = address1;
+        Assert.IsTrue(address1 == address2);
+        Assert.IsFalse(address1 != address2);
+        object o1 = address1;
+        object o2 = address2;
+        Assert.IsTrue(o1.Equals(o2));
+        Assert.AreEqual(o1.GetHashCode(), o2.GetHashCode());
+
+        Assert.IsFalse(o1.Equals(42));
     }
 
     [TestMethod]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
-        "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
-    public void IEnumerableTest2()
+    public void EqualsTest2()
     {
-        IReadOnlyList<IReadOnlyList<string>> adr = new Address(AddressBuilder.Create());
-        Assert.AreEqual(adr.Count, adr.AsWeakEnumerable().Count());
+        var address1 = AddressBuilder.Create().AddLocality("Berlin").Build();
+        
+        Address? address2 = null;
+        Assert.IsFalse(address1.Equals(address2));
+        Assert.IsFalse(address1 == address2);
+        Assert.IsFalse(address2 == address1);
+
+        var address3 = AddressBuilder.Create().AddLocality("Berlin").Build();
+
+        Assert.IsTrue(address1.Equals(address3));
+        Assert.AreEqual(address1.GetHashCode(), address3.GetHashCode());
     }
 }

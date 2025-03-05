@@ -33,15 +33,18 @@ internal sealed class ContactIDGuid : ContactID
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch(Action<Guid>? guidAction = null,
                                 Action<Uri>? uriAction = null,
-                                Action<string>? stringAction = null) => guidAction?.Invoke(Guid.Value);
+                                Action<string>? stringAction = null) 
+        => guidAction?.Invoke(Guid.Value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Switch<TArg>(TArg arg,
                                       Action<Guid, TArg>? guidAction = null,
                                       Action<Uri, TArg>? uriAction = null,
-                                      Action<string, TArg>? stringAction = null) => guidAction?.Invoke(Guid.Value, arg);
+                                      Action<string, TArg>? stringAction = null)
+        => guidAction?.Invoke(Guid.Value, arg);
 
-    public override bool Equals(ContactID? other) => other is ContactIDGuid ctGuid && Guid.Value.Equals(ctGuid.Guid.Value);
+    public override bool Equals([NotNullWhen(true)] ContactID? other)
+        => other is ContactIDGuid ctGuid && Guid.Value.Equals(ctGuid.Guid.Value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => Guid.Value.GetHashCode();

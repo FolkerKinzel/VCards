@@ -1,9 +1,11 @@
 using System.Collections;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties;
 
@@ -17,10 +19,10 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="NameBuilder"/>
 /// <seealso cref="NameProperty"/>
 /// <seealso cref="VCard.NameViews"/>
-public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
+public sealed class Name : ICompoundModel, IEquatable<Name>
 {
     private const int STANDARD_COUNT = 5;
-    private const int MAX_COUNT = 7;
+    internal const int MAX_COUNT = 7;
     private readonly Dictionary<NameProp, string[]> _dic = [];
 
     private string[] Get(NameProp prop)
@@ -39,8 +41,6 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
     /// 
     /// <param name="builder">The <see cref="NameBuilder"/> whose content is used.</param>
     /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <c>null</c>.</exception>
-    [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
-        Justification = "Performance: Collection initializer initializes a new List.")]
     internal Name(NameBuilder builder)
     {
         string[] surnames, surnames2, suffixes, generation;
@@ -51,7 +51,7 @@ public sealed class Name : IReadOnlyList<IReadOnlyList<string>>
             if (kvp.Value.Count != 0)
             {
                 // Copy kvp.Value because it comes from NameBuilder and can be reused!
-                string[] val = kvp.Value.ToArray();
+                string[] val = [.. kvp.Value];
                 _dic[kvp.Key] = val;
 
                 switch (kvp.Key)
@@ -151,7 +151,7 @@ repeat:
 
             ReadOnlySpan<char> span = mem.Span;
             string[] coll = span.Contains(',')
-                ? Splitted(in mem, version).ToArray()
+                ? [.. Splitted(in mem, version)]
                 : StringArrayConverter.ToStringArray(span.UnMaskValue(version));
 
             if (coll.ContainsData())
@@ -211,12 +211,10 @@ repeat:
     internal static Name Empty => new(); // Not a singleton
 
     /// <inheritdoc/>
-    int IReadOnlyCollection<IReadOnlyList<string>>.Count => MAX_COUNT;
+    int ICompoundModel.Count => MAX_COUNT;
 
     /// <inheritdoc/>
-    /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is less than zero, or equal or greater than
-    /// <see cref="IReadOnlyCollection{T}.Count"/></exception>
-    IReadOnlyList<string> IReadOnlyList<IReadOnlyList<string>>.this[int index]
+    IReadOnlyList<string> ICompoundModel.this[int index]
     {
         get
         {
@@ -235,18 +233,6 @@ repeat:
             };
         }
     }
-
-    /// <inheritdoc/>
-    IEnumerator<IReadOnlyList<string>> IEnumerable<IReadOnlyList<string>>.GetEnumerator()
-    {
-        for (int i = 0; i < MAX_COUNT; i++)
-        {
-            yield return ((IReadOnlyList<IReadOnlyList<string>>)this)[i];
-        }
-    }
-
-    /// <inheritdoc/>
-    IEnumerator IEnumerable.GetEnumerator() => ((IReadOnlyList<IReadOnlyList<string>>)this).GetEnumerator();
 
     /// <inheritdoc/>
     public override string ToString() => CompoundObjectConverter.ToString(_dic);
@@ -329,6 +315,35 @@ repeat:
                                  ? oldProps
                                  : list;
     }
+
+    /// <inheritdoc/>
+    public bool Equals([NotNullWhen(true)] Name? other) => other is not null && CompoundModelHelper.Equals(this, other);
+
+    /// <inheritdoc/>
+    public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as Name);
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => CompoundModelHelper.GetHashCode(this);
+
+    /// <summary>
+    /// Overloads the equality operator for <see cref="Name"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="Name"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="Name"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the contents of <paramref name="left"/> and 
+    /// <paramref name="right"/> are equal, otherwise <c>false</c>.</returns>
+    public static bool operator ==(Name? left, Name? right)
+        => ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
+
+    /// <summary>
+    /// Overloads the not-equal-to operator for <see cref="Name"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="Name"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="Name"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the contents of <paramref name="left"/> and 
+    /// <paramref name="right"/> are not equal, otherwise <c>false</c>.</returns>
+    public static bool operator !=(Name? left, Name? right)
+        => !(left == right);
 }
 
 

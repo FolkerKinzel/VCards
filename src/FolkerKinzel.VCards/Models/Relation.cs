@@ -202,7 +202,7 @@ public sealed class Relation : IEquatable<Relation>
     /// or in its <see cref="VCard"/> property) that is equal to that one that <paramref name="other"/> encapsulates.
     /// 
     /// </remarks>
-    public bool Equals(Relation? other)
+    public bool Equals([NotNullWhen(true)] Relation? other)
         => other is not null && Convert(
                       other,
                       static (vc, other) => VCardProperty.IsNullOrEmpty(vc.ContactID)
@@ -221,7 +221,7 @@ public sealed class Relation : IEquatable<Relation>
     /// <remarks>Equality is given if <paramref name="obj"/> is a <see cref="Relation"/>
     /// instance, and if the content of <paramref name="obj"/> has the same <see cref="Type"/>
     /// and is equal.</remarks>
-    public override bool Equals(object? obj) => Equals(obj as Relation);
+    public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as Relation);
 
     /// <inheritdoc/>
     public override int GetHashCode()

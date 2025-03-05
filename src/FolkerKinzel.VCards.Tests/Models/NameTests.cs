@@ -145,23 +145,60 @@ public class NameTests
         Assert.AreEqual(0, prop.Value.Surnames.Count);
     }
 
+    //[TestMethod]
+    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
+    //    "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
+    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
+    //    "CA1829:Use Length/Count property instead of Count() when available", Justification = "Test")]
+    //public void IEnumerableTest1()
+    //{
+    //    IReadOnlyList<IReadOnlyList<string>> name = new Name(NameBuilder.Create());
+    //    Assert.AreEqual(name.Count, name.Count());
+    //}
+
+    //[TestMethod]
+    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
+    //    "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
+    //public void IEnumerableTest2()
+    //{
+    //    IReadOnlyList<IReadOnlyList<string>> name = new Name(NameBuilder.Create());
+    //    Assert.AreEqual(name.Count, name.AsWeakEnumerable().Count());
+    //}
+
     [TestMethod]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
-        "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
-        "CA1829:Use Length/Count property instead of Count() when available", Justification = "Test")]
-    public void IEnumerableTest1()
+    public void EqualsTest1()
     {
-        IReadOnlyList<IReadOnlyList<string>> name = new Name(NameBuilder.Create());
-        Assert.AreEqual(name.Count, name.Count());
+        var name1 = Name.Empty;
+        var name2 = name1;
+        Assert.IsTrue(name1 == name2);
+        Assert.IsFalse(name1 != name2);
+        object o1 = name1;
+        object o2 = name2;
+        Assert.IsTrue(o1.Equals(o2));
+        Assert.AreEqual(o1.GetHashCode(), o2.GetHashCode());
+
+        Assert.IsFalse(o1.Equals(42));
     }
 
     [TestMethod]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance",
-        "CA1826:Do not use Enumerable methods on indexable collections", Justification = "Test")]
-    public void IEnumerableTest2()
+    public void EqualsTest2()
     {
-        IReadOnlyList<IReadOnlyList<string>> name = new Name(NameBuilder.Create());
-        Assert.AreEqual(name.Count, name.AsWeakEnumerable().Count());
+        var name1 = NameBuilder.Create().AddGiven("Folker").Build();
+
+        Name? name2 = null;
+        Assert.IsFalse(name1.Equals(name2));
+        Assert.IsFalse(name1 == name2);
+        Assert.IsFalse(name2 == name1);
+
+        var name3 = NameBuilder.Create().AddGiven("Folker").Build();
+
+        Assert.IsTrue(name1.Equals(name3));
+        Assert.AreEqual(name1.GetHashCode(), name3.GetHashCode());
+
+        var name4 = NameBuilder.Create().AddGiven("folker").Build();
+        Assert.IsFalse(name1.Equals(name4));
+
+        var name5 = NameBuilder.Create().AddSurname("Kinzel").Build();
+        Assert.IsFalse(name1.Equals(name5));
     }
 }

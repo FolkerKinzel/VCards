@@ -202,13 +202,13 @@ public abstract class ContactID : IEquatable<ContactID>
     /// <remarks>Equality is given if <paramref name="other"/> is a <see cref="ContactID"/>
     /// instance, and if the content of <paramref name="other"/> has the same <see cref="Type"/>
     /// and is equal.</remarks>
-    public abstract bool Equals(ContactID? other);
+    public abstract bool Equals([NotNullWhen(true)] ContactID? other);
 
     /// <inheritdoc/>
     /// <remarks>Equality is given if <paramref name="obj"/> is a <see cref="ContactID"/>
     /// instance, and if the content of <paramref name="obj"/> has the same <see cref="Type"/>
     /// and is equal.</remarks>
-    public override bool Equals(object? obj) => Equals(obj as ContactID);
+    public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as ContactID);
 
     /// <inheritdoc/>
     [ExcludeFromCodeCoverage]

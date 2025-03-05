@@ -1,9 +1,11 @@
 using System.Collections;
 using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Formatters;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
 using FolkerKinzel.VCards.Intls.Enums;
 using FolkerKinzel.VCards.Intls.Extensions;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties;
 
@@ -16,7 +18,7 @@ namespace FolkerKinzel.VCards.Models;
 /// <seealso cref="AddressBuilder"/>
 /// <seealso cref="AddressProperty"/>
 /// <seealso cref="VCard.Addresses"/>
-public sealed class Address
+public sealed class Address : ICompoundModel, IEquatable<Address>
 {
     private const int STANDARD_COUNT = (int)AdrProp.Country + 1;
     internal const int MAX_COUNT = (int)AdrProp.Direction + 1;
@@ -25,8 +27,6 @@ public sealed class Address
     private string[] Get(AdrProp prop)
         => _dic.TryGetValue(prop, out string[]? coll) ? coll : [];
 
-    [SuppressMessage("Style", "IDE0305:Simplify collection initialization",
-        Justification = "Performance: Collection initializer initializes a new List.")]
     internal Address(AddressBuilder builder)
     {
         Dictionary<AdrProp, string[]>? newVals = null;
@@ -40,7 +40,7 @@ public sealed class Address
             if (kvp.Value.Count != 0)
             {
                 // Copy kvp.Value because it comes from AddressBuilder and can be reused!
-                string[] val = kvp.Value.ToArray();
+                string[] val = [.. kvp.Value];
                 _dic[kvp.Key] = val;
 
                 switch (kvp.Key)
@@ -137,7 +137,7 @@ public sealed class Address
 
             ReadOnlySpan<char> span = mem.Span;
             string[] coll = span.Contains(',')
-                ? Splitted(in mem, version).ToArray()
+                ? [.. Splitted(in mem, version)]
                 : StringArrayConverter.ToStringArray(span.UnMaskValue(version));
 
             if (!coll.ContainsData())
@@ -306,14 +306,11 @@ public sealed class Address
 
     internal static Address Empty => new(); // Not a singleton
 
-    ///// <inheritdoc/>
-    //internal int Count => MAX_COUNT;
+    /// <inheritdoc/>
+    int ICompoundModel.Count => MAX_COUNT;
 
     /// <inheritdoc/>
-    /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is 
-    /// less than zero, or equal or greater than
-    /// <see cref="IReadOnlyCollection{T}.Count"/>.</exception>
-    internal IReadOnlyList<string> this[int index]
+    IReadOnlyList<string> ICompoundModel.this[int index]
     {
         get
         {
@@ -332,18 +329,6 @@ public sealed class Address
             };
         }
     }
-
-    ///// <inheritdoc/>
-    //IEnumerator<IReadOnlyList<string>> IEnumerable<IReadOnlyList<string>>.GetEnumerator()
-    //{
-    //    for (int i = 0; i < MAX_COUNT; i++)
-    //    {
-    //        yield return ((IReadOnlyList<IReadOnlyList<string>>)this)[i];
-    //    }
-    //}
-
-    ///// <inheritdoc/>
-    //IEnumerator IEnumerable.GetEnumerator() => ((IReadOnlyList<IReadOnlyList<string>>)this).GetEnumerator();
 
     /// <inheritdoc/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -393,5 +378,32 @@ public sealed class Address
         return false;
     }
 
+    /// <inheritdoc/>
+    public bool Equals([NotNullWhen(true)] Address? other) => other is not null && CompoundModelHelper.Equals(this, other);
 
+    /// <inheritdoc/>
+    public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as Address);
+    
+    /// <inheritdoc/>
+    public override int GetHashCode() => CompoundModelHelper.GetHashCode(this);
+
+    /// <summary>
+    /// Overloads the equality operator for <see cref="Address"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="Address"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="Address"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the contents of <paramref name="left"/> and 
+    /// <paramref name="right"/> are equal, otherwise <c>false</c>.</returns>
+    public static bool operator ==(Address? left, Address? right)
+        => ReferenceEquals(left, right) || (left?.Equals(right) ?? false);
+
+    /// <summary>
+    /// Overloads the not-equal-to operator for <see cref="Address"/> instances.
+    /// </summary>
+    /// <param name="left">The left <see cref="Address"/> object or <c>null</c>.</param>
+    /// <param name="right">The right <see cref="Address"/> object or <c>null</c>.</param>
+    /// <returns><c>true</c> if the contents of <paramref name="left"/> and 
+    /// <paramref name="right"/> are not equal, otherwise <c>false</c>.</returns>
+    public static bool operator !=(Address? left, Address? right)
+        => !(left == right);
 }
