@@ -1,6 +1,6 @@
 ﻿# FolkerKinzel.VCards
 ## Roadmap
-### 8.1.0
+### 8.3.0
 - [ ] Implement `VCard.Clean()`.
 - [ ] Implement `IEnumerable<VCard> Clean(this IEnumerable<VCard?>)`
 - [ ] New extension methods: 
@@ -8,6 +8,19 @@
 void MakePref(this IEnumerable<VCardProperty?>? containingCollection, VCardProperty prop);
 void MakeFirst(this IEnumerable<VCardProperty?>? containingCollection, VCardProperty prop);
 ```
+
+### 8.2.0
+- [ ] Implement `IEquatable<AppID>` in `AppID`
+- [ ] Implement `IEquatable<Gender>` in `Gender`
+- [ ] Implement `IEquatable<Organization>` in `Organization`
+- [ ] Implement `IEquatable<RawData>` in `RawData`
+- [ ] Implement `IEquatable<TimeZoneID>` in `TimeZoneID`
+- [ ] Implement `IEquatable<ParameterSection>` in `ParameterSection`
+- [ ] Implement `IEquatable<VCardProperty>` in `VCardProperty`
+
+### 8.1.0
+- [x] Implement `IEquatable<Address>` in `Address`
+- [x] Implement `IEquatable<Name>` in `Name`
 
 ### 8.0.1
 - [x] Remove symbols that are marked as `Obsolete` errors.

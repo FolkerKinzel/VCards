@@ -48,10 +48,11 @@ public sealed class TimeZoneID
         return new TimeZoneID(value);
     }
 
-    /// <summary> Tries to parse a <see cref="string" /> as <see cref="TimeZoneID" /> object. </summary>
+    /// <summary> Tries to parse a <see cref="string" /> as <see cref="TimeZoneID" /> object.
+    /// </summary>
     /// <param name="value">Identifier of the time zone. It should be an identifier
-    /// from the "IANA Time Zone Database". (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    /// .)</param>
+    /// from the "IANA Time Zone Database". 
+    /// (See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones .)</param>
     /// <param name="timeZoneID">If parsing was successful, the parameter contains a new 
     /// <see cref="TimeZoneID" /> object. The parameter is passed uninitialized.</param>
     /// <returns> <c>true</c> if parsing was successful, otherwise <c>false</c>.</returns>

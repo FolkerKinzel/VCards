@@ -548,7 +548,7 @@ public sealed class AddressBuilder
             return this;
         }
 
-        _dic[prop] = new List<string>(valsToAdd);
+        _dic[prop] = [.. valsToAdd];
         return this;
     }
 
