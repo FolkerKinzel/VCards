@@ -8,10 +8,10 @@
     <!-- .nuget-Package: -->
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
-    <Version>8.1.0</Version>
-    <FileVersion>8.1.0.5</FileVersion>
+    <Version>8.1.1</Version>
+    <FileVersion>8.1.1.2</FileVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
-    <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v8.1.0</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v8.1.1</PackageReleaseNotes>
     <PackageTags>vCard VCF</PackageTags>
     <Description>.NET library for reading, writing, and converting VCF files (vCards)</Description>
     <Authors>Folker Kinzel</Authors>
@@ -139,7 +139,7 @@
     <None Remove="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FolkerKinzel.DataUrls" Version="2.0.3" />
+    <PackageReference Include="FolkerKinzel.DataUrls" Version="2.0.4" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -153,7 +153,7 @@
     <PackageReference Include="Portable.System.DateTimeOnly" Version="9.0.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.4" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\Res.Designer.cs">
