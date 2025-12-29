@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<OutputType>Exe</OutputType>
-		<TargetFramework>net9.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<FileVersion>1.0.0.124</FileVersion>
-	</PropertyGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="if $(ConfigurationName) == Release if '$(TargetFramework)' == 'net5.0' dotnet $(SolutionDir)IncVersion\IncVersion.dll $(ProjectDir)$(ProjectFileName) --revision" />
-	</Target>
-	<ItemGroup>
-		<Compile Remove="AnsiFilterExample_old.cs" />
-		<Compile Remove="NullableTest.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="TimeZoneConverter" Version="6.1.0" />
-	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
-	</ItemGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <FileVersion>1.0.0.129</FileVersion>
+  </PropertyGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if $(ConfigurationName) == Release dotnet $(SolutionDir)IncVersion\IncVersion.dll $(ProjectDir)$(ProjectFileName) --revision" />
+  </Target>
+  <ItemGroup>
+    <Compile Remove="AnsiFilterExample_old.cs" />
+    <Compile Remove="NullableTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="TimeZoneConverter" Version="6.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
+  </ItemGroup>
 </Project>

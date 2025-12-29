@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0;net48</TargetFrameworks>
-		<LangVersion>13.0</LangVersion>
+		<TargetFrameworks>net10.0;net48</TargetFrameworks>
+		<LangVersion>14.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<IsPackable>false</IsPackable>
@@ -54,7 +54,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="System.Linq.Async" Version="6.0.1" />	
+		<PackageReference Include="System.Linq.Async" Version="7.0.0" />	
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\FolkerKinzel.VCards\FolkerKinzel.VCards.csproj" />
