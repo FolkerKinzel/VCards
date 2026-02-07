@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>8.1.2</Version>
-    <FileVersion>8.1.2.5</FileVersion>
+    <FileVersion>8.1.2.6</FileVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v8.1.2</PackageReleaseNotes>
     <PackageTags>vCard VCF</PackageTags>
