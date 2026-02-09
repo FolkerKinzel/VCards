@@ -18,6 +18,8 @@ namespace Net472Issue
             var builder = VCardBuilder.Create(true, true);
 
             builder.NameViews.Add(nb.Build());
+
+            Console.WriteLine(builder.VCard.NameViews.First().Value.Given[0]);
         }
     }
 }
