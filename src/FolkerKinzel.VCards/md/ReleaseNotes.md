@@ -1,4 +1,3 @@
-- Adds a .NET 10.0 DLL to the NuGet package.
 - Dependency updates
 
 &nbsp;
