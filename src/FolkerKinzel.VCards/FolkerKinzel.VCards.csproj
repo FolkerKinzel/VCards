@@ -9,7 +9,7 @@
     <PackageId>FolkerKinzel.VCards</PackageId>
     <Product>FolkerKinzel.VCards</Product>
     <Version>8.1.3</Version>
-    <FileVersion>8.1.3.2</FileVersion>
+    <FileVersion>8.1.3.4</FileVersion>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/FolkerKinzel/VCards/releases/tag/v8.1.3</PackageReleaseNotes>
     <PackageTags>vCard VCF</PackageTags>
@@ -47,7 +47,7 @@
     <None Remove="Translations\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\Nuget-Logo\Logo.png">
+    <None Include="Logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
