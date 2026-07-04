@@ -1,7 +1,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Deserializers;
-using FolkerKinzel.VCards.Intls.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
 
@@ -18,7 +17,10 @@ public sealed class ContactIDProperty : VCardProperty
     /// <param name="prop">The <see cref="ContactIDProperty"/> instance
     /// to clone.</param>
     private ContactIDProperty(ContactIDProperty prop) : base(prop)
-        => Value = prop.Value;
+    {
+        Value = prop.Value;
+        OriginalString = prop.OriginalString;
+    }
 
     /// <summary> Initializes a new <see cref="ContactIDProperty" /> object with a 
     /// specified <see cref="ContactID"/>. </summary>
@@ -31,16 +33,22 @@ public sealed class ContactIDProperty : VCardProperty
         : base(new ParameterSection(), group)
         => Value = value ?? throw new ArgumentNullException(nameof(value));
 
+    /// <summary>
+    /// Gets the original string found in the vCard file or <c>null</c> if the <see cref="ContactIDProperty"/>
+    /// was created programmatically.
+    /// </summary>
+    public string? OriginalString { get; }
+
     internal ContactIDProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
+        OriginalString = StringDeserializer.Deserialize(vcfRow, version);
+
         if (Parameters.DataType == Data.Text)
         {
-            string? val = StringDeserializer.Deserialize(vcfRow, version);
-
-            Value = string.IsNullOrWhiteSpace(val)
+            Value = string.IsNullOrWhiteSpace(OriginalString)
                         ? ContactID.Empty
-                        : ContactID.Create(val);
+                        : ContactID.Create(OriginalString);
             return;
         }
 
@@ -49,16 +57,16 @@ public sealed class ContactIDProperty : VCardProperty
             Value = ContactID.Create(uuid);
         }
 
-        string uriString = vcfRow.Value.Span.Trim().UnMaskValue(version);
+        string uriString = OriginalString.Trim();
 
         if (Uri.TryCreate(uriString, UriKind.Absolute, out Uri? uri))
         {
             Value = ContactID.Create(uri);
         }
 
-        Value = string.IsNullOrWhiteSpace(uriString)
+        Value = uriString.Length == 0
                     ? ContactID.Empty
-                    : ContactID.Create(uriString);
+                    : ContactID.Create(uriString); // leading and trailing whitespace is not used for comparison.
     }
 
     /// <summary> The <see cref="ContactID"/> provided by the <see cref="ContactIDProperty" />.

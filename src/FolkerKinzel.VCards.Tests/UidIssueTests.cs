@@ -1,4 +1,6 @@
-﻿using FolkerKinzel.VCards.Models;
+﻿using FolkerKinzel.VCards.Enums;
+using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 
 namespace FolkerKinzel.VCards.Tests;
 
@@ -38,5 +40,24 @@ public class UidIssueTests
     //        str => str.Trim()
     //    );
     //}
+
+    [TestMethod]
+    public void Uid_IsChanged_On_RoundTrip()
+    {
+        const string input =
+            "BEGIN:VCARD\r\n" +
+            "VERSION:4.0\r\n" +
+            "FN:Test\r\n" +
+            "UID;VALUE=text:d290f1ee-6c54-4b01-90e6-d701748f0851\r\n" +
+            "END:VCARD\r\n";
+
+        VCard card = Vcf.Parse(input)[0];
+        string output = card.ToVcfString(VCdVersion.V4_0);
+
+        // I expect the same UID I read, but this fails:
+        StringAssert.Contains(output,
+            "UID;VALUE=text:d290f1ee-6c54-4b01-90e6-d701748f0851");
+        // actual: UID:urn:uuid:d290f1ee-6c54-4b01-90e6-d701748f0851
+    }
 }
 
