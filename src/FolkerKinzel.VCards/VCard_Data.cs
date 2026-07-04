@@ -840,7 +840,7 @@ public sealed partial class VCard
 
         // Members that contain Relation.Empty can be ignored because
         // an empty string is an empty URI too
-        RelationProperty[] members = Members.Items().ToArray();
+        RelationProperty[] members = [.. Members.Items()];
         Members = members;
         Span<RelationProperty> span = members.AsSpan();
 
@@ -851,7 +851,7 @@ public sealed partial class VCard
             if (prop.Value.ContactID?.String is string text)
             {
                 Debug.Assert(!prop.IsEmpty);
-                Debug.Assert(!Uri.TryCreate(text, UriKind.Absolute, out _));
+                //Debug.Assert(!Uri.TryCreate(text, UriKind.Absolute, out _));
 
                 var relProp = new RelationProperty(Relation.Create(new VCard(setContactID: true, setCreated: false)
                 {

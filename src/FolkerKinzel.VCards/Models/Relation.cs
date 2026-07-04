@@ -68,7 +68,7 @@ public sealed class Relation : IEquatable<Relation>
     /// <see cref="Relation.Empty"/> is a singleton that encapsulates 
     /// <see cref="ContactID.Empty"/>.
     /// </remarks>
-    public bool IsEmpty => ContactID?.IsEmpty ?? false;
+    public bool IsEmpty => ReferenceEquals(this, Empty);
 
     /// <summary>
     /// An instance whose <see cref="IsEmpty"/> property returns <c>true</c>.
