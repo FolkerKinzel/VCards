@@ -109,7 +109,15 @@ public sealed class ContactIDProperty : VCardProperty
     {
         base.PrepareForVcfSerialization(serializer);
 
-        if (OriginalString != null)
+        if (OriginalString is null)
+        {
+            if (Value.String is string str)
+            {
+                Parameters.DataType = Data.Text;
+                StringSerializer.Prepare(str, this, serializer.Version);
+            }
+        }
+        else
         {
             if (serializer.Version < VCdVersion.V4_0)
             {
@@ -119,14 +127,6 @@ public sealed class ContactIDProperty : VCardProperty
             {
                 Parameters.DataType = Data.Text;
             }
-
-            return;
-        }
-
-        if (Value.String is string str)
-        {
-            Parameters.DataType = Data.Text;
-            StringSerializer.Prepare(str, this, serializer.Version);
         }
     }
 
@@ -134,7 +134,25 @@ public sealed class ContactIDProperty : VCardProperty
     {
         Debug.Assert(serializer is not null);
 
-        if (OriginalString != null)
+        if (OriginalString is null)
+        {
+            if (Value.Guid.HasValue)
+            {
+                _ = serializer.Builder.AppendUuid(Value.Guid.Value, serializer.Version);
+            }
+            else if (Value.Uri is Uri uri)
+            {
+                // URIs are not masked according to the "Verifier notes" in
+                // https://www.rfc-editor.org/errata/eid3845
+                // It says that "the ABNF does not support escaping for URIs."
+                _ = serializer.Builder.Append(uri.AbsoluteUri);
+            }
+            else
+            {
+                StringSerializer.AppendVcf(serializer.Builder, Value.String, Parameters, serializer.Version);
+            }
+        }
+        else
         {
             if (Value.String is null)
             {
@@ -148,22 +166,6 @@ public sealed class ContactIDProperty : VCardProperty
             {
                 StringSerializer.AppendVcf(serializer.Builder, OriginalString, Parameters, serializer.Version);
             }
-        }
-
-        if (Value.Guid.HasValue)
-        {
-            _ = serializer.Builder.AppendUuid(Value.Guid.Value, serializer.Version);
-        }
-        else if (Value.Uri is Uri uri)
-        {
-            // URIs are not masked according to the "Verifier notes" in
-            // https://www.rfc-editor.org/errata/eid3845
-            // It says that "the ABNF does not support escaping for URIs."
-            _ = serializer.Builder.Append(uri.AbsoluteUri);
-        }
-        else
-        {
-            StringSerializer.AppendVcf(serializer.Builder, Value.String, Parameters, serializer.Version);
         }
     }
 }
