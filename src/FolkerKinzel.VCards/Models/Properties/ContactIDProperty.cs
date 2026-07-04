@@ -133,7 +133,6 @@ public sealed class ContactIDProperty : VCardProperty
     internal override void AppendValue(VcfSerializer serializer)
     {
         Debug.Assert(serializer is not null);
-        StringBuilder builder = serializer.Builder;
 
         if (OriginalString != null)
         {
@@ -143,28 +142,28 @@ public sealed class ContactIDProperty : VCardProperty
                 // URIs are not masked according to the "Verifier notes" in
                 // https://www.rfc-editor.org/errata/eid3845
                 // It says that "the ABNF does not support escaping for URIs."
-                _ = builder.Append(OriginalString);
+                _ = serializer.Builder.Append(OriginalString);
             }
             else
             {
-                StringSerializer.AppendVcf(builder, OriginalString, Parameters, serializer.Version);
+                StringSerializer.AppendVcf(serializer.Builder, OriginalString, Parameters, serializer.Version);
             }
         }
 
         if (Value.Guid.HasValue)
         {
-            _ = builder.AppendUuid(Value.Guid.Value, serializer.Version);
+            _ = serializer.Builder.AppendUuid(Value.Guid.Value, serializer.Version);
         }
         else if (Value.Uri is Uri uri)
         {
             // URIs are not masked according to the "Verifier notes" in
             // https://www.rfc-editor.org/errata/eid3845
             // It says that "the ABNF does not support escaping for URIs."
-            _ = builder.Append(uri.AbsoluteUri);
+            _ = serializer.Builder.Append(uri.AbsoluteUri);
         }
         else
         {
-            StringSerializer.AppendVcf(builder, Value.String, Parameters, serializer.Version);
+            StringSerializer.AppendVcf(serializer.Builder, Value.String, Parameters, serializer.Version);
         }
     }
 }

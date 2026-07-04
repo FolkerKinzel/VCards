@@ -1,10 +1,28 @@
 ﻿using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
 internal sealed class ContactIDString : ContactID
 {
-    internal ContactIDString(string text) => String = text;
+    internal ContactIDString(string text, ContactID? comparer)
+    {
+        _ArgumentNullException.ThrowIfNull(text, nameof(text));
+
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            throw new ArgumentException(string.Format(Res.Whitespace, nameof(text)));
+        }
+
+        String = text;
+        Comparer = comparer ?? this;
+    }
+
+    internal ContactIDString()
+    {
+        String = "";
+        Comparer = this;
+    }
 
     public override Guid? Guid => null;
 
@@ -41,7 +59,12 @@ internal sealed class ContactIDString : ContactID
                                       Action<Uri, TArg>? uriAction = null,
                                       Action<string, TArg>? stringAction = null) => stringAction?.Invoke(String, arg);
 
-    public override bool Equals([NotNullWhen(true)] ContactID? other) => StringComparer.Ordinal.Equals(String, other?.String);
+    public override bool Equals([NotNullWhen(true)] ContactID? other)
+        => other is not null &&
+            (ReferenceEquals(this, Comparer)
+                ? other.Comparer is ContactIDString comparer && StringComparer.Ordinal.Equals(String, comparer.String)
+                : Comparer.Equals(other.Comparer));
+    
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(String);

@@ -4,7 +4,11 @@ namespace FolkerKinzel.VCards.Intls.Models;
 
 internal sealed class ContactIDGuid : ContactID
 {
-    internal ContactIDGuid(Guid guid) => Guid = guid;
+    internal ContactIDGuid(Guid guid)
+    {
+        Guid = guid;
+        Comparer = this;
+    }
 
     [NotNull]
     public override Guid? Guid { get; }
@@ -44,7 +48,7 @@ internal sealed class ContactIDGuid : ContactID
         => guidAction?.Invoke(Guid.Value, arg);
 
     public override bool Equals([NotNullWhen(true)] ContactID? other)
-        => other is ContactIDGuid ctGuid && Guid.Value.Equals(ctGuid.Guid.Value);
+        => other?.Comparer is ContactIDGuid comparer && Guid.Value.Equals(comparer.Guid.Value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => Guid.Value.GetHashCode();

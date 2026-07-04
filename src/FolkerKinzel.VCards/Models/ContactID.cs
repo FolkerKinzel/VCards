@@ -1,6 +1,5 @@
 ﻿using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Models;
-using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -11,6 +10,12 @@ namespace FolkerKinzel.VCards.Models;
 /// </summary>
 public abstract class ContactID : IEquatable<ContactID>
 {
+    /// <summary>
+    /// For internal use only. The property is used to compare two <see cref="ContactID"/> instances.
+    /// </summary>
+    [NotNull]
+    protected internal ContactID? Comparer { get; protected set; }
+
     /// <summary>
     /// Creates a new <see cref="ContactID"/> instance from a newly
     /// created <see cref="System.Guid"/>.
@@ -39,23 +44,16 @@ public abstract class ContactID : IEquatable<ContactID>
     /// </summary>
     /// <param name="uri">An absolute <see cref="System.Uri"/>.</param>
     /// <returns>The newly created <see cref="ContactID"/> instance.</returns>
-    /// <remarks>
-    /// If <paramref name="uri"/> is a valid "uuid" URN, a <see cref="ContactID"/> instance
-    /// with this <see cref="Guid"/> value will be created.
-    /// </remarks>
     /// <exception cref="ArgumentNullException"><paramref name="uri"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="uri"/> is not an absolute <see cref="Uri"/>.</exception>
     public static ContactID Create(Uri uri)
     {
-        _ArgumentNullException.ThrowIfNull(uri, nameof(uri));
-
-        return !uri.IsAbsoluteUri
-            ? throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)))
-            : uri.AbsoluteUri.StartsWith("urn:uuid:", StringComparison.OrdinalIgnoreCase)
-                ? UuidConverter.TryAsGuid(uri.AbsoluteUri.AsSpan(), out Guid uuid)
-                    ? Create(uuid)
-                    : new ContactIDUri(uri)
-                : new ContactIDUri(uri);
+        ContactID? comparer = uri.AbsoluteUri.StartsWith("urn:uuid:", StringComparison.OrdinalIgnoreCase)
+                              && UuidConverter.TryAsGuid(uri.AbsoluteUri.AsSpan(), out Guid uuid)
+                ? Create(uuid)
+                : null;
+        
+        return new ContactIDUri(uri, comparer);
     }
 
     /// <summary>
@@ -64,33 +62,25 @@ public abstract class ContactID : IEquatable<ContactID>
     /// </summary>
     /// <param name="text">A <see cref="string"/> that can be used as identifier.</param>
     /// <returns>The newly created <see cref="ContactID"/> instance.</returns>
-    /// <remarks>
-    /// If <paramref name="text"/> represents a <see cref="Guid"/>, a <see cref="ContactID"/> instance
-    /// with this <see cref="Guid"/> value will be created. If <paramref name="text"/> represents an absolute
-    /// <see cref="Uri"/>, a <see cref="ContactID"/> instance containing a <see cref="Uri"/> will
-    /// be created.
-    /// </remarks>
     /// <exception cref="ArgumentNullException"><paramref name="text"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="text"/> is an empty <see cref="string"/> 
     /// or consists only of white space.</exception>
     public static ContactID Create(string text)
     {
-        _ArgumentNullException.ThrowIfNull(text, nameof(text));
+        ContactID? comparer = UuidConverter.TryAsGuid(text.AsSpan().Trim(), out Guid uuid)
+                            ? Create(uuid)
+                            : Uri.TryCreate(text, UriKind.Absolute, out Uri? uri)
+                                ? new ContactIDUri(uri, null)
+                                : null;
 
-        return string.IsNullOrWhiteSpace(text)
-            ? throw new ArgumentException(string.Format(Res.Whitespace, nameof(text)))
-            : UuidConverter.TryAsGuid(text.AsSpan().Trim(), out Guid uuid)
-                ? Create(uuid)
-                : Uri.TryCreate(text, UriKind.Absolute, out Uri? uri)
-                    ? new ContactIDUri(uri)
-                    : new ContactIDString(text);
+        return new ContactIDString(text, comparer);
     }
 
     /// <summary>
     /// <c>true</c> if the instance doesn't identify anything, otherwise <c>false</c>.
     /// </summary>
     /// <remarks>
-    /// <see cref="ContactID.Empty"/> is a singleton that encapsulates an empty 
+    /// <see cref="ContactID.Empty"/> is a singleton that encapsulates an empty
     /// <see cref="string"/>.
     /// </remarks>
     public bool IsEmpty => ReferenceEquals(this, Empty);
@@ -101,7 +91,7 @@ public abstract class ContactID : IEquatable<ContactID>
     /// <remarks>
     /// The singleton instance encapsulates an empty <see cref="string"/>.
     /// </remarks>
-    public static ContactID Empty { get; } = new ContactIDString("");
+    public static ContactID Empty { get; } = new ContactIDString();
 
     /// <summary>
     /// Gets the encapsulated <see cref="Guid"/>,

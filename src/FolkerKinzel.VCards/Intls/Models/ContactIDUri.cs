@@ -1,10 +1,22 @@
 ﻿using FolkerKinzel.VCards.Models;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Intls.Models;
 
 internal sealed class ContactIDUri : ContactID
 {
-    internal ContactIDUri(Uri uri) => Uri = uri;
+    internal ContactIDUri(Uri uri, ContactID? comparer)
+    {
+        _ArgumentNullException.ThrowIfNull(uri, nameof(uri));
+
+        if (!uri.IsAbsoluteUri)
+        {
+            throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)));
+        }
+
+        Uri = uri;
+        Comparer = comparer ?? this;
+    }
 
     public override Guid? Guid => null;
 
@@ -41,7 +53,11 @@ internal sealed class ContactIDUri : ContactID
                                       Action<Uri, TArg>? uriAction = null,
                                       Action<string, TArg>? stringAction = null) => uriAction?.Invoke(Uri, arg);
 
-    public override bool Equals([NotNullWhen(true)] ContactID? other) => Uri.Equals(other?.Uri);
+    public override bool Equals([NotNullWhen(true)] ContactID? other)
+        => other is not null &&
+            (ReferenceEquals(this, Comparer)
+                ? other.Comparer is ContactIDUri comparer && Uri.Equals(comparer.Uri)
+                : Comparer.Equals(other.Comparer));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int GetHashCode() => Uri.GetHashCode();
