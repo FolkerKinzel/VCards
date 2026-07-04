@@ -8,6 +8,17 @@ namespace FolkerKinzel.VCards.Models.Properties;
 
 /// <summary>Represents the vCard property <c>UID</c>, which stores a unique identifier
 /// for the vCard subject.</summary>
+/// <remarks>
+/// <para>
+/// If the <see cref="OriginalString"/> is not <c>null</c>, it is copied unchanged into the vCard being written.
+/// This behavior can be undesirable when converting from one vCard version to another.
+/// </para>
+/// <para>
+/// In this case, assign a new <see cref="ContactIDProperty"/> instance to the <see cref="VCard"/> being converted — 
+/// initialized with the <see cref="Value"/> of the current one — in order to adapt the format (e.g., of <see cref="Guid"/>s)
+/// to the new vCard version.
+/// </para>
+/// </remarks>
 /// <seealso cref="VCard.ContactID"/>
 /// <seealso cref="ContactID"/>
 /// <seealso cref="RelationProperty"/>
@@ -34,9 +45,20 @@ public sealed class ContactIDProperty : VCardProperty
         => Value = value ?? throw new ArgumentNullException(nameof(value));
 
     /// <summary>
-    /// Gets the original string found in the vCard file or <c>null</c> if the <see cref="ContactIDProperty"/>
+    /// Gets the original string found in the vCard file, or <c>null</c> if the <see cref="ContactIDProperty"/>
     /// was created programmatically.
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// If the <see cref="OriginalString"/> is not <c>null</c>, it is copied unchanged into the vCard being written.
+    /// This behavior can be undesirable when converting from one vCard version to another.
+    /// </para>
+    /// <para>
+    /// In this case, assign a new <see cref="ContactIDProperty"/> instance to the <see cref="VCard"/> being converted — 
+    /// initialized with the <see cref="Value"/> of the current one — in order to adapt the format (e.g., of <see cref="Guid"/>s)
+    /// to the new vCard version.
+    /// </para>
+    /// </remarks>
     public string? OriginalString { get; }
 
     internal ContactIDProperty(VcfRow vcfRow, VCdVersion version)
@@ -87,6 +109,20 @@ public sealed class ContactIDProperty : VCardProperty
     {
         base.PrepareForVcfSerialization(serializer);
 
+        if (OriginalString != null)
+        {
+            if (serializer.Version < VCdVersion.V4_0)
+            {
+                StringSerializer.Prepare(OriginalString, this, serializer.Version);
+            }
+            else if (Value.String != null || (Value.Guid.HasValue && !UuidConverter.IsUuidUri(OriginalString)))
+            {
+                Parameters.DataType = Data.Text;
+            }
+
+            return;
+        }
+
         if (Value.String is string str)
         {
             Parameters.DataType = Data.Text;
@@ -98,6 +134,22 @@ public sealed class ContactIDProperty : VCardProperty
     {
         Debug.Assert(serializer is not null);
         StringBuilder builder = serializer.Builder;
+
+        if (OriginalString != null)
+        {
+            if (Value.String is null)
+            {
+                // Valid Guids need no masking.
+                // URIs are not masked according to the "Verifier notes" in
+                // https://www.rfc-editor.org/errata/eid3845
+                // It says that "the ABNF does not support escaping for URIs."
+                _ = builder.Append(OriginalString);
+            }
+            else
+            {
+                StringSerializer.AppendVcf(builder, OriginalString, Parameters, serializer.Version);
+            }
+        }
 
         if (Value.Guid.HasValue)
         {
