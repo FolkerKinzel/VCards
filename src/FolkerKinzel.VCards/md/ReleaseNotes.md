@@ -1,3 +1,7 @@
+- Fixes issues with third-party software that treats Guid values as strings:
+  - `ContactIDProperty` got a new property `ContactIDProperty.OriginalString` that preserves 
+the string value found in the parsed vCard. As the default behavior, this value is preserved when serializing
+the `VCard` back to a string.
 - Dependency updates
 
 &nbsp;
