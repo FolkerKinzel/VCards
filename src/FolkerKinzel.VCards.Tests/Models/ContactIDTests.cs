@@ -15,7 +15,8 @@ public class ContactIDTests
     public void CreateTest3()
     {
         var id = ContactID.Create(new Uri("urn:uuid:A0CD4379-64AB-4BFA-9CEC-66DC76CA585E", UriKind.Absolute));
-        Assert.IsNotNull(id.Guid);
+        Assert.IsNull(id.Guid);
+        Assert.IsNotNull(id.Uri);
     }
 
     [TestMethod]

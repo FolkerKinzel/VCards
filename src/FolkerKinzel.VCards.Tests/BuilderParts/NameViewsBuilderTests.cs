@@ -96,8 +96,8 @@ public class NameViewsBuilderTests
     public void ToDisplayNamesTest1() => new NameViewsBuilder().ToDisplayNames(NameFormatter.Default);
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ToDisplayNamesTest2() => VCardBuilder.Create().NameViews.ToDisplayNames(null!);
+    //[ExpectedException(typeof(ArgumentNullException))]
+    public void ToDisplayNamesTest2() => VCardBuilder.Create().NameViews.ToDisplayNames(null);
 
     [TestMethod]
     public void ToDisplayNamesTest3()

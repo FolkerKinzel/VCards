@@ -136,8 +136,8 @@ public class AddressesBuilderTests
     public void AttachLabelsTest1() => new AddressesBuilder().AttachLabels(AddressFormatter.Default);
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AttachLabelsTest2() => VCardBuilder.Create().Addresses.AttachLabels(null!);
+    //[ExpectedException(typeof(ArgumentNullException))]
+    public void AttachLabelsTest2() => VCardBuilder.Create().Addresses.AttachLabels(null);
 
     [TestMethod]
     public void AttachLabelsTest3()

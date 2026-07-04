@@ -7,12 +7,8 @@ internal sealed class ContactIDUri : ContactID
 {
     internal ContactIDUri(Uri uri, ContactID? comparer)
     {
-        _ArgumentNullException.ThrowIfNull(uri, nameof(uri));
-
-        if (!uri.IsAbsoluteUri)
-        {
-            throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)));
-        }
+        Debug.Assert(uri != null);
+        Debug.Assert(uri.IsAbsoluteUri);
 
         Uri = uri;
         Comparer = comparer ?? this;
@@ -60,7 +56,8 @@ internal sealed class ContactIDUri : ContactID
                 : Comparer.Equals(other.Comparer));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override int GetHashCode() => Uri.GetHashCode();
+    public override int GetHashCode()
+        => ReferenceEquals(this, Comparer) ? Uri.GetHashCode() : Comparer.GetHashCode();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString() => $"Uri: {Uri}";

@@ -67,7 +67,8 @@ internal sealed class ContactIDString : ContactID
     
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(String);
+    public override int GetHashCode()
+        => ReferenceEquals(this, Comparer) ? StringComparer.Ordinal.GetHashCode(String) : Comparer.GetHashCode();
 
     public override string ToString() => String.Length == 0 ? "<Empty>" : $"String: {String}";
 }

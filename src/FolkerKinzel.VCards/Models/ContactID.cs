@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Models;
+using FolkerKinzel.VCards.Resources;
 
 namespace FolkerKinzel.VCards.Models;
 
@@ -56,6 +57,13 @@ public abstract class ContactID : IEquatable<ContactID>
     /// <exception cref="ArgumentException"><paramref name="uri"/> is not an absolute <see cref="Uri"/>.</exception>
     public static ContactID Create(Uri uri)
     {
+        _ArgumentNullException.ThrowIfNull(uri, nameof(uri));
+
+        if (!uri.IsAbsoluteUri)
+        {
+            throw new ArgumentException(string.Format(Res.RelativeUri, nameof(uri)));
+        }
+
         ContactID? comparer = uri.AbsoluteUri.StartsWith("urn:uuid:", StringComparison.OrdinalIgnoreCase)
                               && UuidConverter.TryAsGuid(uri.AbsoluteUri.AsSpan(), out Guid uuid)
                 ? Create(uuid)
