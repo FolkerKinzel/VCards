@@ -143,9 +143,7 @@ public readonly struct ContactIDBuilder
     /// 
     /// <remarks>
     /// <para>If <paramref name="uri"/> is an absolute <see cref="Uri"/>, a <see cref="ContactID"/> with a <see cref="Uri"/>
-    /// value will be created unless <paramref name="uri"/> is a valid "uuid" URN. In this case a <see cref="ContactID"/> instance
-    /// with a <see cref="Guid"/> value will be created.</para>
-    /// <para>
+    /// value will be created.
     /// If <paramref name="uri"/> is a relative <see cref="Uri"/>, its <see cref="Uri.OriginalString"/> will be preserved
     /// in a <see cref="ContactID"/> containing a <see cref="string"/> value.
     /// </para>
@@ -169,7 +167,7 @@ public readonly struct ContactIDBuilder
                    ? ContactID.Empty
                    : uri.IsAbsoluteUri
                       ? ContactID.Create(uri)
-                      : ContactID.Create(uri.ToString());
+                      : ContactID.Create(uri.OriginalString);
     }
 
     /// <summary>
@@ -187,15 +185,9 @@ public readonly struct ContactIDBuilder
     /// be able to chain calls.</returns>
     /// 
     /// <remarks>
-    /// <para>If <paramref name="text"/> represents a <see cref="Guid"/>, a <see cref="ContactID"/> instance
-    /// with this <see cref="Guid"/> value will be created. If <paramref name="text"/> represents an absolute
-    /// <see cref="Uri"/>, a <see cref="ContactID"/> instance containing a <see cref="Uri"/> will
-    /// be created.</para>
-    /// <para>
     /// The method sets <see cref="VCard.ContactID"/> to an empty <see cref="ContactIDProperty"/> instance if
     /// <paramref name="text"/> is <c>null</c>, or an empty <see cref="string"/>, or if it consists only of 
     /// white space.
-    /// </para>
     /// </remarks>
     /// 
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 

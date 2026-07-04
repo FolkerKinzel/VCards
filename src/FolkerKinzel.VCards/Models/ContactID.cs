@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Intls.Converters;
+﻿using System.ComponentModel;
+using FolkerKinzel.VCards.Intls.Converters;
 using FolkerKinzel.VCards.Intls.Models;
 
 namespace FolkerKinzel.VCards.Models;
@@ -8,11 +9,18 @@ namespace FolkerKinzel.VCards.Models;
 /// with the vCard. The value of this identifier can be either a <see cref="System.Guid"/>,
 /// a <see cref="System.Uri"/>, or a <see cref="string"/>.
 /// </summary>
+/// <remarks>
+/// This class supports semantic comparability. For example, UUIDs are always compared as 128-bit 
+/// numbers - regardless of whether they are represented as a <see cref="Guid"/> instance, a <see cref="Uri"/>, 
+/// or a <see cref="string"/>.
+/// </remarks>
 public abstract class ContactID : IEquatable<ContactID>
 {
     /// <summary>
-    /// For internal use only. The property is used to compare two <see cref="ContactID"/> instances.
+    /// For internal use only. The property is used to compare <see cref="ContactID"/> 
+    /// instances.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     [NotNull]
     protected internal ContactID? Comparer { get; protected set; }
 
@@ -80,7 +88,7 @@ public abstract class ContactID : IEquatable<ContactID>
     /// <c>true</c> if the instance doesn't identify anything, otherwise <c>false</c>.
     /// </summary>
     /// <remarks>
-    /// <see cref="ContactID.Empty"/> is a singleton that encapsulates an empty
+    /// <see cref="Empty"/> is a singleton that encapsulates an empty
     /// <see cref="string"/>.
     /// </remarks>
     public bool IsEmpty => ReferenceEquals(this, Empty);
