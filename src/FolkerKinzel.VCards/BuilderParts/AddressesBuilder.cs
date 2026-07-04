@@ -198,8 +198,8 @@ public readonly struct AddressesBuilder
     /// Attaches <c>LABEL</c> parameters (<see cref="ParameterSection.Label"/>) to all 
     /// <see cref="AddressProperty"/> instances that are currently in the <see cref="VCard"/>.
     /// </summary>
-    /// <param name="addressFormatter">The <see cref="IAddressFormatter"/> instance to
-    /// use for the conversion.</param>
+    /// <param name="addressFormatter">An instance that implements <see cref="IAddressFormatter"/>, or <c>null</c> 
+    /// for <see cref="AddressFormatter.Default"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="AddressesBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
@@ -215,10 +215,10 @@ public readonly struct AddressesBuilder
     /// <exception cref="ArgumentNullException"><paramref name="addressFormatter"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder AttachLabels(IAddressFormatter addressFormatter)
+    public VCardBuilder AttachLabels(IAddressFormatter? addressFormatter = null)
     {
         VCard vc = Builder.VCard;
-        _ArgumentNullException.ThrowIfNull(addressFormatter, nameof(addressFormatter));
+        addressFormatter ??= AddressFormatter.Default;
         IEnumerable<AddressProperty?>? addresses = vc.Addresses;
 
         if (addresses is null)

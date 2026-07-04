@@ -166,7 +166,8 @@ public readonly struct NameViewsBuilder
     /// Adds automatically corresponding <see cref="TextProperty"/> instances for each <see cref="NameProperty"/> that is 
     /// currently in the <see cref="VCard"/> to <see cref="VCard.DisplayNames"/>.
     /// </summary>
-    /// <param name="nameFormatter"></param>
+    /// <param name="nameFormatter">An instance that implements <see cref="INameFormatter"/>, or <c>null</c> for 
+    /// <see cref="NameFormatter.Default"/>.</param>
     /// <returns>The <see cref="VCardBuilder"/> instance that initialized this <see cref="NameViewsBuilder"/> to 
     /// be able to chain calls.</returns>
     /// 
@@ -196,10 +197,10 @@ public readonly struct NameViewsBuilder
     /// <exception cref="ArgumentNullException"><paramref name="nameFormatter"/> is <c>null</c>.</exception>
     /// <exception cref="InvalidOperationException">The method has been called on an instance that had 
     /// been initialized using the default constructor.</exception>
-    public VCardBuilder ToDisplayNames(INameFormatter nameFormatter)
+    public VCardBuilder ToDisplayNames(INameFormatter? nameFormatter = null)
     {
         VCard vc = Builder.VCard;
-        _ArgumentNullException.ThrowIfNull(nameFormatter, nameof(nameFormatter));
+        nameFormatter ??= NameFormatter.Default;
 
         IEnumerable<NameProperty?>? names = vc.NameViews;
 

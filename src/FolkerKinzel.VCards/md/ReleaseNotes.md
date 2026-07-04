@@ -2,6 +2,8 @@
   - `ContactIDProperty` has gained a new property, `ContactIDProperty.OriginalString`, which preserves the string value contained in the parsed vCard. By default, this value is retained when the `VCard` is serialized back into a string.
 - Improved usability:
   - Unlike in earlier versions, the return values ​​of the `ContactID.Create` methods align more closely with natural expectations, without compromising the semantic comparability of the `ContactID` instances.
+  - `NameViewsBuilder.ToDisplayNames()` now has a default argument.
+  - `AddressesBuilder.AttachLabels()` now has a default argument.
 - Dependency updates
 
 &nbsp;
