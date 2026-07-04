@@ -1,45 +1,94 @@
-Hi @dmitryi0404,
+## vCard 2.1:
 
-a Universally Unique Identifier (UUID) is a 128-bit number used to uniquely 
-identify information in computer systems. The term "UUID" is often used 
-interchangeably with "GUID" (Globally Unique Identifier), which is a Microsoft implementation of the UUID standard.
+This property specifies a value that represents a persistent, globally unique identifier associated 
+with the object. The property can be used as a mechanism to relate different vCard objects. 
+Some examples of valid forms of unique identifiers would include ISO 9070 formal public 
+identifiers (FPI), X.500 distinguished names, machine-generated “random” numbers with a 
+statistically high likelihood of being globally unique and Uniform Resource Locators (URL). If 
+an URL is specified, it is suggested that the URL reference a service which will produce an 
+updated version of the vCard.
 
-The following string representations of the same GUID all identify the **exact same** thing:
+This property is identified by the property name UID. This property is provided to enable a 
+vCard Reader and Writer to uniquely identify either a vCard object instance or properties within
+a vCard object. Valid values for this property are a unique character string. The following is an 
+example of this property:
 
 ```
-d290f1ee-6c54-4b01-90e6-d701748f0851
-urn:uuid:d290f1ee-6c54-4b01-90e6-d701748f0851
-d290f1ee6c544b0190e6d701748f0851
-{d290f1ee-6c54-4b01-90e6-d701748f0851}
-(d290f1ee-6c54-4b01-90e6-d701748f0851)
-{0xd290f1ee,0x6c54,0x4b01,{0x90,0xe6,0xd7,0x01,0x74,0x8f,0x08,0x51}}
-D290F1EE6C544B0190E6D701748F0851
-{D290F1EE-6C54-4B01-90E6-D701748F0851}
-(D290F1EE-6C54-4B01-90E6-D701748F0851)
-{0XD290F1EE,0X6C54,0X4B01,{0X90,0XE6,0XD7,0X01,0X74,0X8F,0X08,0X51}}
+UID:19950401-080045-40000F192713-0052
 ```
 
-Different email clients could variously use all these different 
-character strings to identify the same vCard. So, saving the original string wouldn't actually help you at all.
+Support for this property is optional for vCard Writers conforming to this specification.
 
-The problem you are struggling with is that your application does 
-not control how diverse items - such as GUIDs or URLs - are converted into strings for
-the database. You need to write your own normalization method. Here's a simple 
-example of how this could be done:
 
-```csharp
-private static string NormalizeToString(ContactID id)
-    {
-        return id.Convert(
-            guid => guid.ToString(),
-            uri => uri.AbsoluteUri.ToLowerInvariant().TrimEnd('/'),
-            str => str.Trim()
-        );
-    }
+## vCard 3.0:
+To: ietf-mime-directory@imc.org
+
+Subject: Registration of text/directory MIME type UID
+
+Type name: UID
+
+Type purpose: To specify a value that represents a globally unique
+identifier corresponding to the individual or resource associated
+with the vCard.
+
+Type encoding: 8bit
+
+Type value: A single text value.
+
+Type special notes: The type is used to uniquely identify the object
+that the vCard represents.
+
+The type can include the type parameter "TYPE" to specify the format
+of the identifier. The TYPE parameter value should be an IANA
+registered identifier format. The value can also be a non-standard
+format.
+
+Type example:
+```
+        UID:19950401-080045-40000F192713-0052
+````
+
 ```
 
-Then use this method to normalize ContactIDs before saving them to the database. 
-This way, you ensure that all representations of the same GUID are stored in a consistent format, 
-making it easier to retrieve them later.
+;For name="UID"
+   param        = ""
+        ; No parameters allowed
 
-Since the problem does not lie with the library, I would close this issue.
+   value        = text-value
+```
+
+## vCard 4.0:
+**Purpose:** To specify a value that represents a globally unique
+      identifier corresponding to the entity associated with the vCard.
+
+**Value type:** A single URI value.  It MAY also be reset to free-form
+      text.
+
+**Cardinality:**  *1
+
+**Special notes:**  This property is used to uniquely identify the object
+      that the vCard represents.  The "uuid" URN namespace defined in
+      [RFC4122] is particularly well suited to this task, but other URI
+      schemes MAY be used.  Free-form text MAY also be used.
+
+**ABNF:**
+```
+     UID-param = UID-uri-param / UID-text-param
+     UID-value = UID-uri-value / UID-text-value
+       ; Value and parameter MUST match.
+
+     UID-uri-param = "VALUE=uri"
+     UID-uri-value = URI
+
+     UID-text-param = "VALUE=text"
+     UID-text-value = text
+
+     UID-param =/ any-param
+```
+
+**Example:**
+```
+           UID:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+```
+
+
