@@ -16,7 +16,7 @@ public static class SimpleVCardExample
                     .AddSurname("Sonntag")
                     .Build()
                               )
-                .NameViews.ToDisplayNames(NameFormatter.Default)
+                .NameViews.ToDisplayNames()
                 .GenderViews.Add(Sex.Female)
                 .Phones.Add("+49-321-1234567",
                              parameters: p => p.PhoneType = Tel.Cell

@@ -71,7 +71,7 @@ public static class VCardExample
                     .Build(),
                      parameters: p => p.Language = "de-DE",
                      group: vc => vc.NewGroup())
-                .NameViews.ToDisplayNames(NameFormatter.Default)
+                .NameViews.ToDisplayNames()
                 .GenderViews.Add(Gender.Female)
                 .GramGenders.Add(Gram.Feminine, parameters: p => p.Language = "de")
                 .Organizations.Add("Millers Company", ["C#", "Webdesign"])
@@ -117,7 +117,7 @@ public static class VCardExample
                      group: vc => vc.NewGroup()
                               )
                 // Append automatically formatted address labels:
-                .Addresses.AttachLabels(AddressFormatter.Default)
+                .Addresses.AttachLabels()
                 .EMails.Add("kaethe_mueller@internet.com", parameters: p => p.PropertyClass = PCl.Work)
                 .EMails.Add("mailto:kaethe_at_home@internet.com",
                              parameters: p =>
