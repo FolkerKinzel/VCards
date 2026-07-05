@@ -76,7 +76,7 @@ public sealed class Relation : IEquatable<Relation>
     /// <remarks>
     /// The singleton encapsulates <see cref="ContactID.Empty"/>
     /// </remarks>
-    public static Relation Empty => new(ContactID.Empty);
+    public static Relation Empty { get; } = new(ContactID.Empty);
 
     /// <summary>
     /// Gets the encapsulated <see cref="VCards.VCard"/>,
