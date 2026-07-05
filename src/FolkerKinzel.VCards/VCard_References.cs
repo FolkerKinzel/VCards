@@ -135,7 +135,7 @@ public sealed partial class VCard
                 }
 
                 // Use reference comparison because several versions of a VCard with
-                // the same VCard.ID can be in vCardList
+                // the same VCard.ContactID can be in vCardList
                 if (!vCardList.Contains(vc))
                 {
                     vCardList.Add(vc);
@@ -260,7 +260,9 @@ public sealed partial class VCard
             }
         }//foreach
 
-        static bool TryFindReferencedVCard(ReadOnlySpan<VCard> vCards, ContactID id, [NotNullWhen(true)] out VCard? referencedVCard)
+        static bool TryFindReferencedVCard(ReadOnlySpan<VCard> vCards,
+                                           ContactID id,
+                                           [NotNullWhen(true)] out VCard? referencedVCard)
         {
             foreach (VCard vCard in vCards)
             {

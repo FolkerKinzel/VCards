@@ -825,7 +825,7 @@ public sealed partial class VCard
 
     /// <summary>
     /// Replaces <see cref="RelationProperty"/> instances in <see cref="Members"/>
-    /// that contain text with <see cref="RelationProperty"/> instances that contain <see cref="VCard"/>s.
+    /// that contain text by <see cref="RelationProperty"/> instances that contain <see cref="VCard"/>s.
     /// </summary>
     /// <remarks>
     /// RFC 6350 allows only URIs as value for <c>MEMBER</c>. Values that can't be preserved as URI will be saved in 
@@ -859,6 +859,7 @@ public sealed partial class VCard
                 {
                     DisplayNames = new TextProperty(text)
                 }), prop.Group);
+
                 relProp.Parameters.RelationType = prop.Parameters.RelationType;
                 span[i] = relProp;
             }

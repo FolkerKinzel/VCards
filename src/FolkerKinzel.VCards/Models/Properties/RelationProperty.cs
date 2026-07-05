@@ -11,7 +11,7 @@ using FolkerKinzel.VCards.Models.Properties.Parameters;
 namespace FolkerKinzel.VCards.Models.Properties;
 
 /// <summary>Encapsulates data from vCard properties that describe relationships 
-/// with other people. </summary>
+/// with other people.</summary>
 /// <remarks>
 /// vCard properties whose data is encapsulated by <see cref="RelationProperty"/> 
 /// objects are in particular the vCard&#160;4.0 properties <c>RELATED</c> and <c>MEMBER</c>,
@@ -68,21 +68,37 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
         RelationProperty prop;
         ReadOnlySpan<char> valSpan = vcfRow.Value.Span.Trim();
 
-        if (valSpan.IsWhiteSpace())
+        if (valSpan.IsEmpty)
         {
             prop = new RelationProperty(Relation.Empty);
         }
         else
         {
-            string? val = StringDeserializer.Deserialize(vcfRow, version);
+            if (version < VCdVersion.V4_0)
+            {
+                string val = StringDeserializer.Deserialize(vcfRow, version);
 
-            prop = vcfRow.Parameters.DataType == Data.Text
-                ? new RelationProperty(Relation.Create(ContactID.Create(val)))
-                : UuidConverter.TryAsGuid(vcfRow.Value.Span, out Guid uuid)
-                    ? new RelationProperty(Relation.Create(ContactID.Create(uuid)))
-                        : Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
-                            ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
-                            : new RelationProperty(Relation.Create(ContactID.Create(val)));
+                prop = vcfRow.Parameters.DataType == Data.Text
+                          ? new RelationProperty(Relation.Create(ContactID.Create(val)))
+                          : Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
+                                ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
+                                : new RelationProperty(Relation.Create(ContactID.Create(val)));
+            }
+            else
+            {
+                if (vcfRow.Parameters.DataType == Data.Text)
+                {
+                    string val = StringDeserializer.Deserialize(vcfRow, version);
+                    prop = new RelationProperty(Relation.Create(ContactID.Create(val)));
+                }
+                else
+                {
+                    string val = vcfRow.Value.ToString();
+                    prop = Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
+                                ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
+                                : new RelationProperty(Relation.Create(ContactID.Create(val)));
+                }
+            }
         }
 
         prop.Parameters.Assign(vcfRow.Parameters);
@@ -134,7 +150,8 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
 
             if (Value.ContactID.Uri is Uri uri)
             {
-                _ = builder.Append(uri.AbsoluteUri);
+                // Preserves the original string that has been parsed from a vCard.
+                _ = builder.Append(uri.OriginalString);
                 return;
             }
         }

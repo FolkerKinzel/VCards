@@ -64,15 +64,17 @@ public sealed class ContactIDProperty : VCardProperty
     internal ContactIDProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        OriginalString = StringDeserializer.Deserialize(vcfRow, version);
-
         if (Parameters.DataType == Data.Text)
         {
+            OriginalString = StringDeserializer.Deserialize(vcfRow, version);
+
             Value = string.IsNullOrWhiteSpace(OriginalString)
                         ? ContactID.Empty
                         : ContactID.Create(OriginalString);
             return;
         }
+
+        OriginalString = vcfRow.Value.ToString();
 
         if (UuidConverter.TryAsGuid(vcfRow.Value.Span, out Guid uuid))
         {
