@@ -214,7 +214,7 @@ public abstract class ContactID : IEquatable<ContactID>
     /// <inheritdoc/>
     /// <remarks>Equality is given if <paramref name="obj"/> is a <see cref="ContactID"/>
     /// instance, and if the content of <paramref name="obj"/> is semantically equivalent.
-    /// (This does not necessarily require the content of <paramref name="other"/> to have the 
+    /// (This does not necessarily require the content of <paramref name="obj"/> to have the 
     /// same <see cref="Type"/>.)</remarks>
     public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as ContactID);
 
