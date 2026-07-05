@@ -211,7 +211,11 @@ internal sealed class ParameterSerializer2_1(VcfOpts options) : ParameterSeriali
     //    // none parameters
     //}
 
-    protected override void BuildUidPara() => AppendValue(); // e.g., URL to a web service that provides the latest version of the vCard
+    protected override void BuildUidPara()
+    {
+        AppendEncodingAndCharset();
+        AppendValue(); // e.g., URL to a web service that provides the latest version of the vCard
+    }
 
     protected override void BuildUrlPara() => AppendEncodingAndCharset();
 
