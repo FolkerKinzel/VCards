@@ -1,3 +1,4 @@
+# UID
 ## vCard 2.1:
 
 This property specifies a value that represents a persistent, globally unique identifier associated 
@@ -90,5 +91,114 @@ Type example:
 ```
            UID:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
 ```
+
+# RELATED
+
+   Purpose:  To specify a relationship between another entity and the
+      entity represented by this vCard.
+
+   Value type:  A single URI.  It can also be reset to a single text
+      value.  The text value can be used to specify textual information.
+
+   Cardinality:  *
+
+   Special notes:  The TYPE parameter MAY be used to characterize the
+      related entity.  It contains a comma-separated list of values that
+      are registered with IANA as described in Section 10.2.  The
+      registry is pre-populated with the values defined in [xfn].  This
+      document also specifies two additional values:
+
+```
+      agent:  an entity who may sometimes act on behalf of the entity
+         associated with the vCard.
+
+      emergency:  indicates an emergency contact
+```
+
+ABNF:
+```
+     RELATED-param = RELATED-param-uri / RELATED-param-text
+     RELATED-value = URI / text
+       ; Parameter and value MUST match.
+
+     RELATED-param-uri = "VALUE=uri" / mediatype-param
+     RELATED-param-text = "VALUE=text" / language-param
+
+     RELATED-param =/ pid-param / pref-param / altid-param / type-param
+                    / any-param
+
+     type-param-related = related-type-value *("," related-type-value)
+       ; type-param-related MUST NOT be used with a property other than
+       ; RELATED.
+
+     related-type-value = "contact" / "acquaintance" / "friend" / "met"
+                        / "co-worker" / "colleague" / "co-resident"
+                        / "neighbor" / "child" / "parent"
+                        / "sibling" / "spouse" / "kin" / "muse"
+                        / "crush" / "date" / "sweetheart" / "me"
+                        / "agent" / "emergency"
+```
+
+Examples:
+```
+   RELATED;TYPE=friend:urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6
+   RELATED;TYPE=contact:http://example.com/directory/jdoe.vcf
+   RELATED;TYPE=co-worker;VALUE=text:Please contact my assistant Jane
+    Doe for any inquiries.
+```
+
+# MEMBER
+
+   Purpose:  To include a member in the group this vCard represents.
+
+   Value type:  A single URI.  It MAY refer to something other than a
+      vCard object.  For example, an email distribution list could
+      employ the "mailto" URI scheme [RFC6068] for efficiency.
+
+   Cardinality:  *
+
+   Special notes:  This property MUST NOT be present unless the value of
+      the KIND property is "group".
+
+ABNF:
+```
+     MEMBER-param = "VALUE=uri" / pid-param / pref-param / altid-param
+                  / mediatype-param / any-param
+     MEMBER-value = URI
+```
+
+
+Examples:
+```
+     BEGIN:VCARD
+     VERSION:4.0
+     KIND:group
+     FN:The Doe family
+     MEMBER:urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af
+     MEMBER:urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519
+     END:VCARD
+     BEGIN:VCARD
+     VERSION:4.0
+     FN:John Doe
+     UID:urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af
+     END:VCARD
+     BEGIN:VCARD
+     VERSION:4.0
+     FN:Jane Doe
+     UID:urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519
+     END:VCARD
+
+     BEGIN:VCARD
+     VERSION:4.0
+     KIND:group
+     FN:Funky distribution list
+     MEMBER:mailto:subscriber1@example.com
+     MEMBER:xmpp:subscriber2@example.com
+     MEMBER:sip:subscriber3@example.com
+     MEMBER:tel:+1-418-555-5555
+     END:VCARD
+```
+
+
 
 
