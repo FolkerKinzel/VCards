@@ -64,9 +64,177 @@ public class ContactIDPropertyTests
         VCard vc30 = Vcf.Parse(vcf30)[0];
         VCard vc40 = Vcf.Parse(vcf40)[0];
 
+        Assert.IsNotNull(vc21.ContactID);
+        Assert.AreEqual(id, vc21.ContactID.OriginalString);
+        Assert.AreEqual(id, vc21.ContactID.Value.String);
 
+        Assert.IsNotNull(vc30.ContactID);
+        Assert.AreEqual(id, vc30.ContactID.OriginalString);
+        Assert.AreEqual(id, vc30.ContactID.Value.String);
+
+
+        Assert.IsNotNull(vc40.ContactID);
+        Assert.AreEqual(id, vc40.ContactID.OriginalString);
+        Assert.AreEqual(id, vc40.ContactID.Value.String);
     }
 
+    [TestMethod]
+    public void ContactIDPropertyTest7()
+    {
+        const string id = "789c03ec-b707-4e79-97ae-89ee061d861b";
+        var guid = Guid.Parse(id);
+        string guidUpperCase = guid.ToString().ToUpperInvariant();
+
+        VCard vc1 = VCardBuilder
+            .Create(false)
+            .ContactID.Set(guid)
+            .VCard;
+
+        VCard vc2 = VCardBuilder
+            .Create(false)
+            .ContactID.Set(guidUpperCase)
+            .VCard;
+
+        Assert.IsNotNull (vc1.ContactID?.Value);
+        Assert.IsNull(vc1.ContactID.Value.String);
+        Assert.IsNull(vc1.ContactID.OriginalString);
+
+        Assert.AreEqual(vc1.ContactID.Value, vc2.ContactID?.Value);
+        Assert.IsNotNull(vc2.ContactID?.Value.String);
+        Assert.IsNull(vc2.ContactID.OriginalString);
+
+        string vcf1 = vc1.ToVcfString(Enums.VCdVersion.V3_0);
+        string vcf2 = vc2.ToVcfString(Enums.VCdVersion.V3_0);
+
+        StringAssert.Contains(vcf1, id);
+        StringAssert.Contains(vcf2, guidUpperCase);
+
+        VCard vc1a = Vcf.Parse(vcf1)[0];
+        VCard vc2a = Vcf.Parse(vcf2)[0];
+
+
+        Assert.IsNotNull(vc1a.ContactID?.Value);
+        Assert.IsNotNull(vc1a.ContactID.Value.String);
+        Assert.IsNotNull(vc1a.ContactID.OriginalString);
+
+        Assert.AreEqual(vc1a.ContactID.Value, vc2a.ContactID?.Value);
+        Assert.IsNotNull(vc2a.ContactID?.Value.String);
+        Assert.IsNotNull(vc2a.ContactID.OriginalString);
+
+        string vcf1a = vc1.ToVcfString(Enums.VCdVersion.V3_0);
+        string vcf2a = vc2.ToVcfString(Enums.VCdVersion.V3_0);
+
+        StringAssert.Contains(vcf1a, id);
+        StringAssert.Contains(vcf2a, guidUpperCase);
+    }
+
+    [TestMethod]
+    public void ContactIDPropertyTest8()
+    {
+        const string id = "789c03ec-b707-4e79-97ae-89ee061d861b";
+        var guid = Guid.Parse(id);
+        string guidUpperCase = guid.ToString().ToUpperInvariant();
+
+        VCard vc1 = VCardBuilder
+            .Create(false)
+            .ContactID.Set(guid)
+            .VCard;
+
+        VCard vc2 = VCardBuilder
+            .Create(false)
+            .ContactID.Set(guidUpperCase)
+            .VCard;
+
+        Assert.IsNotNull(vc1.ContactID?.Value);
+        Assert.IsNull(vc1.ContactID.Value.String);
+        Assert.IsNull(vc1.ContactID.OriginalString);
+
+        Assert.AreEqual(vc1.ContactID.Value, vc2.ContactID?.Value);
+        Assert.IsNotNull(vc2.ContactID?.Value.String);
+        Assert.IsNull(vc2.ContactID.OriginalString);
+
+        string vcf1 = vc1.ToVcfString(Enums.VCdVersion.V4_0);
+        string vcf2 = vc2.ToVcfString(Enums.VCdVersion.V4_0);
+
+        StringAssert.Contains(vcf1, id);
+        StringAssert.Contains(vcf1, "urn:uuid:");
+        StringAssert.Contains(vcf2, guidUpperCase);
+        StringAssert.Contains(vcf2, "VALUE=TEXT");
+
+        VCard vc1a = Vcf.Parse(vcf1)[0];
+        VCard vc2a = Vcf.Parse(vcf2)[0];
+
+
+        Assert.IsNotNull(vc1a.ContactID?.Value);
+        Assert.IsTrue(vc1a.ContactID.Value.Guid.HasValue);
+        Assert.IsNotNull(vc1a.ContactID.OriginalString);
+
+        Assert.AreEqual(vc1a.ContactID.Value, vc2a.ContactID?.Value);
+        Assert.IsNotNull(vc2a.ContactID?.Value.String);
+        Assert.IsNotNull(vc2a.ContactID.OriginalString);
+
+        string vcf1a = vc1.ToVcfString(Enums.VCdVersion.V4_0);
+        string vcf2a = vc2.ToVcfString(Enums.VCdVersion.V4_0);
+
+        StringAssert.Contains(vcf1a, id);
+        StringAssert.Contains(vcf1a, "urn:uuid:");
+
+        StringAssert.Contains(vcf2a, guidUpperCase);
+        StringAssert.Contains(vcf2a, "VALUE=TEXT");
+    }
+
+    [TestMethod]
+    public void ContactIDPropertyTest9()
+    {
+        const string id = "789c03ec-b707-4e79-97ae-89ee061d861b";
+        var guid = Guid.Parse(id);
+        string guidUpperCase = guid.ToString().ToUpperInvariant();
+        Uri uri = new Uri("urn:uuid:" + guidUpperCase);
+
+        VCard vc1 = VCardBuilder
+            .Create(false)
+            .ContactID.Set(uri)
+            .VCard;
+
+        VCard vc2 = VCardBuilder
+            .Create(false)
+            .ContactID.Set(guidUpperCase)
+            .VCard;
+
+        Assert.IsNotNull(vc1.ContactID?.Value);
+        Assert.IsNotNull(vc1.ContactID.Value.Uri);
+        Assert.IsNull(vc1.ContactID.OriginalString);
+
+        Assert.AreEqual(vc1.ContactID.Value, vc2.ContactID?.Value);
+        Assert.IsNotNull(vc2.ContactID?.Value.String);
+        Assert.IsNull(vc2.ContactID.OriginalString);
+
+        string vcf1 = vc1.ToVcfString(Enums.VCdVersion.V4_0);
+        string vcf2 = vc2.ToVcfString(Enums.VCdVersion.V4_0);
+
+        StringAssert.Contains(vcf1, uri.OriginalString);
+        StringAssert.Contains(vcf2, guidUpperCase);
+        StringAssert.Contains(vcf2, "VALUE=TEXT");
+
+        VCard vc1a = Vcf.Parse(vcf1)[0];
+        VCard vc2a = Vcf.Parse(vcf2)[0];
+
+        Assert.IsNotNull(vc1a.ContactID?.Value);
+        Assert.IsTrue(vc1a.ContactID.Value.Guid.HasValue);
+        Assert.IsNotNull(vc1a.ContactID.OriginalString);
+
+        Assert.AreEqual(vc1a.ContactID.Value, vc2a.ContactID?.Value);
+        Assert.IsNotNull(vc2a.ContactID?.Value.String);
+        Assert.IsNotNull(vc2a.ContactID.OriginalString);
+
+        string vcf1a = vc1.ToVcfString(Enums.VCdVersion.V4_0);
+        string vcf2a = vc2.ToVcfString(Enums.VCdVersion.V4_0);
+
+        StringAssert.Contains(vcf1a, uri.OriginalString);
+
+        StringAssert.Contains(vcf2a, guidUpperCase);
+        StringAssert.Contains(vcf2a, "VALUE=TEXT");
+    }
 
     [TestMethod]
     public void AppendValueTest1()

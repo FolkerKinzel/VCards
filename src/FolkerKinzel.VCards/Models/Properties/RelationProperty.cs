@@ -74,8 +74,8 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
         }
         else
         {
-            if (version < VCdVersion.V4_0)
-            {
+            //if (version < VCdVersion.V4_0)
+            //{
                 string val = StringDeserializer.Deserialize(vcfRow, version);
 
                 prop = vcfRow.Parameters.DataType == Data.Text
@@ -83,22 +83,22 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
                           : Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
                                 ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
                                 : new RelationProperty(Relation.Create(ContactID.Create(val)));
-            }
-            else
-            {
-                if (vcfRow.Parameters.DataType == Data.Text)
-                {
-                    string val = StringDeserializer.Deserialize(vcfRow, version);
-                    prop = new RelationProperty(Relation.Create(ContactID.Create(val)));
-                }
-                else
-                {
-                    string val = vcfRow.Value.ToString();
-                    prop = Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
-                                ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
-                                : new RelationProperty(Relation.Create(ContactID.Create(val)));
-                }
-            }
+            //}
+            //else
+            //{
+            //    if (vcfRow.Parameters.DataType == Data.Text)
+            //    {
+            //        string val = StringDeserializer.Deserialize(vcfRow, version);
+            //        prop = new RelationProperty(Relation.Create(ContactID.Create(val)));
+            //    }
+            //    else
+            //    {
+            //        string val = vcfRow.Value.ToString();
+            //        prop = Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
+            //                    ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
+            //                    : new RelationProperty(Relation.Create(ContactID.Create(val)));
+            //    }
+            //}
         }
 
         prop.Parameters.Assign(vcfRow.Parameters);

@@ -64,7 +64,8 @@ public sealed class ContactIDProperty : VCardProperty
     internal ContactIDProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        if (Parameters.DataType == Data.Text)
+        if ((version < VCdVersion.V4_0 && Parameters.DataType != Data.Uri) 
+            || Parameters.DataType == Data.Text)
         {
             OriginalString = StringDeserializer.Deserialize(vcfRow, version);
 
@@ -79,6 +80,7 @@ public sealed class ContactIDProperty : VCardProperty
         if (UuidConverter.TryAsGuid(vcfRow.Value.Span, out Guid uuid))
         {
             Value = ContactID.Create(uuid);
+            return;
         }
 
         string uriString = OriginalString.Trim();
@@ -86,6 +88,7 @@ public sealed class ContactIDProperty : VCardProperty
         if (Uri.TryCreate(uriString, UriKind.Absolute, out Uri? uri))
         {
             Value = ContactID.Create(uri);
+            return;
         }
 
         Value = uriString.Length == 0
