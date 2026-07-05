@@ -1,5 +1,6 @@
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Intls.Models;
 using FolkerKinzel.VCards.Models;
 using FolkerKinzel.VCards.Models.Properties;
 using FolkerKinzel.VCards.Models.Properties.Parameters;
@@ -848,11 +849,12 @@ public sealed partial class VCard
         {
             RelationProperty prop = span[i];
 
-            if (prop.Value.ContactID?.String is string text)
+            if (prop.Value.ContactID is ContactID contactID
+                && contactID.String is string text 
+                && ReferenceEquals(contactID, contactID.Comparer))
             {
                 Debug.Assert(!prop.IsEmpty);
-                //Debug.Assert(!Uri.TryCreate(text, UriKind.Absolute, out _));
-
+             
                 var relProp = new RelationProperty(Relation.Create(new VCard(setContactID: true, setCreated: false)
                 {
                     DisplayNames = new TextProperty(text)

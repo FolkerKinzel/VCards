@@ -68,27 +68,23 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
         RelationProperty prop;
         ReadOnlySpan<char> valSpan = vcfRow.Value.Span.Trim();
 
-        if (valSpan.IsEmpty)
+        if (valSpan.IsWhiteSpace())
         {
             prop = new RelationProperty(Relation.Empty);
-            goto done;
         }
-
-        if (UuidConverter.TryAsGuid(vcfRow.Value.Span, out Guid uuid))
+        else
         {
-            prop = new RelationProperty(Relation.Create(ContactID.Create(uuid)));
-            goto done;
+            string? val = StringDeserializer.Deserialize(vcfRow, version);
+
+            prop = vcfRow.Parameters.DataType == Data.Text
+                ? new RelationProperty(Relation.Create(ContactID.Create(val)))
+                : UuidConverter.TryAsGuid(vcfRow.Value.Span, out Guid uuid)
+                    ? new RelationProperty(Relation.Create(ContactID.Create(uuid)))
+                        : Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
+                            ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
+                            : new RelationProperty(Relation.Create(ContactID.Create(val)));
         }
 
-        string? val = StringDeserializer.Deserialize(vcfRow, version);
-
-        prop = vcfRow.Parameters.DataType == Data.Text
-            ? new RelationProperty(Relation.Create(ContactID.Create(val)))
-            : Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
-                ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
-                : new RelationProperty(Relation.Create(ContactID.Create(val)));
-
-done:
         prop.Parameters.Assign(vcfRow.Parameters);
         prop.Group = vcfRow.Group;
         return prop;
