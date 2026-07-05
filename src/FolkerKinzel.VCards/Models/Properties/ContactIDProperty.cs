@@ -64,8 +64,7 @@ public sealed class ContactIDProperty : VCardProperty
     internal ContactIDProperty(VcfRow vcfRow, VCdVersion version)
         : base(vcfRow.Parameters, vcfRow.Group)
     {
-        if ((version < VCdVersion.V4_0 && Parameters.DataType != Data.Uri) 
-            || Parameters.DataType == Data.Text)
+        if (version < VCdVersion.V4_0 || Parameters.DataType == Data.Text)
         {
             OriginalString = StringDeserializer.Deserialize(vcfRow, version);
 
@@ -114,9 +113,11 @@ public sealed class ContactIDProperty : VCardProperty
     {
         base.PrepareForVcfSerialization(serializer);
 
+        Parameters.DataType = null;
+
         if (OriginalString is null)
         {
-            if (Value.String is string str)
+            if (Value.String is string str && Value.Comparer.Uri is null)
             {
                 Parameters.DataType = Data.Text;
                 StringSerializer.Prepare(str, this, serializer.Version);

@@ -140,7 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FolkerKinzel.DataUrls" Version="2.0.6" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.200">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -153,7 +153,7 @@
     <PackageReference Include="Portable.System.DateTimeOnly" Version="9.0.1" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.4" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.9" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\Res.Designer.cs">

@@ -318,4 +318,36 @@ public class RelationPropertyTests
         string s = donald.ToString();
         Assert.IsNotNull(s);
     }
+
+    [TestMethod]
+    public void AgentTest1()
+    {
+        const string vcf = """
+            BEGIN:VCARD
+            VERSION:2.1
+            AGENT:
+            BEGIN:VCARD
+            VERSION:2.1
+            N:Friday;Fred
+            TEL;WORK;VOICE:+1-213-555-1234
+            TEL;WORK;FAX:+1-213-555-5678
+            END:VCARD
+            END:VCARD
+            """;
+
+        VCard vcard = Vcf.Parse(vcf)[0];
+
+        var agent = vcard.Relations.FirstOrNull();
+        Assert.IsNotNull(agent);
+        VCard? vc = agent.Value.VCard;
+        Assert.IsNotNull(vc);
+        
+        string? familyName = vc.NameViews.FirstOrNull()?.Value.Surnames.FirstOrDefault();
+        Assert.AreEqual("Friday", familyName);
+
+        string? givenName = vc.NameViews.FirstOrNull()?.Value.Given.FirstOrDefault();
+        Assert.AreEqual("Fred", givenName);
+
+        Assert.AreEqual(2, vc.Phones?.Count());
+    }
 }

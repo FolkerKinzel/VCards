@@ -74,31 +74,13 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
         }
         else
         {
-            //if (version < VCdVersion.V4_0)
-            //{
-                string val = StringDeserializer.Deserialize(vcfRow, version);
+            string val = StringDeserializer.Deserialize(vcfRow, version);
 
-                prop = vcfRow.Parameters.DataType == Data.Text
-                          ? new RelationProperty(Relation.Create(ContactID.Create(val)))
-                          : Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
-                                ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
-                                : new RelationProperty(Relation.Create(ContactID.Create(val)));
-            //}
-            //else
-            //{
-            //    if (vcfRow.Parameters.DataType == Data.Text)
-            //    {
-            //        string val = StringDeserializer.Deserialize(vcfRow, version);
-            //        prop = new RelationProperty(Relation.Create(ContactID.Create(val)));
-            //    }
-            //    else
-            //    {
-            //        string val = vcfRow.Value.ToString();
-            //        prop = Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
-            //                    ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
-            //                    : new RelationProperty(Relation.Create(ContactID.Create(val)));
-            //    }
-            //}
+            prop = vcfRow.Parameters.DataType == Data.Text
+                      ? new RelationProperty(Relation.Create(ContactID.Create(val)))
+                      : Uri.TryCreate(val, UriKind.Absolute, out Uri? uri)
+                            ? new RelationProperty(Relation.Create(ContactID.Create(uri)))
+                            : new RelationProperty(Relation.Create(ContactID.Create(val)));
         }
 
         prop.Parameters.Assign(vcfRow.Parameters);
@@ -138,8 +120,7 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
                 _ = builder.AppendUuid(Value.ContactID.Guid.Value, serializer.Version);
                 return;
             }
-
-            if (Value.ContactID.String is string txt)
+            else if (Value.ContactID.String is string txt)
             {
                 _ = serializer.Version == VCdVersion.V2_1
                     ? Parameters.Encoding == Enc.QuotedPrintable
@@ -147,12 +128,10 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
                         : builder.Append(Value.ContactID.String)
                     : builder.AppendValueMasked(Value.ContactID.String, serializer.Version);
             }
-
-            if (Value.ContactID.Uri is Uri uri)
+            else if (Value.ContactID.Uri is Uri uri)
             {
                 // Preserves the original string that has been parsed from a vCard.
                 _ = builder.Append(uri.OriginalString);
-                return;
             }
         }
 
@@ -168,8 +147,6 @@ public sealed class RelationProperty : VCardProperty, IEnumerable<RelationProper
             _ = serializer.Version == VCdVersion.V3_0
                 ? builder.AppendValueMasked(vcf, serializer.Version)
                 : builder.Append(VCard.NewLine).Append(vcf); // Version 2.1
-
-            return;
         }
     }
 }

@@ -237,6 +237,56 @@ public class ContactIDPropertyTests
     }
 
     [TestMethod]
+    public void ContactIDPropertyTest10()
+    {
+        const string uriStr = "http://contoso.com/KäseBlümchen/";
+        string escapedUriStr = "http://contoso.com/K%C3%A4seBl%C3%BCmchen/";
+        Uri uri = new Uri(escapedUriStr);
+
+        VCard vc1 = VCardBuilder
+            .Create(false)
+            .ContactID.Set(uriStr)
+            .VCard;
+
+        VCard vc2 = VCardBuilder
+            .Create(false)
+            .ContactID.Set(uri)
+            .VCard;
+
+        Assert.IsNotNull(vc1.ContactID?.Value);
+        Assert.IsNotNull(vc1.ContactID.Value.String);
+        Assert.IsNull(vc1.ContactID.OriginalString);
+
+        Assert.AreEqual(vc1.ContactID.Value, vc2.ContactID?.Value);
+        Assert.IsNotNull(vc2.ContactID?.Value.Uri);
+        Assert.IsNull(vc2.ContactID.OriginalString);
+
+        string vcf1 = vc1.ToVcfString(Enums.VCdVersion.V4_0);
+        string vcf2 = vc2.ToVcfString(Enums.VCdVersion.V4_0);
+
+        StringAssert.Contains(vcf1, uriStr);
+        StringAssert.Contains(vcf2, uri.OriginalString);
+
+        VCard vc1a = Vcf.Parse(vcf1)[0];
+        VCard vc2a = Vcf.Parse(vcf2)[0];
+
+        Assert.IsNotNull(vc1a.ContactID?.Value);
+        Assert.IsNotNull(vc1a.ContactID.Value.Uri);
+        Assert.IsNotNull(vc1a.ContactID.OriginalString);
+
+        Assert.AreEqual(vc1a.ContactID.Value, vc2a.ContactID?.Value);
+        Assert.IsNotNull(vc2a.ContactID?.Value.Uri);
+        Assert.IsNotNull(vc2a.ContactID.OriginalString);
+
+        string vcf1a = vc1.ToVcfString(Enums.VCdVersion.V4_0);
+        string vcf2a = vc2.ToVcfString(Enums.VCdVersion.V4_0);
+
+        StringAssert.Contains(vcf1a, uriStr);
+
+        StringAssert.Contains(vcf2a, uri.OriginalString);
+    }
+
+    [TestMethod]
     public void AppendValueTest1()
     {
         var vc = VCardBuilder.Create().ContactID.Set(new Uri("http://folker.com/")).VCard;
