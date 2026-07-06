@@ -21,7 +21,7 @@ internal sealed class ContactIDString : ContactID
     internal ContactIDString()
     {
         String = "";
-        Comparer = this;
+        Comparer = this; // NEVER remove this line!!!
     }
 
     public override Guid? Guid => null;

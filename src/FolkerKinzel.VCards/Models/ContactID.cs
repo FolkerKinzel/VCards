@@ -93,7 +93,8 @@ public abstract class ContactID : IEquatable<ContactID>
     /// if the parent instance encapsulates a <see cref="string"/> representing a
     /// <see cref="Guid"/>, or a <see cref="Uri"/> that is a UUID-URN.
     /// </remarks>
-    public ContactID Comparer { get; protected set; } = Empty;
+    public ContactID Comparer { get; protected set; } = Empty; // This assignment is never used, because
+                                                               // the ctor of Empty sets the property.
 
     /// <summary>
     /// <c>true</c> if the instance doesn't identify anything, otherwise <c>false</c>.
