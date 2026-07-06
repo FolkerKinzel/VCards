@@ -17,8 +17,6 @@ namespace FolkerKinzel.VCards.Models;
 /// </remarks>
 public abstract class ContactID : IEquatable<ContactID>
 {
-    
-
     /// <summary>
     /// Creates a new <see cref="ContactID"/> instance from a newly
     /// created <see cref="System.Guid"/>.
@@ -93,7 +91,7 @@ public abstract class ContactID : IEquatable<ContactID>
     /// This is not necessarily the same instance as the parent object.
     /// For example, <see cref="Comparer"/> will encapsulate a <see cref="Guid"/> 
     /// if the parent instance encapsulates a <see cref="string"/> representing a
-    /// <see cref="Guid"/>, or a <see cref="Uri"/> that is a GUID URN.
+    /// <see cref="Guid"/>, or a <see cref="Uri"/> that is a UUID-URN.
     /// </remarks>
     [NotNull]
     public ContactID? Comparer { get; protected set; }
