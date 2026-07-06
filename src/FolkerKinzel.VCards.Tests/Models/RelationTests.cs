@@ -224,4 +224,15 @@ public class RelationTests
 
     [TestMethod]
     public void ToStringTest2() => Assert.IsNotNull(Relation.Create(new VCard()).ToString());
+
+    [TestMethod]
+    public void EmptyTest()
+    {
+        var empty = Relation.Empty;
+
+        Assert.IsNotNull(empty);
+        Assert.IsTrue(empty.IsEmpty);
+        Assert.AreSame(empty, Relation.Empty);
+        Assert.AreSame(empty.ContactID, ContactID.Empty);
+    }
 }

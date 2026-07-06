@@ -223,6 +223,16 @@ public class ContactIDTests
 
         Assert.IsFalse(uid1.Equals(null));
     }
+
+    [TestMethod]
+    public void EmptyTest()
+    {
+        var empty = ContactID.Empty;
+
+        Assert.IsTrue(empty.IsEmpty);
+        Assert.AreEqual("", empty.String);
+        Assert.AreSame(empty, ContactID.Empty);
+    }
 }
 
 
