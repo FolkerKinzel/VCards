@@ -1,5 +1,6 @@
 - Fixes issues with third-party software that treats Guid values as strings:
   - `ContactIDProperty` has gained a new property, `ContactIDProperty.OriginalString`, which preserves the string value contained in the parsed vCard. By default, this value is retained when the `VCard` is serialized back into a string.
+- Fixes issues with non-standard vCard parameters.
 - Improved usability:
   - Unlike in earlier versions, the return values ​​of the `ContactID.Create` methods align more closely with natural expectations, without compromising the semantic comparability of the `ContactID` instances. The new `ContactID.Comparer` property makes it clear what is used for the comparison.
   - `NameViewsBuilder.ToDisplayNames()` now has a default argument.

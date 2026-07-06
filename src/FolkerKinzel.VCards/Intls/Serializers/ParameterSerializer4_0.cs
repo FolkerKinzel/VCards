@@ -1073,21 +1073,7 @@ internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSeriali
 
         if (Options.HasFlag(VcfOpts.WriteNonStandardParameters))
         {
-            IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
-
-            if (nonStandard is null)
-            {
-                return;
-            }
-
-            foreach (KeyValuePair<string, string> kvp in nonStandard)
-            {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE)
-                    && !string.IsNullOrWhiteSpace(kvp.Value))
-                {
-                    _stringCollectionList.Add(kvp.Value);
-                }
-            }
+            CollectNonStandardTypeParameters();
         }
 
         if (this._stringCollectionList.Count != 0)
@@ -1100,6 +1086,25 @@ internal sealed class ParameterSerializer4_0(VcfOpts options) : ParameterSeriali
             }
 
             --Builder.Length;
+        }
+    }
+
+    private void CollectNonStandardTypeParameters()
+    {
+        IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
+
+        if (nonStandard is null)
+        {
+            return;
+        }
+
+        foreach (KeyValuePair<string, string> kvp in nonStandard)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE)
+                && !string.IsNullOrWhiteSpace(kvp.Value))
+            {
+                _stringCollectionList.Add(kvp.Value);
+            }
         }
     }
 

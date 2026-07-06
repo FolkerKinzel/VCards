@@ -520,42 +520,49 @@ internal sealed class ParameterSerializer3_0(VcfOpts options) : ParameterSeriali
 
         if (Options.HasFlag(VcfOpts.WriteNonStandardParameters))
         {
-            IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
-
-            if (nonStandard is null)
-            {
-                return;
-            }
-
-            _stringCollectionList.Clear();
-
-            foreach (KeyValuePair<string, string> kvp in nonStandard)
-            {
-                if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE)
-                    && !string.IsNullOrWhiteSpace(kvp.Value))
-                {
-                    _stringCollectionList.Add(kvp.Value);
-                }
-            }
-
-            if (this._stringCollectionList.Count != 0)
-            {
-                if (!typeWritten)
-                {
-                    AppendParameter(ParameterSection.ParameterKey.TYPE, "");
-                    typeWritten = true;
-                }
-
-                for (int i = 0; i < _stringCollectionList.Count; i++)
-                {
-                    Builder.Append(_stringCollectionList[i]).Append(',');
-                }
-            }
+            // A separate method is used, because non-standard type parameters are
+            // not quoted and escaped automatically.
+            WriteNonStandardTypeParameters(ref typeWritten);
         }
 
         if (typeWritten)
         {
             --Builder.Length;
+        }
+    }
+
+    private void WriteNonStandardTypeParameters(ref bool typeWritten)
+    {
+        IEnumerable<KeyValuePair<string, string>>? nonStandard = ParaSection.NonStandard;
+
+        if (nonStandard is null)
+        {
+            return;
+        }
+
+        _stringCollectionList.Clear();
+
+        foreach (KeyValuePair<string, string> kvp in nonStandard)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(kvp.Key, ParameterSection.ParameterKey.TYPE)
+                && !string.IsNullOrWhiteSpace(kvp.Value))
+            {
+                _stringCollectionList.Add(kvp.Value);
+            }
+        }
+
+        if (this._stringCollectionList.Count != 0)
+        {
+            if (!typeWritten)
+            {
+                AppendParameter(ParameterSection.ParameterKey.TYPE, "");
+                typeWritten = true;
+            }
+
+            for (int i = 0; i < _stringCollectionList.Count; i++)
+            {
+                Builder.Append(_stringCollectionList[i]).Append(',');
+            }
         }
     }
 

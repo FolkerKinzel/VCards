@@ -154,7 +154,7 @@ internal sealed class ParameterSerializer2_1(VcfOpts options) : ParameterSeriali
 
     //protected override void BuildProfilePara() // RFC 2425
     //{
-    //    // keine Parameter
+    //    // none parameters
     //}
 
     //protected override void BuildRevPara()
