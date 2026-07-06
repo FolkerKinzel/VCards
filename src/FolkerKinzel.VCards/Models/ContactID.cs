@@ -17,13 +17,7 @@ namespace FolkerKinzel.VCards.Models;
 /// </remarks>
 public abstract class ContactID : IEquatable<ContactID>
 {
-    /// <summary>
-    /// For internal use only. The property is used to compare <see cref="ContactID"/> 
-    /// instances.
-    /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [NotNull]
-    protected internal ContactID? Comparer { get; protected set; }
+    
 
     /// <summary>
     /// Creates a new <see cref="ContactID"/> instance from a newly
@@ -91,6 +85,18 @@ public abstract class ContactID : IEquatable<ContactID>
 
         return new ContactIDString(text, comparer);
     }
+
+    /// <summary>
+    /// Gets the <see cref="ContactID"/> instance that is used for comparison.
+    /// </summary>
+    /// <remarks>
+    /// This is not necessarily the same instance as the parent object.
+    /// For example, <see cref="Comparer"/> will encapsulate a <see cref="Guid"/> 
+    /// if the parent instance encapsulates a <see cref="string"/> representing a
+    /// <see cref="Guid"/>, or a <see cref="Uri"/> that is a GUID URN.
+    /// </remarks>
+    [NotNull]
+    public ContactID? Comparer { get; protected set; }
 
     /// <summary>
     /// <c>true</c> if the instance doesn't identify anything, otherwise <c>false</c>.
