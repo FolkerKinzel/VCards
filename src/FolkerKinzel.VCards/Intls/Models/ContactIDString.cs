@@ -16,6 +16,8 @@ internal sealed class ContactIDString : ContactID
 
         String = text;
         Comparer = comparer ?? this;
+
+        Assertions();
     }
 
     /// <summary>
@@ -25,6 +27,8 @@ internal sealed class ContactIDString : ContactID
     {
         String = "";
         Comparer = this; // NEVER remove this line!!!
+
+        Assertions();
     }
 
     public override Guid? Guid => null;

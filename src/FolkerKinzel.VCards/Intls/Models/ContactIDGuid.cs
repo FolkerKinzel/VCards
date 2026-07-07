@@ -8,6 +8,8 @@ internal sealed class ContactIDGuid : ContactID
     {
         Guid = guid;
         Comparer = this;
+
+        Assertions();
     }
 
     [NotNull]

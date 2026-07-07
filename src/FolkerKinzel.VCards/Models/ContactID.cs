@@ -93,7 +93,8 @@ public abstract class ContactID : IEquatable<ContactID>
     /// if the parent instance encapsulates a <see cref="string"/> representing a
     /// <see cref="Guid"/>, or a <see cref="Uri"/> that is a UUID-URN.
     /// </remarks>
-    public ContactID Comparer { get; protected set; } = Empty; // Initializes empty.
+    public ContactID Comparer { get; protected set; } = null!; // Each ctor of derived classes MUST set this property
+                                                               // to a non-null value.
 
     /// <summary>
     /// <c>true</c> if the instance doesn't identify anything, otherwise <c>false</c>.
@@ -245,4 +246,20 @@ public abstract class ContactID : IEquatable<ContactID>
     /// <paramref name="right"/> are not equal, otherwise <c>false</c>.</returns>
     public static bool operator !=(ContactID? left, ContactID? right)
         => !(left == right);
+
+    /// <summary>
+    /// Infrastructure. Asserts that the <see cref="Comparer"/> property is not <c>null</c>
+    /// and that it is a reference to itself.
+    /// </summary>
+    /// <remarks>
+    /// Each ctor of derived classes MUST call this method at its end to ensure that the 
+    /// <see cref="Comparer"/> property is initialized correctly.
+    /// </remarks>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Conditional("DEBUG")]
+    protected void Assertions()
+    {
+        Debug.Assert(Comparer != null);
+        Debug.Assert(ReferenceEquals(Comparer, Comparer.Comparer));
+    }
 }

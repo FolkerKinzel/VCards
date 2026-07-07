@@ -11,6 +11,7 @@ internal sealed class ContactIDUri : ContactID
 
         Uri = uri;
         Comparer = comparer ?? this;
+        Assertions();
     }
 
     public override Guid? Guid => null;
