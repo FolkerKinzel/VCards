@@ -18,6 +18,9 @@ internal sealed class ContactIDString : ContactID
         Comparer = comparer ?? this;
     }
 
+    /// <summary>
+    /// Initializes <see cref="ContactID.Empty"/>.
+    /// </summary>
     internal ContactIDString()
     {
         String = "";

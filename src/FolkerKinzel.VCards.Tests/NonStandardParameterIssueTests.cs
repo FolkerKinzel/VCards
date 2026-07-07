@@ -27,10 +27,14 @@ public class NonStandardParameterIssueTests
 
         Assert.IsFalse(vcf30.Contains(",:"));
         Assert.IsTrue(vcf30.Contains("x-1st", StringComparison.Ordinal));
+        Assert.IsTrue(vcf30.Contains("TYPE=WORK", StringComparison.OrdinalIgnoreCase));
 
         Assert.IsTrue(vcf40.Contains("TYPE=WORK", StringComparison.OrdinalIgnoreCase));
         Assert.IsTrue(vcf40.Contains("x-1st", StringComparison.Ordinal));
+        Assert.IsFalse(vcf40.Contains(",:"));
+
 
         Assert.IsTrue(vcf21.Contains("x-1st", StringComparison.Ordinal));
+        Assert.IsTrue(vcf21.Contains("WORK", StringComparison.OrdinalIgnoreCase));
     }
 }

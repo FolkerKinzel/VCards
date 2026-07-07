@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FolkerKinzel.VCards;
 using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
+using FolkerKinzel.VCards.Models;
 
 namespace Net472Issue
 {

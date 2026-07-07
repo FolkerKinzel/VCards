@@ -27,6 +27,13 @@ public class ContactIDTests
     }
 
     [TestMethod]
+    public void CreateTest5()
+    {
+        var id = ContactID.Create();
+        Assert.IsNotNull(id.Guid);
+    }
+
+    [TestMethod]
     public void ToStringTest1() => Assert.IsNotNull(ContactID.Empty.ToString());
 
     [TestMethod]
