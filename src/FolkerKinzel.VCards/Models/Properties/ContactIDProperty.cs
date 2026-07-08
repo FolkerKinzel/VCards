@@ -14,9 +14,10 @@ namespace FolkerKinzel.VCards.Models.Properties;
 /// This behavior can be undesirable when converting from one vCard version to another.
 /// </para>
 /// <para>
-/// In this case, assign a new <see cref="ContactIDProperty"/> instance to the <see cref="VCard"/> being converted — 
-/// initialized with the <see cref="Value"/> of the current one — in order to adapt the format (e.g., of <see cref="Guid"/>s)
-/// to the new vCard version.
+/// In this case, assign a new <see cref="ContactIDProperty"/> instance to the <see cref="VCard"/> — 
+/// initialized with the value of the <see cref="ContactID.Comparer"/> property of the <see cref="ContactID"/> thats
+/// stored as the <see cref="Value"/> of the current <see cref="ContactIDProperty"/> — in 
+/// order to adapt the format (e.g., of <see cref="Guid"/>s) to the new vCard version.
 /// </para>
 /// </remarks>
 /// <seealso cref="VCard.ContactID"/>
@@ -54,9 +55,10 @@ public sealed class ContactIDProperty : VCardProperty
     /// This behavior can be undesirable when converting from one vCard version to another.
     /// </para>
     /// <para>
-    /// In this case, assign a new <see cref="ContactIDProperty"/> instance to the <see cref="VCard"/> being converted — 
-    /// initialized with the <see cref="Value"/> of the current one — in order to adapt the format (e.g., of <see cref="Guid"/>s)
-    /// to the new vCard version.
+    /// In this case, assign a new <see cref="ContactIDProperty"/> instance to the <see cref="VCard"/> — 
+    /// initialized with the value of the <see cref="ContactID.Comparer"/> property of the <see cref="ContactID"/> thats
+    /// stored as the <see cref="Value"/> of the current <see cref="ContactIDProperty"/> — in 
+    /// order to adapt the format (e.g., of <see cref="Guid"/>s) to the new vCard version.
     /// </para>
     /// </remarks>
     public string? OriginalString { get; }
