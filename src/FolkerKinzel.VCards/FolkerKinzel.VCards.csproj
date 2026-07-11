@@ -150,7 +150,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard2.1'">
-    <PackageReference Include="Portable.System.DateTimeOnly" Version="9.0.1" />
+    <PackageReference Include="Portable.System.DateTimeOnly" Version="9.0.2" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.9" />
