@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 [TestClass()]
 public class VCdVersionConverterTests
 {
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(null, VCdVersion.V2_1)]
     [DataRow("bla", VCdVersion.V2_1)]
     [DataRow("", VCdVersion.V2_1)]

@@ -15,7 +15,7 @@ public class GeoCoordinateTests
         Assert.AreEqual(longitude, geo.Longitude);
     }
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(double.NaN, 15, null)]
     [DataRow(15, double.NegativeInfinity, null)]
     [DataRow(double.PositiveInfinity, 15, null)]
@@ -31,7 +31,7 @@ public class GeoCoordinateTests
             () => new GeoCoordinate(latitude, longitude, uncertainty));
 
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(double.NaN, 15, null)]
     [DataRow(15, double.NegativeInfinity, null)]
     [DataRow(double.PositiveInfinity, 15, null)]
@@ -75,7 +75,7 @@ public class GeoCoordinateTests
     [TestMethod()]
     public void EqualsTest3() => Assert.IsFalse(null == new GeoCoordinate(1, 1));
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(50, 50, 0.0F, 50, 50, null, false)]
     [DataRow(90, 50, null, 90, 0, null, true)]
     [DataRow(-90, -50, null, -90, 0, null, true)]
@@ -113,7 +113,7 @@ public class GeoCoordinateTests
         Assert.IsFalse(new GeoCoordinate(0, 0) == GeoCoordinate.Empty);
     }
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(51.05022555003223, 12.130624133575036, null, 51.04930951936781, 12.128100583930106, 1000.0F, true)]
     [DataRow(51.05022555003223, 12.130624133575036, null, 51.04930951936781, 12.128100583930106, 100.0F, false)]
     [DataRow(89.99, 180.0, null, 89.99, -179.9999, 10000.0F, true)]
@@ -150,7 +150,7 @@ public class GeoCoordinateTests
     public void AreSamePositionTest5()
         => Assert.IsFalse(GeoCoordinate.AreSamePosition(GeoCoordinate.Empty, new GeoCoordinate(0, 0)));
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(5.1234561, 0, null)]
     [DataRow(5.1234568, 5.1234561, null)]
     [DataRow(0, 0, null)]
@@ -172,7 +172,7 @@ public class GeoCoordinateTests
     [TestMethod]
     public void ToStringTest2() => Assert.IsNotNull(GeoCoordinate.Empty.ToString());
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow("geo:0.8,0.7")]
     [DataRow("0.8;0.7")]
     [DataRow(".8;0.7")]
@@ -190,7 +190,7 @@ public class GeoCoordinateTests
         Assert.AreEqual(new GeoCoordinate(0.8, 0.7), geo);
     }
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(null)]
     [DataRow(",0.7")]
     [DataRow("geo:,0.7")]

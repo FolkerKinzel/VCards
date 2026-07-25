@@ -21,7 +21,7 @@ public class TextEncodingConverterTests
         Assert.AreEqual(28591, enc.CodePage);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(null, 65001)]
     [DataRow("iso-8859-1", 28591)]
     [DataRow("ISO-8859-1", 28591)]
@@ -34,7 +34,7 @@ public class TextEncodingConverterTests
         Assert.IsNotInstanceOfType(enc.DecoderFallback.GetType(), DecoderFallback.ExceptionFallback.GetType());
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(65001)]
     [DataRow(28591)]
     public void GetEncodingTest3(int codePage)
@@ -45,7 +45,7 @@ public class TextEncodingConverterTests
         Assert.IsNotInstanceOfType(enc.DecoderFallback.GetType(), DecoderFallback.ExceptionFallback.GetType());
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(-17)]
     [DataRow(int.MaxValue)]
     [DataRow(42)]

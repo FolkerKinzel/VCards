@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Converters.Tests;
 [TestClass]
 public class EncConverterTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(null, null)]
     [DataRow("Base64", Enc.Base64)]
     [DataRow("B", Enc.Base64)]

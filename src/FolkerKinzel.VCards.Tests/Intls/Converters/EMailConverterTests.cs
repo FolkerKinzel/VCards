@@ -3,7 +3,7 @@
 [TestClass]
 public class EMailConverterTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("internet")]
     [DataRow("x400")]
     [DataRow("OTHER")]

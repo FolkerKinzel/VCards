@@ -134,7 +134,7 @@ public class RelationPropertyTests
         Assert.IsTrue(s.Length >= "John Doe".Length);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("   ")]
     [DataRow("../bla.txt")]
     public void ParseTest1(string input)

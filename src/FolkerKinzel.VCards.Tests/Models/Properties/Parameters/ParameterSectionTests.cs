@@ -8,7 +8,7 @@ namespace FolkerKinzel.VCards.Models.Properties.Parameters.Tests;
 [TestClass]
 public class ParameterSectionTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("Date")]
     [DataRow("DATE")]
     [DataRow("\"Date\"")]

@@ -54,7 +54,7 @@ public class UriConverterTests
         => Assert.AreEqual(".pdf", UriConverter.GetFileTypeExtensionFromUri(
             new Uri("../.../../contäso.pdf", UriKind.Relative)));
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("www.folker.de/")]
     [DataRow("www.folker.de")]
     public void GetFileTypeExtensionFromUriTest6(string input)

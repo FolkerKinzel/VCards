@@ -6,7 +6,7 @@ namespace FolkerKinzel.VCards.Intls.Formatters.Tests;
 [TestClass]
 public class AddressOrderConverterTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(null, null)]
     [DataRow("Germany", AddressOrder.Din)]
     [DataRow("Deutschland", AddressOrder.Din)]
@@ -24,7 +24,7 @@ public class AddressOrderConverterTests
         Assert.AreEqual((AddressOrder?)expected, order);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("en-US", AddressOrder.Usa)]
     [DataRow("de-DE", AddressOrder.Din)]
     [DataRow("es-VE-Z", AddressOrder.Venezuela)]
@@ -74,7 +74,7 @@ public class AddressOrderConverterTests
         }
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("AU", 1)] // AUSTRALIA												
     [DataRow("BH", 1)] // BAHRAIN												
     [DataRow("BD", 1)] // BANGLADESH												

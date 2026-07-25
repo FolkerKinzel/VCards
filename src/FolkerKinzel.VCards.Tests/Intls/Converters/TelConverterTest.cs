@@ -24,7 +24,7 @@ public class TypeConverterPolyfillTests
         Assert.AreEqual(val, result);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("")]
     [DataRow("/")]
     [DataRow(":")]

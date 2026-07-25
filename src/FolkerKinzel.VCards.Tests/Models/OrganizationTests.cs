@@ -14,7 +14,7 @@ public class OrganizationTests
         Assert.AreEqual(0, s.Length);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("org", "äöü", true)]
     [DataRow("äöü", "", true)]
     [DataRow("", "äöü", true)]

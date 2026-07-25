@@ -48,7 +48,7 @@ public class TimeConverterTests
     [TestMethod]
     public void TryParseTest1() => Assert.IsFalse(_conv.TryParse(null, out _));
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("T143522+02")]
     [DataRow("T143522+0200")]
     [DataRow("T14+0200")]
@@ -66,7 +66,7 @@ public class TimeConverterTests
     }
 
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("T14")]
     [DataRow("T1435")]
     [DataRow("T143522")]
@@ -82,7 +82,7 @@ public class TimeConverterTests
     public void TryParseTest4() => Assert.IsFalse(_conv.TryParse("TblablaZ".AsSpan(), out _));
 
 
-    [DataTestMethod]
+    [TestMethod]
     //[DataRow("T14")]
     //[DataRow("T1435")]
     //[DataRow("T143522")]
@@ -104,7 +104,7 @@ public class TimeConverterTests
         Assert.IsTrue(oneOf.DateTimeOffset.HasValue);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("T14")]
     [DataRow("T1435")]
     [DataRow("T143522")]

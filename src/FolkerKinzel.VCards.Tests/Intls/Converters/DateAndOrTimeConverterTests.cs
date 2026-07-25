@@ -184,7 +184,7 @@ public class DateAndOrTimeConverterTests
     [DataRow("A very very loooooooooooooooooooooooooong string that is longer than 64 characters.")]
     public void TryParseTest1(string? input) => Assert.IsFalse(_conv.TryParse(input.AsSpan(), out _));
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("---bl")]
     [DataRow("---bTlZ")]
     [DataRow("--bb")]

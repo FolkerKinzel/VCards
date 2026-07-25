@@ -28,7 +28,7 @@ public class TimeZoneIDTests
         => _ = Assert.ThrowsExactly<ArgumentNullException>(
             () => TimeZoneID.Parse(null!));
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("-0700")]
     [DataRow("-07:00")]
     [DataRow("-07")]
@@ -47,7 +47,7 @@ public class TimeZoneIDTests
         Assert.IsTrue(tzInfo.TryGetUtcOffset(out _));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(true)]
     [DataRow(false)]
     public void TryGetUtcOffsetTest3(bool success)
@@ -73,7 +73,7 @@ public class TimeZoneIDTests
     //    Assert.AreEqual(tz1, tz2);
     //}
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("-0700", true)]
     [DataRow("-07:00", true)]
     [DataRow("-07", true)]
@@ -109,7 +109,7 @@ public class TimeZoneIDTests
         Assert.AreEqual(input, builder.ToString());
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("-0100")]
     [DataRow("+0100")]
     public void AppendToTest2(string input)
@@ -125,7 +125,7 @@ public class TimeZoneIDTests
     [TestMethod]
     public void ToStringTest() => Assert.IsNotNull(TimeZoneID.Parse("Europe/Berlin").ToString());
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(null)]
     [DataRow("")]
     [DataRow(" ")]

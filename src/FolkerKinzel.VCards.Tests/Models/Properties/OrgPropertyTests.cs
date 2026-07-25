@@ -9,7 +9,7 @@ public class OrgPropertyTests
 {
     private const string GROUP = "myGroup";
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(GROUP, "ABC, Inc.", new string[] { "North American Division", "Marketing" })]
     [DataRow(null, "ABC, Inc.", new string[] { "North American Division", "Marketing" })]
     [DataRow(null, null, new string[] { "North American Division", "Marketing" })]
@@ -25,7 +25,7 @@ public class OrgPropertyTests
         CollectionAssert.AreEqual(expectedOrganizationalUnits, orgProp.Value.Units?.ToArray());
     }
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(@"ORG:", null, null, null)]
     [DataRow(GROUP + @".ORG:ABC\, Inc.;North American Division;Marketing", GROUP, "ABC, Inc.", new string[] { "North American Division", "Marketing" })]
     [DataRow(@"ORG:ABC\, Inc.;North American Division;Marketing", null, "ABC, Inc.", new string[] { "North American Division", "Marketing" })]

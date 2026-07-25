@@ -21,7 +21,7 @@ public class AddressTests
         Assert.IsNotNull(adr);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("a;;;;;;")]
     [DataRow(";a;;;;;")]
     [DataRow(";;a;;;;")]

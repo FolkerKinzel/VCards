@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Models.Tests;
 [TestClass]
 public class GenderTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(null, null, true)]
     [DataRow(null, "Other", false)]
     [DataRow(Sex.Unknown, null, false)]

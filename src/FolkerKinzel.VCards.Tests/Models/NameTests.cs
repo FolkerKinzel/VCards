@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Models.Tests;
 [TestClass]
 public class NameTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("a;;;;")]
     [DataRow(";a;;;")]
     [DataRow(";;a;;")]

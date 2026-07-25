@@ -241,7 +241,7 @@ public class VcfTests
     [TestMethod]
     public void LoadManyTest5() => Assert.IsNull(Vcf.LoadMany([TestFiles.EmptyVcf]).FirstOrDefault());
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]

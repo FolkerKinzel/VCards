@@ -11,7 +11,7 @@ public class GenderPropertyTests
     private const string GROUP = "myGroup";
     private const string IDENTITY = "identity";
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(GROUP, Sex.Male, null)]
     [DataRow(GROUP, Sex.Female, null)]
     [DataRow(GROUP, Sex.Other, null)]
@@ -32,7 +32,7 @@ public class GenderPropertyTests
     }
 
 
-    [DataTestMethod()]
+    [TestMethod()]
     [DataRow(GROUP + ".GENDER:M", GROUP, Sex.Male, null)]
     [DataRow(GROUP + ".GENDER:F", GROUP, Sex.Female, null)]
     [DataRow(GROUP + ".GENDER:O", GROUP, Sex.Other, null)]

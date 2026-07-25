@@ -43,7 +43,7 @@ public class ReadOnlySpanExtensionTests
         Assert.AreEqual(@"\\\N", unMasked);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("", VCdVersion.V3_0, "")]
     [DataRow("a\\bc", VCdVersion.V2_1, "a\\bc")]
     [DataRow("a\\;bc", VCdVersion.V2_1, "a;bc")]
@@ -83,7 +83,7 @@ public class ReadOnlySpanExtensionTests
         Assert.AreEqual("abc\\,;\r\n\\\\ä".Replace("\r\n", Environment.NewLine), decoded);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("a^'b\\n\\x^y", true, "a\"b\r\n\\x^y")]
     [DataRow("a^'b\\N", true, "a\"b\r\n")]
     [DataRow("a\\nb^^", true, "a\r\nb^")]

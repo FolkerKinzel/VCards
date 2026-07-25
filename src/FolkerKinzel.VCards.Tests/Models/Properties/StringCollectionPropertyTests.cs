@@ -10,7 +10,7 @@ public class StringCollectionPropertyTests
 {
     private const string GROUP = "myGroup";
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(new string?[] { "Bodo, der Blöde", "Dumbo" }, GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
     [DataRow(new string?[] { "", null, "Bodo, der Blöde", "  ", "Dumbo" }, GROUP, new string[] { "", "", "Bodo, der Blöde", "  ", "Dumbo" })]
     [DataRow(new string?[] { "", null, "  " }, GROUP, new string[] { "", "", "  " })]
@@ -27,7 +27,7 @@ public class StringCollectionPropertyTests
         CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value.ToArray());
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("Dumbo", GROUP, new string[] { "Dumbo" })]
     [DataRow(null, GROUP, new string[0])]
     [DataRow("", GROUP, new string[0])]
@@ -44,7 +44,7 @@ public class StringCollectionPropertyTests
         CollectionAssert.AreEqual(expectedNickNames, nickNameProp.Value.ToArray());
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(GROUP + ".NICKNAME:", GROUP, new string[0])]
     [DataRow(GROUP + @".NICKNAME:Bodo\, der Blöde,Dumbo", GROUP, new string[] { "Bodo, der Blöde", "Dumbo" })]
     [DataRow(@"NICKNAME:Bodo\, der Blöde,Dumbo", null, new string[] { "Bodo, der Blöde", "Dumbo" })]

@@ -3,7 +3,7 @@
 [TestClass]
 public class ListExtensionTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("")]
     [DataRow("1")]
     [DataRow("12")]

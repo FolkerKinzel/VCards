@@ -22,7 +22,7 @@ public class GeoCoordinateConverterTests
     //}
 
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V4_0, "geo:0.8,0.7;u=5")]
     [DataRow(VCdVersion.V3_0, "0.8;0.7")]
     [DataRow(VCdVersion.V2_1, "0.8;0.7")]
@@ -34,7 +34,7 @@ public class GeoCoordinateConverterTests
     }
 
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V4_0)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V2_1)]

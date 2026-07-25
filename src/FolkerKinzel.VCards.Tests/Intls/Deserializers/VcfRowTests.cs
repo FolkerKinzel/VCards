@@ -3,7 +3,7 @@
 [TestClass]
 public class VcfRowTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("folker.TEL;TYPE=work,voice;VALUE=uri:tel:+49-221-9999123", false, "TEL", "folker", 3)]
     [DataRow("folker.TEL;TYPE=work,voice;VALUE=uri tel +49-221-9999123", true, "TEL", "folker", 3)]
     [DataRow("folker.tel;TYPE=work,voice;LABEL=\"bla:;h\":tel:+49-221-9999123", false, "TEL", "folker", 3)]

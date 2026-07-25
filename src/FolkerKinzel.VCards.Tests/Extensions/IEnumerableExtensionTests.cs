@@ -85,7 +85,7 @@ public class IEnumerableExtensionTests
         Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x?.Value.VCard is not null));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -100,7 +100,7 @@ public class IEnumerableExtensionTests
         Assert.IsFalse(File.Exists(path));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -115,7 +115,7 @@ public class IEnumerableExtensionTests
         Assert.IsTrue(File.Exists(path));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -128,7 +128,7 @@ public class IEnumerableExtensionTests
         _ = Assert.ThrowsExactly<ArgumentNullException>(() => list!.SaveVcf(path, version));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -188,7 +188,7 @@ public class IEnumerableExtensionTests
         Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value.VCard);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -236,7 +236,7 @@ public class IEnumerableExtensionTests
         _ = Assert.ThrowsExactly<ArgumentException>(() => vcard.SaveVcf("   "));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -251,7 +251,7 @@ public class IEnumerableExtensionTests
             () => vcard.SerializeVcf(null!, version));
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -273,7 +273,7 @@ public class IEnumerableExtensionTests
         Assert.AreNotEqual(-1, ms.ReadByte());
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -291,7 +291,7 @@ public class IEnumerableExtensionTests
         _ = Assert.ThrowsExactly<ObjectDisposedException>(() => _ = ms.Length);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -313,7 +313,7 @@ public class IEnumerableExtensionTests
         => _ = Assert.ThrowsExactly<ArgumentNullException>(
             () => new List<VCard?>().SerializeVcf(null!, VCdVersion.V3_0));
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -332,7 +332,7 @@ public class IEnumerableExtensionTests
         Assert.AreNotEqual(-1, ms.ReadByte());
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -348,7 +348,7 @@ public class IEnumerableExtensionTests
 
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
@@ -365,7 +365,7 @@ public class IEnumerableExtensionTests
         Assert.AreEqual(version, list2[0].Version);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]

@@ -3,7 +3,7 @@
 [TestClass]
 public class MimeTypeConverterTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("image/jpg", "JPEG")]
     [DataRow("image/", null)]
     [DataRow("IMAGE/", null)]
@@ -17,7 +17,7 @@ public class MimeTypeConverterTests
     }
 
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("audio/mp3", "MP3")]
     [DataRow("audio/MP3", "MP3")]
     [DataRow("AUDIO/MP3", "MP3")]
@@ -42,7 +42,7 @@ public class MimeTypeConverterTests
     [TestMethod]
     public void MimeTypeFromSoundTypeTest2() => Assert.IsNull(MimeTypeConverter.MimeTypeFromSoundType("ÄÖÜ".AsSpan()));
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("PGP", "application/pgp-keys")]
     [DataRow("X509", "application/x-x509-ca-cert")]
     [DataRow("OTHER", "application/other")]
@@ -53,7 +53,7 @@ public class MimeTypeConverterTests
     }
 
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("PGP", "application/pgp-keys")]
     [DataRow("X509", "application/x-x509-ca-cert")]
     [DataRow("X509", "application/x-x509-user-cert")]
@@ -65,7 +65,7 @@ public class MimeTypeConverterTests
     }
 
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("GIF")]
     [DataRow("CGM")]
     [DataRow("WMF")]
@@ -108,7 +108,7 @@ public class MimeTypeConverterTests
     }
 
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")]
     [DataRow("VORBIS")]
     [DataRow("WAVE")]
@@ -132,7 +132,7 @@ public class MimeTypeConverterTests
         Assert.AreEqual("MPEG", type);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("X509")]
     [DataRow("PGP")]
     public void KeyRoundtripTest1(string typeValue)

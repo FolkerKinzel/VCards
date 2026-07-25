@@ -6,7 +6,7 @@ namespace FolkerKinzel.VCards.Intls.Extensions.Tests;
 [TestClass]
 public class StringBuilderExtensionTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("", VCdVersion.V2_1, "")]
     [DataRow("", VCdVersion.V3_0, "")]
     [DataRow("", VCdVersion.V4_0, "")]
@@ -19,7 +19,7 @@ public class StringBuilderExtensionTests
         Assert.AreEqual(expected, s);
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(",;\"\"\r\n\n\\", true, VCdVersion.V4_0, "\",;^\'^\'\\n\\n\\\"")]
     [DataRow(",;\"\"\r\n\n\\", false, VCdVersion.V4_0, "\",;^\'^\'^n^n\\\"")]
     [DataRow("a\r\n\"b", true, VCdVersion.V3_0, "ab")]
@@ -37,7 +37,7 @@ public class StringBuilderExtensionTests
         => Assert.AreEqual(expected,
             new StringBuilder().AppendParameterValueEscapedAndQuoted(input, version, isLabel: isLabel).ToString());
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(VCdVersion.V4_0)]
     [DataRow(VCdVersion.V3_0)]
     public void AppendParameterValueEscapedAndQuotedTest2(VCdVersion version)

@@ -6,7 +6,7 @@ namespace FolkerKinzel.VCards.Intls.Deserializers.Tests;
 [TestClass]
 public class PropertyValueSplitterTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(null, ',', StringSplitOptions.None, 1)]
     [DataRow(null, ';', StringSplitOptions.None, 1)]
     [DataRow("", ',', StringSplitOptions.None, 1)]
@@ -35,7 +35,7 @@ public class PropertyValueSplitterTests
     }
 
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ',', new string[] { @"Bun,go", @"Bon;go;Banga" })]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ';', new string[] { @"Bun,go,Bon;go", "Banga" })]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments",
@@ -49,7 +49,7 @@ public class PropertyValueSplitterTests
     }
 
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ',', new string[] { @"Bun,go", @"Bon;go;Banga" })]
     [DataRow(@"Bun\,go,Bon\;go;Banga", ';', new string[] { @"Bun,go,Bon;go", "Banga" })]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments",

@@ -5,7 +5,7 @@ namespace FolkerKinzel.VCards.Intls.Encodings.Tests;
 [TestClass]
 public class QuotedPrintableTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("ä", "=C3=A4", 0)]
     [DataRow("ä", "=C3=A4", 69)]
     [DataRow("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaä", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=C3=A4", 0)]
@@ -42,14 +42,14 @@ public class QuotedPrintableTests
         StringAssert.EndsWith(s, " Firma");
     }
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(null)]
     [DataRow("")]
     public void DecodeStringTest2(string? quoted)
         => Assert.AreEqual(0, QuotedPrintable.Decode(quoted.AsSpan(), null).Length);
 
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow(null)]
     [DataRow("")]
     public void DecodeDataTest1(string? quoted)
@@ -80,7 +80,7 @@ public class QuotedPrintableTests
     [TestMethod]
     public void TruncatedTextTest1() => Assert.AreEqual("abcC", QuotedPrintable.Decode("abc=C".AsSpan(), null));
 
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("abc==\r\nC3=A4", "abcä")]
     [DataRow("abc=C=\r\n3=A4", "abcä")]
     [DataRow("abc=C3=\r\n=A4", "abcä")]
