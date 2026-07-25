@@ -63,7 +63,7 @@ public class ContactIDBuilderTests
     {
         var vc = VCardBuilder.Create().ContactID.Set("   ").VCard;
         Assert.IsNotNull(vc.ContactID);
-        Assert.IsNotNull(vc.ContactID.Value.IsEmpty);
+        Assert.IsTrue(vc.ContactID.Value.IsEmpty);
     }
 
     [TestMethod]
