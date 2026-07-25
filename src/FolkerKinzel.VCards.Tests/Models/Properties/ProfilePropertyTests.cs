@@ -37,7 +37,7 @@ public class ProfilePropertyTests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
 

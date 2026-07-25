@@ -14,7 +14,7 @@ public class V4Tests
         IReadOnlyList<VCard>? vcard = Vcf.Load(TestFiles.V4vcf);
 
         Assert.IsNotNull(vcard);
-        Assert.AreNotEqual(0, vcard.Count);
+        Assert.IsNotEmpty(vcard);
     }
 
     [TestMethod]
@@ -25,13 +25,13 @@ public class V4Tests
 
         IReadOnlyList<VCard>? cards = Vcf.Parse(s);
 
-        Assert.AreEqual(1, cards.Count);
+        Assert.HasCount(1, cards);
 
         vcard = cards[0];
 
         Assert.AreEqual(VCdVersion.V4_0, vcard.Version);
         Assert.IsNotNull(vcard.DisplayNames);
-        Assert.AreEqual(1, vcard.DisplayNames!.Count());
+        Assert.HasCount(1, vcard.DisplayNames);
         Assert.IsNotNull(vcard.DisplayNames!.First());
     }
 
@@ -98,7 +98,7 @@ public class V4Tests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         VCard vcard = list[0];
 
@@ -126,7 +126,7 @@ public class V4Tests
         IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOpts.WriteRfc6474Extensions));
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
         vc = list[0];
 
         Assert.IsNotNull(vc.BirthPlaceViews);
@@ -137,7 +137,7 @@ public class V4Tests
         list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0, options: VcfOpts.None));
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
         vc = list[0];
 
         Assert.IsNull(vc.BirthPlaceViews);
@@ -159,7 +159,7 @@ public class V4Tests
         IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
         vc = list[0];
 
         Assert.IsNotNull(vc.Members);
@@ -178,7 +178,7 @@ public class V4Tests
         IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(2, list.Count);
+        Assert.HasCount(2, list);
         vc = list[0];
 
         Assert.IsNotNull(vc.Members);
@@ -201,7 +201,7 @@ public class V4Tests
 
         IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
-        Assert.AreEqual(2, list.Count);
+        Assert.HasCount(2, list);
         vc = list[1];
 
         Assert.AreNotEqual(Guid.Empty, vc.ContactID?.Value.Guid);
@@ -222,7 +222,7 @@ public class V4Tests
 
         IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
-        Assert.AreEqual(2, list.Count);
+        Assert.HasCount(2, list);
         vc = list[1];
 
         Assert.IsNotNull(vc.ContactID);
@@ -245,10 +245,10 @@ public class V4Tests
 
         IReadOnlyList<VCard> list = Vcf.Parse(vc.ToVcfString(version: VCdVersion.V4_0));
 
-        Assert.AreEqual(2, list.Count);
+        Assert.HasCount(2, list);
 
         list = Vcf.Parse(list.ToVcfString(VCdVersion.V4_0));
-        Assert.AreEqual(2, list.Count);
+        Assert.HasCount(2, list);
     }
 
     [TestMethod]
@@ -266,7 +266,7 @@ public class V4Tests
         IReadOnlyList<VCard> list = Vcf.Parse(vcf);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
     }
 
 
@@ -300,7 +300,7 @@ public class V4Tests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         VCard vc2 = list[0];
 
@@ -309,7 +309,7 @@ public class V4Tests
         IEnumerable<TextProperty?>? fburls = vc2.FreeOrBusyUrls;
 
         Assert.IsNotNull(fburls);
-        Assert.AreEqual(2, fburls!.Count());
+        Assert.HasCount(2, fburls);
 
         TextProperty fb1 = fburls!.FirstOrDefault(x => x is not null && x.Parameters.Preference == 1)!;
 
@@ -415,10 +415,10 @@ public class V4Tests
         TextProperty expertise = vc.Expertises!.First()!;
         TextProperty interest = vc.Interests!.First()!;
 
-        Assert.IsTrue(expertise.Parameters.NonStandard!.Any(kvp => kvp.Key == "LEVEL" && kvp.Value == "SuperExpert"));
-        Assert.IsTrue(expertise.Parameters.NonStandard!.Any(kvp => kvp.Key == "TYPE" && kvp.Value == "NERD"));
+        Assert.Contains(kvp => kvp.Key == "LEVEL" && kvp.Value == "SuperExpert", expertise.Parameters.NonStandard!);
+        Assert.Contains(kvp => kvp.Key == "TYPE" && kvp.Value == "NERD", expertise.Parameters.NonStandard!);
 
-        Assert.IsTrue(interest.Parameters.NonStandard!.Any(kvp => kvp.Key == "LEVEL" && kvp.Value == "VeryInterested"));
+        Assert.Contains(kvp => kvp.Key == "LEVEL" && kvp.Value == "VeryInterested", interest.Parameters.NonStandard!);
     }
 
     [TestMethod]
@@ -489,7 +489,7 @@ public class V4Tests
 
         vc.Dereference();
 
-        Assert.AreEqual(2, vc.Relations!.Count());
+        Assert.HasCount(2, vc.Relations!);
     }
 
     [TestMethod]
@@ -527,9 +527,8 @@ public class V4Tests
 
         vc = Vcf.Parse(serialized)[0];
 
-        Assert.AreEqual(2, vc.DisplayNames!.First()!.Parameters.NonStandard!.Count());
-        Assert.AreEqual(1, vc.Relations!.First()!.Parameters.NonStandard!.Count());
-
+        Assert.HasCount(2, vc.DisplayNames!.First()!.Parameters.NonStandard!);
+        Assert.HasCount(1, vc.Relations!.First()!.Parameters.NonStandard!);
     }
 
     [TestMethod]
@@ -581,7 +580,7 @@ public class V4Tests
             .VCard;
 
         string vcf = vc.ToVcfString(VCdVersion.V4_0);
-        StringAssert.Contains(vcf, "ALTID=");
+        Assert.Contains("ALTID=", vcf);
     }
 
     [TestMethod]
@@ -593,7 +592,7 @@ public class V4Tests
             .VCard;
 
         string vcf = vc.ToVcfString(VCdVersion.V4_0);
-        Assert.IsFalse(vcf.Contains("SORT-AS="));
+        Assert.DoesNotContain("SORT-AS=", vcf);
     }
 }
 

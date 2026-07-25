@@ -37,7 +37,7 @@ public class RawDataTests
     {
         var prop = new DataProperty(RawData.FromBytes([1, 2, 3]));
         string s = prop.ToString();
-        StringAssert.Contains(s, "3 Bytes");
+        Assert.Contains("3 Bytes", s);
     }
 
     [TestMethod]
@@ -45,7 +45,7 @@ public class RawDataTests
     {
         var prop = new DataProperty(RawData.FromUri(new Uri("http://contoso.com")));
         string s = prop.ToString();
-        StringAssert.Contains(s, "contoso");
+        Assert.Contains("contoso", s);
     }
 
     [TestMethod]
@@ -54,7 +54,7 @@ public class RawDataTests
         const string passWord = "Simsalabim";
         var prop = new DataProperty(RawData.FromText(passWord));
         string s = prop.ToString();
-        StringAssert.Contains(s, passWord);
+        Assert.Contains(passWord, s);
     }
 
     [TestMethod]

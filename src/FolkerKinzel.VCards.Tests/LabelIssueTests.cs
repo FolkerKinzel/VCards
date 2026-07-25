@@ -11,11 +11,11 @@ public class LabelIssueTests
     {
         IReadOnlyList<VCard> vCards = Vcf.Load(TestFiles.LabelIssueVcf, new AnsiFilter());
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.IsNotNull(vCards[0]);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
         Assert.IsNotNull(addresses);
-        Assert.AreEqual(3, addresses!.Count());
+        Assert.HasCount(3, addresses);
 
         const string street1 = "Business-Straße 19";
         Assert.IsNotNull(addresses.FirstOrNull(
@@ -38,11 +38,11 @@ public class LabelIssueTests
     {
         IReadOnlyList<VCard> vCards = Vcf.Load(TestFiles.LabelTest1Vcf, new AnsiFilter());
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.IsNotNull(vCards[0]);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
         Assert.IsNotNull(addresses);
-        Assert.AreEqual(3, addresses!.Count());
+        Assert.HasCount(3, addresses);
 
         const string street1 = "Business-Straße 19";
         Assert.IsNotNull(addresses.FirstOrNull(
@@ -66,11 +66,11 @@ public class LabelIssueTests
     {
         IReadOnlyList<VCard> vCards = Vcf.Load(TestFiles.LabelTest2Vcf, new AnsiFilter());
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.IsNotNull(vCards[0]);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
         Assert.IsNotNull(addresses);
-        Assert.AreEqual(4, addresses!.Count());
+        Assert.HasCount(4, addresses);
 
         const string street1 = "Business-Straße 19";
         Assert.IsNotNull(addresses.FirstOrNull(
@@ -111,8 +111,8 @@ public class LabelIssueTests
         IReadOnlyList<VCard> vcs = Vcf.Parse(vcf);
         IEnumerable<AddressProperty?>? adr = vcs[0].Addresses;
         Assert.IsNotNull(adr);
-        Assert.AreEqual(5, adr.Count());
-        Assert.IsTrue(adr.Any(x => x?.Value.Street[0] == "1" && x.Parameters.Label == "1"));
+        Assert.HasCount(5, adr);
+        Assert.Contains(x => x?.Value.Street[0] == "1" && x.Parameters.Label == "1", adr);
     }
 
     [TestMethod]
@@ -133,7 +133,7 @@ public class LabelIssueTests
         IReadOnlyList<VCard> vcs = Vcf.Parse(vcf);
         IEnumerable<AddressProperty?>? adr = vcs[0].Addresses;
         Assert.IsNotNull(adr);
-        Assert.AreEqual(4, adr.Count());
-        Assert.IsTrue(adr.Any(x => x?.Value.Street[0] == "1" && x.Parameters.Label == "1"));
+        Assert.HasCount(4, adr);
+        Assert.Contains(x => x?.Value.Street[0] == "1" && x.Parameters.Label == "1", adr);
     }
 }

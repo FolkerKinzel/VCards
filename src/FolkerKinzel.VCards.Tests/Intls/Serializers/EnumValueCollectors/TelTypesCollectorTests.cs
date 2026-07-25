@@ -15,19 +15,19 @@ public class TelTypesCollectorTests
 
         EnumValueCollector.Collect(tel, list);
 
-        Assert.AreEqual(2, list.Count);
-        Assert.IsTrue(list.Contains("MSG"));
+        Assert.HasCount(2, list);
+        Assert.Contains("MSG", list);
 
         // collector darf die Liste nicht löschen!:
         EnumValueCollector.Collect(tel, list);
-        Assert.AreEqual(4, list.Count);
+        Assert.HasCount(4, list);
 
         // auf null testen:
         tel = null;
         list.Clear();
 
         EnumValueCollector.Collect(tel, list);
-        Assert.AreEqual(0, list.Count);
+        Assert.IsEmpty(list);
     }
 
 
@@ -44,7 +44,7 @@ public class TelTypesCollectorTests
             list.Clear();
             EnumValueCollector.Collect(item, list);
 
-            Assert.AreEqual(1, list.Count);
+            Assert.HasCount(1, list);
             Assert.IsNotNull(list[0]);
         }
     }
@@ -62,7 +62,7 @@ public class TelTypesCollectorTests
             list.Clear();
             EnumValueCollector.Collect(item, list);
 
-            Assert.AreEqual(1, list.Count);
+            Assert.HasCount(1, list);
             Assert.IsNotNull(list[0]);
 
             //TelTypes? comp = (TelTypes)Enum.Parse(typeof(TelTypes), list[0], true);

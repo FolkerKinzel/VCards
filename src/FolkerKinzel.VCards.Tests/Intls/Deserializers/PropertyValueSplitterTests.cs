@@ -67,20 +67,20 @@ public class PropertyValueSplitterTests
             count++;
         }
 
-        Assert.AreEqual(count, expected.Length);
+        Assert.HasCount(count, expected);
     }
 
     [TestMethod]
     public void SplitTest4()
     {
         IEnumerable<string> splitter = PropertyValueSplitter.Split(",,,".AsMemory(), ',', VCdVersion.V2_1);
-        Assert.AreEqual(4, splitter.Count());
+        Assert.HasCount(4, splitter);
     }
 
     [TestMethod]
     public void SplitTest5()
     {
         IEnumerable<string> splitter = PropertyValueSplitter.Split("abc".AsMemory(), ',', VCdVersion.V4_0);
-        Assert.AreEqual(1, splitter.Count());
+        Assert.HasCount(1, splitter);
     }
 }

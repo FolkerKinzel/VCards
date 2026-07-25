@@ -101,7 +101,7 @@ public class AddressPropertyTests
         string vcf = vc.ToVcfString(version);
         IReadOnlyList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
+        Assert.HasCount(1, cards);
         vc = cards[0];
         Assert.IsNull(vc.Addresses);
 
@@ -114,7 +114,7 @@ public class AddressPropertyTests
         cards = Vcf.Parse(vcf);
 
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
+        Assert.HasCount(1, cards);
         vc = cards[0];
         Assert.IsNotNull(vc.Addresses);
 
@@ -143,7 +143,7 @@ public class AddressPropertyTests
         string vcf = vc.ToVcfString(version);
         IReadOnlyList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
+        Assert.HasCount(1, cards);
         vc = cards[0];
         Assert.IsNull(vc.Addresses);
 
@@ -156,7 +156,7 @@ public class AddressPropertyTests
         cards = Vcf.Parse(vcf);
 
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
+        Assert.HasCount(1, cards);
         vc = cards[0];
         Assert.IsNotNull(vc.Addresses);
 
@@ -185,7 +185,7 @@ public class AddressPropertyTests
         string vcf = vc.ToVcfString(version);
         IReadOnlyList<VCard> cards = Vcf.Parse(vcf);
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
+        Assert.HasCount(1, cards);
         vc = cards[0];
         Assert.IsNull(vc.Addresses);
 
@@ -198,7 +198,7 @@ public class AddressPropertyTests
         cards = Vcf.Parse(vcf);
 
         Assert.IsNotNull(cards);
-        Assert.AreEqual(1, cards.Count);
+        Assert.HasCount(1, cards);
         vc = cards[0];
         Assert.IsNotNull(vc.Addresses);
 
@@ -240,7 +240,7 @@ public class AddressPropertyTests
     public void IEnumerableTest1()
     {
         var prop = new AddressProperty(AddressBuilder.Create().AddStreet("Elm Street").Build());
-        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.HasCount(1, prop.AsWeakEnumerable());
     }
 
     [TestMethod]

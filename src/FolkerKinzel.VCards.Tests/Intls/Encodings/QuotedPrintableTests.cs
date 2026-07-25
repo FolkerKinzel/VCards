@@ -38,7 +38,7 @@ public class QuotedPrintableTests
         string? s = QuotedPrintable.Decode(quoted.AsSpan(), null);
 
         Assert.IsNotNull(s);
-        StringAssert.Contains(s, "Firmenstraße");
+        Assert.Contains("Firmenstraße", s);
         StringAssert.EndsWith(s, " Firma");
     }
 
@@ -56,7 +56,7 @@ public class QuotedPrintableTests
     {
         byte[] data = QuotedPrintable.DecodeData(quoted.AsSpan());
         Assert.IsNotNull(data);
-        Assert.AreEqual(0, data.Length);
+        Assert.IsEmpty(data);
     }
 
 

@@ -74,7 +74,7 @@ public class GenderPropertyTests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
 
@@ -98,7 +98,7 @@ public class GenderPropertyTests
     public void IEnumerableTest1()
     {
         var prop = new GenderProperty(Gender.Create(Sex.Other));
-        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.HasCount(1, prop.AsWeakEnumerable());
     }
 
     [TestMethod]

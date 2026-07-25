@@ -11,7 +11,7 @@ public class DateAndOrTimePropertyTests
     private const string GROUP = "myGroup";
 
     [TestMethod]
-    public void IEnumerableTest1() => Assert.AreEqual(1, new DateAndOrTimeProperty(DateTime.Now).AsWeakEnumerable().Count());
+    public void IEnumerableTest1() => Assert.HasCount(1, new DateAndOrTimeProperty(DateTime.Now).AsWeakEnumerable());
 
 
     [TestMethod]
@@ -98,7 +98,7 @@ public class DateAndOrTimePropertyTests
         var prop = new DateAndOrTimeProperty(DateAndOrTime.Empty);
         string s = prop.ToString();
         Assert.IsNotNull(s);
-        Assert.IsTrue(s.Length > 0);
+        Assert.IsGreaterThan(0, s.Length);
     }
 
     [TestMethod]
@@ -198,7 +198,7 @@ public class DateAndOrTimePropertyTests
         var vc = VCardBuilder.Create().BirthDayViews.Add(DateAndOrTime.Empty, p => p.DataType = Data.Text).VCard;
         string vcf = vc.ToVcfString(options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties));
 
-        StringAssert.Contains(vcf, "BDAY:\r\n");
+        Assert.Contains("BDAY:\r\n", vcf);
     }
 
     [TestMethod]
@@ -258,7 +258,7 @@ public class DateAndOrTimePropertyTests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
 
@@ -326,7 +326,7 @@ public class DateAndOrTimePropertyTests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
 

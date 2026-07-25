@@ -513,7 +513,7 @@ public class DataPropertyTests
     public void IEnumerableTest1()
     {
         var prop = new DataProperty(RawData.FromText("Hi"));
-        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.HasCount(1, prop.AsWeakEnumerable());
     }
 
     [TestMethod]

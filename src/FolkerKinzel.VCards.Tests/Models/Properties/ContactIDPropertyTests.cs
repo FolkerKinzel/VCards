@@ -107,8 +107,8 @@ public class ContactIDPropertyTests
         string vcf1 = vc1.ToVcfString(Enums.VCdVersion.V3_0);
         string vcf2 = vc2.ToVcfString(Enums.VCdVersion.V3_0);
 
-        StringAssert.Contains(vcf1, id);
-        StringAssert.Contains(vcf2, guidUpperCase);
+        Assert.Contains(id, vcf1);
+        Assert.Contains(guidUpperCase, vcf2);
 
         VCard vc1a = Vcf.Parse(vcf1)[0];
         VCard vc2a = Vcf.Parse(vcf2)[0];
@@ -125,8 +125,8 @@ public class ContactIDPropertyTests
         string vcf1a = vc1.ToVcfString(Enums.VCdVersion.V3_0);
         string vcf2a = vc2.ToVcfString(Enums.VCdVersion.V3_0);
 
-        StringAssert.Contains(vcf1a, id);
-        StringAssert.Contains(vcf2a, guidUpperCase);
+        Assert.Contains(id, vcf1a);
+        Assert.Contains(guidUpperCase, vcf2a);
     }
 
     [TestMethod]
@@ -157,10 +157,10 @@ public class ContactIDPropertyTests
         string vcf1 = vc1.ToVcfString(Enums.VCdVersion.V4_0);
         string vcf2 = vc2.ToVcfString(Enums.VCdVersion.V4_0);
 
-        StringAssert.Contains(vcf1, id);
-        StringAssert.Contains(vcf1, "urn:uuid:");
-        StringAssert.Contains(vcf2, guidUpperCase);
-        StringAssert.Contains(vcf2, "VALUE=TEXT");
+        Assert.Contains(id, vcf1);
+        Assert.Contains("urn:uuid:", vcf1);
+        Assert.Contains(guidUpperCase, vcf2);
+        Assert.Contains("VALUE=TEXT", vcf2);
 
         VCard vc1a = Vcf.Parse(vcf1)[0];
         VCard vc2a = Vcf.Parse(vcf2)[0];
@@ -177,11 +177,11 @@ public class ContactIDPropertyTests
         string vcf1a = vc1.ToVcfString(Enums.VCdVersion.V4_0);
         string vcf2a = vc2.ToVcfString(Enums.VCdVersion.V4_0);
 
-        StringAssert.Contains(vcf1a, id);
-        StringAssert.Contains(vcf1a, "urn:uuid:");
+        Assert.Contains(id, vcf1a);
+        Assert.Contains("urn:uuid:", vcf1a);
 
-        StringAssert.Contains(vcf2a, guidUpperCase);
-        StringAssert.Contains(vcf2a, "VALUE=TEXT");
+        Assert.Contains(guidUpperCase, vcf2a);
+        Assert.Contains("VALUE=TEXT", vcf2a);
     }
 
     [TestMethod]
@@ -213,9 +213,9 @@ public class ContactIDPropertyTests
         string vcf1 = vc1.ToVcfString(Enums.VCdVersion.V4_0);
         string vcf2 = vc2.ToVcfString(Enums.VCdVersion.V4_0);
 
-        StringAssert.Contains(vcf1, uri.OriginalString);
-        StringAssert.Contains(vcf2, guidUpperCase);
-        StringAssert.Contains(vcf2, "VALUE=TEXT");
+        Assert.Contains(uri.OriginalString, vcf1);
+        Assert.Contains(guidUpperCase, vcf2);
+        Assert.Contains("VALUE=TEXT", vcf2);
 
         VCard vc1a = Vcf.Parse(vcf1)[0];
         VCard vc2a = Vcf.Parse(vcf2)[0];
@@ -231,10 +231,10 @@ public class ContactIDPropertyTests
         string vcf1a = vc1.ToVcfString(Enums.VCdVersion.V4_0);
         string vcf2a = vc2.ToVcfString(Enums.VCdVersion.V4_0);
 
-        StringAssert.Contains(vcf1a, uri.OriginalString);
+        Assert.Contains(uri.OriginalString, vcf1a);
 
-        StringAssert.Contains(vcf2a, guidUpperCase);
-        StringAssert.Contains(vcf2a, "VALUE=TEXT");
+        Assert.Contains(guidUpperCase, vcf2a);
+        Assert.Contains("VALUE=TEXT", vcf2a);
     }
 
     [TestMethod]
@@ -265,8 +265,8 @@ public class ContactIDPropertyTests
         string vcf1 = vc1.ToVcfString(Enums.VCdVersion.V4_0);
         string vcf2 = vc2.ToVcfString(Enums.VCdVersion.V4_0);
 
-        StringAssert.Contains(vcf1, uriStr);
-        StringAssert.Contains(vcf2, uri.OriginalString);
+        Assert.Contains(uriStr, vcf1);
+        Assert.Contains(uri.OriginalString, vcf2);
 
         VCard vc1a = Vcf.Parse(vcf1)[0];
         VCard vc2a = Vcf.Parse(vcf2)[0];
@@ -282,9 +282,9 @@ public class ContactIDPropertyTests
         string vcf1a = vc1.ToVcfString(Enums.VCdVersion.V4_0);
         string vcf2a = vc2.ToVcfString(Enums.VCdVersion.V4_0);
 
-        StringAssert.Contains(vcf1a, uriStr);
+        Assert.Contains(uriStr, vcf1a);
 
-        StringAssert.Contains(vcf2a, uri.OriginalString);
+        Assert.Contains(uri.OriginalString, vcf2a);
     }
 
     [TestMethod]
@@ -292,7 +292,7 @@ public class ContactIDPropertyTests
     {
         var vc = VCardBuilder.Create().ContactID.Set(new Uri("http://folker.com/")).VCard;
         string vcf = vc.ToVcfString();
-        StringAssert.Contains(vcf, "http://folker.com/");
+        Assert.Contains("http://folker.com/", vcf);
     }
 
 

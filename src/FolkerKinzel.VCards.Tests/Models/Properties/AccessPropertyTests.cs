@@ -49,7 +49,7 @@ public class AccessPropertyTests
 
         IReadOnlyList<VCard> list = Vcf.Parse(serialized);
 
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
         Assert.IsNotNull(vcard.Access);

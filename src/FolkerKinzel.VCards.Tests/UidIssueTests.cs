@@ -54,8 +54,8 @@ public class UidIssueTests
         VCard card = Vcf.Parse(input)[0];
         string output = card.ToVcfString(VCdVersion.V4_0);
 
-        StringAssert.Contains(output,
-            "UID;VALUE=TEXT:d290f1ee-6c54-4b01-90e6-d701748f0851");
+        Assert.Contains("UID;VALUE=TEXT:d290f1ee-6c54-4b01-90e6-d701748f0851",
+output);
     }
 }
 

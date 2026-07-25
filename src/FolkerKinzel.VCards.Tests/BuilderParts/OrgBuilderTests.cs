@@ -23,7 +23,7 @@ public class OrgBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.Organizations);
-        Assert.AreEqual(2, vc.Organizations.Count());
+        Assert.HasCount(2, vc.Organizations);
         Assert.AreEqual(100, vc.Organizations.First()!.Parameters.Preference);
         Assert.AreEqual(1, vc.Organizations.ElementAt(1)!.Parameters.Preference);
 
@@ -59,8 +59,8 @@ public class OrgBuilderTests
         IEnumerable<OrgProperty?>? property = vc.Organizations;
 
         Assert.IsNotNull(property);
-        Assert.AreEqual(2, property.Count());
-        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.HasCount(2, property);
+        Assert.IsNull(property.First()!.Parameters.Index);
         Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
 
         builder.Organizations.SetIndexes(skipEmptyItems: false);
@@ -140,7 +140,7 @@ public class OrgBuilderTests
             .VCard;
 
         Assert.IsNotNull(vc.DisplayNames);
-        Assert.AreEqual(2, vc.DisplayNames.Count());
+        Assert.HasCount(2, vc.DisplayNames);
     }
 
     [TestMethod]

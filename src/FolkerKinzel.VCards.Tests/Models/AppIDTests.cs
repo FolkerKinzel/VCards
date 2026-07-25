@@ -105,7 +105,7 @@ public class AppIDTests
 
         Assert.IsNotNull(s);
         Assert.IsTrue(s.Contains(';'));
-        Assert.IsTrue(5 < s.Length);
+        Assert.IsLessThan(s.Length, 5);
     }
 
 }

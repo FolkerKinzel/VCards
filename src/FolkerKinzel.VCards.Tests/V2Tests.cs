@@ -14,7 +14,7 @@ public class V2Tests
         IReadOnlyList<VCard> vcard = Vcf.Load(filePath: TestFiles.V2vcf);
 
         Assert.IsNotNull(vcard);
-        Assert.AreNotEqual(0, vcard.Count);
+        Assert.IsNotEmpty(vcard);
     }
 
     [TestMethod]
@@ -23,7 +23,7 @@ public class V2Tests
         IReadOnlyList<VCard> vcard = Vcf.Load(filePath: TestFiles.OutlookV2vcf);
 
         Assert.IsNotNull(vcard);
-        Assert.AreNotEqual(0, vcard.Count);
+        Assert.IsNotEmpty(vcard);
 
         //string s = vcard[0].ToString();
 
@@ -46,14 +46,14 @@ public class V2Tests
 
         IReadOnlyList<VCard> cards = Vcf.Parse(s);
 
-        Assert.AreEqual(1, cards.Count);
+        Assert.HasCount(1, cards);
 
         vcard = cards[0];
 
         Assert.AreEqual(VCdVersion.V2_1, vcard.Version);
 
         Assert.IsNotNull(vcard.NameViews);
-        Assert.AreEqual(1, vcard.NameViews!.Count());
+        Assert.HasCount(1, vcard.NameViews);
         Assert.IsNotNull(vcard.NameViews!.First());
     }
 
@@ -118,7 +118,7 @@ public class V2Tests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         VCard vcard = list[0];
         Assert.AreEqual(VCdVersion.V2_1, vcard.Version);
@@ -149,10 +149,10 @@ public class V2Tests
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
         IReadOnlyList<VCard> vCards = Vcf.Parse(vcf);
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
         Assert.IsNotNull(addresses);
-        Assert.AreEqual(2, addresses!.Count());
+        Assert.HasCount(2, addresses);
         Assert.IsNotNull(addresses!.FirstOrDefault(x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
         Assert.IsNotNull(addresses!.FirstOrDefault(x => x!.Parameters.Label == label1 && x.Value.Street[0] == label1));
 
@@ -185,10 +185,10 @@ public class V2Tests
         string vcf = vc.ToVcfString(VCdVersion.V2_1, options: VcfOpts.Default.Unset(VcfOpts.AllowMultipleAdrAndLabelInVCard21));
         IReadOnlyList<VCard> vCards = Vcf.Parse(vcf);
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         IEnumerable<AddressProperty?>? addresses = vCards[0].Addresses;
         Assert.IsNotNull(addresses);
-        Assert.AreEqual(1, addresses.Count());
+        Assert.HasCount(1, addresses);
         Assert.AreEqual(100, addresses.First()!.Parameters.Preference);
         Assert.IsNotNull(addresses.FirstOrDefault(x => x!.Parameters.Label == label0 && x.Value.Street[0] == label0));
 
@@ -309,7 +309,7 @@ public class V2Tests
     [TestMethod]
     public void LineWrappingTest1()
     {
-        byte[] bytes = Enumerable.Range(0 - 255, 255).Select(x => (byte)x).ToArray();
+        byte[] bytes = [.. Enumerable.Range(0 - 255, 255).Select(x => (byte)x)];
         var agent = new VCard
         {
             DisplayNames = new TextProperty("007"),
@@ -330,7 +330,7 @@ public class V2Tests
         string s = vCard.ToVcfString(VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.AppendAgentAsSeparateVCard));
 
         IReadOnlyList<VCard> vCards = Vcf.Parse(s);
-        Assert.AreEqual(2, vCards.Count);
+        Assert.HasCount(2, vCards);
         Assert.IsNotNull(vCards[0].Relations);
     }
 
@@ -352,7 +352,7 @@ public class V2Tests
             """;
 
         IReadOnlyList<VCard> vcs = Vcf.Parse(agent);
-        Assert.AreEqual(1, vcs.Count);
+        Assert.HasCount(1, vcs);
         Assert.IsNotNull(vcs[0].Relations);
     }
 
@@ -423,8 +423,8 @@ public class V2Tests
         IReadOnlyList<VCard> vcs = Vcf.Parse(cropped);
 
         Assert.IsNotNull(vcs);
-        Assert.AreEqual(1, vcs.Count);
-        Assert.IsFalse(vcs[0].Entities.Any());
+        Assert.HasCount(1, vcs);
+        Assert.IsEmpty(vcs[0].Entities);
     }
 
     [TestMethod]
@@ -437,7 +437,7 @@ public class V2Tests
         IReadOnlyList<VCard> vcs = Vcf.Parse(cropped);
 
         Assert.IsNotNull(vcs);
-        Assert.AreEqual(0, vcs.Count);
+        Assert.IsEmpty(vcs);
     }
 
     [TestMethod]
@@ -479,8 +479,8 @@ public class V2Tests
         IReadOnlyList<VCard> vcs = Vcf.Parse(s);
 
         Assert.IsNotNull(vcs);
-        Assert.AreEqual(1, vcs.Count);
-        Assert.AreEqual(1, vcs[0].Keys!.Count());
+        Assert.HasCount(1, vcs);
+        Assert.HasCount(1, vcs[0].Keys!);
 
         //string parsed = vcs[0].ToString();
     }
@@ -499,7 +499,7 @@ public class V2Tests
         IReadOnlyList<VCard> vcs = Vcf.Parse(s);
 
         Assert.IsNotNull(vcs);
-        Assert.AreEqual(1, vcs.Count);
+        Assert.HasCount(1, vcs);
         Assert.IsNull(vcs[0].Keys);
 
         //string parsed = vcs[0].ToString();
@@ -517,14 +517,14 @@ public class V2Tests
 
         string serialized = vc.ToVcfString(VCdVersion.V2_1, options: VcfOpts.All);
 
-        StringAssert.Contains(serialized, "GROUP.X-GENDER;X-TEST=test:Female");
-        StringAssert.Contains(serialized, "GROUP.X-WAB-GENDER;X-TEST=test:1");
+        Assert.Contains("GROUP.X-GENDER;X-TEST=test:Female", serialized);
+        Assert.Contains("GROUP.X-WAB-GENDER;X-TEST=test:1", serialized);
 
         vc = Vcf.Parse(serialized)[0];
 
         Assert.IsNotNull(vc);
         Assert.IsNotNull(vc.GenderViews);
-        Assert.AreEqual(1, vc.GenderViews.Count());
+        Assert.HasCount(1, vc.GenderViews);
 
         GenderProperty prop = vc.GenderViews.First()!;
         Assert.AreEqual(Sex.Female, prop.Value.Sex);
@@ -542,7 +542,7 @@ public class V2Tests
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1);
 
-        StringAssert.Contains(vcf, "BDAY", StringComparison.Ordinal);
+        Assert.Contains("BDAY", vcf, StringComparison.Ordinal);
     }
 
     [TestMethod]
@@ -656,6 +656,6 @@ public class V2Tests
             .VCard;
 
         string vcf = vc.ToVcfString(VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties));
-        StringAssert.Contains(vcf, "\r\n\r\n");
+        Assert.Contains("\r\n\r\n", vcf);
     }
 }

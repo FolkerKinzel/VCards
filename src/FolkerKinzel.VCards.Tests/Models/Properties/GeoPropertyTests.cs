@@ -38,7 +38,7 @@ public class GeoPropertyTests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
 
@@ -56,7 +56,7 @@ public class GeoPropertyTests
     {
         const string GROUP = "group";
         var prop = new GeoProperty(new GeoCoordinate(42, 42), GROUP);
-        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.HasCount(1, prop.AsWeakEnumerable());
         Assert.AreEqual(GROUP, prop.Group, true);
 
     }

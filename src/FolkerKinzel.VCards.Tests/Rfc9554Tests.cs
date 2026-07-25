@@ -55,7 +55,7 @@ public class Rfc9554Tests
         vc = Vcf.Parse(v4)[0];
 
         Assert.IsNotNull(vc.GramGenders);
-        Assert.AreEqual(2, vc.GramGenders.Count());
+        Assert.HasCount(2, vc.GramGenders);
         Assert.IsTrue(vc.GramGenders.All(x => x?.Parameters.Language is not null && x.Parameters.Preference < 100));
     }
 
@@ -101,7 +101,7 @@ public class Rfc9554Tests
         vc = Vcf.Parse(v4)[0];
 
         Assert.IsNotNull(vc.Pronouns);
-        Assert.AreEqual(2, vc.Pronouns.Count());
+        Assert.HasCount(2, vc.Pronouns);
         Assert.IsTrue(vc.Pronouns.All(x => x?.Parameters.Language is not null && x.Parameters.Preference < 100));
     }
 
@@ -168,38 +168,38 @@ public class Rfc9554Tests
         vc = Vcf.Parse(v4)[0];
 
         Assert.IsNotNull(vc.SocialMediaProfiles);
-        Assert.AreEqual(3, vc.SocialMediaProfiles.Count());
+        Assert.HasCount(3, vc.SocialMediaProfiles);
         Assert.IsTrue(vc.SocialMediaProfiles.All(x => x?.Parameters.ServiceType is not null && x.Parameters.Preference < 100));
-        Assert.IsTrue(vc.SocialMediaProfiles.Any(x => x?.Parameters.DataType == Data.Text));
-        Assert.IsTrue(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y")));
-        Assert.IsTrue(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z")));
+        Assert.Contains(x => x?.Parameters.DataType == Data.Text, vc.SocialMediaProfiles);
+        Assert.Contains(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y"), vc.SocialMediaProfiles);
+        Assert.Contains(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z"), vc.SocialMediaProfiles);
 
         vc = Vcf.Parse(v4WithoutRfc9554)[0];
 
         Assert.IsNotNull(vc.SocialMediaProfiles);
-        Assert.AreEqual(3, vc.SocialMediaProfiles.Count());
+        Assert.HasCount(3, vc.SocialMediaProfiles);
         Assert.IsTrue(vc.SocialMediaProfiles.All(x => x?.Parameters.ServiceType is not null && x.Parameters.Preference < 100));
-        Assert.IsTrue(vc.SocialMediaProfiles.Any(x => x?.Parameters.DataType == Data.Text));
-        Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y")));
-        Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z")));
+        Assert.Contains(x => x?.Parameters.DataType == Data.Text, vc.SocialMediaProfiles);
+        Assert.DoesNotContain(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y"), vc.SocialMediaProfiles);
+        Assert.DoesNotContain(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z"), vc.SocialMediaProfiles);
 
         vc = Vcf.Parse(v3)[0];
 
         Assert.IsNotNull(vc.SocialMediaProfiles);
-        Assert.AreEqual(3, vc.SocialMediaProfiles.Count());
+        Assert.HasCount(3, vc.SocialMediaProfiles);
         Assert.IsTrue(vc.SocialMediaProfiles.All(x => x?.Parameters.ServiceType is not null));
-        Assert.IsTrue(vc.SocialMediaProfiles.Any(x => x?.Parameters.DataType == Data.Text));
-        Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y")));
-        Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z")));
+        Assert.Contains(x => x?.Parameters.DataType == Data.Text, vc.SocialMediaProfiles);
+        Assert.DoesNotContain(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y"), vc.SocialMediaProfiles);
+        Assert.DoesNotContain(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z"), vc.SocialMediaProfiles);
 
         vc = Vcf.Parse(v2)[0];
 
         Assert.IsNotNull(vc.SocialMediaProfiles);
-        Assert.AreEqual(2, vc.SocialMediaProfiles.Count());
+        Assert.HasCount(2, vc.SocialMediaProfiles);
         Assert.IsTrue(vc.SocialMediaProfiles.All(x => x?.Parameters.ServiceType is not null));
-        Assert.IsFalse(vc.SocialMediaProfiles.Any(x => x?.Parameters.DataType == Data.Text));
-        Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y")));
-        Assert.IsFalse(vc.SocialMediaProfiles.Any(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z")));
+        Assert.DoesNotContain(x => x?.Parameters.DataType == Data.Text, vc.SocialMediaProfiles);
+        Assert.DoesNotContain(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Y"), vc.SocialMediaProfiles);
+        Assert.DoesNotContain(x => StringComparer.Ordinal.Equals(x?.Parameters.UserName, "Z"), vc.SocialMediaProfiles);
     }
 
     [TestMethod]

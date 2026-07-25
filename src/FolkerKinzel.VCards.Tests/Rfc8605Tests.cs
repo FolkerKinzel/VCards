@@ -22,15 +22,15 @@ public class Rfc8605Tests
 
         Assert.IsNotNull(vc);
         Assert.IsNotNull(vc.ContactUris);
-        Assert.IsTrue(vc.ContactUris.Any());
+        Assert.IsNotEmpty(vc.ContactUris);
 
         string vcfStr1 = vc.ToVcfString(VCdVersion.V4_0);
         string vcfStr2 = vc.ToVcfString(VCdVersion.V4_0, options: VcfOpts.Default.Unset(VcfOpts.WriteRfc8605Extensions));
         string vcfStr3 = vc.ToVcfString(VCdVersion.V3_0);
         string vcfStr4 = vc.ToVcfString(VCdVersion.V2_1);
 
-        StringAssert.Contains(vcfStr1, contactUri);
-        StringAssert.Contains(vcfStr1, propKey);
+        Assert.Contains(contactUri, vcfStr1);
+        Assert.Contains(propKey, vcfStr1);
         Assert.IsFalse(vcfStr2.Contains(propKey, StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(vcfStr3.Contains(propKey, StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(vcfStr4.Contains(propKey, StringComparison.OrdinalIgnoreCase));
@@ -39,7 +39,7 @@ public class Rfc8605Tests
 
         Assert.IsNotNull(vc);
         Assert.IsNotNull(vc.ContactUris);
-        Assert.AreEqual(2, vc.ContactUris.Count());
+        Assert.HasCount(2, vc.ContactUris);
         Assert.AreEqual(contactUri, vc.ContactUris.PrefOrNull()?.Value);
     }
 
@@ -63,7 +63,7 @@ public class Rfc8605Tests
         string vcfStr3 = vc.ToVcfString(VCdVersion.V3_0);
         string vcfStr4 = vc.ToVcfString(VCdVersion.V2_1);
 
-        StringAssert.Contains(vcfStr1, "CC=DE");
+        Assert.Contains("CC=DE", vcfStr1);
         Assert.IsFalse(vcfStr2.Contains("CC=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(vcfStr3.Contains("CC=", StringComparison.OrdinalIgnoreCase));
         Assert.IsFalse(vcfStr4.Contains("CC=", StringComparison.OrdinalIgnoreCase));

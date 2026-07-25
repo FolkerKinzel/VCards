@@ -68,7 +68,7 @@ public class OrgPropertyTests
     public void IEnumerableTest1()
     {
         var prop = new OrgProperty(new Organization("Contoso"));
-        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.HasCount(1, prop.AsWeakEnumerable());
     }
 
     [TestMethod]

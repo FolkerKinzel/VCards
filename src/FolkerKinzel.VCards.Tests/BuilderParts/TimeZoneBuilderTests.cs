@@ -24,7 +24,7 @@ public class TimeZoneBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.TimeZones);
-        Assert.AreEqual(2, vc.TimeZones.Count());
+        Assert.HasCount(2, vc.TimeZones);
         Assert.AreEqual(100, vc.TimeZones.First()!.Parameters.Preference);
         Assert.AreEqual(1, vc.TimeZones.ElementAt(1)!.Parameters.Preference);
 
@@ -58,8 +58,8 @@ public class TimeZoneBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.TimeZones);
-        Assert.AreEqual(2, vc.TimeZones.Count());
-        Assert.AreEqual(null, vc.TimeZones.First()!.Parameters.Index);
+        Assert.HasCount(2, vc.TimeZones);
+        Assert.IsNull(vc.TimeZones.First()!.Parameters.Index);
         Assert.AreEqual(1, vc.TimeZones.ElementAt(1)!.Parameters.Index);
 
         builder.TimeZones.SetIndexes(skipEmptyItems: false);

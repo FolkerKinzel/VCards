@@ -95,7 +95,7 @@ public class NonStandardPropertyTests
     public void IEnumerableTest1()
     {
         var prop = new NonStandardProperty("X-TEST", "val");
-        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.HasCount(1, prop.AsWeakEnumerable());
     }
 
     [TestMethod]

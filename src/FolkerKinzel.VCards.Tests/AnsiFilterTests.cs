@@ -40,27 +40,27 @@ public class AnsiFilterTests
         Assert.AreEqual("windows-1252", filter.FallbackEncoding.WebName, true);
         IReadOnlyList<VCard> vCards = filter.Load(TestFiles.MultiAnsiFilterTests_Utf8Vcf);
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.AreEqual("utf-8", filter.UsedEncoding?.WebName);
         Assert.AreEqual(UTF8, vCards[0]!.DisplayNames!.First()!.Value);
 
         vCards = filter.Load(TestFiles.MultiAnsiFilterTests_HebrewVcf);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.AreEqual("windows-1252", filter.UsedEncoding?.WebName, true);
         Assert.AreNotEqual(WIN1255, vCards[0]!.DisplayNames!.First()!.Value);
 
         vCards = filter.Load(TestFiles.MultiAnsiFilterTests_GreekVcf);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.AreEqual("windows-1253", filter.UsedEncoding?.WebName, true);
         Assert.AreEqual(WIN1253, vCards[0]!.DisplayNames!.First()!.Value);
 
         vCards = filter.Load(TestFiles.MultiAnsiFilterTests_UkrainianVcf);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.AreEqual("windows-1251", filter.UsedEncoding?.WebName, true);
         Assert.AreEqual(WIN1251, vCards[0]!.DisplayNames!.First()!.Value);
 
         vCards = filter.Load(TestFiles.MultiAnsiFilterTests_MurksVcf);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.AreEqual("windows-1252", filter.UsedEncoding?.WebName, true);
         Assert.AreEqual(WIN1252, vCards[0]!.DisplayNames!.First()!.Value);
     }
@@ -73,23 +73,23 @@ public class AnsiFilterTests
         Assert.AreEqual("windows-1252", filter.FallbackEncoding.WebName, true);
         IReadOnlyList<VCard> vCards = filter.Load(TestFiles.MultiAnsiFilterTests_Utf8Vcf);
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.AreEqual(UTF8, vCards[0]!.DisplayNames!.First()!.Value);
 
         vCards = filter.Load(TestFiles.MultiAnsiFilterTests_HebrewVcf);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.AreNotEqual(WIN1255, vCards[0]!.DisplayNames!.First()!.Value);
 
         vCards = filter.Load(TestFiles.MultiAnsiFilterTests_GreekVcf);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.AreEqual(WIN1253, vCards[0]!.DisplayNames!.First()!.Value);
 
         vCards = filter.Load(TestFiles.MultiAnsiFilterTests_GreekVcf);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.AreEqual(WIN1253, vCards[0]!.DisplayNames!.First()!.Value);
 
         vCards = filter.Load(TestFiles.MultiAnsiFilterTests_MurksVcf);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
         Assert.AreEqual(WIN1252, vCards[0]!.DisplayNames!.First()!.Value);
     }
 
@@ -101,7 +101,7 @@ public class AnsiFilterTests
         Assert.AreEqual("windows-1252", filter.FallbackEncoding.WebName, true);
         IReadOnlyList<VCard> vCards = filter.Load(TestFiles.MultiAnsiFilterTests_v3AnsiVcf);
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(2, vCards.Count);
+        Assert.HasCount(2, vCards);
         Assert.AreEqual("windows-1252", filter.UsedEncoding?.WebName, true);
     }
 

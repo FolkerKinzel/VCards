@@ -24,8 +24,8 @@ public class DateAndOrTimeBuilderTests
         var property = vc.BirthDayViews;
 
         Assert.IsNotNull(property);
-        Assert.AreEqual(2, property.Count());
-        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.HasCount(2, property);
+        Assert.IsNull(property.First()!.Parameters.Index);
         Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
 
         builder.BirthDayViews.SetIndexes(skipEmptyItems: false);

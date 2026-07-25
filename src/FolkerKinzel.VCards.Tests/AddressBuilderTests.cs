@@ -55,7 +55,7 @@ public class AddressBuilderTests
             .AddStreetName((string?)null)
             .AddStreet("   ");
 
-        Assert.IsFalse(bldr.Data.Any());
+        Assert.IsEmpty(bldr.Data);
     }
 
     [TestMethod()]
@@ -65,7 +65,7 @@ public class AddressBuilderTests
             .Create()
             .AddLocality(["", "    "]);
 
-        Assert.IsFalse(bldr.Data.Any());
+        Assert.IsEmpty(bldr.Data);
     }
 
     [TestMethod()]
@@ -148,7 +148,7 @@ public class AddressBuilderTests
                           .AddApartment("a")
                           .Build());
 
-        Assert.AreEqual(0, prop.Value.Extended.Count);
+        Assert.IsEmpty(prop.Value.Extended);
         Assert.AreEqual("a", prop.Value.Apartment.Single());
     }
 
@@ -184,7 +184,7 @@ public class AddressBuilderTests
                                                      .AddStreetName("s")
                                                      .Build());
 
-        Assert.AreEqual(0, prop.Value.Street.Count);
+        Assert.IsEmpty(prop.Value.Street);
         Assert.AreEqual("s", prop.Value.StreetName.Single());
     }
 

@@ -25,6 +25,6 @@ public class ParameterSerializerTests
 
         vc = Vcf.Parse(s)[0];
         prop = vc.NonStandards!.First();
-        Assert.AreEqual(2, prop!.Parameters.NonStandard!.Count());
+        Assert.HasCount(2, prop!.Parameters.NonStandard!);
     }
 }

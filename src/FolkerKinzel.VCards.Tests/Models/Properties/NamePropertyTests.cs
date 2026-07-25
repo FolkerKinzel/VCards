@@ -62,7 +62,7 @@ public class NamePropertyTests
     public void IEnumerableTest1()
     {
         var prop = new NameProperty(NameBuilder.Create().AddSurname("Duck").Build());
-        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.HasCount(1, prop.AsWeakEnumerable());
     }
 
     [TestMethod]

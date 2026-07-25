@@ -20,7 +20,7 @@ public class InterestConverterTests
         //Assert.AreEqual(null, InterestLevelConverter.Parse(null));
 
         // Test auf nicht definiert
-        Assert.AreEqual(null, ((Interest?)4711).ToVCardString());
+        Assert.IsNull(((Interest?)4711).ToVCardString());
     }
 
     [TestMethod]

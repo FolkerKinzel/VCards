@@ -218,7 +218,7 @@ public class NameBuilderTests
             .AddGiven((string?)null)
             .AddSurname("   ");
 
-        Assert.IsFalse(bldr.Data.Any());
+        Assert.IsEmpty(bldr.Data);
     }
 
     [TestMethod()]
@@ -228,7 +228,7 @@ public class NameBuilderTests
             .Create()
             .AddSurname(["", "    "]);
 
-        Assert.IsFalse(bldr.Data.Any());
+        Assert.IsEmpty(bldr.Data);
     }
 
     [TestMethod()]

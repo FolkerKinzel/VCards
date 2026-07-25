@@ -45,7 +45,7 @@ public class IEnumerableExtensionTests
 
         list = list.Reference().ToList()!;
 
-        Assert.AreEqual(2, list.Count);
+        Assert.HasCount(2, list);
 
         VCard? vc1 = list[0];
 
@@ -76,12 +76,12 @@ public class IEnumerableExtensionTests
 
         list = list.Reference().ToList()!;
 
-        Assert.AreEqual(2, list.Count);
+        Assert.HasCount(2, list);
         Assert.IsNull(list[0]?.Relations?.FirstOrDefault(x => x?.Value.VCard is not null));
 
         list.Dereference();
 
-        Assert.AreEqual(2, list.Count);
+        Assert.HasCount(2, list);
         Assert.IsNotNull(list[0]?.Relations?.FirstOrDefault(x => x?.Value.VCard is not null));
     }
 
@@ -152,7 +152,7 @@ public class IEnumerableExtensionTests
         IReadOnlyList<VCard> list2 = Vcf.Load(path);
 
         Assert.AreNotEqual(list.Count, list2.Count);
-        Assert.AreNotEqual(0, list2.Count);
+        Assert.IsNotEmpty(list2);
         Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value.VCard);
     }
 
@@ -168,7 +168,7 @@ public class IEnumerableExtensionTests
         IReadOnlyList<VCard> list2 = Vcf.Load(path);
 
         Assert.AreNotEqual(list.Count, list2.Count);
-        Assert.AreNotEqual(0, list2.Count);
+        Assert.IsNotEmpty(list2);
         Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value.VCard);
     }
 
@@ -183,8 +183,8 @@ public class IEnumerableExtensionTests
 
         IReadOnlyList<VCard> list2 = Vcf.Load(path);
 
-        Assert.AreEqual(2, list2.Count);
-        Assert.AreNotEqual(0, list2.Count);
+        Assert.HasCount(2, list2);
+        Assert.IsNotEmpty(list2);
         Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value.VCard);
     }
 
@@ -205,7 +205,7 @@ public class IEnumerableExtensionTests
 
         IReadOnlyList<VCard> list = Vcf.Load(path);
 
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
         Assert.IsNotNull(list[0].DisplayNames);
 
         TextProperty? dispNameProp = list[0].DisplayNames.FirstOrNull();
@@ -360,7 +360,7 @@ public class IEnumerableExtensionTests
 
         IReadOnlyList<VCard> list2 = Vcf.Parse(s);
 
-        Assert.AreNotEqual(0, list2.Count);
+        Assert.IsNotEmpty(list2);
         Assert.IsNotNull(list2[0].Relations?.FirstOrDefault()?.Value.VCard);
         Assert.AreEqual(version, list2[0].Version);
     }
@@ -380,7 +380,7 @@ public class IEnumerableExtensionTests
 
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
         Assert.IsNotNull(list[0].DisplayNames);
 
         TextProperty? dispNameProp = list[0].DisplayNames.FirstOrNull();
@@ -519,14 +519,14 @@ public class IEnumerableExtensionTests
     public void OrderByPrefTest1()
     {
         VCardProperty[]? props = null;
-        Assert.IsFalse(props.OrderByPref().Any());
+        Assert.IsEmpty(props.OrderByPref());
     }
 
     [TestMethod]
     public void OrderByIndexTest1()
     {
         VCardProperty[]? props = null;
-        Assert.IsFalse(props.OrderByIndex().Any());
+        Assert.IsEmpty(props.OrderByIndex());
     }
 
     [TestMethod]
@@ -534,7 +534,7 @@ public class IEnumerableExtensionTests
     {
         var prop = new TextProperty("Hi");
         VCardProperty[]? props = [prop];
-        Assert.IsTrue(props.OrderByPref(false).Any());
+        Assert.IsNotEmpty(props.OrderByPref(false));
     }
 
     [TestMethod]
@@ -543,7 +543,7 @@ public class IEnumerableExtensionTests
         var prop = new TextProperty("Hi");
         prop.Parameters.Index = 1;
         VCardProperty[]? props = [prop];
-        Assert.IsTrue(props.OrderByIndex(false).Any());
+        Assert.IsNotEmpty(props.OrderByIndex(false));
     }
 
     [TestMethod]
@@ -568,8 +568,8 @@ public class IEnumerableExtensionTests
         TextProperty?[]? props = [null, prop1, null, prop2, null, prop3, null, prop4, null, prop5, null];
         IEnumerable<IGrouping<string?, TextProperty>> groups = props.GroupByAltID();
 
-        Assert.AreEqual(3, groups.Count());
-        Assert.IsTrue(groups.Any(gr => gr.Key is null));
+        Assert.HasCount(3, groups);
+        Assert.Contains(gr => gr.Key is null, groups);
         Assert.IsTrue(groups.All(gr => gr.SelectMany(x => x).All(x => x is not null)));
     }
 
@@ -616,16 +616,16 @@ public class IEnumerableExtensionTests
         vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
         vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
         vc.DisplayNames = vc.DisplayNames.ConcatWith(null);
-        CollectionAssert.AllItemsAreNotNull(vc.DisplayNames.ToArray());
-        Assert.AreEqual(2, vc.DisplayNames.Count());
+        Assert.AreAllNotNull(vc.DisplayNames);
+        Assert.HasCount(2, vc.DisplayNames);
 
         vc.DisplayNames = new TextProperty("Hi");
         vc.DisplayNames = vc.DisplayNames.ConcatWith(new TextProperty("Hi"));
-        Assert.AreEqual(2, vc.DisplayNames.Count());
+        Assert.HasCount(2, vc.DisplayNames);
 
         var props = new TextProperty?[] { new("1"), null, new("2") };
         vc.DisplayNames = vc.DisplayNames.ConcatWith(props);
-        Assert.AreEqual(4, vc.DisplayNames.Count());
+        Assert.HasCount(4, vc.DisplayNames);
 
         // This MUST not compile:
 
@@ -649,13 +649,12 @@ public class IEnumerableExtensionTests
         vc.Relations = vc.Relations.ConcatWith(null);
         vc.Relations = vc.Relations.ConcatWith(new RelationProperty(Relation.Create(ContactID.Create("Hi"))));
         vc.Relations = vc.Relations.ConcatWith(null);
-        CollectionAssert.AllItemsAreNotNull(vc.Relations.ToArray());
-        Assert.AreEqual(2, vc.Relations.Count());
+        Assert.AreAllNotNull(vc.Relations);
+        Assert.HasCount(2, vc.Relations);
 
         vc.Relations = new RelationProperty(Relation.Create(ContactID.Create("Hi")));
         vc.Relations = vc.Relations.ConcatWith(new RelationProperty(Relation.Create(ContactID.Create("Hi"))));
-        Assert.AreEqual(2, vc.Relations.Count());
-
+        Assert.HasCount(2, vc.Relations);
     }
 
     [TestMethod]
@@ -702,13 +701,13 @@ public class IEnumerableExtensionTests
 
         arr.SetIndexes();
         Assert.AreEqual(1, arr[0]!.Parameters.Index);
-        Assert.AreEqual(null, arr[2]!.Parameters.Index);
+        Assert.IsNull(arr[2]!.Parameters.Index);
         Assert.AreEqual(2, arr[3]!.Parameters.Index);
 
         arr.UnsetIndexes();
-        Assert.AreEqual(null, arr[0]!.Parameters.Index);
-        Assert.AreEqual(null, arr[2]!.Parameters.Index);
-        Assert.AreEqual(null, arr[3]!.Parameters.Index);
+        Assert.IsNull(arr[0]!.Parameters.Index);
+        Assert.IsNull(arr[2]!.Parameters.Index);
+        Assert.IsNull(arr[3]!.Parameters.Index);
 
         arr.SetIndexes(skipEmptyItems: false);
         Assert.AreEqual(1, arr[0]!.Parameters.Index);
@@ -717,7 +716,7 @@ public class IEnumerableExtensionTests
 
         arr.SetIndexes();
         Assert.AreEqual(1, arr[0]!.Parameters.Index);
-        Assert.AreEqual(null, arr[2]!.Parameters.Index);
+        Assert.IsNull(arr[2]!.Parameters.Index);
         Assert.AreEqual(2, arr[3]!.Parameters.Index);
     }
 
@@ -742,7 +741,7 @@ public class IEnumerableExtensionTests
         IEnumerable<TextProperty?>? numerable = null;
         IEnumerable<TextProperty?> result = numerable.Remove(new TextProperty("Hi"));
         Assert.IsNotNull(result);
-        Assert.IsFalse(result.Any());
+        Assert.IsEmpty(result);
     }
 
     [TestMethod]
@@ -751,7 +750,7 @@ public class IEnumerableExtensionTests
         IEnumerable<TextProperty?>? numerable = new TextProperty("Hi").Append(null).Append(null);
         IEnumerable<TextProperty?> result = numerable.Remove((TextProperty?)null);
         Assert.IsNotNull(result);
-        Assert.AreEqual(1, result.Count());
+        Assert.HasCount(1, result);
         Assert.IsNotNull(result.First());
     }
 
@@ -762,7 +761,7 @@ public class IEnumerableExtensionTests
         IEnumerable<TextProperty?>? numerable = prop.Append(null).Append(null);
         IEnumerable<TextProperty?> result = numerable.Remove(prop);
         Assert.IsNotNull(result);
-        Assert.IsFalse(result.Any());
+        Assert.IsEmpty(result);
     }
 
     [TestMethod]
@@ -771,7 +770,7 @@ public class IEnumerableExtensionTests
         IEnumerable<TextProperty?>? numerable = null;
         IEnumerable<TextProperty?> result = numerable.Remove(x => x.Value == "Hi");
         Assert.IsNotNull(result);
-        Assert.IsFalse(result.Any());
+        Assert.IsEmpty(result);
     }
 
     [TestMethod]
@@ -789,7 +788,7 @@ public class IEnumerableExtensionTests
         IEnumerable<TextProperty?>? numerable = prop;
         IEnumerable<TextProperty?>? newProp = numerable.Remove(prop);
         Assert.IsNotNull(newProp);
-        Assert.AreEqual(0, newProp.Count());
+        Assert.IsEmpty(newProp);
     }
 
     [TestMethod]
@@ -813,7 +812,7 @@ public class IEnumerableExtensionTests
     public void ItemsTest2()
     {
         TextProperty?[] props = [new TextProperty("")];
-        Assert.IsFalse(props.Items().Any());
+        Assert.IsEmpty(props.Items());
     }
 
     [TestMethod]
@@ -827,7 +826,7 @@ public class IEnumerableExtensionTests
     public void ItemsTest4()
     {
         TextProperty?[] props = [null, new TextProperty(""), null, new TextProperty("1")];
-        Assert.AreEqual(1, props.Items().Count());
+        Assert.HasCount(1, props.Items());
         Assert.IsNotNull(props.Items().First());
     }
 

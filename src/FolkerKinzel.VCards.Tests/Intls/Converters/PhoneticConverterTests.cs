@@ -17,7 +17,7 @@ public class PhoneticConverterTests
         }
 
         // Test auf nicht definiert
-        Assert.AreEqual(null, ((Phonetic?)4711).ToVcfString());
+        Assert.IsNull(((Phonetic?)4711).ToVcfString());
     }
 
     [TestMethod]

@@ -26,7 +26,7 @@ public class AppIDPropertyTests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
 
@@ -53,7 +53,7 @@ public class AppIDPropertyTests
     public void IEnumerableTest1()
     {
         var prop = new AppIDProperty(new AppID(4, "https://contoso.com"));
-        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.HasCount(1, prop.AsWeakEnumerable());
     }
 
     [TestMethod]

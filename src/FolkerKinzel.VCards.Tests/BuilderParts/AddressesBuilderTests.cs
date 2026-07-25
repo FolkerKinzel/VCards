@@ -23,7 +23,7 @@ public class AddressesBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.Addresses);
-        Assert.AreEqual(2, vc.Addresses.Count());
+        Assert.HasCount(2, vc.Addresses);
         Assert.AreEqual(100, vc.Addresses.First()!.Parameters.Preference);
         Assert.AreEqual(1, vc.Addresses.ElementAt(1)!.Parameters.Preference);
 
@@ -59,8 +59,8 @@ public class AddressesBuilderTests
         IEnumerable<AddressProperty?>? property = vc.Addresses;
 
         Assert.IsNotNull(property);
-        Assert.AreEqual(2, property.Count());
-        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.HasCount(2, property);
+        Assert.IsNull(property.First()!.Parameters.Index);
         Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
 
         builder.Addresses.SetIndexes(skipEmptyItems: false);
@@ -174,10 +174,10 @@ public class AddressesBuilderTests
 
         IEnumerable<AddressProperty?>? adr = vc.Addresses;
         Assert.IsNotNull(adr);
-        Assert.AreEqual(3, adr.Count());
-        Assert.IsTrue(adr.Any(x => StringComparer.Ordinal.Equals("London", x?.Value.Locality.First()) &&
-                                   (x.Parameters.Label?.Contains("London", StringComparison.Ordinal) ?? false)));
-        Assert.IsTrue(adr.Any(x => StringComparer.Ordinal.Equals("New York", x?.Value.Locality.First()) &&
-                                   (x.Parameters.Label?.Contains("Borna", StringComparison.Ordinal) ?? false)));
+        Assert.HasCount(3, adr);
+        Assert.Contains(x => StringComparer.Ordinal.Equals("London", x?.Value.Locality.First()) &&
+                                   (x.Parameters.Label?.Contains("London", StringComparison.Ordinal) ?? false), adr);
+        Assert.Contains(x => StringComparer.Ordinal.Equals("New York", x?.Value.Locality.First()) &&
+                                   (x.Parameters.Label?.Contains("Borna", StringComparison.Ordinal) ?? false), adr);
     }
 }

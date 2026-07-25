@@ -17,7 +17,7 @@ public class GramConverterTests
         }
 
         // Test auf nicht definiert
-        Assert.AreEqual(null, ((Gram)4711).ToVcfString());
+        Assert.IsNull(((Gram)4711).ToVcfString());
     }
 
     [TestMethod]

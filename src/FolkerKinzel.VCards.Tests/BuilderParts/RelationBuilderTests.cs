@@ -24,7 +24,7 @@ public class RelationBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.Relations);
-        Assert.AreEqual(2, vc.Relations.Count());
+        Assert.HasCount(2, vc.Relations);
         Assert.AreEqual(100, vc.Relations.First()!.Parameters.Preference);
         Assert.AreEqual(1, vc.Relations.ElementAt(1)!.Parameters.Preference);
 
@@ -60,8 +60,8 @@ public class RelationBuilderTests
         var property = vc.Relations;
 
         Assert.IsNotNull(property);
-        Assert.AreEqual(2, property.Count());
-        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.HasCount(2, property);
+        Assert.IsNull(property.First()!.Parameters.Index);
         Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
 
         builder.Relations.SetIndexes(skipEmptyItems: false);

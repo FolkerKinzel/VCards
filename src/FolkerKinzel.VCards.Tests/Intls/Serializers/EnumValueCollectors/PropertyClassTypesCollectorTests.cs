@@ -14,19 +14,19 @@ public class PropertyClassTypesCollectorTests
 
         EnumValueCollector.Collect(type, list);
 
-        Assert.AreEqual(2, list.Count);
-        Assert.IsTrue(list.Contains("WORK"));
+        Assert.HasCount(2, list);
+        Assert.Contains("WORK", list);
 
         // collector darf die Liste nicht löschen!:
         EnumValueCollector.Collect(type, list);
-        Assert.AreEqual(4, list.Count);
+        Assert.HasCount(4, list);
 
         // auf null testen:
         type = null;
         list.Clear();
 
         EnumValueCollector.Collect(type, list);
-        Assert.AreEqual(0, list.Count);
+        Assert.IsEmpty(list);
     }
 
     [TestMethod()]
@@ -40,7 +40,7 @@ public class PropertyClassTypesCollectorTests
             list.Clear();
             EnumValueCollector.Collect(item, list);
 
-            Assert.AreEqual(1, list.Count);
+            Assert.HasCount(1, list);
             Assert.IsNotNull(list[0]);
         }
     }
@@ -56,7 +56,7 @@ public class PropertyClassTypesCollectorTests
             list.Clear();
             EnumValueCollector.Collect(item, list);
 
-            Assert.AreEqual(1, list.Count);
+            Assert.HasCount(1, list);
             Assert.IsNotNull(list[0]);
 
             PCl comp;

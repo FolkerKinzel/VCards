@@ -17,7 +17,7 @@ public class SexConverterTests
         }
 
         // Test auf nicht definiert
-        Assert.AreEqual(null, ((Sex?)4711).ToVcfString());
+        Assert.IsNull(((Sex?)4711).ToVcfString());
     }
 
 

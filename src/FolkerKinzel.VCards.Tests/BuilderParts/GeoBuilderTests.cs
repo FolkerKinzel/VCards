@@ -23,7 +23,7 @@ public class GeoBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.GeoCoordinates);
-        Assert.AreEqual(2, vc.GeoCoordinates.Count());
+        Assert.HasCount(2, vc.GeoCoordinates);
         Assert.AreEqual(100, vc.GeoCoordinates.First()!.Parameters.Preference);
         Assert.AreEqual(1, vc.GeoCoordinates.ElementAt(1)!.Parameters.Preference);
 
@@ -59,8 +59,8 @@ public class GeoBuilderTests
         var property = vc.GeoCoordinates;
 
         Assert.IsNotNull(property);
-        Assert.AreEqual(2, property.Count());
-        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.HasCount(2, property);
+        Assert.IsNull(property.First()!.Parameters.Index);
         Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
 
         builder.GeoCoordinates.SetIndexes(skipEmptyItems: false);

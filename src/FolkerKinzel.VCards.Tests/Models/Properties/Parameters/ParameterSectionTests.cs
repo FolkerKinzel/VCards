@@ -74,7 +74,7 @@ public class ParameterSectionTests
 
         string s = sec.ToString();
 
-        Assert.IsTrue(s.GetLinesCount() > 1);
+        Assert.IsGreaterThan(1, s.GetLinesCount());
     }
 
     [TestMethod]
@@ -89,16 +89,16 @@ public class ParameterSectionTests
 
         Assert.IsNotNull(result);
         Assert.IsTrue(!result.Any(x => x is null));
-        Assert.AreEqual(5, result.Count());
+        Assert.HasCount(5, result);
 
         list.Add(null);
         result = prop.Parameters.SortAs;
         Assert.IsTrue(!result.Any(x => x is null));
-        Assert.AreEqual(5, result.Count);
+        Assert.HasCount(5, result);
 
         list.Add(" Web ");
         Assert.IsTrue(!result.Any(x => x is null));
-        Assert.AreEqual(5, result.Count);
+        Assert.HasCount(5, result);
 
         prop.Parameters.SortAs = null;
         Assert.IsNull(prop.Parameters.SortAs);
@@ -164,7 +164,7 @@ public class ParameterSectionTests
         Assert.IsNotNull(vc);
         Assert.IsNotNull(vc.Messengers);
         TextProperty?[] messengers = vc.Messengers.ToArray();
-        Assert.AreEqual(14, messengers.Length);
+        Assert.HasCount(14, messengers);
         CollectionAssert.AllItemsAreNotNull(messengers);
         Assert.IsTrue(messengers.All(p => p!.Parameters.PhoneType.IsSet(Tel.Msg)));
     }

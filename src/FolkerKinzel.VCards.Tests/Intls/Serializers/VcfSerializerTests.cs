@@ -25,7 +25,7 @@ public class VcfSerializerTests
 
         string s = vc.ToVcfString();
 
-        Assert.IsTrue(s.GetLinesCount() > 5);
+        Assert.IsGreaterThan(5, s.GetLinesCount());
     }
 
 
@@ -87,18 +87,18 @@ public class VcfSerializerTests
         _ = vc.ToVcfString(VCdVersion.V4_0, options: options | VcfOpts.SetPropertyIDs);
 
         Assert.AreEqual(1, tProp1.Parameters.Index);
-        Assert.AreEqual(null, tProp2.Parameters.Index);
+        Assert.IsNull(tProp2.Parameters.Index);
         Assert.AreEqual(2, tProp3.Parameters.Index);
-        Assert.AreEqual(null, prodID.Parameters.Index);
-        Assert.AreEqual(null, vc.AppIDs!.ElementAt(1).Parameters.Index);
+        Assert.IsNull(prodID.Parameters.Index);
+        Assert.IsNull(vc.AppIDs!.ElementAt(1).Parameters.Index);
 
         _ = vc.ToVcfString(VCdVersion.V4_0, options: options | VcfOpts.WriteEmptyProperties);
 
         Assert.AreEqual(1, tProp1.Parameters.Index);
         Assert.AreEqual(2, tProp2.Parameters.Index);
         Assert.AreEqual(3, tProp3.Parameters.Index);
-        Assert.AreEqual(null, prodID.Parameters.Index);
-        Assert.AreEqual(null, vc.AppIDs!.ElementAt(1).Parameters.Index);
+        Assert.IsNull(prodID.Parameters.Index);
+        Assert.IsNull(vc.AppIDs!.ElementAt(1).Parameters.Index);
 
     }
 

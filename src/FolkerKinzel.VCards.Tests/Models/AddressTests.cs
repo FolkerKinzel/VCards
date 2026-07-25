@@ -52,7 +52,7 @@ public class AddressTests
         var adr = new Address(input.AsMemory(), VCdVersion.V4_0);
 
         string s = adr.ToString();
-        StringAssert.Contains(s, "7a");
+        Assert.Contains("7a", s);
     }
 
     //[TestMethod]

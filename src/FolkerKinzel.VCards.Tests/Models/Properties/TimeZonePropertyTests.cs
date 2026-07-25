@@ -37,7 +37,7 @@ public class TimeZonePropertyTests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
 
@@ -82,7 +82,7 @@ public class TimeZonePropertyTests
     public void IEnumerableTest1()
     {
         var prop = new TimeZoneProperty(TimeZoneID.Parse("+01"));
-        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.HasCount(1, prop.AsWeakEnumerable());
     }
 
     [TestMethod]

@@ -167,7 +167,7 @@ public class DateAndOrTimeConverterTests
         var builder = new StringBuilder();
         DateAndOrTimeConverter.AppendDateTimeOffsetTo(builder, new DateTime(4, 1, 1), VCdVersion.V4_0, false, true, true);
         string s = builder.ToString();
-        Assert.IsTrue(s.StartsWith("--"));
+        Assert.StartsWith("--", s);
     }
 
     [TestMethod]
@@ -176,7 +176,7 @@ public class DateAndOrTimeConverterTests
         var builder = new StringBuilder();
         DateAndOrTimeConverter.AppendDateTo(builder, new DateOnly(4, 5, 1), VCdVersion.V4_0, false, true, true);
         string s = builder.ToString();
-        Assert.IsTrue(s.StartsWith("--"));
+        Assert.StartsWith("--", s);
     }
 
     [TestMethod]

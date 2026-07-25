@@ -25,8 +25,8 @@ public class NameViewsBuilderTests
         IEnumerable<NameProperty?>? property = vc.NameViews;
 
         Assert.IsNotNull(property);
-        Assert.AreEqual(2, property.Count());
-        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.HasCount(2, property);
+        Assert.IsNull(property.First()!.Parameters.Index);
         Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
 
         builder.NameViews.SetIndexes(skipEmptyItems: false);
@@ -136,10 +136,10 @@ public class NameViewsBuilderTests
 
         IEnumerable<TextProperty?>? dn = vc.DisplayNames;
         Assert.IsNotNull(dn);
-        Assert.AreEqual(4, dn.Count());
+        Assert.HasCount(4, dn);
         CollectionAssert.Contains(dn.ToArray(), null);
-        Assert.IsTrue(dn.Any(x => comp.Equals("Sven", x?.Value)));
-        Assert.IsTrue(dn.Any(x => comp.Equals("Folker", x?.Value) && comp.Equals("2", x.Group) && comp.Equals("de-DE", x.Parameters.Language) && x.Parameters.Derived));
-        Assert.IsTrue(dn.Any(x => comp.Equals("Susi", x?.Value) && comp.Equals("4", x.Group) && comp.Equals("en-US", x.Parameters.Language) && x.Parameters.Derived));
+        Assert.Contains(x => comp.Equals("Sven", x?.Value), dn);
+        Assert.Contains(x => comp.Equals("Folker", x?.Value) && comp.Equals("2", x.Group) && comp.Equals("de-DE", x.Parameters.Language) && x.Parameters.Derived, dn);
+        Assert.Contains(x => comp.Equals("Susi", x?.Value) && comp.Equals("4", x.Group) && comp.Equals("en-US", x.Parameters.Language) && x.Parameters.Derived, dn);
     }
 }

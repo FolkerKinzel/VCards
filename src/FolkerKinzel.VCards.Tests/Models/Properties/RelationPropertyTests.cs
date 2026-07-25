@@ -62,7 +62,7 @@ public class RelationPropertyTests
 
     [TestMethod]
     public void IEnumerableTest()
-        => Assert.AreEqual(1, new RelationProperty(Relation.Empty).AsWeakEnumerable().Count());
+        => Assert.HasCount(1, new RelationProperty(Relation.Empty).AsWeakEnumerable());
 
     [TestMethod]
     public void FromUriTest1()
@@ -131,7 +131,7 @@ public class RelationPropertyTests
         string s = prop.ToString();
 
         Assert.IsNotNull(s);
-        Assert.IsTrue(s.Length >= "John Doe".Length);
+        Assert.IsGreaterThanOrEqualTo("John Doe".Length, s.Length);
     }
 
     [TestMethod]
@@ -219,7 +219,7 @@ public class RelationPropertyTests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
 
@@ -248,7 +248,7 @@ public class RelationPropertyTests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
 
@@ -277,7 +277,7 @@ public class RelationPropertyTests
         IReadOnlyList<VCard> list = Vcf.Parse(s);
 
         Assert.IsNotNull(list);
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         vcard = list[0];
 

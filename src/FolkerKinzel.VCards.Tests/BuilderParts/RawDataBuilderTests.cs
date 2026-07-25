@@ -23,7 +23,7 @@ public class RawDataBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.Photos);
-        Assert.AreEqual(2, vc.Photos.Count());
+        Assert.HasCount(2, vc.Photos);
         Assert.AreEqual(100, vc.Photos.First()!.Parameters.Preference);
         Assert.AreEqual(1, vc.Photos.ElementAt(1)!.Parameters.Preference);
 
@@ -59,8 +59,8 @@ public class RawDataBuilderTests
         var property = vc.Photos;
 
         Assert.IsNotNull(property);
-        Assert.AreEqual(2, property.Count());
-        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.HasCount(2, property);
+        Assert.IsNull(property.First()!.Parameters.Index);
         Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
 
         builder.Photos.SetIndexes(skipEmptyItems: false);

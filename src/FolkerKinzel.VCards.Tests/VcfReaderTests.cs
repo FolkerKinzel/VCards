@@ -18,6 +18,6 @@ public class VcfReaderTests
         using var reader = new VcfReader(textReader);
         IEnumerable<VCard> result = reader.ReadToEnd();
 
-        Assert.AreEqual(1000, result.Count());
+        Assert.HasCount(1000, result);
     }
 }

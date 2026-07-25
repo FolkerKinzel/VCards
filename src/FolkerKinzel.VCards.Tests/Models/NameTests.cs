@@ -38,7 +38,7 @@ public class NameTests
         var name = new Name(input.AsMemory(), VCdVersion.V4_0);
 
         string s = name.ToString();
-        StringAssert.Contains(s, "August");
+        Assert.Contains("August", s);
     }
 
     [TestMethod]
@@ -75,10 +75,10 @@ public class NameTests
         const string standardV4 = "1,6;2;3;4;5,7\r\n";
         const string rfc9554 = "1,6;2;3;4;5,7;6;7\r\n";
 
-        Assert.IsTrue(vcf2.Contains(standard));
-        Assert.IsTrue(vcf3.Contains(standard));
-        Assert.IsTrue(vcf4.Contains(standardV4));
-        Assert.IsTrue(vcfRfc9554.Contains(rfc9554));
+        Assert.Contains(standard, vcf2);
+        Assert.Contains(standard, vcf3);
+        Assert.Contains(standardV4, vcf4);
+        Assert.Contains(rfc9554, vcfRfc9554);
     }
 
     [TestMethod]
@@ -142,7 +142,7 @@ public class NameTests
             .AddSurname2(arr)
             .Build());
 
-        Assert.AreEqual(0, prop.Value.Surnames.Count);
+        Assert.IsEmpty(prop.Value.Surnames);
     }
 
     //[TestMethod]

@@ -22,7 +22,7 @@ public class TextBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.Notes);
-        Assert.AreEqual(2, vc.Notes.Count());
+        Assert.HasCount(2, vc.Notes);
         Assert.AreEqual(100, vc.Notes.First()!.Parameters.Preference);
         Assert.AreEqual(1, vc.Notes.ElementAt(1)!.Parameters.Preference);
 
@@ -56,8 +56,8 @@ public class TextBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.Notes);
-        Assert.AreEqual(2, vc.Notes.Count());
-        Assert.AreEqual(null, vc.Notes.First()!.Parameters.Index);
+        Assert.HasCount(2, vc.Notes);
+        Assert.IsNull(vc.Notes.First()!.Parameters.Index);
         Assert.AreEqual(1, vc.Notes.ElementAt(1)!.Parameters.Index);
 
         builder.Notes.SetIndexes(skipEmptyItems: false);

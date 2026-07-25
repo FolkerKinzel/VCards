@@ -23,8 +23,8 @@ public class AddressLabelFormatterTests
         address.Parameters.Label = AddressFormatter.Default.ToLabel(address);
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
-        StringAssert.Contains(label, $"{zip} {city}");
-        StringAssert.Contains(label, country);
+        Assert.Contains($"{zip} {city}", label);
+        Assert.Contains(country, label);
         Assert.IsFalse(label.HasEmptyLine());
     }
 
@@ -50,10 +50,10 @@ public class AddressLabelFormatterTests
 
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
-        StringAssert.Contains(label, $"{zip} {city}");
-        Assert.IsFalse(label!.Contains(street));
-        Assert.IsTrue(label!.Contains(poBox));
-        StringAssert.Contains(label, country);
+        Assert.Contains($"{zip} {city}", label);
+        Assert.DoesNotContain(street, label);
+        Assert.Contains(poBox, label);
+        Assert.Contains(country, label);
         Assert.IsFalse(label.HasEmptyLine());
     }
 
@@ -79,9 +79,9 @@ public class AddressLabelFormatterTests
 
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
-        StringAssert.Contains(label, $"{zip} {city}");
-        StringAssert.Contains(label, country);
-        StringAssert.Contains(label, state);
+        Assert.Contains($"{zip} {city}", label);
+        Assert.Contains(country, label);
+        Assert.Contains(state, label);
         Assert.IsFalse(label.HasEmptyLine());
     }
 
@@ -110,9 +110,9 @@ public class AddressLabelFormatterTests
 
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
-        StringAssert.Contains(label, $"{zip} {city}");
-        StringAssert.Contains(label, country);
-        StringAssert.Contains(label, state);
+        Assert.Contains($"{zip} {city}", label);
+        Assert.Contains(country, label);
+        Assert.Contains(state, label);
         Assert.IsFalse(label.HasEmptyLine());
     }
 
@@ -142,9 +142,9 @@ public class AddressLabelFormatterTests
 
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
-        StringAssert.Contains(label, $"{city} {state} {zip}");
-        StringAssert.Contains(label, country);
-        StringAssert.Contains(label, state);
+        Assert.Contains($"{city} {state} {zip}", label);
+        Assert.Contains(country, label);
+        Assert.Contains(state, label);
         Assert.IsFalse(label.HasEmptyLine());
     }
 
@@ -175,9 +175,9 @@ public class AddressLabelFormatterTests
 
         string? label = address.Parameters.Label;
         Assert.IsNotNull(label);
-        StringAssert.Contains(label, $"{city} {zip} {state}");
-        StringAssert.Contains(label, country);
-        StringAssert.Contains(label, state);
+        Assert.Contains($"{city} {zip} {state}", label);
+        Assert.Contains(country, label);
+        Assert.Contains(state, label);
         Assert.IsFalse(label.HasEmptyLine());
     }
 
@@ -269,17 +269,17 @@ public class AddressLabelFormatterTests
 
         string? label = prop.Parameters.Label;
         Assert.IsNotNull(label);
-        StringAssert.Contains(label, $"{city} {state} {zip}");
-        StringAssert.Contains(label, country);
-        StringAssert.Contains(label, state);
+        Assert.Contains($"{city} {state} {zip}", label);
+        Assert.Contains(country, label);
+        Assert.Contains(state, label);
         Assert.IsFalse(label.HasEmptyLine());
 
         prop.Parameters.CountryCode = "DE";
         label = AddressFormatter.Default.ToLabel(prop);
         Assert.IsNotNull(label);
-        StringAssert.Contains(label, $"{zip} {city}");
-        StringAssert.Contains(label, country);
-        StringAssert.Contains(label, state);
+        Assert.Contains($"{zip} {city}", label);
+        Assert.Contains(country, label);
+        Assert.Contains(state, label);
         Assert.IsFalse(label.HasEmptyLine());
     }
 }

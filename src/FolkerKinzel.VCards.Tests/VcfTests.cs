@@ -26,14 +26,14 @@ public class VcfTests
     public void ParseTest_contentEmpty()
     {
         IReadOnlyList<VCard> list = Vcf.Parse("");
-        Assert.AreEqual(0, list.Count);
+        Assert.IsEmpty(list);
     }
 
     [TestMethod]
     public void ParseTest1()
     {
         IReadOnlyList<VCard> list = Vcf.Parse("BEGIN:VCARD\r\nFN:Folker\r\nEND:VCARD");
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         Assert.IsNotNull(list[0].DisplayNames);
 
@@ -61,7 +61,7 @@ public class VcfTests
     public void DeserializeTest3()
     {
         IReadOnlyList<VCard> vc = Vcf.Deserialize(() => null, new AnsiFilter());
-        Assert.AreEqual(0, vc.Count);
+        Assert.IsEmpty(vc);
     }
 
     [TestMethod]
@@ -78,7 +78,7 @@ public class VcfTests
     public async Task DeserializeAsyncTest3()
     {
         IReadOnlyList<VCard> vc = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(null!), new AnsiFilter());
-        Assert.AreEqual(0, vc.Count);
+        Assert.IsEmpty(vc);
     }
 
     [TestMethod]
@@ -90,7 +90,7 @@ public class VcfTests
     public async Task DeserializeAsyncTest5()
     {
         IReadOnlyList<VCard> vc = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(null!));
-        Assert.AreEqual(0, vc.Count);
+        Assert.IsEmpty(vc);
     }
 
     [TestMethod]
@@ -98,7 +98,7 @@ public class VcfTests
     {
         IReadOnlyList<VCard> vc =
             await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream(File.ReadAllBytes(TestFiles.V4vcf))));
-        Assert.AreEqual(2, vc.Count);
+        Assert.HasCount(2, vc);
     }
 
 

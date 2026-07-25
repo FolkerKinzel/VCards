@@ -16,9 +16,9 @@ public class DataConverterTests
         }
 
         // Test auf null
-        Assert.AreEqual(null, DataConverter.Parse(null));
+        Assert.IsNull(DataConverter.Parse(null));
 
         // Test auf nicht definiert
-        Assert.AreEqual(null, ((Data?)4711).ToVcfString());
+        Assert.IsNull(((Data?)4711).ToVcfString());
     }
 }

@@ -14,7 +14,7 @@ public class V3Tests
         IReadOnlyList<VCard>? vcard = Vcf.Load(TestFiles.V3vcf);
 
         Assert.IsNotNull(vcard);
-        Assert.AreEqual(2, vcard.Count);
+        Assert.HasCount(2, vcard);
     }
 
 
@@ -24,7 +24,7 @@ public class V3Tests
         IReadOnlyList<VCard>? vcard = Vcf.Load(@"C:\Users\fkinz\OneDrive\Kontakte\Thunderbird\21-01-13.vcf");
 
         Assert.IsNotNull(vcard);
-        Assert.AreNotEqual(0, vcard.Count);
+        Assert.IsNotEmpty(vcard);
     }
 
     [TestMethod]
@@ -33,7 +33,7 @@ public class V3Tests
         IReadOnlyList<VCard>? vcard = Vcf.Load(TestFiles.PhotoV3vcf);
 
         Assert.IsNotNull(vcard);
-        Assert.AreNotEqual(0, vcard.Count);
+        Assert.IsNotEmpty(vcard);
     }
 
 
@@ -46,17 +46,17 @@ public class V3Tests
 
         IReadOnlyList<VCard>? cards = Vcf.Parse(s);
 
-        Assert.AreEqual(1, cards.Count);
+        Assert.HasCount(1, cards);
 
         vcard = cards[0];
 
         Assert.AreEqual(VCdVersion.V3_0, vcard.Version);
 
         Assert.IsNotNull(vcard.DisplayNames);
-        Assert.AreEqual(1, vcard.DisplayNames!.Count());
+        Assert.HasCount(1, vcard.DisplayNames);
         Assert.IsNotNull(vcard.DisplayNames!.First());
         Assert.IsNotNull(vcard.NameViews);
-        Assert.AreEqual(1, vcard.NameViews!.Count());
+        Assert.HasCount(1, vcard.NameViews);
         Assert.IsNotNull(vcard.NameViews!.First());
     }
 
@@ -156,7 +156,7 @@ public class V3Tests
 
         Assert.IsNotNull(list);
 
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
 
         VCard vcard = list[0];
 
@@ -175,7 +175,7 @@ public class V3Tests
 
         IReadOnlyList<VCard> vc2 = Vcf.Parse(s);
 
-        Assert.AreEqual(2, vc2.Count);
+        Assert.HasCount(2, vc2);
     }
 
     [TestMethod]
@@ -336,7 +336,7 @@ END:VCARD";
         string vcfString = vcard.ToVcfString(options: (VcfOpts.Default | VcfOpts.WriteXExtensions).Unset(VcfOpts.WriteImppExtension));
         vcard = Vcf.Parse(vcfString)[0];
 
-        Assert.AreEqual(1, vcard.Messengers!.Count());
+        Assert.HasCount(1, vcard.Messengers!);
         prop = vcard.Messengers?.First();
         Assert.AreEqual(mobilePhoneNumber, prop?.Value);
         Assert.AreEqual(PCl.Home, prop?.Parameters.PropertyClass);
@@ -359,7 +359,7 @@ END:VCARD";
 
         string vcfString = vcard.ToVcfString(options: VcfOpts.Default | VcfOpts.WriteXExtensions);
         vcard = Vcf.Parse(vcfString)[0];
-        Assert.AreEqual(1, vcard.Messengers!.Count());
+        Assert.HasCount(1, vcard.Messengers!);
         prop = vcard.Messengers!.First();
         Assert.AreEqual(mobilePhoneNumber, prop?.Value);
         Assert.AreEqual(imppTypes, prop?.Parameters.InstantMessengerType);
@@ -474,7 +474,7 @@ END:VCARD";
 
         IEnumerable<string>? sortAs = vc.NameViews!.First()!.Parameters.SortAs;
         Assert.IsNotNull(sortAs);
-        Assert.AreEqual(1, sortAs.Count());
+        Assert.HasCount(1, sortAs);
         Assert.AreEqual("abc", sortAs.First());
     }
 
@@ -493,7 +493,7 @@ END:VCARD";
 
         IEnumerable<string>? sortAs = vc.NameViews!.First()!.Parameters.SortAs;
         Assert.IsNotNull(sortAs);
-        Assert.AreEqual(1, sortAs.Count());
+        Assert.HasCount(1, sortAs);
         Assert.AreEqual("abc", sortAs.First());
     }
 
@@ -512,7 +512,7 @@ END:VCARD";
 
         IEnumerable<string>? sortAs = vc.Organizations!.First()!.Parameters.SortAs;
         Assert.IsNotNull(sortAs);
-        Assert.AreEqual(1, sortAs.Count());
+        Assert.HasCount(1, sortAs);
         Assert.AreEqual("abc", sortAs.First());
     }
 
@@ -530,7 +530,7 @@ END:VCARD";
 
         IEnumerable<string>? sortAs = vc.NameViews!.First()!.Parameters.SortAs;
         Assert.IsNotNull(sortAs);
-        Assert.AreEqual(1, sortAs.Count());
+        Assert.HasCount(1, sortAs);
         Assert.AreEqual("abc", sortAs.First());
     }
 
@@ -549,7 +549,7 @@ END:VCARD";
 
         IEnumerable<string>? sortAs = vc.NameViews!.First()!.Parameters.SortAs;
         Assert.IsNotNull(sortAs);
-        Assert.AreEqual(1, sortAs.Count());
+        Assert.HasCount(1, sortAs);
         Assert.AreEqual("abc", sortAs.First());
     }
 
@@ -578,19 +578,19 @@ END:VCARD";
         vc = Vcf.Parse(serialized)[0];
 
         Assert.IsNotNull(vc.CalendarAccessUris);
-        Assert.AreEqual(2, vc.CalendarAccessUris.Count());
+        Assert.HasCount(2, vc.CalendarAccessUris);
         Assert.AreEqual("CalendarAccessUriPref", vc.CalendarAccessUris.PrefOrNull()!.Value);
 
         Assert.IsNotNull(vc.CalendarAddresses);
-        Assert.AreEqual(2, vc.CalendarAddresses.Count());
+        Assert.HasCount(2, vc.CalendarAddresses);
         Assert.AreEqual("CalendarAddressPref", vc.CalendarAddresses.PrefOrNull()!.Value);
 
         Assert.IsNotNull(vc.CalendarUserAddresses);
-        Assert.AreEqual(2, vc.CalendarUserAddresses.Count());
+        Assert.HasCount(2, vc.CalendarUserAddresses);
         Assert.AreEqual("CalenderUserAddressPref", vc.CalendarUserAddresses.PrefOrNull()!.Value);
 
         Assert.IsNotNull(vc.FreeOrBusyUrls);
-        Assert.AreEqual(2, vc.FreeOrBusyUrls.Count());
+        Assert.HasCount(2, vc.FreeOrBusyUrls);
         Assert.AreEqual("FbUrlPref", vc.FreeOrBusyUrls.PrefOrNull()!.Value);
     }
 
@@ -649,7 +649,7 @@ END:VCARD";
 
         string vcf = vc.ToVcfString(VCdVersion.V3_0);
 
-        StringAssert.Contains(vcf, "BDAY", StringComparison.Ordinal);
+        Assert.Contains("BDAY", vcf, StringComparison.Ordinal);
     }
 
     [TestMethod]

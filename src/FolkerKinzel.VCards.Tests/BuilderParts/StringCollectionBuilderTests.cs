@@ -23,7 +23,7 @@ public class StringCollectionBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.NickNames);
-        Assert.AreEqual(2, vc.NickNames.Count());
+        Assert.HasCount(2, vc.NickNames);
         Assert.AreEqual(100, vc.NickNames.First()!.Parameters.Preference);
         Assert.AreEqual(1, vc.NickNames.ElementAt(1)!.Parameters.Preference);
 
@@ -59,8 +59,8 @@ public class StringCollectionBuilderTests
         IEnumerable<StringCollectionProperty?>? property = vc.NickNames;
 
         Assert.IsNotNull(property);
-        Assert.AreEqual(2, property.Count());
-        Assert.AreEqual(null, property.First()!.Parameters.Index);
+        Assert.HasCount(2, property);
+        Assert.IsNull(property.First()!.Parameters.Index);
         Assert.AreEqual(1, property.ElementAt(1)!.Parameters.Index);
 
         builder.NickNames.SetIndexes(skipEmptyItems: false);

@@ -30,7 +30,7 @@ public class VCardTests
 
         IReadOnlyList<VCard> list = Vcf.Deserialize(ms);
 
-        Assert.AreEqual(1, list.Count);
+        Assert.HasCount(1, list);
         Assert.IsNotNull(list[0].DisplayNames);
 
         TextProperty? dispNameProp = list[0].DisplayNames!.FirstOrDefault();
@@ -77,9 +77,9 @@ public class VCardTests
         vc.ToVcfString();
 
         string s = Vcf.Parse(Vcf.AsString(vc, VCdVersion.V2_1, options: VcfOpts.Default.Set(VcfOpts.WriteEmptyProperties)))[0].ToString();
-        StringAssert.Contains(s, group);
-        StringAssert.Contains(s, "2.1");
-        StringAssert.Contains(s, "<EMPTY>");
+        Assert.Contains(group, s);
+        Assert.Contains("2.1", s);
+        Assert.Contains("<EMPTY>", s);
     }
 
     [TestMethod]
@@ -95,8 +95,8 @@ public class VCardTests
         vc.ToVcfString();
 
         string s = Vcf.Parse(Vcf.AsString(vc, VCdVersion.V3_0))[0].ToString();
-        StringAssert.Contains(s, group);
-        StringAssert.Contains(s, "3.0");
+        Assert.Contains(group, s);
+        Assert.Contains("3.0", s);
     }
 
     [TestMethod]
@@ -112,8 +112,8 @@ public class VCardTests
         vc.ToVcfString();
 
         string s = Vcf.Parse(Vcf.AsString(vc, VCdVersion.V4_0))[0].ToString();
-        StringAssert.Contains(s, group);
-        StringAssert.Contains(s, "4.0");
+        Assert.Contains(group, s);
+        Assert.Contains("4.0", s);
     }
 
     [TestMethod]
@@ -163,7 +163,7 @@ public class VCardTests
     {
         IReadOnlyList<VCard> vCards = Vcf.Load(TestFiles.Cropped_2_1vcf);
         Assert.IsNotNull(vCards);
-        Assert.AreEqual(1, vCards.Count);
+        Assert.HasCount(1, vCards);
     }
 
     [TestMethod]
@@ -217,7 +217,7 @@ public class VCardTests
         Address adr2 = AddressBuilder.Create().AddStreet("2").Build();
 
         IEnumerable<string> groups = vc.GroupIDs;
-        Assert.IsFalse(groups.Any());
+        Assert.IsEmpty(groups);
 
         vc.DisplayNames = new TextProperty("Donald", " 4 1 ");
         vc.Updated = new TimeStampProperty();
@@ -230,7 +230,7 @@ public class VCardTests
                               null,
                               new(new GeoCoordinate(2, 2))
                             ];
-        Assert.AreEqual(2, vc.GroupIDs.Count());
+        Assert.HasCount(2, vc.GroupIDs);
         Assert.AreEqual("42", vc.NewGroup());
     }
 
@@ -246,7 +246,7 @@ public class VCardTests
         };
         IEnumerable<IGrouping<string?, KeyValuePair<Prop, VCardProperty>>> result = vc.Groups;
         Assert.IsNotNull(result);
-        Assert.AreEqual(2, result.Count());
+        Assert.HasCount(2, result);
         Assert.IsTrue(result.All(static x => x.Count() == 2));
     }
 
@@ -431,7 +431,7 @@ public class VCardTests
         var vc2 = (VCard)vc1.Clone();
         Assert.AreNotSame(vc1, vc2);
         Assert.IsNotNull(vc2.Organizations);
-        Assert.AreEqual(3, vc2.Organizations.Count());
+        Assert.HasCount(3, vc2.Organizations);
     }
 
     [TestMethod]
@@ -499,11 +499,11 @@ public class VCardTests
         var nonStandards = vCard.NonStandards;
 
         Assert.IsNotNull(nonStandards);
-        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("KIND", StringComparison.OrdinalIgnoreCase) ?? false));
-        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("GEO", StringComparison.OrdinalIgnoreCase) ?? false));
-        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("TZ", StringComparison.OrdinalIgnoreCase) ?? false));
-        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("CLASS", StringComparison.OrdinalIgnoreCase) ?? false));
-        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("CLIENTPIDMAP", StringComparison.OrdinalIgnoreCase) ?? false));
-        Assert.IsTrue(nonStandards.Any(x => x?.Key.Equals("GRAMGENDER", StringComparison.OrdinalIgnoreCase) ?? false));
+        Assert.Contains(x => x?.Key.Equals("KIND", StringComparison.OrdinalIgnoreCase) ?? false, nonStandards);
+        Assert.Contains(x => x?.Key.Equals("GEO", StringComparison.OrdinalIgnoreCase) ?? false, nonStandards);
+        Assert.Contains(x => x?.Key.Equals("TZ", StringComparison.OrdinalIgnoreCase) ?? false, nonStandards);
+        Assert.Contains(x => x?.Key.Equals("CLASS", StringComparison.OrdinalIgnoreCase) ?? false, nonStandards);
+        Assert.Contains(x => x?.Key.Equals("CLIENTPIDMAP", StringComparison.OrdinalIgnoreCase) ?? false, nonStandards);
+        Assert.Contains(x => x?.Key.Equals("GRAMGENDER", StringComparison.OrdinalIgnoreCase) ?? false, nonStandards);
     }
 }

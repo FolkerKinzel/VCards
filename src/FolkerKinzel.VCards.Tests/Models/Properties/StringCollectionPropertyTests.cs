@@ -105,7 +105,7 @@ public class StringCollectionPropertyTests
     public void IEnumerableTest1()
     {
         var prop = new StringCollectionProperty("");
-        Assert.AreEqual(1, prop.AsWeakEnumerable().Count());
+        Assert.HasCount(1, prop.AsWeakEnumerable());
     }
 
     [TestMethod]

@@ -14,7 +14,7 @@ public class WhatsAppIssueTests
         VCard.RegisterApp(null);
 
         IReadOnlyList<VCard> list = Vcf.Load(TestFiles.WhatsAppIssueVcf);
-        Assert.AreNotEqual(0, list.Count);
+        Assert.IsNotEmpty(list);
 
         IEnumerable<TextProperty?>? phoneNumbers = list[0].Phones;
         Assert.IsNotNull(phoneNumbers);

@@ -19,15 +19,15 @@ public class PropertyIDTests
 
 
     [TestMethod]
-    public void ParseTest1() => Assert.AreEqual(0, PropertyID.Parse("".AsSpan()).Count());
+    public void ParseTest1() => Assert.IsEmpty(PropertyID.Parse("".AsSpan()));
 
 
     [TestMethod]
     public void ParseTest2()
     {
         IEnumerable<PropertyID> list = PropertyID.Parse("4".AsSpan());
-        Assert.AreEqual(1, list.Count());
-        Assert.AreEqual(new PropertyID(4, null), list.First());
+        Assert.HasCount(1, list);
+        Assert.AreSequenceEqual(new PropertyID(4, null), list);
     }
 
 
@@ -36,10 +36,10 @@ public class PropertyIDTests
     {
         IEnumerable<PropertyID> list = PropertyID.Parse("4.9".AsSpan());
 
-        Assert.AreEqual(1, list.Count());
+        Assert.HasCount(1, list);
         var pidMap = new AppID(9, "http://folkerkinzel.de/");
 
-        Assert.AreEqual(new PropertyID(4, pidMap), list.First());
+        Assert.AreSequenceEqual(new PropertyID(4, pidMap), list);
     }
 
 
@@ -48,10 +48,10 @@ public class PropertyIDTests
     {
         IEnumerable<PropertyID> list = PropertyID.Parse("4.9,7.5".AsSpan());
 
-        Assert.AreEqual(2, list.Count());
+        Assert.HasCount(2, list);
         string uri = "http://folker.de/";
-        Assert.AreEqual(new PropertyID(4, new AppID(9, uri)), list.First());
-        Assert.AreEqual(new PropertyID(7, new AppID(5, uri)), list.ElementAt(1));
+        Assert.AreSequenceEqual([new PropertyID(4, new AppID(9, uri)), new PropertyID(7, new AppID(5, uri))],
+                                list);
     }
 
 
@@ -60,10 +60,10 @@ public class PropertyIDTests
     {
         IEnumerable<PropertyID> list = PropertyID.Parse(" 4 . 9 , 7 . 5 ".AsSpan());
 
-        Assert.AreEqual(2, list.Count());
+        Assert.HasCount(2, list);
         string uri = "http://folker.de/";
-        Assert.AreEqual(new PropertyID(4, new AppID(9, uri)), list.First());
-        Assert.AreEqual(new PropertyID(7, new AppID(5, uri)), list.ElementAt(1));
+        Assert.AreSequenceEqual([new PropertyID(4, new AppID(9, uri)), new PropertyID(7, new AppID(5, uri))],
+                                list);
     }
 
 
@@ -72,10 +72,10 @@ public class PropertyIDTests
     {
         IEnumerable<PropertyID> list = PropertyID.Parse("4.9,6.0,7.5".AsSpan());
 
-        Assert.AreEqual(2, list.Count());
+        Assert.HasCount(2, list);
         string uri = "http://folker.de/";
-        Assert.AreEqual(new PropertyID(4, new AppID(9, uri)), list.First());
-        Assert.AreEqual(new PropertyID(7, new AppID(5, uri)), list.ElementAt(1));
+        Assert.AreSequenceEqual([new PropertyID(4, new AppID(9, uri)), new PropertyID(7, new AppID(5, uri))],
+                                list);
     }
 
     [TestMethod]
@@ -83,10 +83,13 @@ public class PropertyIDTests
     {
         IEnumerable<PropertyID> list = PropertyID.Parse("9,22.15,7,2.0".AsSpan());
 
-        Assert.AreEqual(3, list.Count());
-        Assert.AreEqual(new PropertyID(9, null), list.First());
-        Assert.AreEqual(new PropertyID(22, new AppID(15, "http://www.contoso.com/")), list.ElementAt(1));
-        Assert.AreEqual(new PropertyID(7, null), list.ElementAt(2));
+        Assert.HasCount(3, list);
+
+        PropertyID[] expectedResult = [new PropertyID(9, null),
+                                       new PropertyID(22, new AppID(15, "http://www.contoso.com/")),
+                                       new PropertyID(7, null)];
+
+        Assert.AreSequenceEqual(expectedResult, list);
     }
 
     [TestMethod]
@@ -94,15 +97,15 @@ public class PropertyIDTests
     {
         IEnumerable<PropertyID> list = PropertyID.Parse("-7,22.-15,-2.8,xyz,xy.7,7.xy".AsSpan());
 
-        Assert.AreEqual(0, list.Count());
+        Assert.IsEmpty(list);
     }
-
-
 
     [TestMethod]
     public void PropertyIDTest3() => _ = new PropertyID(10, null);
 
     [TestMethod]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "MSTEST0065:Avoid Assert.AreEqual on collection types", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "MSTEST0032:Assertion condition is always true", Justification = "<Pending>")]
     public void EqualsTest1()
     {
         const string uriStr = "http://folkers-website.de";
@@ -159,7 +162,7 @@ public class PropertyIDTests
     public void EqualityOperatorTest2()
     {
         PropertyID? propID1 = null;
-        Assert.IsTrue(propID1 is null);
+        Assert.IsTrue(propID1 == null);
     }
 
     [TestMethod]
@@ -193,8 +196,8 @@ public class PropertyIDTests
 
         foreach (object? item in numerable)
         {
-            Assert.IsTrue(item as PropertyID == id1);
-            Assert.IsFalse(item as PropertyID != id1);
+            Assert.IsTrue((item as PropertyID) == id1);
+            Assert.IsFalse((item as PropertyID) != id1);
         }
     }
 

@@ -20,7 +20,7 @@ public class ExpertiseConverterTests
         //Assert.AreEqual(null, ExpertiseLevelConverter.Parse(null));
 
         // Test auf nicht definiert
-        Assert.AreEqual(null, ((Expertise?)4711).ToVcfString());
+        Assert.IsNull(((Expertise?)4711).ToVcfString());
     }
 
     [TestMethod]

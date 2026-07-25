@@ -22,8 +22,8 @@ public class TextViewBuilderTests
         VCard vc = builder.VCard;
 
         Assert.IsNotNull(vc.BirthPlaceViews);
-        Assert.AreEqual(2, vc.BirthPlaceViews.Count());
-        Assert.AreEqual(null, vc.BirthPlaceViews.First()!.Parameters.Index);
+        Assert.HasCount(2, vc.BirthPlaceViews);
+        Assert.IsNull(vc.BirthPlaceViews.First()!.Parameters.Index);
         Assert.AreEqual(1, vc.BirthPlaceViews.ElementAt(1)!.Parameters.Index);
 
         builder.BirthPlaceViews.SetIndexes(skipEmptyItems: false);

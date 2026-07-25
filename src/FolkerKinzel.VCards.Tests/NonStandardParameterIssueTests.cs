@@ -25,13 +25,13 @@ public class NonStandardParameterIssueTests
         string vcf40 = Vcf.AsString(card, VCdVersion.V4_0, options: opts);
         string vcf21 = Vcf.AsString(card, VCdVersion.V2_1, options: opts);
 
-        Assert.IsFalse(vcf30.Contains(",:"));
+        Assert.DoesNotContain(",:", vcf30);
         Assert.IsTrue(vcf30.Contains("x-1st", StringComparison.Ordinal));
         Assert.IsTrue(vcf30.Contains("TYPE=WORK", StringComparison.OrdinalIgnoreCase));
 
         Assert.IsTrue(vcf40.Contains("TYPE=WORK", StringComparison.OrdinalIgnoreCase));
         Assert.IsTrue(vcf40.Contains("x-1st", StringComparison.Ordinal));
-        Assert.IsFalse(vcf40.Contains(",:"));
+        Assert.DoesNotContain(",:", vcf40);
 
 
         Assert.IsTrue(vcf21.Contains("x-1st", StringComparison.Ordinal));

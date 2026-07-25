@@ -21,7 +21,7 @@ public class SyncOperationTests
 
         vc.Sync.SetPropertyIDs();
 
-        Assert.AreEqual(1, arr[1].Parameters.PropertyIDs!.Count());
+        Assert.HasCount(1, arr[1].Parameters.PropertyIDs!);
     }
 
     [TestMethod]
@@ -39,7 +39,7 @@ public class SyncOperationTests
 
         vc.Sync.SetPropertyIDs();
         Assert.IsNotNull(tProp.Parameters.PropertyIDs);
-        Assert.AreEqual(1, tProp.Parameters.PropertyIDs.Count());
+        Assert.HasCount(1, tProp.Parameters.PropertyIDs);
 
         //const string folker = "http://folker.de/id";
         ////const string contoso = "http://contoso.com/id";
@@ -87,7 +87,7 @@ public class SyncOperationTests
         vc.Sync.SetPropertyIDs();
         Assert.AreEqual(uri.AbsoluteUri, vc.Sync.CurrentAppID?.GlobalID);
         Assert.IsNotNull(tProp.Parameters.PropertyIDs);
-        Assert.AreEqual(1, tProp.Parameters.PropertyIDs.Count());
+        Assert.HasCount(1, tProp.Parameters.PropertyIDs);
         Assert.AreEqual(1, vc.AppIDs?.Count());
 
         vc.Sync.Reset();
