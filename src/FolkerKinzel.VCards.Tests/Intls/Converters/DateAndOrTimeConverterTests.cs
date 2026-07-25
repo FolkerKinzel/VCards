@@ -28,8 +28,8 @@ public class DateAndOrTimeConverterTests
         Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateAndOrTime? dt));
 
         Assert.IsTrue(dt.DateOnly.HasValue);
-        Assert.AreEqual(dt.DateOnly.Value.Year, 4);
-        Assert.AreEqual(dt.DateOnly.Value.Month, 8);
+        Assert.AreEqual(4, dt.DateOnly.Value.Year);
+        Assert.AreEqual(8, dt.DateOnly.Value.Month);
     }
 
     [TestMethod]
@@ -39,9 +39,9 @@ public class DateAndOrTimeConverterTests
         Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateAndOrTime? dt));
 
         Assert.IsTrue(dt.DateOnly.HasValue);
-        Assert.AreEqual(dt.DateOnly.Value.Year, 4);
-        Assert.AreEqual(dt.DateOnly.Value.Month, 8);
-        Assert.AreEqual(dt.DateOnly.Value.Day, 3);
+        Assert.AreEqual(4, dt.DateOnly.Value.Year);
+        Assert.AreEqual(8, dt.DateOnly.Value.Month);
+        Assert.AreEqual(3, dt.DateOnly.Value.Day);
     }
 
     [TestMethod]
@@ -51,9 +51,9 @@ public class DateAndOrTimeConverterTests
         Assert.IsTrue(_conv.TryParse(s.AsSpan(), out DateAndOrTime? dt));
 
         Assert.IsTrue(dt.DateOnly.HasValue);
-        Assert.AreEqual(dt.DateOnly.Value.Year, 4);
-        Assert.AreEqual(dt.DateOnly.Value.Month, 1);
-        Assert.AreEqual(dt.DateOnly.Value.Day, 3);
+        Assert.AreEqual(4, dt.DateOnly.Value.Year);
+        Assert.AreEqual(1, dt.DateOnly.Value.Month);
+        Assert.AreEqual(3, dt.DateOnly.Value.Day);
     }
 
     [TestMethod]

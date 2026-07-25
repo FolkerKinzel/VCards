@@ -30,7 +30,7 @@ public class V2Tests
         DataProperty? photo = vcard[0].Photos?.FirstOrDefault();
         Assert.IsNotNull(photo);
 
-        Assert.AreEqual(photo?.Parameters.MediaType, "image/jpeg");
+        Assert.AreEqual("image/jpeg", photo?.Parameters.MediaType);
         //System.IO.File.WriteAllBytes(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), $"Testbild{dataUrl.GetFileExtension()}"), dataUrl.GetEmbeddedBytes());
 
         Vcf.Save(vcard,
@@ -46,14 +46,14 @@ public class V2Tests
 
         IReadOnlyList<VCard> cards = Vcf.Parse(s);
 
-        Assert.AreEqual(cards.Count, 1);
+        Assert.AreEqual(1, cards.Count);
 
         vcard = cards[0];
 
-        Assert.AreEqual(vcard.Version, VCdVersion.V2_1);
+        Assert.AreEqual(VCdVersion.V2_1, vcard.Version);
 
         Assert.IsNotNull(vcard.NameViews);
-        Assert.AreEqual(vcard.NameViews!.Count(), 1);
+        Assert.AreEqual(1, vcard.NameViews!.Count());
         Assert.IsNotNull(vcard.NameViews!.First());
     }
 
@@ -88,8 +88,8 @@ public class V2Tests
 
         _ = Vcf.Parse(s);
 
-        Assert.AreEqual(vcard.Keys?.First()?.Value.String, ASCIITEXT);
-        Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
+        Assert.AreEqual(ASCIITEXT, vcard.Keys?.First()?.Value.String);
+        Assert.AreEqual("image/jpeg", vcard.Photos?.First()?.Parameters.MediaType);
         Assert.IsTrue(vcard.Photos?.First()?.Value.Bytes?.SequenceEqual(bytes) ?? false);
 
 

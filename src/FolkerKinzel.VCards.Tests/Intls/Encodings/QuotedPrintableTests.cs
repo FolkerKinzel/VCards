@@ -73,7 +73,7 @@ public class QuotedPrintableTests
         string s = new(' ', 100);
         string quoted = new StringBuilder().AppendQuotedPrintable(s.AsSpan(), 0).ToString();
         Assert.IsNotNull(quoted);
-        Assert.AreNotEqual(quoted[quoted.Length - 1], ' ');
+        Assert.AreNotEqual(' ', quoted[quoted.Length - 1]);
         Assert.AreEqual(2, quoted.GetLinesCount());
     }
 

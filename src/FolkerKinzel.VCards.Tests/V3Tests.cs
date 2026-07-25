@@ -46,17 +46,17 @@ public class V3Tests
 
         IReadOnlyList<VCard>? cards = Vcf.Parse(s);
 
-        Assert.AreEqual(cards.Count, 1);
+        Assert.AreEqual(1, cards.Count);
 
         vcard = cards[0];
 
         Assert.AreEqual(VCdVersion.V3_0, vcard.Version);
 
         Assert.IsNotNull(vcard.DisplayNames);
-        Assert.AreEqual(vcard.DisplayNames!.Count(), 1);
+        Assert.AreEqual(1, vcard.DisplayNames!.Count());
         Assert.IsNotNull(vcard.DisplayNames!.First());
         Assert.IsNotNull(vcard.NameViews);
-        Assert.AreEqual(vcard.NameViews!.Count(), 1);
+        Assert.AreEqual(1, vcard.NameViews!.Count());
         Assert.IsNotNull(vcard.NameViews!.First());
     }
 
@@ -97,8 +97,8 @@ public class V3Tests
 
         _ = Vcf.Parse(s);
 
-        Assert.AreEqual(vcard.Keys?.First()?.Value.String, ASCIITEXT);
-        Assert.AreEqual(vcard.Photos?.First()?.Parameters.MediaType, "image/jpeg");
+        Assert.AreEqual(ASCIITEXT, vcard.Keys?.First()?.Value.String);
+        Assert.AreEqual("image/jpeg", vcard.Photos?.First()?.Parameters.MediaType);
         Assert.IsTrue(vcard.Photos?.First()?.Value.Bytes?.SequenceEqual(bytes) ?? false);
 
 
