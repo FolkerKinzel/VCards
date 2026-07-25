@@ -7,16 +7,19 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class AccessBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new AccessBuilder().Edit(p => p);
+    public void EditTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AccessBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().Access.Edit(null!);
+    public void EditTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Access.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new AccessBuilder().Edit((p, d) => p, true);
+    public void EditTest3()
+         => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AccessBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
     public void EditTest5()
@@ -30,16 +33,19 @@ public class AccessBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().Access.Edit(null!, true);
+    public void EditTest4() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Access.Edit(null!, true));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetTest1() => new AccessBuilder().Set(Access.Public);
+    public void SetTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AccessBuilder().Set(Access.Public));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new AccessBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AccessBuilder().Clear());
 
     [TestMethod]
     public void EqualsTest1()

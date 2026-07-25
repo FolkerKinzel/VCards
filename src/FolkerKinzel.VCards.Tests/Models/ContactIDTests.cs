@@ -4,12 +4,14 @@
 public class ContactIDTests
 {
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void CreateTest1() => ContactID.Create("  ");
+    public void CreateTest1()
+        => _ = Assert.ThrowsExactly<ArgumentException>(
+            () => ContactID.Create("  "));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void CreateTest2() => ContactID.Create(new Uri("../relative", UriKind.Relative));
+    public void CreateTest2()
+        => _ = Assert.ThrowsExactly<ArgumentException>(
+            () => ContactID.Create(new Uri("../relative", UriKind.Relative)));
 
     [TestMethod]
     public void CreateTest3()
@@ -120,28 +122,34 @@ public class ContactIDTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest2() => _ = ContactID.Create().Convert<string, string>("", null!, null!, null!);
+    public void ConvertTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => ContactID.Create().Convert<string, string>("", null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest3() => _ = ContactID.Create(new Uri("http://folker.com/")).Convert<string, string>("", null!, null!, null!);
+    public void ConvertTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => ContactID.Create(new Uri("http://folker.com/")).Convert<string, string>("", null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest4() => _ = ContactID.Create("Hi").Convert<string, string>("", null!, null!, null!);
+    public void ConvertTest4()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => ContactID.Create("Hi").Convert<string, string>("", null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest5() => _ = ContactID.Create().Convert<string>(null!, null!, null!);
+    public void ConvertTest5() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => ContactID.Create().Convert<string>(null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest6() => _ = ContactID.Create(new Uri("http://folker.com/")).Convert<string>(null!, null!, null!);
+    public void ConvertTest6()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => ContactID.Create(new Uri("http://folker.com/")).Convert<string>(null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest7() => _ = ContactID.Create("Hi").Convert<string>(null!, null!, null!);
+    public void ConvertTest7()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => ContactID.Create("Hi").Convert<string>(null!, null!, null!));
 
     [TestMethod]
     public void ConvertTest8()

@@ -7,20 +7,24 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class ContactIDBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new ContactIDBuilder().Edit(p => p);
+    public void EditTest1() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new ContactIDBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().ContactID.Edit(null!);
+    public void EditTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().ContactID.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new ContactIDBuilder().Edit((p, d) => p, true);
+    public void EditTest3() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new ContactIDBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().ContactID.Edit(null!, true);
+    public void EditTest4()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().ContactID.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
@@ -34,8 +38,9 @@ public class ContactIDBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetTest1() => new ContactIDBuilder().Set(ContactID.Empty);
+    public void SetTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new ContactIDBuilder().Set(ContactID.Empty));
 
     [TestMethod]
     public void SetTest2()
@@ -70,8 +75,9 @@ public class ContactIDBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new ContactIDBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new ContactIDBuilder().Clear());
 
     [TestMethod]
     public void EqualsTest1()
@@ -81,8 +87,6 @@ public class ContactIDBuilderTests
         var builder = new ContactIDBuilder();
         Assert.AreEqual(builder.GetHashCode(), ((object)builder).GetHashCode());
     }
-
-
 
     [TestMethod]
     public void ToStringTest1() => Assert.IsNotNull(new ContactIDBuilder().ToString());

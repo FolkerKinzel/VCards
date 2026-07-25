@@ -65,8 +65,9 @@ public class StringCollectionPropertyTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void StringCollectionPropertyTest4() => _ = new StringCollectionProperty((IEnumerable<string?>?)null!);
+    public void StringCollectionPropertyTest4() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new StringCollectionProperty((IEnumerable<string?>?)null!));
 
     [TestMethod]
     public void ToStringTest1()

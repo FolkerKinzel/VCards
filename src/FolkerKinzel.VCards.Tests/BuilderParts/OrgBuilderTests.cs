@@ -7,8 +7,9 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class OrgBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetPreferencesTest1() => new OrgBuilder().SetPreferences();
+    public void SetPreferencesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new OrgBuilder().SetPreferences());
 
     [TestMethod]
     public void SetPreferencesTest2()
@@ -35,12 +36,14 @@ public class OrgBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetPreferencesTest1() => new OrgBuilder().UnsetPreferences();
+    public void UnsetPreferencesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new OrgBuilder().UnsetPreferences());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetIndexesTest1() => new OrgBuilder().SetIndexes();
+    public void SetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new OrgBuilder().SetIndexes());
 
     [TestMethod]
     public void SetIndexesTest2()
@@ -69,24 +72,29 @@ public class OrgBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetIndexesTest1() => new OrgBuilder().UnsetIndexes();
+    public void UnsetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new OrgBuilder().UnsetIndexes());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new OrgBuilder().Edit(p => p);
+    public void EditTest1() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new OrgBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().Organizations.Edit(null!);
+    public void EditTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Organizations.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new OrgBuilder().Edit((p, d) => p, true);
+    public void EditTest3()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new OrgBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().Organizations.Edit(null!, true);
+    public void EditTest4()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Organizations.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
@@ -100,8 +108,9 @@ public class OrgBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new OrgBuilder().Add("Contoso");
+    public void AddTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new OrgBuilder().Add("Contoso"));
 
     [TestMethod]
     public void AddTest2()
@@ -135,12 +144,14 @@ public class OrgBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new OrgBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new OrgBuilder().Clear());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new OrgBuilder().Remove(p => true);
+    public void RemoveTest1() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new OrgBuilder().Remove(p => true));
 
     [TestMethod]
     public void EqualsTest1()

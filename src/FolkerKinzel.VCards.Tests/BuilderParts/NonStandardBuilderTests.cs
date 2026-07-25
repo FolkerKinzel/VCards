@@ -6,20 +6,24 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class NonStandardBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new NonStandardBuilder().Edit(p => p);
+    public void EditTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NonStandardBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().NonStandards.Edit(null!);
+    public void EditTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().NonStandards.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new NonStandardBuilder().Edit((p, d) => p, true);
+    public void EditTest3()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NonStandardBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().NonStandards.Edit(null!, true);
+    public void EditTest4() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().NonStandards.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
@@ -33,8 +37,9 @@ public class NonStandardBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new NonStandardBuilder().Add("X-TEST", null);
+    public void AddTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NonStandardBuilder().Add("X-TEST", null));
 
     [TestMethod]
     public void AddTest2()
@@ -56,12 +61,14 @@ public class NonStandardBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new NonStandardBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NonStandardBuilder().Clear());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new NonStandardBuilder().Remove(p => true);
+    public void RemoveTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NonStandardBuilder().Remove(p => true));
 
     [TestMethod]
     public void EqualsTest1()

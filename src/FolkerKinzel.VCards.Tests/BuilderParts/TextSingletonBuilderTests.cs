@@ -6,20 +6,24 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class TextSingletonBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new TextSingletonBuilder().Edit(p => p);
+    public void EditTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TextSingletonBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().DirectoryName.Edit(null!);
+    public void EditTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().DirectoryName.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new TextSingletonBuilder().Edit((p, d) => p, true);
+    public void EditTest3() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TextSingletonBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().DirectoryName.Edit(null!, true);
+    public void EditTest4()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().DirectoryName.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
@@ -33,12 +37,14 @@ public class TextSingletonBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetTest1() => new TextSingletonBuilder().Set(null);
+    public void SetTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TextSingletonBuilder().Set(null));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new TextSingletonBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TextSingletonBuilder().Clear());
 
     [TestMethod]
     public void EqualsTest1()

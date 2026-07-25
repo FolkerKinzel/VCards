@@ -45,8 +45,9 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void CreateTest4() => _ = VCardBuilder.Create(null!);
+    public void CreateTest4() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create(null!));
 
     [TestMethod()]
     public void SetAccessTest1()
@@ -204,12 +205,12 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void RemoveAddressTest1()
     {
-        _ = VCardBuilder.Create()
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create()
                         .Addresses.Remove((Func<AddressProperty?, bool>)null!)
-                        .VCard;
+                        .VCard);
     }
 
     [TestMethod()]
@@ -1248,13 +1249,13 @@ public class VCardBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void RemoveNameViewTest1()
     {
-        _ = VCardBuilder
-            .Create()
-            .NameViews.Remove((Func<NameProperty?, bool>)null!)
-            .VCard;
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder
+                    .Create()
+                    .NameViews.Remove((Func<NameProperty?, bool>)null!)
+                    .VCard);
     }
 
 

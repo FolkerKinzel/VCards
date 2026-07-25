@@ -9,7 +9,7 @@ namespace FolkerKinzel.VCards.Extensions.Tests;
 public class IEnumerableExtensionTests
 {
     [NotNull]
-    public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
+    public TestContext? TestContext { get; set; }
 
     private static List<VCard?> GenerateVCardList()
     {
@@ -89,14 +89,13 @@ public class IEnumerableExtensionTests
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(ArgumentException))]
     public void SaveVcfTest_InvalidFilename(VCdVersion version)
     {
         var list = new List<VCard?>() { new() };
 
         string path = "   ";
 
-        list.SaveVcf(path, version);
+        _ = Assert.ThrowsExactly<ArgumentException>(() => list.SaveVcf(path, version));
 
         Assert.IsFalse(File.Exists(path));
     }
@@ -120,26 +119,25 @@ public class IEnumerableExtensionTests
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void SaveVcfTest_ListNull(VCdVersion version)
     {
         List<VCard?>? list = null;
 
         string path = Path.Combine(TestContext.TestRunResultsDirectory!, "SaveVcfTest_Empty.vcf");
 
-        list!.SaveVcf(path, version);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(() => list!.SaveVcf(path, version));
     }
 
     [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void SaveVcfTest_fileNameNull(VCdVersion version)
     {
         var list = new List<VCard?>() { new() };
 
-        list.SaveVcf(null!, version);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => list.SaveVcf(null!, version));
     }
 
     [TestMethod]
@@ -217,7 +215,6 @@ public class IEnumerableExtensionTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void SaveTest_fileNameNull()
     {
         var vcard = new VCard
@@ -225,11 +222,10 @@ public class IEnumerableExtensionTests
             DisplayNames = new TextProperty("Folker")
         };
 
-        vcard.SaveVcf(null!);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(() => vcard.SaveVcf(null!));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void SaveTest_InvalidFileName()
     {
         var vcard = new VCard
@@ -237,14 +233,13 @@ public class IEnumerableExtensionTests
             DisplayNames = new TextProperty("Folker")
         };
 
-        vcard.SaveVcf("   ");
+        _ = Assert.ThrowsExactly<ArgumentException>(() => vcard.SaveVcf("   "));
     }
 
     [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void SerializeTest_StreamNull(VCdVersion version)
     {
         var vcard = new VCard
@@ -252,7 +247,8 @@ public class IEnumerableExtensionTests
             DisplayNames = new TextProperty("Folker")
         };
 
-        vcard.SerializeVcf(null!, version);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => vcard.SerializeVcf(null!, version));
     }
 
     [DataTestMethod]
@@ -281,7 +277,6 @@ public class IEnumerableExtensionTests
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(ObjectDisposedException))]
     public void SerializeTest_CloseStream(VCdVersion version)
     {
         var vcard = new VCard
@@ -293,14 +288,13 @@ public class IEnumerableExtensionTests
 
         vcard.SerializeVcf(ms, version, leaveStreamOpen: false);
 
-        _ = ms.Length;
+        _ = Assert.ThrowsExactly<ObjectDisposedException>(() => _ = ms.Length);
     }
 
     [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
     public void SerializeTest_StreamClosed(VCdVersion version)
     {
         var vcard = new VCard
@@ -311,12 +305,13 @@ public class IEnumerableExtensionTests
         using var ms = new MemoryStream();
         ms.Close();
 
-        vcard.SerializeVcf(ms, version);
+        _ = Assert.Throws<Exception>(() => vcard.SerializeVcf(ms, version));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void SerializeVcfTest1() => new List<VCard?>().SerializeVcf(null!, VCdVersion.V3_0);
+    public void SerializeVcfTest1()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new List<VCard?>().SerializeVcf(null!, VCdVersion.V3_0));
 
     [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
@@ -341,7 +336,6 @@ public class IEnumerableExtensionTests
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(ObjectDisposedException))]
     public void SerializeVcfTest3(VCdVersion version)
     {
         List<VCard?> list = GenerateVCardList();
@@ -350,7 +344,7 @@ public class IEnumerableExtensionTests
 
         list.SerializeVcf(ms, version, leaveStreamOpen: false);
 
-        _ = ms.Length;
+        _ = Assert.ThrowsExactly<ObjectDisposedException>(() => _ = ms.Length);
 
     }
 
@@ -799,13 +793,13 @@ public class IEnumerableExtensionTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void RemoveTest5()
     {
         var prop = new TextProperty("Hi");
         IEnumerable<TextProperty> numerable = prop;
         Func<TextProperty, bool>? func = null;
-        _ = numerable.Remove(func!);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => _ = numerable.Remove(func!));
     }
 
     [TestMethod]

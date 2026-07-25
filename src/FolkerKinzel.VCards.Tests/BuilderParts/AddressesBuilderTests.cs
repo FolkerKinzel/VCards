@@ -7,8 +7,9 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class AddressesBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetPreferencesTest1() => new AddressesBuilder().SetPreferences();
+    public void SetPreferencesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().SetPreferences());
 
     [TestMethod]
     public void SetPreferencesTest2()
@@ -35,12 +36,14 @@ public class AddressesBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetPreferencesTest1() => new AddressesBuilder().UnsetPreferences();
+    public void UnsetPreferencesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().UnsetPreferences());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetIndexesTest1() => new AddressesBuilder().SetIndexes();
+    public void SetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().SetIndexes());
 
     [TestMethod]
     public void SetIndexesTest2()
@@ -69,24 +72,29 @@ public class AddressesBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetIndexesTest1() => new AddressesBuilder().UnsetIndexes();
+    public void UnsetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().UnsetIndexes());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new AddressesBuilder().Edit(p => p);
+    public void EditTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().Addresses.Edit(null!);
+    public void EditTest2() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Addresses.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new AddressesBuilder().Edit((p, d) => p, true);
+    public void EditTest3()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().Addresses.Edit(null!, true);
+    public void EditTest4()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Addresses.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
@@ -100,24 +108,29 @@ public class AddressesBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new AddressesBuilder().Add((Address?)null);
+    public void AddTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().Add((Address?)null));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new AddressesBuilder().Add((Address?)null);
+    public void AddTest2() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().Add((Address?)null));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest3() => new AddressesBuilder().Add(AddressBuilder.Create().Build());
+    public void AddTest3()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().Add(AddressBuilder.Create().Build()));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new AddressesBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().Clear());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new AddressesBuilder().Remove(p => true);
+    public void RemoveTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().Remove(p => true));
 
     [TestMethod]
     public void EqualsTest1()
@@ -132,12 +145,13 @@ public class AddressesBuilderTests
     public void ToStringTest1() => Assert.IsNotNull(new AddressesBuilder().ToString());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AttachLabelsTest1() => new AddressesBuilder().AttachLabels(AddressFormatter.Default);
+    public void AttachLabelsTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new AddressesBuilder().AttachLabels(AddressFormatter.Default));
 
     [TestMethod]
-    //[ExpectedException(typeof(ArgumentNullException))]
-    public void AttachLabelsTest2() => VCardBuilder.Create().Addresses.AttachLabels(null);
+    public void AttachLabelsTest2()
+        => VCardBuilder.Create().Addresses.AttachLabels(null);
 
     [TestMethod]
     public void AttachLabelsTest3()
@@ -151,8 +165,9 @@ public class AddressesBuilderTests
     {
         VCard vc = VCardBuilder
             .Create()
-            .Addresses.Add(VCards.AddressBuilder.Create().AddLocality("London").Build())
-            .Addresses.Add(VCards.AddressBuilder.Create().AddLocality("New York").Build(), p => p.Label = "Borna")
+            .Addresses.Add(AddressBuilder.Create().AddLocality("London").Build())
+            .Addresses.Add(AddressBuilder.Create().AddLocality("New York").Build(),
+                           p => p.Label = "Borna")
             .Addresses.Edit(props => props.Append(null))
             .Addresses.AttachLabels(AddressFormatter.Default)
             .VCard;

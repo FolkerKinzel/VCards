@@ -41,8 +41,9 @@ public class ContactIDPropertyTests
     }
     
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ContactIDPropertyTest5() => _ = new ContactIDProperty((ContactID?)null!);
+    public void ContactIDPropertyTest5()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new ContactIDProperty((ContactID?)null!));
 
     [TestMethod]
     public void ContactIDPropertyTest6()

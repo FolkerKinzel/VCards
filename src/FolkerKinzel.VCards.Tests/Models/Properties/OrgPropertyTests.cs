@@ -60,8 +60,9 @@ public class OrgPropertyTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void OrgPropertyTest4() => _ = new OrgProperty((Organization?)null!);
+    public void OrgPropertyTest4() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new OrgProperty((Organization?)null!));
 
     [TestMethod]
     public void IEnumerableTest1()

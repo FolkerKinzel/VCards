@@ -8,16 +8,19 @@ public class VcfTests
 {
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void LoadTest_fileNameNull() => _ = Vcf.Load(null!);
+    public void LoadTest_fileNameNull()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.Load(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void LoadTest_invalidFileName() => _ = Vcf.Load("  ");
+    public void LoadTest_invalidFileName()
+        => _ = Assert.ThrowsExactly<ArgumentException>(
+            () => Vcf.Load("  "));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ParseTest_contentNull() => _ = Vcf.Parse(null!);
+    public void ParseTest_contentNull() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.Parse(null!));
 
     [TestMethod]
     public void ParseTest_contentEmpty()
@@ -40,16 +43,19 @@ public class VcfTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void DeserializeTest1() => _ = Vcf.Deserialize(() => new MemoryStream(), null!);
+    public void DeserializeTest1()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.Deserialize(() => new MemoryStream(), null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void DeserializeTest2() => _ = Vcf.Deserialize(null!, new AnsiFilter());
+    public void DeserializeTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.Deserialize(null!, new AnsiFilter()));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void DeserializeTest_readerNull() => _ = Vcf.Deserialize(null!);
+    public void DeserializeTest_readerNull()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.Deserialize(null!));
 
     [TestMethod]
     public void DeserializeTest3()
@@ -59,13 +65,14 @@ public class VcfTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public async Task DeserializeAsyncTest1() =>
-        _ = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream()), (AnsiFilter)null!);
+    public async Task DeserializeAsyncTest1()
+        => await Assert.ThrowsExactlyAsync<ArgumentNullException>(
+            async () => _ = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream()), (AnsiFilter)null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public async Task DeserializeAsyncTest2() => _ = await Vcf.DeserializeAsync(null!, new AnsiFilter());
+    public async Task DeserializeAsyncTest2()
+        => await Assert.ThrowsExactlyAsync<ArgumentNullException>(
+            async () => _ = await Vcf.DeserializeAsync(null!, new AnsiFilter()));
 
     [TestMethod]
     public async Task DeserializeAsyncTest3()
@@ -75,8 +82,9 @@ public class VcfTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public async Task DeserializeAsyncTest4() => _ = await Vcf.DeserializeAsync(null!);
+    public async Task DeserializeAsyncTest4()
+        => _ = await Assert.ThrowsExactlyAsync<ArgumentNullException>(
+            () => Vcf.DeserializeAsync(null!));
 
     [TestMethod]
     public async Task DeserializeAsyncTest5()
@@ -95,8 +103,9 @@ public class VcfTests
 
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void DeserializeManyTest1() => _ = Vcf.DeserializeMany(null!).Count();
+    public void DeserializeManyTest1() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.DeserializeMany(null!).Count());
 
     [TestMethod]
     public void DeserializeManyTest2()
@@ -136,8 +145,9 @@ public class VcfTests
 
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public async Task DeserializeManyAsyncTest1() => _ = await Vcf.DeserializeManyAsync(null!).CountAsync();
+    public async Task DeserializeManyAsyncTest1() 
+        => await Assert.ThrowsExactlyAsync<ArgumentNullException>(
+            async () => _ = await Vcf.DeserializeManyAsync(null!).CountAsync());
 
     [TestMethod]
     public async Task DeserializeManyAsyncTest2()
@@ -194,16 +204,19 @@ public class VcfTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void LoadTest2() => _ = Vcf.Load(null!, new AnsiFilter());
+    public void LoadTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.Load(null!, new AnsiFilter()));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void LoadTest3() => _ = Vcf.Load(TestFiles.AnsiIssueVcf, (AnsiFilter)null!);
+    public void LoadTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.Load(TestFiles.AnsiIssueVcf, (AnsiFilter)null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void LoadManyTest1() => _ = Vcf.LoadMany(null!).Count();
+    public void LoadManyTest1()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.LoadMany(null!).Count());
 
     [TestMethod]
     public void LoadManyTest2()
@@ -232,6 +245,7 @@ public class VcfTests
     [DataRow(VCdVersion.V2_1)]
     [DataRow(VCdVersion.V3_0)]
     [DataRow(VCdVersion.V4_0)]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ToVcfStringTest_vcardListNull1(VCdVersion version) => _ = Vcf.AsString(null!, version);
+    public void ToVcfStringTest_vcardListNull1(VCdVersion version) 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.AsString(null!, version));
 }

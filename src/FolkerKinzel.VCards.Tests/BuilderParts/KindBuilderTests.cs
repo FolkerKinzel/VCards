@@ -6,20 +6,24 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class KindBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new KindBuilder().Edit(p => p);
+    public void EditTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new KindBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().Kind.Edit(null!);
+    public void EditTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Kind.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new KindBuilder().Edit((p, d) => p, true);
+    public void EditTest3()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new KindBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().Kind.Edit(null!, true);
+    public void EditTest4()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Kind.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
@@ -33,12 +37,14 @@ public class KindBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetTest1() => new KindBuilder().Set(Enums.Kind.Individual);
+    public void SetTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new KindBuilder().Set(Enums.Kind.Individual));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new KindBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new KindBuilder().Clear());
 
     [TestMethod]
     public void EqualsTest1()

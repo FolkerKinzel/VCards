@@ -7,8 +7,9 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class RawDataBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetPreferencesTest1() => new RawDataBuilder().SetPreferences();
+    public void SetPreferencesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().SetPreferences());
 
     [TestMethod]
     public void SetPreferencesTest2()
@@ -35,12 +36,14 @@ public class RawDataBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetPreferencesTest1() => new RawDataBuilder().UnsetPreferences();
+    public void UnsetPreferencesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().UnsetPreferences());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetIndexesTest1() => new RawDataBuilder().SetIndexes();
+    public void SetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().SetIndexes());
 
     [TestMethod]
     public void SetIndexesTest2()
@@ -69,24 +72,29 @@ public class RawDataBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetIndexesTest1() => new RawDataBuilder().UnsetIndexes();
+    public void UnsetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().UnsetIndexes());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new RawDataBuilder().Edit(p => p);
+    public void EditTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().Photos.Edit(null!);
+    public void EditTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Photos.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new RawDataBuilder().Edit((p, d) => p, true);
+    public void EditTest3()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().Photos.Edit(null!, true);
+    public void EditTest4()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Photos.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
@@ -100,28 +108,34 @@ public class RawDataBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddFileTest1() => new RawDataBuilder().AddFile("file");
+    public void AddFileTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().AddFile("file"));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddUriTest1() => new RawDataBuilder().AddUri(null);
+    public void AddUriTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().AddUri(null));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddBytesTest1() => new RawDataBuilder().AddBytes(null);
+    public void AddBytesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().AddBytes(null));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTextTest1() => new RawDataBuilder().AddText(null);
+    public void AddTextTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().AddText(null));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new RawDataBuilder().Clear();
+    public void ClearTest1() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().Clear());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new RawDataBuilder().Remove(p => true);
+    public void RemoveTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().Remove(p => true));
 
     [TestMethod]
     public void EqualsTest1()
@@ -136,8 +150,9 @@ public class RawDataBuilderTests
     public void ToStringTest1() => Assert.IsNotNull(new RawDataBuilder().ToString());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddRawDataTest1() => new RawDataBuilder().AddRawData(RawData.FromText("text"));
+    public void AddRawDataTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RawDataBuilder().AddRawData(RawData.FromText("text")));
 
     [TestMethod]
     public void AddRawDataTest2()

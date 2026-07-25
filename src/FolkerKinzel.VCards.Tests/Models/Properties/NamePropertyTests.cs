@@ -76,22 +76,20 @@ public class NamePropertyTests
     public void ItemTest1()
     {
         ICompoundProperty prop = new NameProperty(NameBuilder.Create().Build());
-        Assert.IsNotNull(prop[prop.Count - 1]);
+        _ = prop[prop.Count - 1];
     }
 
     [TestMethod]
-    [ExpectedException(typeof(IndexOutOfRangeException))]
     public void ItemTest2()
     {
         ICompoundProperty prop = new NameProperty(NameBuilder.Create().Build());
-        Assert.IsNotNull(prop[prop.Count]);
+        _ = Assert.ThrowsExactly<IndexOutOfRangeException>(() => prop[prop.Count]);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(IndexOutOfRangeException))]
     public void ItemTest3()
     {
         ICompoundProperty prop = new NameProperty(NameBuilder.Create().Build());
-        Assert.IsNotNull(prop[-1]);
+        _ = Assert.ThrowsExactly<IndexOutOfRangeException>(() => prop[-1]);
     }
 }

@@ -12,8 +12,9 @@ namespace FolkerKinzel.VCards.Models.Properties.Tests;
 public class DataPropertyTests
 {
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void DataPropertyTest1() => _ = new DataProperty(null!);
+    public void DataPropertyTest1() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new DataProperty(null!));
 
     [TestMethod]
     public void DataPropertyTest2()
@@ -103,11 +104,11 @@ public class DataPropertyTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void FromUriTest1()
     {
         Assert.IsTrue(Uri.TryCreate("../relative", UriKind.Relative, out Uri? uri));
-        _ = RawData.FromUri(uri);
+        _ = Assert.ThrowsExactly<ArgumentException>(
+            () => RawData.FromUri(uri));
     }
 
     [TestMethod]

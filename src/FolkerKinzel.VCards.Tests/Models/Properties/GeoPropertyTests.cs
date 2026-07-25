@@ -62,8 +62,9 @@ public class GeoPropertyTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void GeoPropertyTest3() => _ = new GeoProperty(null!);
+    public void GeoPropertyTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new GeoProperty(null!));
 
     [TestMethod]
     public void CloneTest1()

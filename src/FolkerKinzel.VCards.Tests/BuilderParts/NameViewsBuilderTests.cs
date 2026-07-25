@@ -7,8 +7,9 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class NameViewsBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetIndexesTest1() => new NameViewsBuilder().SetIndexes();
+    public void SetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NameViewsBuilder().SetIndexes());
 
     [TestMethod]
     public void SetIndexesTest2()
@@ -37,24 +38,29 @@ public class NameViewsBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetIndexesTest1() => new NameViewsBuilder().UnsetIndexes();
+    public void UnsetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NameViewsBuilder().UnsetIndexes());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new NameViewsBuilder().Edit(p => p);
+    public void EditTest1() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NameViewsBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().NameViews.Edit(null!);
+    public void EditTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().NameViews.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new NameViewsBuilder().Edit((p, d) => p, true);
+    public void EditTest3() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NameViewsBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().NameViews.Edit(null!, true);
+    public void EditTest4()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().NameViews.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
@@ -68,16 +74,19 @@ public class NameViewsBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest3() => new NameViewsBuilder().Add(FolkerKinzel.VCards.NameBuilder.Create().Build());
+    public void AddTest3()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NameViewsBuilder().Add(NameBuilder.Create().Build()));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new NameViewsBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NameViewsBuilder().Clear());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new NameViewsBuilder().Remove(p => true);
+    public void RemoveTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NameViewsBuilder().Remove(p => true));
 
     [TestMethod]
     public void EqualsTest1()
@@ -92,12 +101,13 @@ public class NameViewsBuilderTests
     public void ToStringTest1() => Assert.IsNotNull(new NameViewsBuilder().ToString());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ToDisplayNamesTest1() => new NameViewsBuilder().ToDisplayNames(NameFormatter.Default);
+    public void ToDisplayNamesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new NameViewsBuilder().ToDisplayNames(NameFormatter.Default));
 
     [TestMethod]
-    //[ExpectedException(typeof(ArgumentNullException))]
-    public void ToDisplayNamesTest2() => VCardBuilder.Create().NameViews.ToDisplayNames(null);
+    public void ToDisplayNamesTest2()
+        => VCardBuilder.Create().NameViews.ToDisplayNames(null);
 
     [TestMethod]
     public void ToDisplayNamesTest3()

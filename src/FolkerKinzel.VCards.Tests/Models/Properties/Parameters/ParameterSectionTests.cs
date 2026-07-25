@@ -21,11 +21,11 @@ public class ParameterSectionTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void AssignTest1()
     {
         var sec = new ParameterSection();
-        sec.Assign(null!);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => sec.Assign(null!));
     }
 
     [TestMethod]
@@ -185,11 +185,11 @@ public class ParameterSectionTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void AuthorRelativeUriTest()
     {
         var prop = new TextProperty("text");
-        prop.Parameters.Author = new Uri("www.nix.com", UriKind.Relative);
+        _ = Assert.ThrowsExactly<ArgumentException>(
+            () => prop.Parameters.Author = new Uri("www.nix.com", UriKind.Relative));
     }
 
     [TestMethod]

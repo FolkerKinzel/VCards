@@ -10,7 +10,7 @@ namespace FolkerKinzel.VCards.Tests;
 public class VCardTests
 {
     [NotNull]
-    public Microsoft.VisualStudio.TestTools.UnitTesting.TestContext? TestContext { get; set; }
+    public TestContext? TestContext { get; set; }
 
     [DataTestMethod]
     [DataRow(VCdVersion.V2_1)]
@@ -135,11 +135,11 @@ public class VCardTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void SeralizeVcfTest1()
     {
         using var stream = new MemoryStream();
-        Vcf.Serialize(null!, stream);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => Vcf.Serialize(null!, stream));
     }
 
     [TestMethod]
@@ -200,12 +200,14 @@ public class VCardTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void DereferenceTest1() => FolkerKinzel.VCards.VCard.Dereference(null!);
+    public void DereferenceTest1() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCard.Dereference(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ReferenceTest1() => _ = FolkerKinzel.VCards.VCard.Reference(null!);
+    public void ReferenceTest1()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => FolkerKinzel.VCards.VCard.Reference(null!));
 
     [TestMethod]
     public void GroupsTest1()
@@ -267,47 +269,47 @@ public class VCardTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void RegisterAppTest3()
     {
         VCard.SyncTestReset();
-        VCard.RegisterApp(new Uri("../IamRelative", UriKind.Relative));
+        _ = Assert.ThrowsExactly<ArgumentException>(
+            () => VCard.RegisterApp(new Uri("../IamRelative", UriKind.Relative)));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
     public void RegisterAppTest4()
     {
         VCard.SyncTestReset();
         VCard.RegisterApp(new Uri("http://absolute.com/"));
-        VCard.RegisterApp(new Uri("http://other.com/"));
+        _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => VCard.RegisterApp(new Uri("http://other.com/")));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
     public void RegisterAppTest5()
     {
         VCard.SyncTestReset();
         VCard.RegisterApp(null);
-        VCard.RegisterApp(new Uri("http://other.com/"));
+        _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => VCard.RegisterApp(new Uri("http://other.com/")));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
     public void RegisterAppTest6()
     {
         VCard.SyncTestReset();
         VCard.RegisterApp(new Uri("http://other.com/"));
-        VCard.RegisterApp(null);
+        _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => VCard.RegisterApp(null));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
     public void RegisterAppTest7()
     {
         VCard.SyncTestReset();
         VCard.RegisterApp(new Uri("http://absolute.com/"));
-        VCard.RegisterApp(new Uri("../IamRelative", UriKind.Relative));
+        _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => VCard.RegisterApp(new Uri("../IamRelative", UriKind.Relative)));
     }
 
     [TestMethod]

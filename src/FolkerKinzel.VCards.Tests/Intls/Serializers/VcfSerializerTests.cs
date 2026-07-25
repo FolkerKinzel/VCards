@@ -1,4 +1,5 @@
-﻿using FolkerKinzel.VCards.Enums;
+﻿using System.Text;
+using FolkerKinzel.VCards.Enums;
 using FolkerKinzel.VCards.Extensions;
 using FolkerKinzel.VCards.Intls.Serializers;
 using FolkerKinzel.VCards.Models;
@@ -9,11 +10,10 @@ namespace FolkerKinzel.VCards.Tests.Intls.Serializers;
 public class VcfSerializerTests
 {
     [TestMethod]
-    [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void GetSerializerTest1()
-    {
-        using var serializer = VcfSerializer.GetSerializer(new MemoryStream(), false, (VCdVersion)(-10000), VcfOpts.Default, null);
-    }
+        => _ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
+            () => VcfSerializer.GetSerializer(new MemoryStream(), false, (VCdVersion)(-10000), VcfOpts.Default, null));
+
 
     [TestMethod]
     public void AppendLineFoldingTest1()

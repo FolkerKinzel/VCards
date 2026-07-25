@@ -538,7 +538,7 @@ public class VcfRowReaderTests
 
 
     [TestMethod]
-    [ExpectedException(typeof(DecoderFallbackException))]
     public void HandleExceptionTest()
-        => _ = Vcf.Load(TestFiles.AnsiIssueVcf, new UTF8Encoding(false, true));
+        => _ = Assert.ThrowsExactly<DecoderFallbackException>(
+            () => Vcf.Load(TestFiles.AnsiIssueVcf, new UTF8Encoding(false, true)));
 }

@@ -26,9 +26,9 @@ public class GeoCoordinateTests
     [DataRow(52, 16, float.NaN)]
     [DataRow(52, 16, float.NegativeInfinity)]
     [DataRow(52, 16, -42.0F)]
-    [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void GeoCoordinateTest2(double latitude, double longitude, float? uncertainty)
-        => _ = new GeoCoordinate(latitude, longitude, uncertainty);
+        => _ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
+            () => new GeoCoordinate(latitude, longitude, uncertainty));
 
 
     [DataTestMethod()]
@@ -133,14 +133,14 @@ public class GeoCoordinateTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void AreSamePositionTest2()
-        => _ = GeoCoordinate.AreSamePosition(null!, new GeoCoordinate(45, 45));
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => GeoCoordinate.AreSamePosition(null!, new GeoCoordinate(45, 45)));
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void AreSamePositionTest3()
-        => _ = GeoCoordinate.AreSamePosition(new GeoCoordinate(45, 45), null!);
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => GeoCoordinate.AreSamePosition(new GeoCoordinate(45, 45), null!));
 
     [TestMethod]
     public void AreSamePositionTest4()
@@ -150,17 +150,7 @@ public class GeoCoordinateTests
     public void AreSamePositionTest5()
         => Assert.IsFalse(GeoCoordinate.AreSamePosition(GeoCoordinate.Empty, new GeoCoordinate(0, 0)));
 
-
-
-    //[TestMethod()]
-    //public void GetHashCodeTest()
-    //{
-    //    Assert.Fail();
-    //}
-
-
     [DataTestMethod()]
-    //[DataRow(double.NaN, 15)]
     [DataRow(5.1234561, 0, null)]
     [DataRow(5.1234568, 5.1234561, null)]
     [DataRow(0, 0, null)]

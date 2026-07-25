@@ -42,8 +42,9 @@ public class TypeConverterPolyfillTests
 public class TelConverterTest
 {
     [TestMethod]
-    [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void ToVcfStringTest() => _ = TelConverter.ToVcfString((Tel)4711);
+    public void ToVcfStringTest()
+        => _ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
+            () => TelConverter.ToVcfString((Tel)4711));
 
 
     [TestMethod]

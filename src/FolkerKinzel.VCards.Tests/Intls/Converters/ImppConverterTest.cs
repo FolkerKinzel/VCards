@@ -20,6 +20,7 @@ public class ImppConverterTest
 
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void ToVcfStringTest() => _ = ImppConverter.ToVcfString((Impp)4711);
+    public void ToVcfStringTest()
+        => _ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
+            () => ImppConverter.ToVcfString((Impp)4711));
 }

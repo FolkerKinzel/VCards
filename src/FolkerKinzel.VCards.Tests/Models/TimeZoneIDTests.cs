@@ -19,12 +19,14 @@ internal class TimeZoneIDConverterMock(bool success) : ITimeZoneIDConverter
 public class TimeZoneIDTests
 {
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void ParseTest1() => _ = TimeZoneID.Parse("  ");
+    public void ParseTest1()
+        => _ = Assert.ThrowsExactly<ArgumentException>(
+            () => TimeZoneID.Parse("  "));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ParseTest2() => _ = TimeZoneID.Parse(null!);
+    public void ParseTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => TimeZoneID.Parse(null!));
 
     [DataTestMethod]
     [DataRow("-0700")]

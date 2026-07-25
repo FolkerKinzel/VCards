@@ -342,6 +342,7 @@ public class DateAndOrTimePropertyTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void DateAndOrTimePropertyTest1() => _ = new DateAndOrTimeProperty(null!);
+    public void DateAndOrTimePropertyTest1()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new DateAndOrTimeProperty(null!));
 }

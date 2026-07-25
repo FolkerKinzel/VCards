@@ -183,26 +183,32 @@ public class RawDataTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest7() => _ = RawData.FromBytes([]).Convert<string, string>("", null!, null!, null!);
+    public void ConvertTest7() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => RawData.FromBytes([]).Convert<string, string>("", null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest8() => _ = RawData.FromUri(new Uri("http://folker.com/")).Convert<string, string>("", null!, null!, null!);
+    public void ConvertTest8()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => RawData.FromUri(new Uri("http://folker.com/")).Convert<string, string>("", null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest9() => _ = RawData.FromText("TEXT").Convert<string, string>("", null!, null!, null!);
+    public void ConvertTest9()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => RawData.FromText("TEXT").Convert<string, string>("", null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest10() => _ = RawData.FromBytes([]).Convert<string>(null!, null!, null!);
+    public void ConvertTest10()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => RawData.FromBytes([]).Convert<string>(null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest11() => _ = RawData.FromUri(new Uri("http://folker.com/")).Convert<string>(null!, null!, null!);
+    public void ConvertTest11() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => RawData.FromUri(new Uri("http://folker.com/")).Convert<string>(null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void ConvertTest12() => _ = RawData.FromText("TEXT").Convert<string>(null!, null!, null!);
+    public void ConvertTest12() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => RawData.FromText("TEXT").Convert<string>(null!, null!, null!));
 }

@@ -8,8 +8,9 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class TimeZoneBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetPreferencesTest1() => new TimeZoneBuilder().SetPreferences();
+    public void SetPreferencesTest1() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TimeZoneBuilder().SetPreferences());
 
     [TestMethod]
     public void SetPreferencesTest2()
@@ -36,12 +37,14 @@ public class TimeZoneBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetPreferencesTest1() => new TimeZoneBuilder().UnsetPreferences();
+    public void UnsetPreferencesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TimeZoneBuilder().UnsetPreferences());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetIndexesTest1() => new TimeZoneBuilder().SetIndexes();
+    public void SetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TimeZoneBuilder().SetIndexes());
 
     [TestMethod]
     public void SetIndexesTest2()
@@ -68,24 +71,29 @@ public class TimeZoneBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetIndexesTest1() => new TimeZoneBuilder().UnsetIndexes();
+    public void UnsetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TimeZoneBuilder().UnsetIndexes());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new TimeZoneBuilder().Edit(p => p);
+    public void EditTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TimeZoneBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().TimeZones.Edit(null!);
+    public void EditTest2()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().TimeZones.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new TimeZoneBuilder().Edit((p, d) => p, true);
+    public void EditTest3() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TimeZoneBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().TimeZones.Edit(null!, true);
+    public void EditTest4() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().TimeZones.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
@@ -99,12 +107,14 @@ public class TimeZoneBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new TimeZoneBuilder().Add((TimeZoneID?)null);
+    public void AddTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TimeZoneBuilder().Add((TimeZoneID?)null));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new TimeZoneBuilder().Add("Europe/Berlin");
+    public void AddTest2()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TimeZoneBuilder().Add("Europe/Berlin"));
 
     [TestMethod]
     public void AddTest3()
@@ -117,12 +127,14 @@ public class TimeZoneBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new TimeZoneBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TimeZoneBuilder().Clear());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new TimeZoneBuilder().Remove(p => true);
+    public void RemoveTest1() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new TimeZoneBuilder().Remove(p => true));
 
     [TestMethod]
     public void EqualsTest1()

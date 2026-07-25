@@ -15,9 +15,9 @@ public class JSCompsFormatterTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void JSCompsFormatterTest2()
-        => _ = JSCompsFormatter.TryFormat(null!, out _);
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => JSCompsFormatter.TryFormat(null!, out _));
 
     [TestMethod]
     public void JSCompsFormatterTest3()

@@ -74,8 +74,9 @@ public class TimeZonePropertyTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void TimeZonePropertyTest5() => _ = new TimeZoneProperty((TimeZoneID?)null!);
+    public void TimeZonePropertyTest5()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new TimeZoneProperty((TimeZoneID?)null!));
 
     [TestMethod]
     public void IEnumerableTest1()

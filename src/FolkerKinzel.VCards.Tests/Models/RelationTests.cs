@@ -99,35 +99,35 @@ public class RelationTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest2()
     {
         var rel = Relation.Create(ContactID.Create("Hi"));
-        _ = rel.Convert<int>(null!, null!);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => rel.Convert<int>(null!, null!));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest3()
     {
         var rel = Relation.Create(ContactID.Create("Hi"));
-        _ = rel.Convert<string, int>("", null!, null!);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => rel.Convert<string, int>("", null!, null!));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest4()
     {
         var rel = Relation.Create(new VCard());
-        _ = rel.Convert<int>(null!, null!);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => rel.Convert<int>(null!, null!));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest5()
     {
         var rel = Relation.Create(new VCard());
-        _ = rel.Convert<string, int>("", null!, null!);
+        _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => rel.Convert<string, int>("", null!, null!));
     }
 
     [TestMethod]

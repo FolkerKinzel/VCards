@@ -8,8 +8,9 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class RelationBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetPreferencesTest1() => new RelationBuilder().SetPreferences();
+    public void SetPreferencesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().SetPreferences());
 
     [TestMethod]
     public void SetPreferencesTest2()
@@ -36,12 +37,14 @@ public class RelationBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetPreferencesTest1() => new RelationBuilder().UnsetPreferences();
+    public void UnsetPreferencesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().UnsetPreferences());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetIndexesTest1() => new RelationBuilder().SetIndexes();
+    public void SetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().SetIndexes());
 
     [TestMethod]
     public void SetIndexesTest2()
@@ -70,51 +73,62 @@ public class RelationBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetIndexesTest1() => new RelationBuilder().UnsetIndexes();
+    public void UnsetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().UnsetIndexes());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new RelationBuilder().Edit(p => p);
+    public void EditTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().Relations.Edit(null!);
+    public void EditTest2() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Relations.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new RelationBuilder().Edit((p, d) => p, true);
+    public void EditTest3() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().Relations.Edit(null!, true);
+    public void EditTest4() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().Relations.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
     {
         VCard vc = VCardBuilder
             .Create()
-            .Relations.Edit((props, bl) => new RelationProperty(Relation.Create(ContactID.Create("Susi"))), true)
+            .Relations.Edit(
+                (props, bl) => new RelationProperty(Relation.Create(ContactID.Create("Susi"))),
+                                                    true)
             .VCard;
 
         Assert.IsNotNull(vc.Relations);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new RelationBuilder().Add(Guid.Empty);
+    public void AddTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().Add(Guid.Empty));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new RelationBuilder().Add("");
+    public void AddTest2()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().Add(""));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest3() => new RelationBuilder().Add((Uri?)null);
+    public void AddTest3()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().Add((Uri?)null));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest4() => new RelationBuilder().Add((VCard?)null);
+    public void AddTest4() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().Add((VCard?)null));
 
     [TestMethod]
     public void AddTest5()
@@ -137,12 +151,14 @@ public class RelationBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new RelationBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().Clear());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new RelationBuilder().Remove(p => true);
+    public void RemoveTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new RelationBuilder().Remove(p => true));
 
     [TestMethod]
     public void EqualsTest1()

@@ -23,13 +23,15 @@ public class NonStandardPropertyTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentException))]
-    public void NonStandardPropertyTest2() => _ = new NonStandardProperty("aaa", "ddd");
+    public void NonStandardPropertyTest2()
+        => _ = Assert.ThrowsExactly<ArgumentException>(
+            () => new NonStandardProperty("aaa", "ddd"));
 
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void NonStandardPropertyTest3() => _ = new NonStandardProperty(null!, "ddd");
+    public void NonStandardPropertyTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new NonStandardProperty(null!, "ddd"));
 
     [TestMethod]
     public void NonStandardPropertyTest4()

@@ -7,8 +7,9 @@ namespace FolkerKinzel.VCards.BuilderParts.Tests;
 public class StringCollectionBuilderTests
 {
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetPreferencesTest1() => new StringCollectionBuilder().SetPreferences();
+    public void SetPreferencesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new StringCollectionBuilder().SetPreferences());
 
     [TestMethod]
     public void SetPreferencesTest2()
@@ -35,12 +36,14 @@ public class StringCollectionBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetPreferencesTest1() => new StringCollectionBuilder().UnsetPreferences();
+    public void UnsetPreferencesTest1() 
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new StringCollectionBuilder().UnsetPreferences());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void SetIndexesTest1() => new StringCollectionBuilder().SetIndexes();
+    public void SetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new StringCollectionBuilder().SetIndexes());
 
     [TestMethod]
     public void SetIndexesTest2()
@@ -69,24 +72,29 @@ public class StringCollectionBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void UnsetIndexesTest1() => new StringCollectionBuilder().UnsetIndexes();
+    public void UnsetIndexesTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new StringCollectionBuilder().UnsetIndexes());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest1() => new StringCollectionBuilder().Edit(p => p);
+    public void EditTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new StringCollectionBuilder().Edit(p => p));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest2() => VCardBuilder.Create().NickNames.Edit(null!);
+    public void EditTest2() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().NickNames.Edit(null!));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void EditTest3() => new StringCollectionBuilder().Edit((p, d) => p, true);
+    public void EditTest3()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new StringCollectionBuilder().Edit((p, d) => p, true));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void EditTest4() => VCardBuilder.Create().NickNames.Edit(null!, true);
+    public void EditTest4() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => VCardBuilder.Create().NickNames.Edit(null!, true));
 
     [TestMethod]
     public void EditTest5()
@@ -100,12 +108,14 @@ public class StringCollectionBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest1() => new StringCollectionBuilder().Add((string?)null);
+    public void AddTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new StringCollectionBuilder().Add((string?)null));
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void AddTest2() => new StringCollectionBuilder().Add([]);
+    public void AddTest2()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new StringCollectionBuilder().Add([]));
 
     [TestMethod]
     public void AddTest3()
@@ -117,12 +127,14 @@ public class StringCollectionBuilderTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void ClearTest1() => new StringCollectionBuilder().Clear();
+    public void ClearTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new StringCollectionBuilder().Clear());
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidOperationException))]
-    public void RemoveTest1() => new StringCollectionBuilder().Remove(p => true);
+    public void RemoveTest1()
+        => _ = Assert.ThrowsExactly<InvalidOperationException>(
+            () => new StringCollectionBuilder().Remove(p => true));
 
     [TestMethod]
     public void EqualsTest1()

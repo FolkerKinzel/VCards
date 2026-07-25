@@ -236,48 +236,57 @@ public class DateAndOrTimeTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest9()
-        => _ = DateAndOrTime.Create(DateOnly.FromDateTime(DateTime.Now)).Convert<string, string>("", null!, null!, null!, null!);
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => DateAndOrTime.Create(DateOnly.FromDateTime(DateTime.Now))
+                                               .Convert<string, string>("", null!, null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest10()
-        => _ = DateAndOrTime.Create(DateTimeOffset.Now).Convert<string, string>("", null!, null!, null!, null!);
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => DateAndOrTime.Create(DateTimeOffset.Now)
+                               .Convert<string, string>("", null!, null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest11()
-        => _ = DateAndOrTime.Create(TimeOnly.FromDateTime(DateTime.Now)).Convert<string, string>("", null!, null!, null!, null!);
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => DateAndOrTime.Create(TimeOnly.FromDateTime(DateTime.Now))
+                               .Convert<string, string>("", null!, null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest12()
-        => _ = DateAndOrTime.Create("Midnight").Convert<string, string>("", null!, null!, null!, null!);
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => DateAndOrTime.Create("Midnight")
+                               .Convert<string, string>("", null!, null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest13()
-       => _ = DateAndOrTime.Create(DateOnly.FromDateTime(DateTime.Now)).Convert<string>(null!, null!, null!, null!);
+       => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => DateAndOrTime.Create(DateOnly.FromDateTime(DateTime.Now))
+                               .Convert<string>(null!, null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest14()
-        => _ = DateAndOrTime.Create(DateTimeOffset.Now).Convert<string>(null!, null!, null!, null!);
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => DateAndOrTime.Create(DateTimeOffset.Now)
+                               .Convert<string>(null!, null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest15()
-        => _ = DateAndOrTime.Create(TimeOnly.FromDateTime(DateTime.Now)).Convert<string>(null!, null!, null!, null!);
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => DateAndOrTime.Create(TimeOnly.FromDateTime(DateTime.Now))
+                               .Convert<string>(null!, null!, null!, null!));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void ConvertTest16()
-        => _ = DateAndOrTime.Create("Midnight").Convert<string>(null!, null!, null!, null!);
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => DateAndOrTime.Create("Midnight")
+                               .Convert<string>(null!, null!, null!, null!));
 
     [TestMethod]
     public void TryAsDateTest1()
-        => Assert.IsTrue(DateAndOrTime.Create(new DateTimeOffset(2, 1, 1, 17, 24, 32, TimeSpan.FromHours(1))).TryAsDateOnly(out _));
+        => Assert.IsTrue(DateAndOrTime.Create(new DateTimeOffset(2, 1, 1, 17, 24, 32, TimeSpan.FromHours(1)))
+                                      .TryAsDateOnly(out _));
 
     [TestMethod]
     public void TryAsDateTest2()
@@ -285,7 +294,8 @@ public class DateAndOrTimeTests
 
     [TestMethod]
     public void TryAsDateTest3()
-        => Assert.IsTrue(DateAndOrTime.Create(new DateOnly(2023, 11, 11).ToString(CultureInfo.CurrentCulture)).TryAsDateOnly(out _));
+        => Assert.IsTrue(DateAndOrTime.Create(new DateOnly(2023, 11, 11).ToString(CultureInfo.CurrentCulture))
+                                      .TryAsDateOnly(out _));
 
     [TestMethod]
     public void TryAsDateTest4()
@@ -297,7 +307,8 @@ public class DateAndOrTimeTests
 
     [TestMethod]
     public void TryAsDateTest6()
-        => Assert.IsFalse(DateAndOrTime.Create(new DateTimeOffset(2025, 1, 26, 20, 57, 3, TimeSpan.FromHours(-7)), true, true, true).TryAsDateOnly(out _));
+        => Assert.IsFalse(DateAndOrTime.Create(new DateTimeOffset(2025, 1, 26, 20, 57, 3, TimeSpan.FromHours(-7)), true, true, true)
+                                       .TryAsDateOnly(out _));
 
     [TestMethod]
     public void ToStringTest1() => Assert.IsNotNull(DateAndOrTime.Empty.ToString());

@@ -56,19 +56,20 @@ public class RelationPropertyTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void RelationPropertyTest3() => _ = new RelationProperty(null!);
+    public void RelationPropertyTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new RelationProperty(null!));
 
     [TestMethod]
     public void IEnumerableTest()
         => Assert.AreEqual(1, new RelationProperty(Relation.Empty).AsWeakEnumerable().Count());
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void FromUriTest1()
     {
         Assert.IsTrue(Uri.TryCreate("../bla.txt", UriKind.Relative, out Uri? uri));
-        _ = new RelationProperty(Relation.Create(ContactID.Create(uri)));
+        _ = Assert.ThrowsExactly<ArgumentException>(
+            () => new RelationProperty(Relation.Create(ContactID.Create(uri))));
     }
 
     [TestMethod]

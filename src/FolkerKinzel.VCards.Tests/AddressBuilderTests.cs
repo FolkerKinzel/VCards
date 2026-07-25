@@ -111,8 +111,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddPostOfficeBoxTest3() => AddressBuilder.Create().AddPOBox((string[]?)null!);
+    public void AddPostOfficeBoxTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddPOBox((string[]?)null!));
 
     [TestMethod()]
     public void AddExtendedAddressTest1()
@@ -133,8 +134,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddExtendedAddressTest3() => AddressBuilder.Create().AddExtended((string[]?)null!);
+    public void AddExtendedAddressTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddExtended((string[]?)null!));
 
     [TestMethod()]
     public void AddExtendedAddressTest4()
@@ -169,8 +171,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddStreetTest3() => AddressBuilder.Create().AddStreet((string[]?)null!);
+    public void AddStreetTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddStreet((string[]?)null!));
 
     [TestMethod()]
     public void AddStreetTest4()
@@ -204,8 +207,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddLocalityTest3() => AddressBuilder.Create().AddLocality((string[]?)null!);
+    public void AddLocalityTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddLocality((string[]?)null!));
 
     [TestMethod()]
     public void AddRegionTest1()
@@ -226,8 +230,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddRegionTest3() => AddressBuilder.Create().AddRegion((string[]?)null!);
+    public void AddRegionTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddRegion((string[]?)null!));
 
     [TestMethod()]
     public void AddPostalCodeTest1()
@@ -248,8 +253,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddPostalCodeTest3() => AddressBuilder.Create().AddPostalCode((string[]?)null!);
+    public void AddPostalCodeTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddPostalCode((string[]?)null!));
 
     [TestMethod()]
     public void AddCountryTest1()
@@ -270,8 +276,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddCountryTest3() => AddressBuilder.Create().AddCountry((string[]?)null!);
+    public void AddCountryTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddCountry((string[]?)null!));
 
     [TestMethod()]
     public void AddRoomTest1()
@@ -292,8 +299,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddRoomTest3() => AddressBuilder.Create().AddRoom((string[]?)null!);
+    public void AddRoomTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddRoom((string[]?)null!));
 
     [TestMethod()]
     public void AddApartmentTest1()
@@ -314,8 +322,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddApartmentTest3() => AddressBuilder.Create().AddApartment((string[]?)null!);
+    public void AddApartmentTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddApartment((string[]?)null!));
 
     [TestMethod()]
     public void AddFloorTest1()
@@ -336,8 +345,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddFloorTest3() => AddressBuilder.Create().AddFloor((string[]?)null!);
+    public void AddFloorTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddFloor((string[]?)null!));
 
     [TestMethod()]
     public void AddStreetNumberTest1()
@@ -358,8 +368,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddStreetNumberTest3() => AddressBuilder.Create().AddStreetNumber((string[]?)null!);
+    public void AddStreetNumberTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddStreetNumber((string[]?)null!));
 
     [TestMethod()]
     public void AddStreetNameTest1()
@@ -380,8 +391,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddStreetNameTest3() => AddressBuilder.Create().AddStreetName((string[]?)null!);
+    public void AddStreetNameTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddStreetName((string[]?)null!));
 
     [TestMethod()]
     public void AddBuildingTest1()
@@ -402,8 +414,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddBuildingTest3() => AddressBuilder.Create().AddBuilding((string[]?)null!);
+    public void AddBuildingTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddBuilding((string[]?)null!));
 
     [TestMethod()]
     public void AddBlockTest1()
@@ -424,8 +437,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddBlockTest3() => AddressBuilder.Create().AddBlock((string[]?)null!);
+    public void AddBlockTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddBlock((string[]?)null!));
 
     [TestMethod()]
     public void AddSubDistrictTest1()
@@ -446,8 +460,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddSubDistrictTest3() => AddressBuilder.Create().AddSubDistrict((string[]?)null!);
+    public void AddSubDistrictTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddSubDistrict((string[]?)null!));
 
     [TestMethod()]
     public void AddDistrictTest1()
@@ -468,8 +483,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddDistrictTest3() => AddressBuilder.Create().AddDistrict((string[]?)null!);
+    public void AddDistrictTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddDistrict((string[]?)null!));
 
     [TestMethod()]
     public void AddLandmarkTest1()
@@ -490,8 +506,9 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddLandmarkTest3() => AddressBuilder.Create().AddLandmark((string[]?)null!);
+    public void AddLandmarkTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddLandmark((string[]?)null!));
 
     [TestMethod()]
     public void AddDirectionTest1()
@@ -512,7 +529,8 @@ public class AddressBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddDirectionTest3() => AddressBuilder.Create().AddDirection((string[]?)null!);
+    public void AddDirectionTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => AddressBuilder.Create().AddDirection((string[]?)null!));
 
 }

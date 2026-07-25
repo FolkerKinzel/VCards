@@ -47,8 +47,9 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddFamilyNameTest3() => NameBuilder.Create().AddSurname((string[]?)null!);
+    public void AddFamilyNameTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => NameBuilder.Create().AddSurname((string[]?)null!));
 
 
     [TestMethod()]
@@ -70,8 +71,9 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddGivenNameTest3() => NameBuilder.Create().AddGiven((string[]?)null!);
+    public void AddGivenNameTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => NameBuilder.Create().AddGiven((string[]?)null!));
 
     [TestMethod()]
     public void AddAdditionalNameTest1()
@@ -92,8 +94,9 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddAdditionalNameTest3() => NameBuilder.Create().AddGiven2((string[]?)null!);
+    public void AddAdditionalNameTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => NameBuilder.Create().AddGiven2((string[]?)null!));
 
     [TestMethod()]
     public void AddPrefixTest1()
@@ -114,8 +117,9 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddPrefixTest3() => NameBuilder.Create().AddPrefix((string[]?)null!);
+    public void AddPrefixTest3() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => NameBuilder.Create().AddPrefix((string[]?)null!));
 
     [TestMethod()]
     public void AddSuffixTest1()
@@ -136,8 +140,9 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddSuffixTest3() => NameBuilder.Create().AddSuffix((string[]?)null!);
+    public void AddSuffixTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => NameBuilder.Create().AddSuffix((string[]?)null!));
 
     [TestMethod()]
     public void AddSurname2Test1()
@@ -158,8 +163,9 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddSurname2Test3() => NameBuilder.Create().AddSurname2((string[]?)null!);
+    public void AddSurname2Test3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => NameBuilder.Create().AddSurname2((string[]?)null!));
 
     [TestMethod()]
     public void AddGenerationTest1()
@@ -180,8 +186,9 @@ public class NameBuilderTests
     }
 
     [TestMethod()]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void AddGenerationTest3() => NameBuilder.Create().AddGeneration((string[]?)null!);
+    public void AddGenerationTest3()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => NameBuilder.Create().AddGeneration((string[]?)null!));
 
     [TestMethod()]
     public void ClearTest()

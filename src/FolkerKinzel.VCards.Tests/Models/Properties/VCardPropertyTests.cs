@@ -18,6 +18,7 @@ public class VCardPropertyTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void CtorTest1() => _ = new ArgumentNullTester(null!);
+    public void CtorTest1()
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new ArgumentNullTester(null!));
 }

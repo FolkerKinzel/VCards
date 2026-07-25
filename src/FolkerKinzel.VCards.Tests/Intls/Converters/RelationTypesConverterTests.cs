@@ -21,6 +21,7 @@ public class RelationTypesConverterTests
     public void ParseTest2() => Assert.IsNull(RelConverter.Parse(null));
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void ToVcfStringTest() => _ = RelConverter.ToVcfString((Rel)4711);
+    public void ToVcfStringTest()
+        => _ = Assert.ThrowsExactly<ArgumentOutOfRangeException>(
+            () => RelConverter.ToVcfString((Rel)4711));
 }

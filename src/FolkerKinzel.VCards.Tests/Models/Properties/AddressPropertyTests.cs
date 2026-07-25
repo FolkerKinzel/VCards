@@ -269,18 +269,18 @@ public class AddressPropertyTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(IndexOutOfRangeException))]
     public void ItemTest2()
     {
         ICompoundProperty prop = new AddressProperty(AddressBuilder.Create().Build());
-        Assert.IsNotNull(prop[prop.Count]);
+        _ = Assert.ThrowsExactly<IndexOutOfRangeException>(
+            () => prop[prop.Count]);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(IndexOutOfRangeException))]
     public void ItemTest3()
     {
         ICompoundProperty prop = new AddressProperty(AddressBuilder.Create().Build());
-        Assert.IsNotNull(prop[-1]);
+        _ = Assert.ThrowsExactly<IndexOutOfRangeException>(
+            () => prop[-1]);
     }
 }

@@ -90,8 +90,9 @@ public class GenderPropertyTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
-    public void GenderPropertyTest4() => _ = new GenderProperty((Gender?)null!);
+    public void GenderPropertyTest4() 
+        => _ = Assert.ThrowsExactly<ArgumentNullException>(
+            () => new GenderProperty((Gender?)null!));
 
     [TestMethod]
     public void IEnumerableTest1()
