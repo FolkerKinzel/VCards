@@ -67,12 +67,12 @@ public class VcfTests
     [TestMethod]
     public async Task DeserializeAsyncTest1()
         => await Assert.ThrowsExactlyAsync<ArgumentNullException>(
-            async () => _ = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream()), (AnsiFilter)null!));
-
+            async () => _ = await Vcf.DeserializeAsync(t => Task.FromResult<Stream>(new MemoryStream()), (AnsiFilter)null!,
+                                                       TestContext.CancellationToken));
     [TestMethod]
     public async Task DeserializeAsyncTest2()
         => await Assert.ThrowsExactlyAsync<ArgumentNullException>(
-            async () => _ = await Vcf.DeserializeAsync(null!, new AnsiFilter()));
+            async () => _ = await Vcf.DeserializeAsync(null!, new AnsiFilter(), TestContext.CancellationToken));
 
     [TestMethod]
     public async Task DeserializeAsyncTest3()
@@ -147,27 +147,29 @@ public class VcfTests
     [TestMethod]
     public async Task DeserializeManyAsyncTest1() 
         => await Assert.ThrowsExactlyAsync<ArgumentNullException>(
-            async () => _ = await Vcf.DeserializeManyAsync(null!).CountAsync());
+            async () => _ = await Vcf.DeserializeManyAsync(null!, token: TestContext.CancellationToken)
+                                     .CountAsync(TestContext.CancellationToken));
 
     [TestMethod]
     public async Task DeserializeManyAsyncTest2()
     {
         VCard vc = await Vcf.DeserializeManyAsync([null, t => Task.FromResult<Stream>(File.OpenRead(TestFiles.AnsiIssueVcf))],
-                                                   new AnsiFilter()).FirstAsync();
+                                                   new AnsiFilter(), TestContext.CancellationToken)
+                            .FirstAsync(TestContext.CancellationToken);
 
         Assert.AreEqual("Lämmerweg 12", vc.Addresses!.First()!.Value.Street[0]);
-
     }
 
     [TestMethod]
     public async Task DeserializeManyAsyncTest3()
     {
-        VCard[] vc = await Vcf.DeserializeManyAsync(
-            [ null,
+        Func<CancellationToken, Task<Stream>>?[] factories = [ null,
             t => Task.FromResult<Stream>( File.OpenRead(TestFiles.AnsiIssueVcf)),
             t => Task.FromResult<Stream>(null!),
-            //t => throw new Exception(),
-            t => Task.FromResult<Stream>(File.OpenRead(TestFiles.OutlookV2vcf))]).ToArrayAsync();
+            t => Task.FromResult<Stream>(File.OpenRead(TestFiles.OutlookV2vcf))];
+
+        VCard[] vc = await Vcf.DeserializeManyAsync(factories, token: TestContext.CancellationToken)
+                              .ToArrayAsync(TestContext.CancellationToken);
 
         Assert.AreNotEqual("Lämmerweg 12", vc[0].Addresses!.First()!.Value.Street[0]);
     }
@@ -184,16 +186,17 @@ public class VcfTests
                                           new AnsiFilter()).ToArrayAsync();
 
         Assert.AreEqual("Lämmerweg 12", vc[0].Addresses!.First()!.Value.Street[0]);
-
     }
 
     [TestMethod]
     public async Task DeserializeManyAsyncTest5()
-        => Assert.IsNull(await Vcf.DeserializeManyAsync([]).FirstOrDefaultAsync());
+        => Assert.IsNull(await Vcf.DeserializeManyAsync([], token: TestContext.CancellationToken)
+                                  .FirstOrDefaultAsync(TestContext.CancellationToken));
 
     [TestMethod]
     public async Task DeserializeManyAsyncTest6()
-        => Assert.IsNull(await Vcf.DeserializeManyAsync([t => Task.FromResult<Stream>(File.OpenRead(TestFiles.EmptyVcf))]).FirstOrDefaultAsync());
+        => Assert.IsNull(await Vcf.DeserializeManyAsync([t => Task.FromResult<Stream>(File.OpenRead(TestFiles.EmptyVcf))], token: TestContext.CancellationToken)
+                                                                  .FirstOrDefaultAsync(TestContext.CancellationToken));
 
     [TestMethod]
     public void LoadTest1()
@@ -248,4 +251,6 @@ public class VcfTests
     public void ToVcfStringTest_vcardListNull1(VCdVersion version) 
         => _ = Assert.ThrowsExactly<ArgumentNullException>(
             () => Vcf.AsString(null!, version));
+
+    public TestContext TestContext { get; set; }
 }
